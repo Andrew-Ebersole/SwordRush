@@ -13,6 +13,7 @@ namespace SwordRush
         #region fields
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+        private Player player;
 
         // Textures
         private Texture2D dungeontilesTexture2D;
@@ -31,7 +32,7 @@ namespace SwordRush
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
+            player = new Player();
             base.Initialize();
         }
 
@@ -50,7 +51,7 @@ namespace SwordRush
                 Exit();
 
             // TODO: Add your update logic here
-
+            player.playerControl();
             base.Update(gameTime);
         }
 
@@ -66,7 +67,7 @@ namespace SwordRush
                 new Vector2(10, 10),    // Location
                 Color.White);           // Color
 
-            _spriteBatch.Draw(dungeontilesTexture2D,new Rectangle(0,0,50,100),new Rectangle(128,64,16,32),Color.White);
+            _spriteBatch.Draw(dungeontilesTexture2D,new Rectangle(player.Rectangle.X,player.Rectangle.Y,50,100),new Rectangle(128,64,16,32),Color.White);
 
             _spriteBatch.End();
             base.Draw(gameTime);

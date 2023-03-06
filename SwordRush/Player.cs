@@ -2,10 +2,12 @@
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Input;
+using System.Threading;
 
 namespace SwordRush
 {
@@ -28,6 +30,14 @@ namespace SwordRush
         private MouseState currentMouseState;
         private MouseState preMouseState;
 
+        public Rectangle Rectangle
+        {
+            get
+            {
+                return rectangle;
+            }
+        }
+
         public Player()
         {
             exp = 0;
@@ -43,16 +53,21 @@ namespace SwordRush
 
         public void playerControl()
         {
+            currentMouseState = Mouse.GetState();
             if (currentMouseState.LeftButton == ButtonState.Pressed && 
                 preMouseState.LeftButton == ButtonState.Released)
             {
                 //calculate the direction
-                Point direction = currentMouseState.Position - rectangle.Location;
-                
+                Vector2 difference = Vector2.Normalize(Vector2.Subtract(rectangle.Location.ToVector2(), currentMouseState.Position.ToVector2()));
+                Point direction = difference.ToPoint();
+                Debug.WriteLine(difference);
+
                 //move the player's location 
                 rectangle = new Rectangle(rectangle.Location + direction,
                     new Point(rectangle.Width,rectangle.Height));
             }
+
+            preMouseState = currentMouseState;
         }
 
         public void animation()
@@ -78,6 +93,7 @@ namespace SwordRush
         public void Draw(SpriteBatch sb)
         {
             
+
         }
 
         public void Update(GameTime gt)
