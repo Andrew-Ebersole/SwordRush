@@ -10,8 +10,16 @@ namespace SwordRush
 {
     public class Game1 : Game
     {
+        #region fields
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+
+        // Textures
+
+        // Fonts
+        SpriteFont bellMT24;
+
+        #endregion
 
         public Game1()
         {
@@ -31,7 +39,8 @@ namespace SwordRush
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
+            // Load Fonts
+            bellMT24 = Content.Load<SpriteFont>("Bell_MT-24");
         }
 
         protected override void Update(GameTime gameTime)
@@ -47,9 +56,16 @@ namespace SwordRush
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
+            _spriteBatch.Begin();
 
-            // TODO: Add your drawing code here
+            // Testing font
+            _spriteBatch.DrawString(
+                bellMT24,               // Font
+                "Test",                 // Text
+                new Vector2(10, 10),    // Location
+                Color.White);           // Color
 
+            _spriteBatch.End();
             base.Draw(gameTime);
         }
     }
