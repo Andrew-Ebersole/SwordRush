@@ -2,10 +2,12 @@
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Input;
+using System.Threading;
 
 namespace SwordRush
 {
@@ -23,14 +25,59 @@ namespace SwordRush
         private int atk;
         private int health;
         private float atkSpd;
-        private float distance;
         private float range;
         private GameObject sword;
-        private MouseState mouse;
+        private MouseState currentMouseState;
+        private MouseState preMouseState;
 
+        public Vector2 Position
+        {
+            get
+            {
+                return position;
+            }
+        }
+
+        public Point Size
+        {
+            get
+            {
+                return size;
+            }
+        }
+
+        // --- Constructor --- //
+
+        public Player(Texture2D texture, Vector2 position, Point size) : base(texture, position, size)
+        {
+            exp = 0;
+            level = 1;
+            atk = 1;
+            health = 10;
+            atkSpd = 1;
+            range = 1;
+            currentMouseState = Mouse.GetState();
+            preMouseState = Mouse.GetState();
+            
+        }
+
+        //move left and top not working
         public void playerControl()
         {
+            currentMouseState = Mouse.GetState();
+            if (currentMouseState.LeftButton == ButtonState.Pressed && 
+                preMouseState.LeftButton == ButtonState.Released)
+            {
+                //calculate the direction
+                Vector2 difference = Vector2.Normalize(Vector2.Subtract(rectangle.Location.ToVector2(), currentMouseState.Position.ToVector2()));
+                difference = new Vector2(-difference.X, -difference.Y);
+                Debug.WriteLine(difference);
 
+                //move the player's location 
+                position += difference *10;
+            }
+
+            preMouseState = currentMouseState;
         }
 
         public void animation()
@@ -55,6 +102,7 @@ namespace SwordRush
 
         public void Draw(SpriteBatch sb)
         {
+            
 
         }
 

@@ -15,7 +15,12 @@ namespace SwordRush
         #region fields
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+        private Player player;
 
+        // Textures
+        private Texture2D dungeontilesTexture2D;
+        // Fonts
+        SpriteFont bellMT24;
         // UI Manager
         private UI uiManager;
 
@@ -31,8 +36,8 @@ namespace SwordRush
 
         protected override void Initialize()
         {
-
-
+            // TODO: Add your initialization logic here
+            player = new Player(null, new Vector2(0,0), new Point(0,0));
             base.Initialize();
         }
 
@@ -40,6 +45,9 @@ namespace SwordRush
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
+            // Load Fonts
+            bellMT24 = Content.Load<SpriteFont>("Bell_MT-24");
+            dungeontilesTexture2D = Content.Load<Texture2D>("DungeonTiles");
             // UI Manager
             uiManager = new UI(Content);
 
@@ -50,6 +58,8 @@ namespace SwordRush
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            // TODO: Add your update logic here
+            player.playerControl();
             uiManager.Update(gameTime);
 
             base.Update(gameTime);
@@ -62,6 +72,8 @@ namespace SwordRush
 
             // Draw UI elements (Text, Menus, Icons)
             uiManager.Draw(_spriteBatch);
+
+            _spriteBatch.Draw(dungeontilesTexture2D,player.Position,new Rectangle(128,64,16,32),Color.White);
 
             _spriteBatch.End();
             base.Draw(gameTime);

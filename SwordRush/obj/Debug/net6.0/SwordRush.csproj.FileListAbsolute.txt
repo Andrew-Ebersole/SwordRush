@@ -26,3 +26,59 @@ Z:\IGMProfile\Documents\GIT-Repos\SwordRush\SwordRush\obj\Debug\net6.0\ref\Sword
 Z:\IGMProfile\Documents\GIT-Repos\SwordRush\SwordRush\bin\Debug\net6.0\Content\AbilityIcons.xnb
 Z:\IGMProfile\Documents\GIT-Repos\SwordRush\SwordRush\bin\Debug\net6.0\Content\Bell_MT-24.xnb
 Z:\IGMProfile\Documents\GIT-Repos\SwordRush\SwordRush\bin\Debug\net6.0\Content\DungeonTiles.xnb
+E:\RIT\IGME106-SwordRush\SwordRush\bin\Debug\net6.0\Content\AbilityIcons.xnb
+E:\RIT\IGME106-SwordRush\SwordRush\bin\Debug\net6.0\Content\Bell_MT-24.xnb
+E:\RIT\IGME106-SwordRush\SwordRush\bin\Debug\net6.0\Content\DungeonTiles.xnb
+E:\RIT\IGME106-SwordRush\SwordRush\bin\Debug\net6.0\SwordRush.exe
+E:\RIT\IGME106-SwordRush\SwordRush\bin\Debug\net6.0\SwordRush.deps.json
+E:\RIT\IGME106-SwordRush\SwordRush\bin\Debug\net6.0\SwordRush.runtimeconfig.json
+E:\RIT\IGME106-SwordRush\SwordRush\bin\Debug\net6.0\SwordRush.dll
+E:\RIT\IGME106-SwordRush\SwordRush\bin\Debug\net6.0\SwordRush.pdb
+E:\RIT\IGME106-SwordRush\SwordRush\bin\Debug\net6.0\MonoGame.Framework.dll
+E:\RIT\IGME106-SwordRush\SwordRush\bin\Debug\net6.0\runtimes\linux-x64\native\libSDL2-2.0.so.0
+E:\RIT\IGME106-SwordRush\SwordRush\bin\Debug\net6.0\runtimes\linux-x64\native\libopenal.so.1
+E:\RIT\IGME106-SwordRush\SwordRush\bin\Debug\net6.0\runtimes\osx\native\libSDL2.dylib
+E:\RIT\IGME106-SwordRush\SwordRush\bin\Debug\net6.0\runtimes\osx\native\libopenal.1.dylib
+E:\RIT\IGME106-SwordRush\SwordRush\bin\Debug\net6.0\runtimes\win-x64\native\SDL2.dll
+E:\RIT\IGME106-SwordRush\SwordRush\bin\Debug\net6.0\runtimes\win-x64\native\soft_oal.dll
+E:\RIT\IGME106-SwordRush\SwordRush\bin\Debug\net6.0\runtimes\win-x86\native\SDL2.dll
+E:\RIT\IGME106-SwordRush\SwordRush\bin\Debug\net6.0\runtimes\win-x86\native\soft_oal.dll
+E:\RIT\IGME106-SwordRush\SwordRush\obj\Debug\net6.0\SwordRush.csproj.AssemblyReference.cache
+E:\RIT\IGME106-SwordRush\SwordRush\obj\Debug\net6.0\SwordRush.GeneratedMSBuildEditorConfig.editorconfig
+E:\RIT\IGME106-SwordRush\SwordRush\obj\Debug\net6.0\SwordRush.AssemblyInfoInputs.cache
+E:\RIT\IGME106-SwordRush\SwordRush\obj\Debug\net6.0\SwordRush.AssemblyInfo.cs
+E:\RIT\IGME106-SwordRush\SwordRush\obj\Debug\net6.0\SwordRush.csproj.CoreCompileInputs.cache
+E:\RIT\IGME106-SwordRush\SwordRush\obj\Debug\net6.0\SwordRush.csproj.CopyComplete
+E:\RIT\IGME106-SwordRush\SwordRush\obj\Debug\net6.0\SwordRush.dll
+E:\RIT\IGME106-SwordRush\SwordRush\obj\Debug\net6.0\refint\SwordRush.dll
+E:\RIT\IGME106-SwordRush\SwordRush\obj\Debug\net6.0\SwordRush.pdb
+E:\RIT\IGME106-SwordRush\SwordRush\obj\Debug\net6.0\SwordRush.genruntimeconfig.cache
+E:\RIT\IGME106-SwordRush\SwordRush\obj\Debug\net6.0\ref\SwordRush.dll
+C:\Users\Joshua Leong\Source\Repos\SwordRush\SwordRush\bin\Debug\net6.0\Content\AbilityIcons.xnb
+C:\Users\Joshua Leong\Source\Repos\SwordRush\SwordRush\bin\Debug\net6.0\Content\Bell_MT-24.xnb
+C:\Users\Joshua Leong\Source\Repos\SwordRush\SwordRush\bin\Debug\net6.0\Content\DungeonTiles.xnb
+C:\Users\Joshua Leong\Source\Repos\SwordRush\SwordRush\bin\Debug\net6.0\SwordRush.exe
+C:\Users\Joshua Leong\Source\Repos\SwordRush\SwordRush\bin\Debug\net6.0\SwordRush.deps.json
+C:\Users\Joshua Leong\Source\Repos\SwordRush\SwordRush\bin\Debug\net6.0\SwordRush.runtimeconfig.json
+C:\Users\Joshua Leong\Source\Repos\SwordRush\SwordRush\bin\Debug\net6.0\SwordRush.dll
+C:\Users\Joshua Leong\Source\Repos\SwordRush\SwordRush\bin\Debug\net6.0\SwordRush.pdb
+C:\Users\Joshua Leong\Source\Repos\SwordRush\SwordRush\bin\Debug\net6.0\MonoGame.Framework.dll
+C:\Users\Joshua Leong\Source\Repos\SwordRush\SwordRush\bin\Debug\net6.0\runtimes\linux-x64\native\libSDL2-2.0.so.0
+C:\Users\Joshua Leong\Source\Repos\SwordRush\SwordRush\bin\Debug\net6.0\runtimes\linux-x64\native\libopenal.so.1
+C:\Users\Joshua Leong\Source\Repos\SwordRush\SwordRush\bin\Debug\net6.0\runtimes\osx\native\libSDL2.dylib
+C:\Users\Joshua Leong\Source\Repos\SwordRush\SwordRush\bin\Debug\net6.0\runtimes\osx\native\libopenal.1.dylib
+C:\Users\Joshua Leong\Source\Repos\SwordRush\SwordRush\bin\Debug\net6.0\runtimes\win-x64\native\SDL2.dll
+C:\Users\Joshua Leong\Source\Repos\SwordRush\SwordRush\bin\Debug\net6.0\runtimes\win-x64\native\soft_oal.dll
+C:\Users\Joshua Leong\Source\Repos\SwordRush\SwordRush\bin\Debug\net6.0\runtimes\win-x86\native\SDL2.dll
+C:\Users\Joshua Leong\Source\Repos\SwordRush\SwordRush\bin\Debug\net6.0\runtimes\win-x86\native\soft_oal.dll
+C:\Users\Joshua Leong\Source\Repos\SwordRush\SwordRush\obj\Debug\net6.0\SwordRush.csproj.AssemblyReference.cache
+C:\Users\Joshua Leong\Source\Repos\SwordRush\SwordRush\obj\Debug\net6.0\SwordRush.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Joshua Leong\Source\Repos\SwordRush\SwordRush\obj\Debug\net6.0\SwordRush.AssemblyInfoInputs.cache
+C:\Users\Joshua Leong\Source\Repos\SwordRush\SwordRush\obj\Debug\net6.0\SwordRush.AssemblyInfo.cs
+C:\Users\Joshua Leong\Source\Repos\SwordRush\SwordRush\obj\Debug\net6.0\SwordRush.csproj.CoreCompileInputs.cache
+C:\Users\Joshua Leong\Source\Repos\SwordRush\SwordRush\obj\Debug\net6.0\SwordRush.csproj.CopyComplete
+C:\Users\Joshua Leong\Source\Repos\SwordRush\SwordRush\obj\Debug\net6.0\SwordRush.dll
+C:\Users\Joshua Leong\Source\Repos\SwordRush\SwordRush\obj\Debug\net6.0\refint\SwordRush.dll
+C:\Users\Joshua Leong\Source\Repos\SwordRush\SwordRush\obj\Debug\net6.0\SwordRush.pdb
+C:\Users\Joshua Leong\Source\Repos\SwordRush\SwordRush\obj\Debug\net6.0\SwordRush.genruntimeconfig.cache
+C:\Users\Joshua Leong\Source\Repos\SwordRush\SwordRush\obj\Debug\net6.0\ref\SwordRush.dll

@@ -12,6 +12,11 @@ namespace SwordRush
     {
         private List<Projectile> projectiles;
 
+        // --- Constructor --- //
+        public LongRangeEnemy(Texture2D texture, Vector2 position, Point size) : base(texture, position, size)
+        {
+
+        }
 
         public void initStat(int level)
         {

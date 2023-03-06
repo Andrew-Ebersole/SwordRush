@@ -1,1 +1,16 @@
-<?xml version="1.0" encoding="utf-8"?><SourceFileCollection xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><Profile>Reach</Profile><Platform>DesktopGL</Platform><Config /><SourceFiles><File>Z:/IGMProfile/Documents/GIT-Repos/SwordRush/SwordRush/Content/AbilityIcons.png</File><File>Z:/IGMProfile/Documents/GIT-Repos/SwordRush/SwordRush/Content/Bell_MT-24.spritefont</File><File>Z:/IGMProfile/Documents/GIT-Repos/SwordRush/SwordRush/Content/DungeonTiles.png</File></SourceFiles><DestFiles><File xsi:nil="true" /><File xsi:nil="true" /><File xsi:nil="true" /></DestFiles></SourceFileCollection>
+<?xml version="1.0" encoding="utf-8"?>
+<SourceFileCollection xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Profile>Reach</Profile>
+  <Platform>DesktopGL</Platform>
+  <Config />
+  <SourceFiles>
+    <File>C:/Users/Joshua Leong/Source/Repos/SwordRush/SwordRush/Content/AbilityIcons.png</File>
+    <File>C:/Users/Joshua Leong/Source/Repos/SwordRush/SwordRush/Content/Bell_MT-24.spritefont</File>
+    <File>C:/Users/Joshua Leong/Source/Repos/SwordRush/SwordRush/Content/DungeonTiles.png</File>
+  </SourceFiles>
+  <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+  </DestFiles>
+</SourceFileCollection>
