@@ -12,8 +12,9 @@ namespace SwordRush
     internal class GameObject
     {
         private Texture2D texture;
-        private Rectangle rectangle;
+        protected Rectangle rectangle;
         private SoundEffect sound;
+        
 
         public void Draw(SpriteBatch sb)
         {

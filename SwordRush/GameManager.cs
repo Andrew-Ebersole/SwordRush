@@ -8,5 +8,6 @@ namespace SwordRush
 {
     internal class GameManager
     {
+
     }
 }
