@@ -8,16 +8,17 @@ using Microsoft.Xna.Framework.Input;
 
 namespace SwordRush
 {
+    
+
     public class Game1 : Game
     {
         #region fields
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
-        // Textures
+        // UI Manager
+        private UI uiManager;
 
-        // Fonts
-        SpriteFont bellMT24;
 
         #endregion
 
@@ -30,7 +31,7 @@ namespace SwordRush
 
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+
 
             base.Initialize();
         }
@@ -39,8 +40,9 @@ namespace SwordRush
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // Load Fonts
-            bellMT24 = Content.Load<SpriteFont>("Bell_MT-24");
+            // UI Manager
+            uiManager = new UI(Content);
+
         }
 
         protected override void Update(GameTime gameTime)
@@ -48,7 +50,7 @@ namespace SwordRush
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
+            uiManager.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -58,15 +60,12 @@ namespace SwordRush
             GraphicsDevice.Clear(Color.CornflowerBlue);
             _spriteBatch.Begin();
 
-            // Testing font
-            _spriteBatch.DrawString(
-                bellMT24,               // Font
-                "Test",                 // Text
-                new Vector2(10, 10),    // Location
-                Color.White);           // Color
+            // Draw UI elements (Text, Menus, Icons)
+            uiManager.Draw(_spriteBatch);
 
             _spriteBatch.End();
             base.Draw(gameTime);
         }
+
     }
 }

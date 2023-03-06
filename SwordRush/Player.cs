@@ -28,7 +28,7 @@ namespace SwordRush
         private GameObject sword;
         private MouseState mouse;
 
-        public void playerConteol()
+        public void playerControl()
         {
 
         }
