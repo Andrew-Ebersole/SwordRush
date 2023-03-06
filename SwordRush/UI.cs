@@ -35,11 +35,12 @@ namespace SwordRush
         // Fonts
         private SpriteFont bellMT24;
 
-        // Menu Coordinates
-        
+        // Mouse State
+        private MouseState currentMState;
+        private MouseState previousMState;
 
         // Buttons
-
+        private List<TextButton> menuButtons;
 
 
         // --- Properties --- //
@@ -54,6 +55,9 @@ namespace SwordRush
         {
             gameFSM = GameFSM.Menu;
             bellMT24 = content.Load<SpriteFont>("Bell_MT-24");
+            initalizeButtons();
+            currentMState = new MouseState();
+            previousMState = new MouseState();
         }
 
 
@@ -67,11 +71,35 @@ namespace SwordRush
 
         public void Update(GameTime gt)
         {
-            // Temporary input to change text
-            if (Keyboard.GetState().IsKeyDown(Keys.Enter))
+            currentMState = Mouse.GetState();
+
+            // Testing Menu Text
+            switch (gameFSM)
             {
-                gameFSM = GameFSM.Game;
+                case GameFSM.Menu:
+                    
+                    // Updates hover color change
+                    foreach (TextButton b in menuButtons)
+                    {
+                        b.Update(gt);
+                    }
+
+                    // changes states when clicked
+                    if (menuButtons[0].IsClicked())
+                    {
+                        gameFSM = GameFSM.Instructions;
+                    }
+                    break;
+                case GameFSM.Instructions:
+                    if (currentMState.LeftButton == ButtonState.Pressed
+                        && previousMState.LeftButton == ButtonState.Released)
+                    {
+                        gameFSM = GameFSM.Menu;
+                    }
+                    break;
             }
+
+            previousMState = currentMState;
         }
 
         public void Draw(SpriteBatch sb)
@@ -80,26 +108,29 @@ namespace SwordRush
             switch (gameFSM)
             {
                 case GameFSM.Menu:
-                    // Testing font
-                    sb.DrawString(
-                        bellMT24,               // Font
-                        "Menu",                 // Text
-                        new Vector2(10, 10),    // Location
-                        Color.White);           // Color
+                    foreach (TextButton b in menuButtons)
+                    {
+                        b.Draw(sb);
+                    }
                     break;
 
                 case GameFSM.Game:
-                    // Testing font
-                    sb.DrawString(
-                        bellMT24,               // Font
-                        "Game",                // Text
-                        new Vector2(10, 10),    // Location
-                        Color.White);           // Color
+                    
                     break;
             }
 
             
         }
 
+        private void initalizeButtons()
+        {
+            menuButtons = new List<TextButton>();
+
+            menuButtons.Add(new TextButton(
+                new Vector2(10, 10),    // Location
+                new Point(160, 30),     // Hover Hitbox ("Used to sense when mouse is over the button")
+                "Test Button",          // Text
+                bellMT24));             // Font
+        }
     }
 }

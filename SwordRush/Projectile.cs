@@ -15,6 +15,12 @@ namespace SwordRush
         private Vector2 direction;
         private int damage;
 
+        // --- Constructor --- //
+        public Projectile(Texture2D texture, Vector2 position, Point size) : base(texture, position, size)
+        {
+
+        }
+
         public void Draw(SpriteBatch sb)
         {
 

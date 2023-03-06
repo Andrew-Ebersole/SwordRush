@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace SwordRush
 {
@@ -14,12 +17,19 @@ namespace SwordRush
         Damaged
     }
 
-    internal class Enemy:GameObject
+    internal class Enemy : GameObject
     {
         private EnemyStateMachine enemyState;
         private int level;
         private int atk;
         private int health;
+
+        // --- Constructor --- //
+
+        public Enemy (Texture2D texture, Vector2 position, Point size) : base (texture, position, size)
+        {
+
+        }
 
         public void Damage()
         {
