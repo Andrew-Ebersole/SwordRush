@@ -30,11 +30,19 @@ namespace SwordRush
         private MouseState currentMouseState;
         private MouseState preMouseState;
 
-        public Rectangle Rectangle
+        public Vector2 Position
         {
             get
             {
-                return rectangle;
+                return position;
+            }
+        }
+
+        public Point Size
+        {
+            get
+            {
+                return size;
             }
         }
 
@@ -59,12 +67,11 @@ namespace SwordRush
             {
                 //calculate the direction
                 Vector2 difference = Vector2.Normalize(Vector2.Subtract(rectangle.Location.ToVector2(), currentMouseState.Position.ToVector2()));
-                Point direction = difference.ToPoint();
+                difference = new Vector2(-difference.X, -difference.Y);
                 Debug.WriteLine(difference);
 
                 //move the player's location 
-                rectangle = new Rectangle(rectangle.Location + direction,
-                    new Point(rectangle.Width,rectangle.Height));
+                position += difference *10;
             }
 
             preMouseState = currentMouseState;
