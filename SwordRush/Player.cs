@@ -77,7 +77,7 @@ namespace SwordRush
 
         public void Draw(SpriteBatch sb)
         {
-
+            
         }
 
         public void Update(GameTime gt)

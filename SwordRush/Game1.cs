@@ -15,7 +15,7 @@ namespace SwordRush
         private SpriteBatch _spriteBatch;
 
         // Textures
-
+        private Texture2D dungeontilesTexture2D;
         // Fonts
         SpriteFont bellMT24;
 
@@ -41,6 +41,7 @@ namespace SwordRush
 
             // Load Fonts
             bellMT24 = Content.Load<SpriteFont>("Bell_MT-24");
+            dungeontilesTexture2D = Content.Load<Texture2D>("DungeonTiles");
         }
 
         protected override void Update(GameTime gameTime)
@@ -64,6 +65,8 @@ namespace SwordRush
                 "Test",                 // Text
                 new Vector2(10, 10),    // Location
                 Color.White);           // Color
+
+            _spriteBatch.Draw(dungeontilesTexture2D,new Rectangle(0,0,50,100),new Rectangle(128,64,16,32),Color.White);
 
             _spriteBatch.End();
             base.Draw(gameTime);
