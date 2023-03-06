@@ -59,6 +59,7 @@ namespace SwordRush
             
         }
 
+        //move left and top not working
         public void playerControl()
         {
             currentMouseState = Mouse.GetState();
