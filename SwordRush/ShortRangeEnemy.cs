@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SwordRush
 {
-    internal class ShortRangeEnemy
+    internal class ShortRangeEnemy:Enemy
     {
     }
 }

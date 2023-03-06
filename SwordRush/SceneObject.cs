@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SwordRush
 {
-    internal class SceneObject
+    internal class SceneObject : GameObject
     {
     }
 }
