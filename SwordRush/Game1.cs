@@ -53,8 +53,6 @@ namespace SwordRush
                 _graphics.PreferredBackBufferWidth,
                 _graphics.PreferredBackBufferHeight);
 
-            // Temp Player
-            player = new Player(null, new Rectangle(10, 10, 10, 10));
             // TODO: Add your initialization logic here
             enemies = new List<Enemy>();
             player = new Player(null, new Rectangle(10,10,16,16));
@@ -70,7 +68,7 @@ namespace SwordRush
             bellMT24 = Content.Load<SpriteFont>("Bell_MT-24");
             dungeontilesTexture2D = Content.Load<Texture2D>("DungeonTiles");
             // UI Manager
-            uiManager = new UI(Content);
+            uiManager = new UI(Content, windowSize);
             // Game Manager
             gameManager = new GameManager(dungeontilesTexture2D);
 

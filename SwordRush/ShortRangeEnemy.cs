@@ -6,11 +6,12 @@ namespace SwordRush
 {
     internal class ShortRangeEnemy:Enemy
     {
+        Player player;
 
         // --- Constructor --- //
         public ShortRangeEnemy(Texture2D texture, Rectangle rectangle, Player player) : base(texture, rectangle, player)
         {
-
+            this.player = player;
         }
 
         public void initStat(int level)
