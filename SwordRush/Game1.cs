@@ -25,6 +25,8 @@ namespace SwordRush
         SpriteFont bellMT24;
         // UI Manager
         private UI uiManager;
+        //Game Manager
+        private GameManager gameManager;
 
 
         #endregion
@@ -54,6 +56,8 @@ namespace SwordRush
             dungeontilesTexture2D = Content.Load<Texture2D>("DungeonTiles");
             // UI Manager
             uiManager = new UI(Content);
+            // Game Manager
+            gameManager = new GameManager(dungeontilesTexture2D);
 
         }
 
@@ -82,6 +86,7 @@ namespace SwordRush
 
             _spriteBatch.Draw(dungeontilesTexture2D,player.Position,new Rectangle(128,64,16,32),Color.White);
             _spriteBatch.Draw(dungeontilesTexture2D, enemies[0].Position, new Rectangle(368, 80, 16, 16), Color.White);
+            gameManager.GenerateRoom(_spriteBatch);
             _spriteBatch.End();
             base.Draw(gameTime);
         }
