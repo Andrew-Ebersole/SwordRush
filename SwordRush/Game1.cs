@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 // Andrew, Bin, Weiji, Josh
-// Created March 6, 2023
+// Started March 6, 2023
 // Group Game "Sword Rush" for IGME 106 Class
 
 namespace SwordRush
@@ -36,7 +36,6 @@ namespace SwordRush
 
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
             player = new Player(null, new Vector2(0,0), new Point(0,0));
             base.Initialize();
         }
@@ -49,7 +48,7 @@ namespace SwordRush
             bellMT24 = Content.Load<SpriteFont>("Bell_MT-24");
             dungeontilesTexture2D = Content.Load<Texture2D>("DungeonTiles");
             // UI Manager
-            uiManager = new UI(Content);
+            uiManager = new UI(Content, _graphics);
 
         }
 
@@ -58,7 +57,6 @@ namespace SwordRush
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
             player.playerControl();
             uiManager.Update(gameTime);
 
@@ -67,7 +65,7 @@ namespace SwordRush
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(new Color(32,32,32));
             _spriteBatch.Begin();
 
             // Draw UI elements (Text, Menus, Icons)

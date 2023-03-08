@@ -42,6 +42,8 @@ namespace SwordRush
         // Buttons
         private List<TextButton> menuButtons;
 
+        // Window dimensions
+        private Rectangle window;
 
         // --- Properties --- //
 
@@ -51,13 +53,25 @@ namespace SwordRush
 
         // --- Constructor --- //
 
-        public UI(ContentManager content)
+        public UI(ContentManager content, GraphicsDeviceManager graphics)
         {
+            // State Machine
             gameFSM = GameFSM.Menu;
+
+            // Fonts
             bellMT24 = content.Load<SpriteFont>("Bell_MT-24");
+
+            // Creates all the buttons
             initalizeButtons();
+
+            // Controls Mouse
             currentMState = new MouseState();
             previousMState = new MouseState();
+
+            // Used for window height and width
+            window = new Rectangle(0,0,
+                graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
+
         }
 
 
@@ -127,9 +141,43 @@ namespace SwordRush
             menuButtons = new List<TextButton>();
 
             menuButtons.Add(new TextButton(
-                new Vector2(10, 10),    // Location
+                new Vector2(
+                window.Width * 0.1f,
+                window.Height * 0.3f),  // Location
                 new Point(160, 30),     // Hover Hitbox ("Used to sense when mouse is over the button")
-                "Test Button",          // Text
+                "Start Game",           // Text
+                bellMT24));             // Font
+
+            menuButtons.Add(new TextButton(
+                new Vector2(
+                window.Width * 0.1f,
+                window.Height * 0.42f),    // Location
+                new Point(200, 30),     // Hover Hitbox ("Used to sense when mouse is over the button")
+                "Instructions",         // Text
+                bellMT24));             // Font
+
+            menuButtons.Add(new TextButton(
+                new Vector2(
+                window.Width * 0.1f,
+                window.Height * 0.54f),    // Location
+                new Point(120, 30),     // Hover Hitbox ("Used to sense when mouse is over the button")
+                "Credits",              // Text
+                bellMT24));             // Font
+
+            menuButtons.Add(new TextButton(
+                new Vector2(
+                window.Width * 0.1f,
+                window.Height * 0.66f),    // Location
+                new Point(180, 30),     // Hover Hitbox ("Used to sense when mouse is over the button")
+                "High Scores",          // Text
+                bellMT24));             // Font
+
+            menuButtons.Add(new TextButton(
+                new Vector2(
+                window.Width * 0.1f,
+                window.Height * 0.78f),    // Location
+                new Point(140, 30),     // Hover Hitbox ("Used to sense when mouse is over the button")
+                "Settings",             // Text
                 bellMT24));             // Font
         }
     }

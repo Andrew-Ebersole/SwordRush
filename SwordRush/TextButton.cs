@@ -27,7 +27,7 @@ namespace SwordRush
             : base(null, position, size)
         {
             this.text = text;
-            color = Color.Black;
+            color = Color.LightGray;
             this.font = font;
             currentMState = new MouseState();
             previousMState = new MouseState();
@@ -43,7 +43,7 @@ namespace SwordRush
                 color = Color.DarkGoldenrod;
             } else
             {
-                color = Color.Black;
+                color = Color.LightGray;
             }
 
 
