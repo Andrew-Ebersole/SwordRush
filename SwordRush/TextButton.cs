@@ -20,17 +20,28 @@ namespace SwordRush
         private SpriteFont font;
         private MouseState currentMState;
         private MouseState previousMState;
+        private bool leftClicked;
+
+        // --- Properties --- //
+
+        /// <summary>
+        /// Returns if the button was left clicked or not
+        /// </summary>
+        public bool LeftClicked { get { return leftClicked; } }
+
+
 
         // --- Constructor --- //
 
-        public TextButton(Vector2 position, Point size, string text, SpriteFont font) 
-            : base(null, position, size)
+        public TextButton(Rectangle rectangle, string text, SpriteFont font) 
+            : base(null, rectangle)
         {
             this.text = text;
             color = Color.LightGray;
             this.font = font;
             currentMState = new MouseState();
             previousMState = new MouseState();
+            leftClicked = false;
         }
 
         public override void Update(GameTime gt)
@@ -46,6 +57,16 @@ namespace SwordRush
                 color = Color.LightGray;
             }
 
+            // When the button is clicked sets leftClicked to true
+            if (color == Color.DarkGoldenrod
+                && currentMState.LeftButton == ButtonState.Pressed
+                && previousMState.LeftButton == ButtonState.Released)
+            {
+                leftClicked = true;
+            } else
+            {
+                leftClicked = false;
+            }
 
             previousMState = Mouse.GetState();
         }
@@ -55,19 +76,8 @@ namespace SwordRush
             sb.DrawString(
                 font,
                 text,
-                position,
+                new Vector2(rectangle.X,rectangle.Y),
                 color);
-        }
-
-        public bool IsClicked()
-        {
-            if (color == Color.DarkGoldenrod
-                && currentMState.LeftButton == ButtonState.Pressed
-                && currentMState.RightButton == ButtonState.Released)
-            {
-                return true;
-            }
-            return false;
         }
     }
 }

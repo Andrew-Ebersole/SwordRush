@@ -24,6 +24,8 @@ namespace SwordRush
         // UI Manager
         private UI uiManager;
 
+        // window
+        Point windowSize;
 
         #endregion
 
@@ -32,11 +34,23 @@ namespace SwordRush
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+
+            // Change window size
+            _graphics.PreferredBackBufferWidth = 1280;
+            _graphics.PreferredBackBufferHeight = 720;
+            _graphics.ApplyChanges();
         }
 
         protected override void Initialize()
         {
-            player = new Player(null, new Vector2(0,0), new Point(0,0));
+
+            // Window Size
+            windowSize = new Point(
+                _graphics.PreferredBackBufferWidth,
+                _graphics.PreferredBackBufferHeight);
+
+            // Temp Player
+            player = new Player(null, new Rectangle(10, 10, 10, 10));
             base.Initialize();
         }
 
@@ -48,7 +62,7 @@ namespace SwordRush
             bellMT24 = Content.Load<SpriteFont>("Bell_MT-24");
             dungeontilesTexture2D = Content.Load<Texture2D>("DungeonTiles");
             // UI Manager
-            uiManager = new UI(Content, _graphics);
+            uiManager = new UI(Content, windowSize);
 
         }
 

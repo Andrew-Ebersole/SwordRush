@@ -30,14 +30,6 @@ namespace SwordRush
         private MouseState currentMouseState;
         private MouseState preMouseState;
 
-        public Vector2 Position
-        {
-            get
-            {
-                return position;
-            }
-        }
-
         public Point Size
         {
             get
@@ -45,10 +37,10 @@ namespace SwordRush
                 return size;
             }
         }
-
+         
         // --- Constructor --- //
 
-        public Player(Texture2D texture, Vector2 position, Point size) : base(texture, position, size)
+        public Player(Texture2D texture, Rectangle rectangle) : base(texture, rectangle)
         {
             exp = 0;
             level = 1;
@@ -68,13 +60,14 @@ namespace SwordRush
             if (currentMouseState.LeftButton == ButtonState.Pressed && 
                 preMouseState.LeftButton == ButtonState.Released)
             {
-                //calculate the direction
-                Vector2 difference = Vector2.Normalize(Vector2.Subtract(rectangle.Location.ToVector2(), currentMouseState.Position.ToVector2()));
-                difference = new Vector2(-difference.X, -difference.Y);
-                Debug.WriteLine(difference);
+                Vector2 rectangleCenter = new Vector2(rectangle.X + rectangle.Width / 2, rectangle.Y + rectangle.Height / 2);
 
+                //calculate the direction
+                Vector2 difference = GetDirection();
+               
                 //move the player's location 
-                position += difference *10;
+                position -= difference *10;
+                
             }
 
             preMouseState = currentMouseState;
@@ -87,7 +80,7 @@ namespace SwordRush
 
         public Vector2 GetDirection()
         {
-            return new Vector2();
+            return Vector2.Normalize(position - currentMouseState.Position.ToVector2()); ;
         }
 
         public void Damage()

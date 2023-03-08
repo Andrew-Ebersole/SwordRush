@@ -33,7 +33,8 @@ namespace SwordRush
         private GameFSM gameFSM;
 
         // Fonts
-        private SpriteFont bellMT24;
+        private SpriteFont bellMT48;
+        private SpriteFont bellMT72;
 
         // Mouse State
         private MouseState currentMState;
@@ -45,6 +46,9 @@ namespace SwordRush
         // Window dimensions
         private Rectangle window;
 
+        // Textures
+        private Texture2D menuImageTexture;
+
         // --- Properties --- //
 
         public GameFSM GameFSM { get { return gameFSM; } }
@@ -53,25 +57,28 @@ namespace SwordRush
 
         // --- Constructor --- //
 
-        public UI(ContentManager content, GraphicsDeviceManager graphics)
+        public UI(ContentManager content, Point windowSize)
         {
             // State Machine
             gameFSM = GameFSM.Menu;
 
             // Fonts
-            bellMT24 = content.Load<SpriteFont>("Bell_MT-24");
+            bellMT48 = content.Load<SpriteFont>("Bell_MT-48");
+            bellMT72 = content.Load<SpriteFont>("Bell_MT-72");
 
-            // Creates all the buttons
-            initalizeButtons();
+            // Textures
+            menuImageTexture = content.Load<Texture2D>("DungeonTiles");
 
             // Controls Mouse
             currentMState = new MouseState();
             previousMState = new MouseState();
 
             // Used for window height and width
-            window = new Rectangle(0,0,
-                graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
+            this.window = new Rectangle(0,0,
+                windowSize.X, windowSize.Y);
 
+            // Creates all the buttons
+            initalizeButtons();
         }
 
 
@@ -99,12 +106,38 @@ namespace SwordRush
                     }
 
                     // changes states when clicked
-                    if (menuButtons[0].IsClicked())
+                    if (menuButtons[0].LeftClicked)
+                    {
+                        gameFSM = GameFSM.Game;
+                    }
+                    if (menuButtons[1].LeftClicked)
                     {
                         gameFSM = GameFSM.Instructions;
                     }
+                    if (menuButtons[2].LeftClicked)
+                    {
+                        gameFSM = GameFSM.Credits;
+                    }
+                    if (menuButtons[3].LeftClicked)
+                    {
+                        gameFSM = GameFSM.HighScores;
+                    }
+                    if (menuButtons[4].LeftClicked)
+                    {
+                        gameFSM = GameFSM.Settings;
+                    }
                     break;
-                case GameFSM.Instructions:
+                case GameFSM.Game:
+                    // Temporarily when in game right click will bring you out
+                    if (currentMState.RightButton == ButtonState.Pressed
+                        && previousMState.RightButton == ButtonState.Released)
+                    {
+                        gameFSM = GameFSM.Menu;
+                    }
+                    break;
+
+                default:
+                    // In any state that is not game left click will bring you back to menu
                     if (currentMState.LeftButton == ButtonState.Pressed
                         && previousMState.LeftButton == ButtonState.Released)
                     {
@@ -113,7 +146,7 @@ namespace SwordRush
                     break;
             }
 
-            previousMState = currentMState;
+            previousMState = Mouse.GetState();
         }
 
         public void Draw(SpriteBatch sb)
@@ -122,10 +155,23 @@ namespace SwordRush
             switch (gameFSM)
             {
                 case GameFSM.Menu:
+
+                    // Draw Title
+                    sb.DrawString(
+                        bellMT72,                           // Font
+                        "SWORD RUSH",                       // Text
+                        new Vector2((window.Width * 0.10f), // X Pos
+                        (window.Height * 0.10f)),           // Y Pos
+                        Color.Goldenrod);                   // Color
+
+                    // Draw all Buttons
                     foreach (TextButton b in menuButtons)
                     {
                         b.Draw(sb);
                     }
+
+                    // Draw Image
+                    
                     break;
 
                 case GameFSM.Game:
@@ -138,47 +184,39 @@ namespace SwordRush
 
         private void initalizeButtons()
         {
+
+            // --- Menu Buttons -----------------------------------------------------------------//
             menuButtons = new List<TextButton>();
 
-            menuButtons.Add(new TextButton(
-                new Vector2(
-                window.Width * 0.1f,
-                window.Height * 0.3f),  // Location
-                new Point(160, 30),     // Hover Hitbox ("Used to sense when mouse is over the button")
-                "Start Game",           // Text
-                bellMT24));             // Font
+            menuButtons.Add(new TextButton(new Rectangle(
+                (int)(window.Width * 0.10f), (int)(window.Height * 0.30f),  // Location
+                (int)(window.Width * 0.23f), (int)(window.Height * 0.09f)), // Hitbox
+                "Start Game",                                               // Text
+                bellMT48));                                                 // Font
 
-            menuButtons.Add(new TextButton(
-                new Vector2(
-                window.Width * 0.1f,
-                window.Height * 0.42f),    // Location
-                new Point(200, 30),     // Hover Hitbox ("Used to sense when mouse is over the button")
-                "Instructions",         // Text
-                bellMT24));             // Font
+            menuButtons.Add(new TextButton(new Rectangle(
+                (int)(window.Width * 0.10f), (int)(window.Height * 0.42f),  // Location
+                (int)(window.Width * 0.25f), (int)(window.Height * 0.09f)), // Hitbox
+                "Instructions",                                             // Text
+                bellMT48));                                                 // Font
 
-            menuButtons.Add(new TextButton(
-                new Vector2(
-                window.Width * 0.1f,
-                window.Height * 0.54f),    // Location
-                new Point(120, 30),     // Hover Hitbox ("Used to sense when mouse is over the button")
-                "Credits",              // Text
-                bellMT24));             // Font
+            menuButtons.Add(new TextButton(new Rectangle(
+                (int)(window.Width * 0.10f), (int)(window.Height * 0.54f),  // Location
+                (int)(window.Width * 0.15f), (int)(window.Height * 0.09f)), // Hitbox
+                "Credits",                                                  // Text
+                bellMT48));                                                 // Font
 
-            menuButtons.Add(new TextButton(
-                new Vector2(
-                window.Width * 0.1f,
-                window.Height * 0.66f),    // Location
-                new Point(180, 30),     // Hover Hitbox ("Used to sense when mouse is over the button")
-                "High Scores",          // Text
-                bellMT24));             // Font
+            menuButtons.Add(new TextButton(new Rectangle(
+                (int)(window.Width * 0.10f), (int)(window.Height * 0.66f),  // Location
+                (int)(window.Width * 0.25f), (int)(window.Height * 0.09f)), // Hitbox
+                "High Scores",                                              // Text
+                bellMT48));                                                 // Font
 
-            menuButtons.Add(new TextButton(
-                new Vector2(
-                window.Width * 0.1f,
-                window.Height * 0.78f),    // Location
-                new Point(140, 30),     // Hover Hitbox ("Used to sense when mouse is over the button")
-                "Settings",             // Text
-                bellMT24));             // Font
+            menuButtons.Add(new TextButton(new Rectangle(
+                (int)(window.Width * 0.10f), (int)(window.Height * 0.78),  // Location
+                (int)(window.Width * 0.25f), (int)(window.Height * 0.09f)), // Hitbox
+                "Instructions",                                             // Text
+                bellMT48));                                                 // Font
         }
     }
 }
