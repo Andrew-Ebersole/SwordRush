@@ -27,6 +27,7 @@ namespace SwordRush
         private float atkSpd;
         private float range;
         private GameObject sword;
+        private float distance;
         private MouseState currentMouseState;
         private MouseState preMouseState;
 
@@ -47,26 +48,24 @@ namespace SwordRush
             atk = 1;
             health = 10;
             atkSpd = 1;
+            distance = 1;
             range = 1;
             currentMouseState = Mouse.GetState();
             preMouseState = Mouse.GetState();
             
         }
 
-        //move left and top not working
+        /// <summary>
+        /// move the player toward the mouse cursor when left clicked
+        /// </summary>
         public void playerControl()
         {
             currentMouseState = Mouse.GetState();
             if (currentMouseState.LeftButton == ButtonState.Pressed && 
                 preMouseState.LeftButton == ButtonState.Released)
             {
-                Vector2 rectangleCenter = new Vector2(rectangle.X + rectangle.Width / 2, rectangle.Y + rectangle.Height / 2);
-
-                //calculate the direction
-                Vector2 difference = GetDirection();
-               
-                //move the player's location 
-                position -= difference *10;
+                //move the player's location
+                position -= GetDirection() * 25 * distance;
                 
             }
 
@@ -78,6 +77,10 @@ namespace SwordRush
 
         }
 
+        /// <summary>
+        /// Calculate the direction vector between the player and the cursor
+        /// </summary>
+        /// <returns>the direction vector</returns>
         public Vector2 GetDirection()
         {
             return Vector2.Normalize(position - currentMouseState.Position.ToVector2()); ;
