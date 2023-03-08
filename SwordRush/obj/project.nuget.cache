@@ -1,11 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "2sZu/XjbxFODqN3F9N5EYVnPYf4hCYNFJVemBiy79A+22BIGaKlD74uUKbNkjTR0QvC1Ye73Q5nqk9m61YhSsw==",
+  "dgSpecHash": "MWEed7dPpYAHTQ2e2XvZVgCB8ZsKCUE0XRHlvY5NCPktq+aC2dTuPBgGfBSHSq7Znjusmxt+SNEG/y2zGhaoeg==",
   "success": true,
-  "projectFilePath": "E:\\RIT\\IGME106-SwordRush\\SwordRush\\SwordRush.csproj",
+  "projectFilePath": "D:\\Profiles\\wy8933\\Source\\Repos\\SwordRush\\SwordRush\\SwordRush.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\82799\\.nuget\\packages\\monogame.content.builder.task\\3.8.1.303\\monogame.content.builder.task.3.8.1.303.nupkg.sha512",
-    "C:\\Users\\82799\\.nuget\\packages\\monogame.framework.desktopgl\\3.8.1.303\\monogame.framework.desktopgl.3.8.1.303.nupkg.sha512"
+    "D:\\Profiles\\wy8933\\.nuget\\packages\\monogame.content.builder.task\\3.8.1.303\\monogame.content.builder.task.3.8.1.303.nupkg.sha512",
+    "D:\\Profiles\\wy8933\\.nuget\\packages\\monogame.framework.desktopgl\\3.8.1.303\\monogame.framework.desktopgl.3.8.1.303.nupkg.sha512"
   ],
   "logs": []
 }

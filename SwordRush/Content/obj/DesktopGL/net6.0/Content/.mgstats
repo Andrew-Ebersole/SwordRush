@@ -1,4 +1,4 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
-"E:/RIT/IGME106-SwordRush/SwordRush/Content/AbilityIcons.png","E:/RIT/IGME106-SwordRush/SwordRush/Content/bin/DesktopGL/Content/AbilityIcons.xnb","TextureProcessor","Texture2DContent",41059,589909,0.2979553
-"E:/RIT/IGME106-SwordRush/SwordRush/Content/Bell_MT-24.spritefont","E:/RIT/IGME106-SwordRush/SwordRush/Content/bin/DesktopGL/Content/Bell_MT-24.xnb","FontDescriptionProcessor","SpriteFontContent",2070,70687,0.2102306
-"E:/RIT/IGME106-SwordRush/SwordRush/Content/DungeonTiles.png","E:/RIT/IGME106-SwordRush/SwordRush/Content/bin/DesktopGL/Content/DungeonTiles.xnb","TextureProcessor","Texture2DContent",35688,1048661,0.0655127
+"D:/Profiles/wy8933/Source/Repos/SwordRush/SwordRush/Content/AbilityIcons.png","D:/Profiles/wy8933/Source/Repos/SwordRush/SwordRush/Content/bin/DesktopGL/Content/AbilityIcons.xnb","TextureProcessor","Texture2DContent",41059,589909,0.2464243
+"D:/Profiles/wy8933/Source/Repos/SwordRush/SwordRush/Content/Bell_MT-24.spritefont","D:/Profiles/wy8933/Source/Repos/SwordRush/SwordRush/Content/bin/DesktopGL/Content/Bell_MT-24.xnb","FontDescriptionProcessor","SpriteFontContent",2070,70687,0.1627124
+"D:/Profiles/wy8933/Source/Repos/SwordRush/SwordRush/Content/DungeonTiles.png","D:/Profiles/wy8933/Source/Repos/SwordRush/SwordRush/Content/bin/DesktopGL/Content/DungeonTiles.xnb","TextureProcessor","Texture2DContent",35688,1048661,0.0378453

@@ -27,16 +27,9 @@ namespace SwordRush
         private float atkSpd;
         private float range;
         private GameObject sword;
+        private float distance;
         private MouseState currentMouseState;
         private MouseState preMouseState;
-
-        public Vector2 Position
-        {
-            get
-            {
-                return position;
-            }
-        }
 
         public Point Size
         {
@@ -45,34 +38,35 @@ namespace SwordRush
                 return size;
             }
         }
+         
+        // --- Constructor --- //
 
-        public Player()
+        public Player(Texture2D texture, Rectangle rectangle) : base(texture, rectangle)
         {
             exp = 0;
             level = 1;
             atk = 1;
             health = 10;
             atkSpd = 1;
+            distance = 1;
             range = 1;
             currentMouseState = Mouse.GetState();
             preMouseState = Mouse.GetState();
             
         }
 
-        //move left and top not working
+        /// <summary>
+        /// move the player toward the mouse cursor when left clicked
+        /// </summary>
         public void playerControl()
         {
             currentMouseState = Mouse.GetState();
             if (currentMouseState.LeftButton == ButtonState.Pressed && 
                 preMouseState.LeftButton == ButtonState.Released)
             {
-                //calculate the direction
-                Vector2 difference = Vector2.Normalize(Vector2.Subtract(rectangle.Location.ToVector2(), currentMouseState.Position.ToVector2()));
-                difference = new Vector2(-difference.X, -difference.Y);
-                Debug.WriteLine(difference);
-
-                //move the player's location 
-                position += difference *10;
+                //move the player's location
+                position -= GetDirection() * 25 * distance;
+                
             }
 
             preMouseState = currentMouseState;
@@ -83,9 +77,13 @@ namespace SwordRush
 
         }
 
+        /// <summary>
+        /// Calculate the direction vector between the player and the cursor
+        /// </summary>
+        /// <returns>the direction vector</returns>
         public Vector2 GetDirection()
         {
-            return new Vector2();
+            return Vector2.Normalize(position - currentMouseState.Position.ToVector2()); ;
         }
 
         public void Damage()

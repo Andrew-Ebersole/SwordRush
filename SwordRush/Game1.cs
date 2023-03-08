@@ -8,6 +8,8 @@ using Microsoft.Xna.Framework.Input;
 
 namespace SwordRush
 {
+    
+
     public class Game1 : Game
     {
         #region fields
@@ -19,6 +21,9 @@ namespace SwordRush
         private Texture2D dungeontilesTexture2D;
         // Fonts
         SpriteFont bellMT24;
+        // UI Manager
+        private UI uiManager;
+
 
         #endregion
 
@@ -32,7 +37,7 @@ namespace SwordRush
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            player = new Player();
+            player = new Player(null, new Rectangle(10,10,10,10));
             base.Initialize();
         }
 
@@ -43,6 +48,9 @@ namespace SwordRush
             // Load Fonts
             bellMT24 = Content.Load<SpriteFont>("Bell_MT-24");
             dungeontilesTexture2D = Content.Load<Texture2D>("DungeonTiles");
+            // UI Manager
+            uiManager = new UI(Content);
+
         }
 
         protected override void Update(GameTime gameTime)
@@ -52,6 +60,8 @@ namespace SwordRush
 
             // TODO: Add your update logic here
             player.playerControl();
+            uiManager.Update(gameTime);
+
             base.Update(gameTime);
         }
 
@@ -60,17 +70,14 @@ namespace SwordRush
             GraphicsDevice.Clear(Color.CornflowerBlue);
             _spriteBatch.Begin();
 
-            // Testing font
-            _spriteBatch.DrawString(
-                bellMT24,               // Font
-                "Test",                 // Text
-                new Vector2(10, 10),    // Location
-                Color.White);           // Color
+            // Draw UI elements (Text, Menus, Icons)
+            uiManager.Draw(_spriteBatch);
 
             _spriteBatch.Draw(dungeontilesTexture2D,player.Position,new Rectangle(128,64,16,32),Color.White);
 
             _spriteBatch.End();
             base.Draw(gameTime);
         }
+
     }
 }

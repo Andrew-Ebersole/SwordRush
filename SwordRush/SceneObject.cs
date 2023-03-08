@@ -12,6 +12,13 @@ namespace SwordRush
     {
         private bool wall;
 
+        // --- Constructor --- //
+
+        public SceneObject(Texture2D texture, Rectangle rectangle) : base(texture, rectangle)
+        {
+
+        }
+
         public void Draw(SpriteBatch sb)
         {
 

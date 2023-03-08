@@ -14,20 +14,46 @@ namespace SwordRush
 {
     internal class GameObject
     {
-        private Texture2D texture;
+        protected Texture2D texture;
         protected Rectangle rectangle;
-        private SoundEffect sound;
+        protected SoundEffect sound;
         protected Vector2 position;
         protected Point size;
 
-        public void Draw(SpriteBatch sb)
+        public Vector2 Position
+        {
+            get
+            {
+                return position;
+            }
+
+            protected set 
+            {
+                position = value;
+                rectangle = new Rectangle((int)(position.X - rectangle.Width / 2), (int)(position.Y - rectangle.Height / 2), size.X,size.Y);
+            }
+        }
+
+        public GameObject (Texture2D texture, Rectangle rectangle)
+        {
+            this.texture = texture;
+            this.rectangle = rectangle;
+            this.position = new Vector2(rectangle.X + rectangle.Width / 2, rectangle.Y + rectangle.Height / 2);
+            this.size = rectangle.Size;
+        }
+
+        public virtual void Update(GameTime gt)
         {
 
         }
 
-        public void Update(GameTime gt)
+        public virtual void Draw(SpriteBatch sb)
         {
-
+            sb.Draw(
+                texture,
+                rectangle,
+                Microsoft.Xna.Framework.Color.White);
         }
+
     }
 }
