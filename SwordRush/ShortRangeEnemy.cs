@@ -1,10 +1,6 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using System.Diagnostics;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SwordRush
 {
@@ -12,7 +8,7 @@ namespace SwordRush
     {
 
         // --- Constructor --- //
-        public ShortRangeEnemy(Texture2D texture, Rectangle rectangle) : base(texture, rectangle)
+        public ShortRangeEnemy(Texture2D texture, Rectangle rectangle, Player player) : base(texture, rectangle, player)
         {
 
         }
@@ -24,7 +20,13 @@ namespace SwordRush
 
         public void AI()
         {
+            Vector2 distance = position - player.Position;
+            if (distance.Length() < 100 && distance.Length()>1)
+            {
+                Vector2 direction = Vector2.Normalize(distance);
 
+                position -= direction * 1;
+            }
         }
 
         public void Draw(SpriteBatch sb)
@@ -32,9 +34,9 @@ namespace SwordRush
 
         }
 
-        public void Update(GameTime gt)
+        public override void Update(GameTime gt)
         {
-
+            AI();
         }
     }
 }
