@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "Z:\\IGMProfile\\Documents\\GIT-Repos\\SwordRush\\SwordRush\\SwordRush.csproj": {}
+    "D:\\Profiles\\wy8933\\source\\repos\\SwordRush\\SwordRush\\SwordRush.csproj": {}
   },
   "projects": {
-    "Z:\\IGMProfile\\Documents\\GIT-Repos\\SwordRush\\SwordRush\\SwordRush.csproj": {
+    "D:\\Profiles\\wy8933\\source\\repos\\SwordRush\\SwordRush\\SwordRush.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "Z:\\IGMProfile\\Documents\\GIT-Repos\\SwordRush\\SwordRush\\SwordRush.csproj",
+        "projectUniqueName": "D:\\Profiles\\wy8933\\source\\repos\\SwordRush\\SwordRush\\SwordRush.csproj",
         "projectName": "SwordRush",
-        "projectPath": "Z:\\IGMProfile\\Documents\\GIT-Repos\\SwordRush\\SwordRush\\SwordRush.csproj",
-        "packagesPath": "D:\\Profiles\\ane5279\\.nuget\\packages\\",
-        "outputPath": "Z:\\IGMProfile\\Documents\\GIT-Repos\\SwordRush\\SwordRush\\obj\\",
+        "projectPath": "D:\\Profiles\\wy8933\\source\\repos\\SwordRush\\SwordRush\\SwordRush.csproj",
+        "packagesPath": "D:\\Profiles\\wy8933\\.nuget\\packages\\",
+        "outputPath": "D:\\Profiles\\wy8933\\source\\repos\\SwordRush\\SwordRush\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "Z:\\IGMProfile\\AppData\\NuGet\\NuGet.Config",

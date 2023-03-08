@@ -38,6 +38,10 @@ namespace SwordRush
                 return size;
             }
         }
+        public Rectangle Rectangle {
+
+            get { return rectangle; }
+        }
          
         // --- Constructor --- //
 
@@ -65,7 +69,7 @@ namespace SwordRush
                 preMouseState.LeftButton == ButtonState.Released)
             {
                 //move the player's location
-                position -= GetDirection() * 25 * distance;
+                Position -= GetDirection() * 25 * distance;
                 
             }
 

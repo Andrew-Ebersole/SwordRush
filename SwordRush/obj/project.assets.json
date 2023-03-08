@@ -102,16 +102,16 @@
     ]
   },
   "packageFolders": {
-    "D:\\Profiles\\ane5279\\.nuget\\packages\\": {}
+    "D:\\Profiles\\wy8933\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "Z:\\IGMProfile\\Documents\\GIT-Repos\\SwordRush\\SwordRush\\SwordRush.csproj",
+      "projectUniqueName": "D:\\Profiles\\wy8933\\source\\repos\\SwordRush\\SwordRush\\SwordRush.csproj",
       "projectName": "SwordRush",
-      "projectPath": "Z:\\IGMProfile\\Documents\\GIT-Repos\\SwordRush\\SwordRush\\SwordRush.csproj",
-      "packagesPath": "D:\\Profiles\\ane5279\\.nuget\\packages\\",
-      "outputPath": "Z:\\IGMProfile\\Documents\\GIT-Repos\\SwordRush\\SwordRush\\obj\\",
+      "projectPath": "D:\\Profiles\\wy8933\\source\\repos\\SwordRush\\SwordRush\\SwordRush.csproj",
+      "packagesPath": "D:\\Profiles\\wy8933\\.nuget\\packages\\",
+      "outputPath": "D:\\Profiles\\wy8933\\source\\repos\\SwordRush\\SwordRush\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "Z:\\IGMProfile\\AppData\\NuGet\\NuGet.Config",
@@ -167,13 +167,5 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.302\\RuntimeIdentifierGraph.json"
       }
     }
-  },
-  "logs": [
-    {
-      "code": "Undefined",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Problem reading the cache file Z:\\IGMProfile\\Documents\\GIT-Repos\\SwordRush\\SwordRush\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
-    }
-  ]
+  }
 }
