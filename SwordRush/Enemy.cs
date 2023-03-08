@@ -35,5 +35,8 @@ namespace SwordRush
         {
 
         }
+
+        public void Updata(GameTime gt) { 
+        }
     }
 }
