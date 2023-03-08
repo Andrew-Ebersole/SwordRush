@@ -37,7 +37,7 @@ namespace SwordRush
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            player = new Player(null, new Vector2(0,0), new Point(0,0));
+            player = new Player(null, new Rectangle(10,10,10,10));
             base.Initialize();
         }
 

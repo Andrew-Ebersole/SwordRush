@@ -127,8 +127,7 @@ namespace SwordRush
             menuButtons = new List<TextButton>();
 
             menuButtons.Add(new TextButton(
-                new Vector2(10, 10),    // Location
-                new Point(160, 30),     // Hover Hitbox ("Used to sense when mouse is over the button")
+                new Rectangle(10,10,160,30),     // Hover Hitbox ("Used to sense when mouse is over the button")
                 "Test Button",          // Text
                 bellMT24));             // Font
         }

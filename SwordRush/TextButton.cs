@@ -23,8 +23,8 @@ namespace SwordRush
 
         // --- Constructor --- //
 
-        public TextButton(Vector2 position, Point size, string text, SpriteFont font) 
-            : base(null, position, size)
+        public TextButton(Rectangle rectangle, string text, SpriteFont font) 
+            : base(null, rectangle)
         {
             this.text = text;
             color = Color.Black;
