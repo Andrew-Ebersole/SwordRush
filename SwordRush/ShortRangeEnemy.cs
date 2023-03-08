@@ -27,7 +27,7 @@ namespace SwordRush
                 Debug.WriteLine(player.Position+":"+player.Rectangle);
                 Vector2 direction = Vector2.Normalize(distance);
 
-                position -= direction * 1;
+                Position -= direction * 1;
             }
         }
 

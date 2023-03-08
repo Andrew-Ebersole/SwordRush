@@ -55,7 +55,7 @@ namespace SwordRush
 
             // TODO: Add your initialization logic here
             enemies = new List<Enemy>();
-            player = new Player(null, new Rectangle(10,10,16,16));
+            player = new Player(null, new Rectangle(10,10,16,32));
             enemies.Add(new ShortRangeEnemy(null,new Rectangle(10,10,16,16),player));
             base.Initialize();
         }
@@ -96,8 +96,8 @@ namespace SwordRush
             // Draw UI elements (Text, Menus, Icons)
             uiManager.Draw(_spriteBatch);
 
-            _spriteBatch.Draw(dungeontilesTexture2D,player.Position,new Rectangle(128,64,16,32),Color.White);
-            _spriteBatch.Draw(dungeontilesTexture2D, enemies[0].Position, new Rectangle(368, 80, 16, 16), Color.White);
+            _spriteBatch.Draw(dungeontilesTexture2D,player.Rectangle,new Rectangle(128,64,16,32),Color.White);
+            _spriteBatch.Draw(dungeontilesTexture2D, enemies[0].Rectangle, new Rectangle(368, 80, 16, 16), Color.White);
             gameManager.GenerateRoom(_spriteBatch);
             _spriteBatch.End();
             base.Draw(gameTime);

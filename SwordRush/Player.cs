@@ -38,10 +38,7 @@ namespace SwordRush
                 return size;
             }
         }
-        public Rectangle Rectangle {
-
-            get { return rectangle; }
-        }
+        
          
         // --- Constructor --- //
 

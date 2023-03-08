@@ -20,6 +20,11 @@ namespace SwordRush
         protected Vector2 position;
         protected Point size;
 
+        public Rectangle Rectangle
+        {
+
+            get { return rectangle; }
+        }
         public Vector2 Position
         {
             get
