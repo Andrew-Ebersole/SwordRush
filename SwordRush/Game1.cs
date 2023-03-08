@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -16,7 +18,7 @@ namespace SwordRush
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private Player player;
-
+        private List<Enemy> enemies;
         // Textures
         private Texture2D dungeontilesTexture2D;
         // Fonts
@@ -37,7 +39,9 @@ namespace SwordRush
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            player = new Player(null, new Rectangle(10,10,10,10));
+            enemies = new List<Enemy>();
+            player = new Player(null, new Rectangle(10,10,16,16));
+            enemies.Add(new ShortRangeEnemy(null,new Rectangle(10,10,16,16),player));
             base.Initialize();
         }
 
@@ -60,6 +64,9 @@ namespace SwordRush
 
             // TODO: Add your update logic here
             player.playerControl();
+            foreach(Enemy enemy in enemies){
+                enemy.Update(gameTime);
+            }
             uiManager.Update(gameTime);
 
             base.Update(gameTime);
@@ -74,7 +81,7 @@ namespace SwordRush
             uiManager.Draw(_spriteBatch);
 
             _spriteBatch.Draw(dungeontilesTexture2D,player.Position,new Rectangle(128,64,16,32),Color.White);
-
+            _spriteBatch.Draw(dungeontilesTexture2D, enemies[0].Position, new Rectangle(368, 80, 16, 16), Color.White);
             _spriteBatch.End();
             base.Draw(gameTime);
         }
