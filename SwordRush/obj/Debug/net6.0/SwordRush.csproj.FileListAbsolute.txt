@@ -86,3 +86,8 @@ Z:\IGMProfile\Documents\GIT-Repos\SwordRush\SwordRush\bin\Debug\net6.0\Content\B
 Z:\IGMProfile\Documents\GIT-Repos\SwordRush\SwordRush\bin\Debug\net6.0\Content\Bell_MT-72.xnb
 D:\Profiles\wy8933\source\repos\SwordRush\SwordRush\bin\Debug\net6.0\Content\Bell_MT-48.xnb
 D:\Profiles\wy8933\source\repos\SwordRush\SwordRush\bin\Debug\net6.0\Content\Bell_MT-72.xnb
+Z:\IGMProfile\Documents\GIT-Repos\SwordRush\SwordRush\bin\Debug\net6.0\Content\empty_bar.xnb
+Z:\IGMProfile\Documents\GIT-Repos\SwordRush\SwordRush\bin\Debug\net6.0\Content\energy_bar.xnb
+Z:\IGMProfile\Documents\GIT-Repos\SwordRush\SwordRush\bin\Debug\net6.0\Content\health_bar.xnb
+Z:\IGMProfile\Documents\GIT-Repos\SwordRush\SwordRush\bin\Debug\net6.0\Content\magic_bar.xnb
+Z:\IGMProfile\Documents\GIT-Repos\SwordRush\SwordRush\bin\Debug\net6.0\Content\shield_bar.xnb

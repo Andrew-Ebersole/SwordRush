@@ -101,7 +101,7 @@ namespace SwordRush
         {
             currentMState = Mouse.GetState();
 
-            // Testing Menu Text
+            // Loads the 
             switch (gameFSM)
             {
                 case GameFSM.Menu:
