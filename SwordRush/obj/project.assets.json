@@ -102,16 +102,16 @@
     ]
   },
   "packageFolders": {
-    "D:\\Profiles\\ane5279\\.nuget\\packages\\": {}
+    "D:\\Profiles\\jkl7075\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "Z:\\IGMProfile\\Documents\\GIT-Repos\\SwordRush\\SwordRush\\SwordRush.csproj",
+      "projectUniqueName": "Z:\\IGMProfile\\Desktop\\Sword Rush Repo\\SwordRush\\SwordRush.csproj",
       "projectName": "SwordRush",
-      "projectPath": "Z:\\IGMProfile\\Documents\\GIT-Repos\\SwordRush\\SwordRush\\SwordRush.csproj",
-      "packagesPath": "D:\\Profiles\\ane5279\\.nuget\\packages\\",
-      "outputPath": "Z:\\IGMProfile\\Documents\\GIT-Repos\\SwordRush\\SwordRush\\obj\\",
+      "projectPath": "Z:\\IGMProfile\\Desktop\\Sword Rush Repo\\SwordRush\\SwordRush.csproj",
+      "packagesPath": "D:\\Profiles\\jkl7075\\.nuget\\packages\\",
+      "outputPath": "Z:\\IGMProfile\\Desktop\\Sword Rush Repo\\SwordRush\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "Z:\\IGMProfile\\AppData\\NuGet\\NuGet.Config",
