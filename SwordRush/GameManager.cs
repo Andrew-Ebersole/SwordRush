@@ -17,12 +17,13 @@ namespace SwordRush
         private List<Enemy> enemies;
         public event ToggleGameState gameOver;
         private Texture2D dungeontilesTexture2D;
+        private Rectangle window;
 
 
 
         // --- Constructor --- //
 
-        public GameManager(ContentManager content)
+        public GameManager(ContentManager content, Point windowSize)
         {
             this.spriteSheet = spriteSheet;
             gameActive = false;
@@ -30,6 +31,8 @@ namespace SwordRush
             player = new Player(null, new Rectangle(10, 10, 16, 32));
             enemies.Add(new ShortRangeEnemy(null, new Rectangle(10, 10, 16, 16), player));
             dungeontilesTexture2D = content.Load<Texture2D>("DungeonTiles");
+            this.window = new Rectangle(0, 0,
+                windowSize.X, windowSize.Y);
         }
 
 

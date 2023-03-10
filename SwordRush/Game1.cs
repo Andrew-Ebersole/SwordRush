@@ -66,7 +66,7 @@ namespace SwordRush
             // UI Manager
             uiManager = new UI(Content, windowSize);
             // Game Manager
-            gameManager = new GameManager(Content);
+            gameManager = new GameManager(Content, windowSize);
             
             // Events and delegates
             uiManager.startGame += gameManager.StartGame;
