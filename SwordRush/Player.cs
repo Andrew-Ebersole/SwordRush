@@ -34,6 +34,7 @@ namespace SwordRush
         private float range;
         private float distance;
         private int levelUpExp;
+        private int roomsCleared;
 
         // Player weapon
         private GameObject sword;
@@ -85,25 +86,23 @@ namespace SwordRush
                 return levelUpExp;
             }
         }
-        
+
+        public int RoomsCleared
+        {
+            get
+            {
+                return roomsCleared;
+            }
+        }
          
 
         // --- Constructor --- //
 
         public Player(Texture2D texture, Rectangle rectangle) : base(texture, rectangle)
         {
-            exp = 0;
-            levelUpExp = 100;
-            level = 1;
-            atk = 1;
-            maxHealth = 10;
-            health = maxHealth;
-            atkSpd = 1;
-            distance = 1;
-            range = 1;
+            NewRound();
             currentMouseState = Mouse.GetState();
             preMouseState = Mouse.GetState();
-            
         }
 
 
@@ -160,6 +159,21 @@ namespace SwordRush
         public void Update(GameTime gt)
         {
 
+        }
+
+        public void NewRound()
+        {
+            roomsCleared = 0;
+            exp = 0;
+            levelUpExp = 100;
+            level = 1;
+            atk = 1;
+            maxHealth = 10;
+            health = maxHealth;
+            atkSpd = 1;
+            distance = 1;
+            range = 1;
+            roomsCleared = 0;
         }
     }
 }
