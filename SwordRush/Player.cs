@@ -40,9 +40,6 @@ namespace SwordRush
         private MouseState currentMouseState;
         private MouseState preMouseState;
         
-        // Game over event
-        public event ToggleGameState gameOver;
-
 
 
         // --- Properties --- //
@@ -52,6 +49,14 @@ namespace SwordRush
             get
             {
                 return size;
+            }
+        }
+
+        public int Health
+        {
+            get
+            {
+                return health;
             }
         }
         
@@ -127,11 +132,6 @@ namespace SwordRush
         public void Update(GameTime gt)
         {
 
-            // Ends the game when player is out of health
-            if (health <= 0)
-            {
-                gameOver();
-            }
         }
     }
 }

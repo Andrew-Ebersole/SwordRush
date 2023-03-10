@@ -51,6 +51,8 @@ namespace SwordRush
 
         // Event to communicate with GameManager
         public event ToggleGameState startGame;
+        public event ToggleGameState quitGame;
+
 
 
 
@@ -135,12 +137,15 @@ namespace SwordRush
                         gameFSM = GameFSM.Settings;
                     }
                     break;
+
                 case GameFSM.Game:
-                    // Temporarily when in game right click will bring you out
+                    // Right click to quit the game
                     if (currentMState.RightButton == ButtonState.Pressed
                         && previousMState.RightButton == ButtonState.Released)
                     {
+                        quitGame();
                         gameFSM = GameFSM.Menu;
+                        
                     }
                     break;
 
