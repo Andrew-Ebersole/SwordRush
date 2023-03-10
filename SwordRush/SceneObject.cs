@@ -14,14 +14,14 @@ namespace SwordRush
 
         // --- Constructor --- //
 
-        public SceneObject(Texture2D texture, Rectangle rectangle) : base(texture, rectangle)
+        public SceneObject(bool wall, Texture2D texture, Rectangle rectangle) : base(texture, rectangle)
         {
-
+            this.wall = wall;
         }
 
         public void Draw(SpriteBatch sb)
         {
-
+            sb.Draw(texture, Rectangle, Color.White);
         }
 
         public void Update(GameTime gt, GameObject collider)
