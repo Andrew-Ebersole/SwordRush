@@ -49,6 +49,11 @@ namespace SwordRush
         // Textures
         private Texture2D menuImageTexture;
 
+        // Event to communicate with GameManager
+        public event ToggleGameState startGame;
+
+
+
         // --- Properties --- //
 
         public GameFSM GameFSM { get { return gameFSM; } }
@@ -109,6 +114,9 @@ namespace SwordRush
                     if (menuButtons[0].LeftClicked)
                     {
                         gameFSM = GameFSM.Game;
+
+                        // Sends event that will be recieved by game manager
+                        startGame();
                     }
                     if (menuButtons[1].LeftClicked)
                     {
@@ -177,9 +185,25 @@ namespace SwordRush
                 case GameFSM.Game:
                     
                     break;
+
+                case GameFSM.GameOver:
+                    break;
+
+                case GameFSM.Instructions:
+                    break;
+
+                case GameFSM.Credits:
+                    break;
+
+                case GameFSM.HighScores:
+                    break;
+
+                case GameFSM.Settings:
+                    break;
+
             }
 
-            
+
         }
 
         private void initalizeButtons()
@@ -214,9 +238,14 @@ namespace SwordRush
 
             menuButtons.Add(new TextButton(new Rectangle(
                 (int)(window.Width * 0.10f), (int)(window.Height * 0.78),  // Location
-                (int)(window.Width * 0.25f), (int)(window.Height * 0.09f)), // Hitbox
-                "Instructions",                                             // Text
+                (int)(window.Width * 0.17f), (int)(window.Height * 0.09f)), // Hitbox
+                "Settings",                                                 // Text
                 bellMT48));                                                 // Font
+        }
+
+        public void EndGame()
+        {
+            gameFSM = GameFSM.GameOver;
         }
     }
 }

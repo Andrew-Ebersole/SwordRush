@@ -19,17 +19,33 @@ namespace SwordRush
 
     internal class Player : GameObject
     {
+        // --- Fields --- //
+
+        // Player State
         private PlayerStateMachine playerState;
+        
+        // Plater stats
         private int exp;
         private int level;
         private int atk;
         private int health;
         private float atkSpd;
         private float range;
-        private GameObject sword;
         private float distance;
+
+        // Player weapon
+        private GameObject sword;
+
+        // Mouse Controls
         private MouseState currentMouseState;
         private MouseState preMouseState;
+        
+        // Game over event
+        public event ToggleGameState gameOver;
+
+
+
+        // --- Properties --- //
 
         public Point Size
         {
@@ -38,7 +54,9 @@ namespace SwordRush
                 return size;
             }
         }
+        
          
+
         // --- Constructor --- //
 
         public Player(Texture2D texture, Rectangle rectangle) : base(texture, rectangle)
@@ -55,6 +73,10 @@ namespace SwordRush
             
         }
 
+
+
+        // --- Methods --- //
+
         /// <summary>
         /// move the player toward the mouse cursor when left clicked
         /// </summary>
@@ -65,7 +87,7 @@ namespace SwordRush
                 preMouseState.LeftButton == ButtonState.Released)
             {
                 //move the player's location
-                position -= GetDirection() * 25 * distance;
+                Position -= GetDirection() * 25 * distance;
                 
             }
 
@@ -105,6 +127,11 @@ namespace SwordRush
         public void Update(GameTime gt)
         {
 
+            // Ends the game when player is out of health
+            if (health <= 0)
+            {
+                gameOver();
+            }
         }
     }
 }

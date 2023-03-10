@@ -24,9 +24,10 @@ namespace SwordRush
             Vector2 distance = position - player.Position;
             if (distance.Length() < 100 && distance.Length()>1)
             {
+                Debug.WriteLine(player.Position+":"+player.Rectangle);
                 Vector2 direction = Vector2.Normalize(distance);
 
-                position -= direction * 1;
+                Position -= direction * 1;
             }
         }
 

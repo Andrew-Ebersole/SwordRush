@@ -84,3 +84,5 @@ D:\Profiles\wy8933\Source\Repos\SwordRush\SwordRush\obj\Debug\net6.0\SwordRush.g
 D:\Profiles\wy8933\Source\Repos\SwordRush\SwordRush\obj\Debug\net6.0\ref\SwordRush.dll
 Z:\IGMProfile\Documents\GIT-Repos\SwordRush\SwordRush\bin\Debug\net6.0\Content\Bell_MT-48.xnb
 Z:\IGMProfile\Documents\GIT-Repos\SwordRush\SwordRush\bin\Debug\net6.0\Content\Bell_MT-72.xnb
+D:\Profiles\wy8933\source\repos\SwordRush\SwordRush\bin\Debug\net6.0\Content\Bell_MT-48.xnb
+D:\Profiles\wy8933\source\repos\SwordRush\SwordRush\bin\Debug\net6.0\Content\Bell_MT-72.xnb
