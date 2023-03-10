@@ -86,6 +86,7 @@ Z:\IGMProfile\Documents\GIT-Repos\SwordRush\SwordRush\bin\Debug\net6.0\Content\B
 Z:\IGMProfile\Documents\GIT-Repos\SwordRush\SwordRush\bin\Debug\net6.0\Content\Bell_MT-72.xnb
 D:\Profiles\wy8933\source\repos\SwordRush\SwordRush\bin\Debug\net6.0\Content\Bell_MT-48.xnb
 D:\Profiles\wy8933\source\repos\SwordRush\SwordRush\bin\Debug\net6.0\Content\Bell_MT-72.xnb
+<<<<<<< HEAD
 Z:\IGMProfile\Desktop\Sword Rush Repo\SwordRush\bin\Debug\net6.0\Content\AbilityIcons.xnb
 Z:\IGMProfile\Desktop\Sword Rush Repo\SwordRush\bin\Debug\net6.0\Content\Bell_MT-24.xnb
 Z:\IGMProfile\Desktop\Sword Rush Repo\SwordRush\bin\Debug\net6.0\Content\Bell_MT-48.xnb
@@ -116,3 +117,10 @@ Z:\IGMProfile\Desktop\Sword Rush Repo\SwordRush\obj\Debug\net6.0\refint\SwordRus
 Z:\IGMProfile\Desktop\Sword Rush Repo\SwordRush\obj\Debug\net6.0\SwordRush.pdb
 Z:\IGMProfile\Desktop\Sword Rush Repo\SwordRush\obj\Debug\net6.0\SwordRush.genruntimeconfig.cache
 Z:\IGMProfile\Desktop\Sword Rush Repo\SwordRush\obj\Debug\net6.0\ref\SwordRush.dll
+=======
+Z:\IGMProfile\Documents\GIT-Repos\SwordRush\SwordRush\bin\Debug\net6.0\Content\empty_bar.xnb
+Z:\IGMProfile\Documents\GIT-Repos\SwordRush\SwordRush\bin\Debug\net6.0\Content\energy_bar.xnb
+Z:\IGMProfile\Documents\GIT-Repos\SwordRush\SwordRush\bin\Debug\net6.0\Content\health_bar.xnb
+Z:\IGMProfile\Documents\GIT-Repos\SwordRush\SwordRush\bin\Debug\net6.0\Content\magic_bar.xnb
+Z:\IGMProfile\Documents\GIT-Repos\SwordRush\SwordRush\bin\Debug\net6.0\Content\shield_bar.xnb
+>>>>>>> d7c30ed081e4c953dd877fd1d828b9d85934815d

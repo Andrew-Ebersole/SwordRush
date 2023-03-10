@@ -29,9 +29,11 @@ namespace SwordRush
         private int level;
         private int atk;
         private int health;
+        private int maxHealth;
         private float atkSpd;
         private float range;
         private float distance;
+        private int levelUpExp;
 
         // Player weapon
         private GameObject sword;
@@ -59,6 +61,30 @@ namespace SwordRush
                 return health;
             }
         }
+
+        public int MaxHealth
+        {
+            get
+            {
+                return maxHealth;
+            }
+        }
+
+        public int Exp
+        {
+            get
+            {
+                return exp;
+            }
+        }
+
+        public int LevelUpExp
+        {
+            get
+            {
+                return levelUpExp;
+            }
+        }
         
          
 
@@ -67,9 +93,11 @@ namespace SwordRush
         public Player(Texture2D texture, Rectangle rectangle) : base(texture, rectangle)
         {
             exp = 0;
+            levelUpExp = 100;
             level = 1;
             atk = 1;
-            health = 10;
+            maxHealth = 10;
+            health = maxHealth;
             atkSpd = 1;
             distance = 1;
             range = 1;
