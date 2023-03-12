@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -21,10 +21,6 @@ namespace SwordRush
 
         // Fonts
         SpriteFont bellMT24;
-        // UI Manager
-        private UI uiManager;
-        //Game Manager
-        private GameManager gameManager;
 
         // window
         Point windowSize;
@@ -71,14 +67,14 @@ namespace SwordRush
             bellMT24 = Content.Load<SpriteFont>("Bell_MT-24");
 
             // UI Manager
-            uiManager = new UI(Content, windowSize);
+            UI.Get.Initialize(Content, windowSize);
             // Game Manager
-            gameManager = new GameManager(Content, windowSize, whiteRectangle);
+            GameManager.Get.Initialize(Content, windowSize, whiteRectangle);
             
             // Events and delegates
-            uiManager.startGame += gameManager.StartGame;
-            gameManager.gameOver += uiManager.EndGame;
-            uiManager.quitGame += gameManager.QuitGame;
+            UI.Get.startGame += GameManager.Get.StartGame;
+            GameManager.Get.gameOver += UI.Get.EndGame;
+            UI.Get.quitGame += GameManager.Get.QuitGame;
 
             
         }
@@ -88,8 +84,8 @@ namespace SwordRush
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            gameManager.Update(gameTime);
-            uiManager.Update(gameTime);
+            GameManager.Get.Update(gameTime);
+            UI.Get.Update(gameTime);
             
             base.Update(gameTime);
         }
@@ -100,10 +96,10 @@ namespace SwordRush
             _spriteBatch.Begin();
 
             // Draw UI elements (Text, Menus, Icons)
-            uiManager.Draw(_spriteBatch);
+            UI.Get.Draw(_spriteBatch);
 
             
-            gameManager.Draw(_spriteBatch);
+            GameManager.Get.Draw(_spriteBatch);
 
             _spriteBatch.End();
             base.Draw(gameTime);

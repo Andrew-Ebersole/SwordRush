@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -23,12 +23,29 @@ namespace SwordRush
         private Rectangle window;
         private SpriteFont BellMT24;
         private List<SceneObject> walls;
+        
+        private static GameManager instance = null;
+        public static GameManager Get
+        {
+            get
+            {
+                // Does it exist yet? No? Make it!
+                if (instance == null)
+                {
+                    // Call the default constructor.
+                    instance = new GameManager();
+                }
 
+                // Either way, return the (newly made or already made) instance
+                return instance;
+            }
 
+            // NEVER a set for the instance
+        }
 
         // --- Constructor --- //
 
-        public GameManager(ContentManager content, Point windowSize, Texture2D whiteRectangle)
+        public void Initialize(ContentManager content, Point windowSize, Texture2D whiteRectangle)
         {
             this.spriteSheet = spriteSheet;
             gameActive = false;
@@ -54,7 +71,10 @@ namespace SwordRush
             BellMT24 = content.Load<SpriteFont>("Bell_MT-24");
         }
 
-
+        public Player LocalPlayer
+        {
+            get { return player; }
+        }
 
         // --- Methods --- //
 

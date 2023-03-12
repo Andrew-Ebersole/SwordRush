@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -55,6 +55,20 @@ namespace SwordRush
 
 
 
+        private static UI instance = null;
+        
+        public static UI Get
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new UI();
+                }
+                
+                return instance;
+            }
+        }
 
         // --- Properties --- //
 
@@ -64,7 +78,7 @@ namespace SwordRush
 
         // --- Constructor --- //
 
-        public UI(ContentManager content, Point windowSize)
+        public void Initialize(ContentManager content, Point windowSize)
         {
             // State Machine
             gameFSM = GameFSM.Menu;
