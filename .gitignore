@@ -1,0 +1,7 @@
+SwordRush/.vs
+SwordRush/.idea
+SwordRush/bin
+SwordRush/obj
+SwordRush/Content/bin
+SwordRush/Content/obj
+*.DS_Store
