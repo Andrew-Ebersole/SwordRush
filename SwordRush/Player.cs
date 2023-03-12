@@ -41,8 +41,9 @@ namespace SwordRush
         // Mouse Controls
         private MouseState currentMouseState;
         private MouseState preMouseState;
-        
 
+        //Texture
+        private Texture2D dungeontilesTexture2D;
 
         // --- Properties --- //
 
@@ -103,7 +104,9 @@ namespace SwordRush
             range = 1;
             currentMouseState = Mouse.GetState();
             preMouseState = Mouse.GetState();
-            
+
+            sword = new GameObject(null, Rectangle);
+            dungeontilesTexture2D = texture;
         }
 
 
@@ -150,11 +153,29 @@ namespace SwordRush
         {
 
         }
+        public Vector2 SwordLocation()
+        {
+            return new Vector2(Rectangle.X + Rectangle.Width / 2, Rectangle.Y + Rectangle.Height / 1.5f);
+        }
+
+        public float SwordRotateAngle()
+        {
+            float rotationAngle = 0f;
+            float angle = (float)Math.Atan2(currentMouseState.Y - Position.Y, currentMouseState.X - Position.X);
+            rotationAngle = angle - (float)(Math.PI / 2);
+
+            return rotationAngle;
+        }
+
+        public Vector2 SwordRotateOrigin()
+        {
+            return new Vector2(Rectangle.Width / 2, Rectangle.Height / 2);
+        }
 
         public void Draw(SpriteBatch sb)
         {
-            
-
+            sb.Draw(dungeontilesTexture2D, Rectangle, new Rectangle(128, 64, 16, 32), Color.White);
+            sb.Draw(dungeontilesTexture2D, SwordLocation(), new Rectangle(320, 80, 16, 32), Color.White, SwordRotateAngle(), new Vector2(16, 16), 1.0f, SpriteEffects.FlipVertically, 0.0f);
         }
 
         public void Update(GameTime gt)

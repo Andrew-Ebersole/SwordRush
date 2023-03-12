@@ -32,9 +32,10 @@ namespace SwordRush
             this.spriteSheet = spriteSheet;
             gameActive = false;
             enemies = new List<Enemy>();
-            player = new Player(null, new Rectangle(10, 10, 16, 32));
-            enemies.Add(new ShortRangeEnemy(null, new Rectangle(10, 10, 16, 16), player));
+            
             dungeontilesTexture2D = content.Load<Texture2D>("DungeonTiles");
+            player = new Player(dungeontilesTexture2D, new Rectangle(10, 10, 16, 32));
+            enemies.Add(new ShortRangeEnemy(null, new Rectangle(10, 10, 16, 16), player));
             this.window = new Rectangle(0, 0,
                 windowSize.X, windowSize.Y);
 
@@ -75,7 +76,8 @@ namespace SwordRush
             {
                 sb.Draw(dungeontilesTexture2D, new Vector2(0, 0), new Rectangle(0, 64, 16, 32), Color.White);
 
-                sb.Draw(dungeontilesTexture2D, player.Rectangle, new Rectangle(128, 64, 16, 32), Color.White);
+                //sb.Draw(dungeontilesTexture2D, player.Rectangle, new Rectangle(128, 64, 16, 32), Color.White);
+                player.Draw(sb);
                 sb.Draw(dungeontilesTexture2D, enemies[0].Rectangle, new Rectangle(368, 80, 16, 16), Color.White);
 
                 // Display health and xp bars
