@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -73,7 +73,7 @@ namespace SwordRush
             // UI Manager
             uiManager = new UI(Content, windowSize);
             // Game Manager
-            gameManager = new GameManager(Content, windowSize, whiteRectangle);
+            GameManager.Get.Initialize(Content, windowSize, whiteRectangle);
             
             // Events and delegates
             uiManager.startGame += gameManager.StartGame;
