@@ -36,7 +36,7 @@ namespace SwordRush
             walls = new List<SceneObject>();
             enemies = new List<Enemy>();
             player = new Player(dungeontilesTexture2D, new Rectangle(500, 500, 32, 64));
-            enemies.Add(new ShortRangeEnemy(null, new Rectangle(10, 10, 16, 16), player));
+            enemies.Add(new ShortRangeEnemy(null, new Rectangle(10, 10, 32, 32), player));
             //temporary test walls
 
             walls.Add(new SceneObject(true, whiteRectangle, new Rectangle(500, 500, 80, 80)));

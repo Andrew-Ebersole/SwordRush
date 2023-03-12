@@ -22,12 +22,12 @@ namespace SwordRush
         public void AI()
         {
             Vector2 distance = position - player.Position;
-            if (distance.Length() < 100 && distance.Length()>1)
+            if (distance.Length() < 300 && distance.Length()>1)
             {
-                Debug.WriteLine(player.Position+":"+player.Rectangle);
+                Debug.WriteLine(distance+":"+distance.Length());
                 Vector2 direction = Vector2.Normalize(distance);
 
-                Position -= direction * 1;
+                Position -= direction * 2;
             }
         }
 
