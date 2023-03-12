@@ -70,8 +70,11 @@ namespace SwordRush
             // Font
             BellMT24 = content.Load<SpriteFont>("Bell_MT-24");
         }
-        
-        
+
+        public Player LocalPlayer
+        {
+            get { return player; }
+        }
 
         // --- Methods --- //
 
