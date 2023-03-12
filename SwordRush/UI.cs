@@ -187,11 +187,22 @@ namespace SwordRush
                     
                     break;
 
-                case GameFSM.Game:
-                    
-                    break;
-
                 case GameFSM.GameOver:
+                    // Draw Game over
+                    sb.DrawString(
+                        bellMT72,
+                        "GAME OVER",
+                        new Vector2((window.Width * 0.3f),
+                        (window.Height * 0.3f)),
+                        Color.Red);
+
+                    // Draw Score
+                    sb.DrawString(
+                        bellMT48,
+                        $"YOU CLEARED __ ROOMS",
+                        new Vector2((window.Width * 0.3f),
+                        (window.Height * 0.5f)),
+                        Color.White);
                     break;
 
                 case GameFSM.Instructions:

@@ -22,20 +22,27 @@ namespace SwordRush
         private Texture2D emptyBarTexture;
         private Rectangle window;
         private SpriteFont BellMT24;
+        private List<SceneObject> walls;
 
 
 
         // --- Constructor --- //
 
-        public GameManager(ContentManager content, Point windowSize)
+        public GameManager(ContentManager content, Point windowSize, Texture2D whiteRectangle)
         {
             this.spriteSheet = spriteSheet;
             gameActive = false;
             enemies = new List<Enemy>();
-            
-            dungeontilesTexture2D = content.Load<Texture2D>("DungeonTiles");
-            player = new Player(dungeontilesTexture2D, new Rectangle(10, 10, 16, 32));
+            player = new Player(null, new Rectangle(500, 500, 32, 64));
             enemies.Add(new ShortRangeEnemy(null, new Rectangle(10, 10, 16, 16), player));
+            dungeontilesTexture2D = content.Load<Texture2D>("DungeonTiles");
+            walls = new List<SceneObject>();
+
+            //temporary test walls
+            
+            walls.Add(new SceneObject(true, whiteRectangle, new Rectangle(500, 500, 80, 80)));
+
+
             this.window = new Rectangle(0, 0,
                 windowSize.X, windowSize.Y);
 
@@ -60,6 +67,9 @@ namespace SwordRush
                 foreach (Enemy enemy in enemies)
                 {
                     enemy.Update(gt);
+
+                    //update enemy collision
+                    Collision(enemy, walls);
                 }
 
                 // End game if player health runs out
@@ -67,6 +77,10 @@ namespace SwordRush
                 {
                     gameOver();
                 }
+
+                //update player collision
+                Collision(player, walls);
+                
             }
         }
 
@@ -76,8 +90,7 @@ namespace SwordRush
             {
                 sb.Draw(dungeontilesTexture2D, new Vector2(0, 0), new Rectangle(0, 64, 16, 32), Color.White);
 
-                //sb.Draw(dungeontilesTexture2D, player.Rectangle, new Rectangle(128, 64, 16, 32), Color.White);
-                player.Draw(sb);
+                sb.Draw(dungeontilesTexture2D, player.Rectangle, new Rectangle(128, 64, 16, 32), Color.White);
                 sb.Draw(dungeontilesTexture2D, enemies[0].Rectangle, new Rectangle(368, 80, 16, 16), Color.White);
 
                 // Display health and xp bars
@@ -94,15 +107,99 @@ namespace SwordRush
                     new Rectangle((int)(window.Width * 0.6f), (int)(window.Height * 0.9f),
                     (int)(window.Width * 0.3f), (int)(window.Height * 0.09f)),
                     sb);
+
+                //draw walls
+                foreach (SceneObject obj in walls)
+                {
+                    obj.Draw(sb);
+                }
             }
         }
         public void GenerateRoom()
         {
+
         }
+
+        public void Collision(GameObject entity, List<SceneObject> walls)
+        {
+            //temporary variables for calculations
+            Rectangle entityRect = entity.Rectangle;
+
+            // For taller entities we only want to check collision with their feet
+            if (entity.Rectangle.Width < entity.Rectangle.Height)
+            {
+                entityRect = new Rectangle(entityRect.X, entityRect.Y + entityRect.Height / 2, entityRect.Width, entityRect.Height / 2);
+            }
+            List<Rectangle> intersectionsList = new List<Rectangle>();
+            List<Rectangle> wallRects = new List<Rectangle>();
+            intersectionsList.Clear();
+            wallRects.Clear();
+            
+            foreach (SceneObject obj in walls)
+            {
+                wallRects.Add(obj.Rectangle);
+            }
+
+            //get list of intersections
+            for (int i = 0; i < walls.Count; i++)
+            {
+                if (entityRect.Intersects(wallRects[i]))
+                {
+                    intersectionsList.Add(wallRects[i]);
+                }
+            }
+
+            //collision
+
+            //loop through intersects
+            for (int i = 0; i < intersectionsList.Count; i++)
+            {
+                Rectangle intersect = Rectangle.Intersect(entityRect, intersectionsList[i]);
+
+                //horizontal collision
+                if (intersect.Width < intersect.Height)
+                {
+                    if (entityRect.X < intersect.X)
+                    {
+                        entityRect.X -= intersect.Width;
+                    }
+                    else
+                    {
+                        entityRect.X += intersect.Width;
+                    }
+                }
+                //vertical collision
+                else
+                {
+                    if (entityRect.Y < intersect.Y)
+                    {
+                        entityRect.Y -= intersect.Height;
+                    }
+                    else
+                    {
+                        entityRect.Y += intersect.Height;
+                    }
+                    
+                }
+            }
+
+            //update player position
+            entity.X = entityRect.X+entityRect.Width / 2;
+            entity.Y = entityRect.Y+entityRect.Height / 2;
+
+            // For player sprite to collide with wall properly and not have space above head
+            if (entity.Rectangle.Width < entity.Rectangle.Height)
+            {
+                entity.Y = entityRect.Y;
+            }
+
+        }
+
 
         public void StartGame()
         {
             gameActive = true;
+            player.NewRound();
             // TODO: Reset game code goes here
         }
 

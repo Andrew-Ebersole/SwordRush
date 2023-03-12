@@ -29,6 +29,9 @@ namespace SwordRush
         // window
         Point windowSize;
 
+        //blank rectangle
+        Texture2D whiteRectangle;
+
         #endregion
 
         public Game1()
@@ -60,18 +63,24 @@ namespace SwordRush
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
+            //create blank rectangle sprite
+            whiteRectangle = new Texture2D(GraphicsDevice, 1, 1);
+            whiteRectangle.SetData(new[] { Color.White });
+
             // Load Fonts
             bellMT24 = Content.Load<SpriteFont>("Bell_MT-24");
 
             // UI Manager
             uiManager = new UI(Content, windowSize);
             // Game Manager
-            gameManager = new GameManager(Content, windowSize);
+            gameManager = new GameManager(Content, windowSize, whiteRectangle);
             
             // Events and delegates
             uiManager.startGame += gameManager.StartGame;
             gameManager.gameOver += uiManager.EndGame;
             uiManager.quitGame += gameManager.QuitGame;
+
+            
         }
 
         protected override void Update(GameTime gameTime)
@@ -93,7 +102,7 @@ namespace SwordRush
             // Draw UI elements (Text, Menus, Icons)
             uiManager.Draw(_spriteBatch);
 
-            gameManager.GenerateRoom();
+            
             gameManager.Draw(_spriteBatch);
 
             _spriteBatch.End();
