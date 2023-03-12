@@ -167,9 +167,8 @@ namespace SwordRush
 
         public float SwordRotateAngle()
         {
-            float rotationAngle = 0f;
             float angle = (float)Math.Atan2(currentMouseState.Y - Position.Y, currentMouseState.X - Position.X);
-            rotationAngle = angle - (float)(Math.PI / 2);
+            float rotationAngle = angle - (float)(Math.PI / 2);
 
             return rotationAngle;
         }
@@ -182,7 +181,7 @@ namespace SwordRush
         public void Draw(SpriteBatch sb)
         {
             sb.Draw(dungeontilesTexture2D, Rectangle, new Rectangle(128, 64, 16, 32), Color.White);
-            sb.Draw(dungeontilesTexture2D, SwordLocation(), new Rectangle(320, 80, 16, 32), Color.White, SwordRotateAngle(), new Vector2(16, 16), 1.0f, SpriteEffects.FlipVertically, 0.0f);
+            sb.Draw(dungeontilesTexture2D, SwordLocation(), new Rectangle(320, 80, 16, 32), Color.White, SwordRotateAngle(), new Vector2(8, -8), 2.0f, SpriteEffects.FlipVertically, 0.0f);
         }
 
         public void Update(GameTime gt)
