@@ -88,7 +88,7 @@ namespace SwordRush
                     enemy.Update(gt);
 
                     //update enemy collision
-                    Collision(enemy, walls);
+                    WallCollision(enemy, walls);
                 }
 
                 // End game if player health runs out
@@ -98,7 +98,7 @@ namespace SwordRush
                 }
 
                 //update player collision
-                Collision(player, walls);
+                WallCollision(player, walls);
                 
             }
         }
@@ -139,7 +139,7 @@ namespace SwordRush
 
         }
 
-        public void Collision(GameObject entity, List<SceneObject> walls)
+        public void WallCollision(GameObject entity, List<SceneObject> walls)
         {
             //temporary variables for calculations
             Rectangle entityRect = entity.Rectangle;
@@ -213,6 +213,27 @@ namespace SwordRush
             }
 
         }
+
+        /// <summary>
+        /// returns true if two game objects are colliding and returns false otherwise
+        /// </summary>
+        /// <param name="obj1"></param>
+        /// <param name="obj2"></param>
+        /// <returns></returns>
+        public bool Collision(GameObject obj1, GameObject obj2)
+        {
+            if (obj1.Rectangle.Intersects(obj2.Rectangle))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+
+
 
 
         public void StartGame()

@@ -28,12 +28,12 @@ namespace SwordRush
         }
 
         // --- Constructor --- //
-
+        /*
         public Enemy (Texture2D texture, Vector2 position, Point size) : base (texture, position, size)
         {
 
         }
-
+        */
         public void Damage()
         {
 

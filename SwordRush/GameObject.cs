@@ -81,13 +81,10 @@ namespace SwordRush
 
         public virtual void Update(GameTime gt)
         {
-            sb.Draw(
-                texture,
-                rectangle,
-                Microsoft.Xna.Framework.Color.White);
+            
         }
 
-        }
+        
 
         public virtual void Draw(SpriteBatch sb)
         {
