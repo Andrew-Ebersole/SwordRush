@@ -4,11 +4,15 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
-    <File>C:/Users/Joshua Leong/Source/Repos/SwordRush/SwordRush/Content/AbilityIcons.png</File>
-    <File>C:/Users/Joshua Leong/Source/Repos/SwordRush/SwordRush/Content/Bell_MT-24.spritefont</File>
-    <File>C:/Users/Joshua Leong/Source/Repos/SwordRush/SwordRush/Content/DungeonTiles.png</File>
+    <File>C:/Users/Joshua Leong/source/repos/SwordRush/SwordRush/Content/AbilityIcons.png</File>
+    <File>C:/Users/Joshua Leong/source/repos/SwordRush/SwordRush/Content/Bell_MT-24.spritefont</File>
+    <File>C:/Users/Joshua Leong/source/repos/SwordRush/SwordRush/Content/Bell_MT-48.spritefont</File>
+    <File>C:/Users/Joshua Leong/source/repos/SwordRush/SwordRush/Content/Bell_MT-72.spritefont</File>
+    <File>C:/Users/Joshua Leong/source/repos/SwordRush/SwordRush/Content/DungeonTiles.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

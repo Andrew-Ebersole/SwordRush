@@ -1,4 +1,6 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
 "Z:/IGMProfile/Documents/GIT-Repos/SwordRush/SwordRush/Content/AbilityIcons.png","Z:/IGMProfile/Documents/GIT-Repos/SwordRush/SwordRush/Content/bin/DesktopGL/AbilityIcons.xnb","TextureProcessor","Texture2DContent",41059,589909,0.1090124
-"Z:/IGMProfile/Documents/GIT-Repos/SwordRush/SwordRush/Content/Bell_MT-24.spritefont","Z:/IGMProfile/Documents/GIT-Repos/SwordRush/SwordRush/Content/bin/DesktopGL/Bell_MT-24.xnb","FontDescriptionProcessor","SpriteFontContent",2068,21535,0.1302862
+"Z:/IGMProfile/Documents/GIT-Repos/SwordRush/SwordRush/Content/Bell_MT-24.spritefont","Z:/IGMProfile/Documents/GIT-Repos/SwordRush/SwordRush/Content/bin/DesktopGL/Bell_MT-24.xnb","FontDescriptionProcessor","SpriteFontContent",2070,70687,0.2073607
+"Z:/IGMProfile/Documents/GIT-Repos/SwordRush/SwordRush/Content/Bell_MT-48.spritefont","Z:/IGMProfile/Documents/GIT-Repos/SwordRush/SwordRush/Content/bin/DesktopGL/Bell_MT-48.xnb","FontDescriptionProcessor","SpriteFontContent",2070,136223,0.1543577
+"Z:/IGMProfile/Documents/GIT-Repos/SwordRush/SwordRush/Content/Bell_MT-72.spritefont","Z:/IGMProfile/Documents/GIT-Repos/SwordRush/SwordRush/Content/bin/DesktopGL/Bell_MT-72.xnb","FontDescriptionProcessor","SpriteFontContent",2068,21535,0.0269894
 "Z:/IGMProfile/Documents/GIT-Repos/SwordRush/SwordRush/Content/DungeonTiles.png","Z:/IGMProfile/Documents/GIT-Repos/SwordRush/SwordRush/Content/bin/DesktopGL/DungeonTiles.xnb","TextureProcessor","Texture2DContent",35688,1048661,0.2046623

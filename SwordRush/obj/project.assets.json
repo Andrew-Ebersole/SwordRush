@@ -107,11 +107,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Joshua Leong\\Source\\Repos\\SwordRush\\SwordRush\\SwordRush.csproj",
+      "projectUniqueName": "C:\\Users\\Joshua Leong\\source\\repos\\SwordRush\\SwordRush\\SwordRush.csproj",
       "projectName": "SwordRush",
-      "projectPath": "C:\\Users\\Joshua Leong\\Source\\Repos\\SwordRush\\SwordRush\\SwordRush.csproj",
+      "projectPath": "C:\\Users\\Joshua Leong\\source\\repos\\SwordRush\\SwordRush\\SwordRush.csproj",
       "packagesPath": "C:\\Users\\Joshua Leong\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Joshua Leong\\Source\\Repos\\SwordRush\\SwordRush\\obj\\",
+      "outputPath": "C:\\Users\\Joshua Leong\\source\\repos\\SwordRush\\SwordRush\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Joshua Leong\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -168,5 +168,13 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.200\\RuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problem reading the cache file C:\\Users\\Joshua Leong\\source\\repos\\SwordRush\\SwordRush\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
+    }
+  ]
 }

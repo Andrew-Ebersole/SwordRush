@@ -1,11 +1,18 @@
 {
   "version": 2,
-  "dgSpecHash": "f+gnH2ZvDyCt+s5VdSkYjOqtsWK/y+A1mK++9FBaaltKqehfnHyOYZfJOboHgRRkdPcStgHbmr//YJn+9lwYeQ==",
+  "dgSpecHash": "1YrMoZ0cP7rkcK034Xo+iuXZWXWrv2to8J3h1aF89q3sE0U8vdrcS+hpM+w0m9u714EHWED13uX448Z79tz+Cw==",
   "success": true,
   "projectFilePath": "C:\\Users\\Joshua Leong\\source\\repos\\SwordRush\\SwordRush\\SwordRush.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Joshua Leong\\.nuget\\packages\\monogame.content.builder.task\\3.8.1.303\\monogame.content.builder.task.3.8.1.303.nupkg.sha512",
     "C:\\Users\\Joshua Leong\\.nuget\\packages\\monogame.framework.desktopgl\\3.8.1.303\\monogame.framework.desktopgl.3.8.1.303.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problem reading the cache file C:\\Users\\Joshua Leong\\source\\repos\\SwordRush\\SwordRush\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
+    }
+  ]
 }

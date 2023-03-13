@@ -16,7 +16,7 @@ namespace SwordRush
         private int damage;
 
         // --- Constructor --- //
-        public Projectile(Texture2D texture, Vector2 position, Point size) : base(texture, position, size)
+        public Projectile(Texture2D texture, Rectangle rectangle) : base(texture, rectangle)
         {
 
         }

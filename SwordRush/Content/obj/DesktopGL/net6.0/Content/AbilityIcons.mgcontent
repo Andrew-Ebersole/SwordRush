@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <SourceFile>C:/Users/Joshua Leong/Source/Repos/SwordRush/SwordRush/Content/AbilityIcons.png</SourceFile>
+  <SourceFile>C:/Users/Joshua Leong/source/repos/SwordRush/SwordRush/Content/AbilityIcons.png</SourceFile>
   <SourceTime>2023-03-07T19:42:30.5031802-05:00</SourceTime>
-  <DestFile>C:/Users/Joshua Leong/Source/Repos/SwordRush/SwordRush/Content/bin/DesktopGL/Content/AbilityIcons.xnb</DestFile>
-  <DestTime>2023-03-07T19:42:39.9737899-05:00</DestTime>
+  <DestFile>C:/Users/Joshua Leong/source/repos/SwordRush/SwordRush/Content/bin/DesktopGL/Content/AbilityIcons.xnb</DestFile>
+  <DestTime>2023-03-08T17:52:23.6502031-05:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2022-07-26T07:44:56-04:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

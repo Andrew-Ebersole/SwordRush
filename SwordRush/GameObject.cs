@@ -20,16 +20,40 @@ namespace SwordRush
         protected Vector2 position;
         protected Point size;
 
-        public GameObject (Texture2D texture, Vector2 position, Point size)
+        public Rectangle Rectangle
+        {
+
+            get { return rectangle; }
+        }
+        public Vector2 Position
+        {
+            get
+            {
+                return position;
+            }
+
+            protected set 
+            {
+                position = value;
+                rectangle = new Rectangle((int)(position.X - rectangle.Width / 2), (int)(position.Y - rectangle.Height / 2), size.X,size.Y);
+            }
+        }
+
+        public GameObject (Texture2D texture, Rectangle rectangle)
         {
             this.texture = texture;
-            this.rectangle = new Rectangle(new Point((int)position.X,(int)position.Y), size);
-            this.position = position;
-            this.size = size;
+            this.rectangle = rectangle;
+            this.position = new Vector2(rectangle.X + rectangle.Width / 2, rectangle.Y + rectangle.Height / 2);
+            this.size = rectangle.Size;
         }
 
         public virtual void Update(GameTime gt)
         {
+            sb.Draw(
+                texture,
+                rectangle,
+                Microsoft.Xna.Framework.Color.White);
+        }
 
         }
 

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -20,9 +15,17 @@ namespace SwordRush
     internal class Enemy : GameObject
     {
         private EnemyStateMachine enemyState;
-        private int level;
-        private int atk;
-        private int health;
+        protected Player player;
+        protected int level;
+        protected int atk;
+        protected int health;
+
+        // --- Constructor --- //
+
+        public Enemy (Texture2D texture, Rectangle rectangle, Player player) : base (texture, rectangle)
+        {
+            this.player = player;
+        }
 
         // --- Constructor --- //
 
@@ -34,6 +37,9 @@ namespace SwordRush
         public void Damage()
         {
 
+        }
+
+        public virtual void Update(GameTime gt) { 
         }
     }
 }
