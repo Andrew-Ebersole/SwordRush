@@ -82,7 +82,7 @@ namespace SwordRush
         {
             if (gameActive)
             {
-                player.playerControl();
+                player.Update(gt);
                 foreach (Enemy enemy in enemies)
                 {
                     enemy.Update(gt);

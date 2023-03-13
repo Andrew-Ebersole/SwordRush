@@ -186,7 +186,7 @@ namespace SwordRush
 
         public void Update(GameTime gt)
         {
-
+            playerControl();
         }
 
         public void NewRound()

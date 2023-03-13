@@ -44,7 +44,6 @@ namespace SwordRush
 
         protected override void Initialize()
         {
-
             // Window Size
             windowSize = new Point(
                 _graphics.PreferredBackBufferWidth,

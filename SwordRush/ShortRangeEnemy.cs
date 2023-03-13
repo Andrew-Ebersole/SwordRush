@@ -19,12 +19,19 @@ namespace SwordRush
 
         }
 
+        public void Damaged()
+        {
+            Vector2 distance = position - player.Position;
+            Vector2 direction = Vector2.Normalize(distance);
+
+            Position += direction * 2;
+        }
+
         public void AI()
         {
             Vector2 distance = position - player.Position;
             if (distance.Length() < 300 && distance.Length()>1)
             {
-                Debug.WriteLine(distance+":"+distance.Length());
                 Vector2 direction = Vector2.Normalize(distance);
 
                 Position -= direction * 2;
