@@ -160,11 +160,20 @@ namespace SwordRush
         {
 
         }
+
+        /// <summary>
+        /// get the location of the sword
+        /// </summary>
+        /// <returns>return the vector2 of the sword's location</returns>
         public Vector2 SwordLocation()
         {
             return new Vector2(Rectangle.X + Rectangle.Width / 2, Rectangle.Y + Rectangle.Height / 1.5f);
         }
 
+        /// <summary>
+        /// calculate the angle for the sword, depend on the mouse cursor location
+        /// </summary>
+        /// <returns>the value of the angle</returns>
         public float SwordRotateAngle()
         {
             float angle = (float)Math.Atan2(currentMouseState.Y - Position.Y, currentMouseState.X - Position.X);
@@ -173,22 +182,28 @@ namespace SwordRush
             return rotationAngle;
         }
 
-        public Vector2 SwordRotateOrigin()
-        {
-            return new Vector2(Rectangle.Width / 2, Rectangle.Height / 2);
-        }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sb"></param>
         public void Draw(SpriteBatch sb)
         {
             sb.Draw(dungeontilesTexture2D, Rectangle, new Rectangle(128, 64, 16, 32), Color.White);
             sb.Draw(dungeontilesTexture2D, SwordLocation(), new Rectangle(320, 80, 16, 32), Color.White, SwordRotateAngle(), new Vector2(8, -8), 2.0f, SpriteEffects.FlipVertically, 0.0f);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="gt"></param>
         public void Update(GameTime gt)
         {
             playerControl();
         }
 
+        /// <summary>
+        /// init player's stats
+        /// </summary>
         public void NewRound()
         {
             roomsCleared = 0;

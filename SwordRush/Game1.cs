@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-// Andrew, Bin, Weiji, Josh
+// Andrew, Bin, Weijie, Josh
 // Started March 6, 2023
 // Group Game "Sword Rush" for IGME 106 Class
 
