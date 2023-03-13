@@ -39,6 +39,38 @@ namespace SwordRush
             }
         }
 
+        /// <summary>
+        /// gets and sets x of position vector
+        /// </summary>
+        public float X
+        {
+            get 
+            { 
+                return position.X; 
+            }
+
+            set
+            {
+                position.X = value;
+                rectangle = new Rectangle((int)(position.X - rectangle.Width / 2), (int)(position.Y - rectangle.Height / 2), size.X, size.Y);
+            }
+        }
+
+        //gets and sets y of position vector
+        public float Y
+        {
+            get
+            {
+                return position.Y;
+            }
+
+            set
+            {
+                position.Y = value;
+                rectangle = new Rectangle((int)(position.X - rectangle.Width / 2), (int)(position.Y - rectangle.Height / 2), size.X, size.Y);
+            }
+        }
+
         public GameObject (Texture2D texture, Rectangle rectangle)
         {
             this.texture = texture;

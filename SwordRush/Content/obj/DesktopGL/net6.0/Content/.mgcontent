@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="utf-8"?>
 <SourceFileCollection xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Profile>Reach</Profile>
@@ -18,3 +19,6 @@
     <File xsi:nil="true" />
   </DestFiles>
 </SourceFileCollection>
+=======
+<?xml version="1.0" encoding="utf-8"?><SourceFileCollection xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><Profile>Reach</Profile><Platform>DesktopGL</Platform><Config /><SourceFiles><File>E:/RIT/IGME106/SwordRush/SwordRush/Content/AbilityIcons.png</File><File>E:/RIT/IGME106/SwordRush/SwordRush/Content/Bell_MT-24.spritefont</File><File>E:/RIT/IGME106/SwordRush/SwordRush/Content/Bell_MT-48.spritefont</File><File>E:/RIT/IGME106/SwordRush/SwordRush/Content/Bell_MT-72.spritefont</File><File>E:/RIT/IGME106/SwordRush/SwordRush/Content/DungeonTiles.png</File><File>E:/RIT/IGME106/SwordRush/SwordRush/Content/empty_bar.png</File><File>E:/RIT/IGME106/SwordRush/SwordRush/Content/energy_bar.png</File><File>E:/RIT/IGME106/SwordRush/SwordRush/Content/health_bar.png</File><File>E:/RIT/IGME106/SwordRush/SwordRush/Content/magic_bar.png</File><File>E:/RIT/IGME106/SwordRush/SwordRush/Content/shield_bar.png</File></SourceFiles><DestFiles><File xsi:nil="true" /><File xsi:nil="true" /><File xsi:nil="true" /><File xsi:nil="true" /><File xsi:nil="true" /><File xsi:nil="true" /><File xsi:nil="true" /><File xsi:nil="true" /><File xsi:nil="true" /><File xsi:nil="true" /></DestFiles></SourceFileCollection>
+>>>>>>> 5588dcd9a7c2ce3593afae82fbfdf509f91dee5f

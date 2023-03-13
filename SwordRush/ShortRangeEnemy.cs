@@ -25,15 +25,28 @@ namespace SwordRush
 
         }
 
+        /// <summary>
+        /// Push the enemy away from the player when it was damaged
+        /// </summary>
+        public void Damaged()
+        {
+            Vector2 distance = position - player.Position;
+            Vector2 direction = Vector2.Normalize(distance);
+
+            Position += direction * 10;
+        }
+
+        /// <summary>
+        /// Move the enemy towards to player
+        /// </summary>
         public void AI()
         {
             Vector2 distance = position - player.Position;
-            if (distance.Length() < 100 && distance.Length()>1)
+            if (distance.Length() < 300 && distance.Length()>1)
             {
-                Debug.WriteLine(player.Position+":"+player.Rectangle);
                 Vector2 direction = Vector2.Normalize(distance);
 
-                Position -= direction * 1;
+                Position -= direction * 2;
             }
         }
 

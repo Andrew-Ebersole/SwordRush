@@ -19,17 +19,34 @@ namespace SwordRush
 
     internal class Player : GameObject
     {
+        // --- Fields --- //
+
+        // Player State
         private PlayerStateMachine playerState;
+        
+        // Plater stats
         private int exp;
         private int level;
         private int atk;
         private int health;
+        private int maxHealth;
         private float atkSpd;
         private float range;
-        private GameObject sword;
         private float distance;
+        private int levelUpExp;
+        private int roomsCleared;
+
+        // Player weapon
+        private GameObject sword;
+
+        // Mouse Controls
         private MouseState currentMouseState;
         private MouseState preMouseState;
+
+        //Texture
+        private Texture2D dungeontilesTexture2D;
+
+        // --- Properties --- //
 
         public Point Size
         {
@@ -38,23 +55,70 @@ namespace SwordRush
                 return size;
             }
         }
-        
-         
+
+        public int Health
+        {
+            get
+            {
+                return health;
+            }
+        }
+
+        public int MaxHealth
+        {
+            get
+            {
+                return maxHealth;
+            }
+        }
+
+        public int Exp
+        {
+            get
+            {
+                return exp;
+            }
+        }
+
+        public int LevelUpExp
+        {
+            get
+            {
+                return levelUpExp;
+            }
+        }
+        public int RoomsCleared
+        {
+            get
+            {
+                return roomsCleared;
+            }
+        }
+
+
         // --- Constructor --- //
 
         public Player(Texture2D texture, Rectangle rectangle) : base(texture, rectangle)
         {
             exp = 0;
+            levelUpExp = 100;
             level = 1;
             atk = 1;
-            health = 10;
+            maxHealth = 10;
+            health = maxHealth;
             atkSpd = 1;
             distance = 1;
             range = 1;
             currentMouseState = Mouse.GetState();
             preMouseState = Mouse.GetState();
-            
+
+            sword = new GameObject(null, Rectangle);
+            dungeontilesTexture2D = texture;
         }
+
+
+
+        // --- Methods --- //
 
         /// <summary>
         /// move the player toward the mouse cursor when left clicked
@@ -97,15 +161,62 @@ namespace SwordRush
 
         }
 
-        public void Draw(SpriteBatch sb)
+        /// <summary>
+        /// get the location of the sword
+        /// </summary>
+        /// <returns>return the vector2 of the sword's location</returns>
+        public Vector2 SwordLocation()
         {
-            
-
+            return new Vector2(Rectangle.X + Rectangle.Width / 2, Rectangle.Y + Rectangle.Height / 1.5f);
         }
 
+        /// <summary>
+        /// calculate the angle for the sword, depend on the mouse cursor location
+        /// </summary>
+        /// <returns>the value of the angle</returns>
+        public float SwordRotateAngle()
+        {
+            float angle = (float)Math.Atan2(currentMouseState.Y - Position.Y, currentMouseState.X - Position.X);
+            float rotationAngle = angle - (float)(Math.PI / 2);
+
+            return rotationAngle;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sb"></param>
+        public void Draw(SpriteBatch sb)
+        {
+            sb.Draw(dungeontilesTexture2D, Rectangle, new Rectangle(128, 64, 16, 32), Color.White);
+            sb.Draw(dungeontilesTexture2D, SwordLocation(), new Rectangle(320, 80, 16, 32), Color.White, SwordRotateAngle(), new Vector2(8, -8), 2.0f, SpriteEffects.FlipVertically, 0.0f);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="gt"></param>
         public void Update(GameTime gt)
         {
+            playerControl();
+        }
 
+        /// <summary>
+        /// init player's stats
+        /// </summary>
+        public void NewRound()
+        {
+            roomsCleared = 0;
+            exp = 0;
+            levelUpExp = 100;
+            level = 1;
+            atk = 1;
+            maxHealth = 10;
+            health = maxHealth;
+            atkSpd = 1;
+            distance = 1;
+            range = 1;
+            roomsCleared = 0;
         }
     }
 }

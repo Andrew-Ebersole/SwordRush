@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -21,14 +21,17 @@ namespace SwordRush
 
         }
 
-        public void Draw(SpriteBatch sb)
+        public override void Draw(SpriteBatch sb)
         {
 
         }
-
-        public void Update(GameTime gt, GameObject collider)
+        
+        public override void Update(GameTime gt)  
         {
-
+            if (Rectangle.Intersects(GameManager.Get.LocalPlayer.Rectangle))
+            {
+                GameManager.Get.LocalPlayer.Damage();
+            }
         }
     }
 }

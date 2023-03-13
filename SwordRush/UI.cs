@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -49,6 +49,27 @@ namespace SwordRush
         // Textures
         private Texture2D menuImageTexture;
 
+        // Event to communicate with GameManager
+        public event ToggleGameState startGame;
+        public event ToggleGameState quitGame;
+
+
+
+        private static UI instance = null;
+        
+        public static UI Get
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new UI();
+                }
+                
+                return instance;
+            }
+        }
+
         // --- Properties --- //
 
         public GameFSM GameFSM { get { return gameFSM; } }
@@ -57,7 +78,7 @@ namespace SwordRush
 
         // --- Constructor --- //
 
-        public UI(ContentManager content, Point windowSize)
+        public void Initialize(ContentManager content, Point windowSize)
         {
             // State Machine
             gameFSM = GameFSM.Menu;
@@ -94,7 +115,7 @@ namespace SwordRush
         {
             currentMState = Mouse.GetState();
 
-            // Testing Menu Text
+            // Loads the 
             switch (gameFSM)
             {
                 case GameFSM.Menu:
@@ -109,6 +130,9 @@ namespace SwordRush
                     if (menuButtons[0].LeftClicked)
                     {
                         gameFSM = GameFSM.Game;
+
+                        // Sends event that will be recieved by game manager
+                        startGame();
                     }
                     if (menuButtons[1].LeftClicked)
                     {
@@ -127,12 +151,15 @@ namespace SwordRush
                         gameFSM = GameFSM.Settings;
                     }
                     break;
+
                 case GameFSM.Game:
-                    // Temporarily when in game right click will bring you out
+                    // Right click to quit the game
                     if (currentMState.RightButton == ButtonState.Pressed
                         && previousMState.RightButton == ButtonState.Released)
                     {
+                        quitGame();
                         gameFSM = GameFSM.Menu;
+                        
                     }
                     break;
 
@@ -174,12 +201,39 @@ namespace SwordRush
                     
                     break;
 
-                case GameFSM.Game:
-                    
+                case GameFSM.GameOver:
+                    // Draw Game over
+                    sb.DrawString(
+                        bellMT72,
+                        "GAME OVER",
+                        new Vector2((window.Width * 0.3f),
+                        (window.Height * 0.3f)),
+                        Color.Red);
+
+                    // Draw Score
+                    sb.DrawString(
+                        bellMT48,
+                        $"YOU CLEARED __ ROOMS",
+                        new Vector2((window.Width * 0.3f),
+                        (window.Height * 0.5f)),
+                        Color.White);
                     break;
+
+                case GameFSM.Instructions:
+                    break;
+
+                case GameFSM.Credits:
+                    break;
+
+                case GameFSM.HighScores:
+                    break;
+
+                case GameFSM.Settings:
+                    break;
+
             }
 
-            
+
         }
 
         private void initalizeButtons()
@@ -214,9 +268,14 @@ namespace SwordRush
 
             menuButtons.Add(new TextButton(new Rectangle(
                 (int)(window.Width * 0.10f), (int)(window.Height * 0.78),  // Location
-                (int)(window.Width * 0.25f), (int)(window.Height * 0.09f)), // Hitbox
-                "Instructions",                                             // Text
+                (int)(window.Width * 0.17f), (int)(window.Height * 0.09f)), // Hitbox
+                "Settings",                                                 // Text
                 bellMT48));                                                 // Font
+        }
+
+        public void EndGame()
+        {
+            gameFSM = GameFSM.GameOver;
         }
     }
 }
