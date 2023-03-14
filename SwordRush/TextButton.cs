@@ -79,5 +79,16 @@ namespace SwordRush
                 new Vector2(rectangle.X,rectangle.Y),
                 color);
         }
+
+        public bool IsClicked()
+        {
+            if (color == Color.DarkGoldenrod
+                && currentMState.LeftButton == ButtonState.Pressed
+                && currentMState.RightButton == ButtonState.Released)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }

@@ -81,8 +81,10 @@ namespace SwordRush
 
         public virtual void Update(GameTime gt)
         {
-
+            
         }
+
+        
 
         public virtual void Draw(SpriteBatch sb)
         {
