@@ -42,6 +42,7 @@ namespace SwordRush
 
         // Buttons
         private List<TextButton> menuButtons;
+        private List<TextButton> settingButtons;
 
         // Window dimensions
         private Rectangle window;
@@ -270,6 +271,15 @@ namespace SwordRush
                 (int)(window.Width * 0.10f), (int)(window.Height * 0.78),  // Location
                 (int)(window.Width * 0.17f), (int)(window.Height * 0.09f)), // Hitbox
                 "Settings",                                                 // Text
+                bellMT48));                                                 // Font
+
+            // --- Settings Buttons -------------------------------------------------------------//
+            settingButtons = new List<TextButton>();
+
+            settingButtons.Add(new TextButton(new Rectangle(
+                (int)(window.Width * 0.10f), (int)(window.Height * 0.30f),  // Location
+                (int)(window.Width * 0.23f), (int)(window.Height * 0.09f)), // Hitbox
+                "<",                                                        // Text
                 bellMT48));                                                 // Font
         }
 
