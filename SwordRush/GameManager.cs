@@ -13,18 +13,27 @@ namespace SwordRush
     {
         // --- Fields --- //
 
-        private Texture2D spriteSheet;
+        //game states
         private bool gameActive;
+        private Rectangle window;
+        public event ToggleGameState gameOver;
+
+        //objects
         private Player player;
         private List<Enemy> enemies;
-        public event ToggleGameState gameOver;
+
+        //textures
+        private Texture2D spriteSheet;
         private Texture2D dungeontilesTexture2D;
         private Texture2D healthBarTexture;
         private Texture2D xpBarTexture;
         private Texture2D emptyBarTexture;
-        private Rectangle window;
+        
         private SpriteFont BellMT24;
+
+        //tiling
         private List<SceneObject> walls;
+        private int[,] grid;
         
         private static GameManager instance = null;
         public static GameManager Get
@@ -49,18 +58,25 @@ namespace SwordRush
 
         public void Initialize(ContentManager content, Point windowSize, Texture2D whiteRectangle)
         {
+            //sprites & game states
             this.spriteSheet = spriteSheet;
             gameActive = false;
             dungeontilesTexture2D = content.Load<Texture2D>("DungeonTiles");
-            walls = new List<SceneObject>();
+            
+            //objects
             enemies = new List<Enemy>();
             player = new Player(dungeontilesTexture2D, new Rectangle(500, 500, 32, 64));
-            enemies.Add(new ShortRangeEnemy(dungeontilesTexture2D, new Rectangle(10, 10, 32, 32), player));
+            enemies.Add(new ShortRangeEnemy(null, new Rectangle(10, 10, 32, 32), player));
             //temporary test walls
 
-            walls.Add(new SceneObject(true, whiteRectangle, new Rectangle(500, 500, 80, 80)));
 
+            //tiling
+            grid = new int[20, 12];
+            walls = new List<SceneObject>();
+            //test wall
+            walls.Add(new SceneObject(true, whiteRectangle, new Rectangle(500, 500, 64, 64)));
 
+            //window
             this.window = new Rectangle(0, 0,
                 windowSize.X, windowSize.Y);
 

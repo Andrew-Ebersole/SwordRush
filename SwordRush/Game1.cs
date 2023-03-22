@@ -38,7 +38,7 @@ namespace SwordRush
 
             // Change window size
             _graphics.PreferredBackBufferWidth = 1280;
-            _graphics.PreferredBackBufferHeight = 720;
+            _graphics.PreferredBackBufferHeight = 768;
             _graphics.ApplyChanges();
         }
 
