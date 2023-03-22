@@ -6,6 +6,10 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
 using System;
+using System.Drawing;
+using Color = Microsoft.Xna.Framework.Color;
+using Point = Microsoft.Xna.Framework.Point;
+using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
 namespace SwordRush
 {
@@ -66,7 +70,7 @@ namespace SwordRush
             //objects
             enemies = new List<Enemy>();
             player = new Player(dungeontilesTexture2D, new Rectangle(500, 500, 32, 64));
-            enemies.Add(new ShortRangeEnemy(null, new Rectangle(10, 10, 32, 32), player));
+            enemies.Add(new ShortRangeEnemy(dungeontilesTexture2D, new Rectangle(10, 10, 32, 32), player));
             //temporary test walls
 
 
@@ -108,7 +112,7 @@ namespace SwordRush
 
                     //update enemy collision
                     WallCollision(enemy, walls);
-                    if (Collision(enemy, player.Sword))
+                    if (SwordCollision(player.CreateSwordCollider(player.SwordLocation(), player.SwordRotateAngle(), new Vector2(1, 1)), enemy.Rectangle))
                     {
                         enemy.Damaged();
                     }
@@ -246,16 +250,17 @@ namespace SwordRush
         /// <param name="obj1"></param>
         /// <param name="obj2"></param>
         /// <returns></returns>
-        public bool Collision(GameObject obj1, GameObject obj2)
+        public bool SwordCollision(RectangleF rect1, Rectangle rect2)
         {
-            if (obj1.Rectangle.Intersects(obj2.Rectangle))
+            player.CreateSwordCollider(player.SwordLocation(), player.SwordRotateAngle(), new Vector2(1, 1));
+            RectangleF rect1f = new RectangleF(rect1.Location, rect1.Size);
+            RectangleF rect2f = new RectangleF((int)rect2.X, (int)rect2.Y, rect2.Width, rect2.Height);
+            if (rect1f.IntersectsWith(rect2f))
             {
                 return true;
             }
-            else
-            {
-                return false;
-            }
+
+            return false;
         }
 
         public void StartGame()
