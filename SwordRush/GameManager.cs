@@ -27,6 +27,7 @@ namespace SwordRush
         private Texture2D healthBarTexture;
         private Texture2D xpBarTexture;
         private Texture2D emptyBarTexture;
+        private Texture2D whiteRectangle;
         
         private SpriteFont BellMT24;
 
@@ -61,11 +62,12 @@ namespace SwordRush
             this.spriteSheet = spriteSheet;
             gameActive = false;
             dungeontilesTexture2D = content.Load<Texture2D>("DungeonTiles");
+            this.whiteRectangle = whiteRectangle;
             
             //objects
             enemies = new List<Enemy>();
             player = new Player(dungeontilesTexture2D, new Rectangle(500, 500, 32, 64));
-            enemies.Add(new ShortRangeEnemy(null, new Rectangle(10, 10, 32, 32), player));
+            enemies.Add(new ShortRangeEnemy(dungeontilesTexture2D, new Rectangle(10, 10, 32, 32), player));
             //temporary test walls
 
 
@@ -131,6 +133,12 @@ namespace SwordRush
             {
                 sb.Draw(dungeontilesTexture2D, new Vector2(0, 0), new Rectangle(0, 64, 16, 32), Color.White);
 
+                //draw walls
+                foreach (SceneObject obj in walls)
+                {
+                    obj.Draw(sb);
+                }
+
                 player.Draw(sb);
                 foreach (Enemy enemy in enemies)
                 {
@@ -154,16 +162,26 @@ namespace SwordRush
                     (int)(window.Width * 0.3f), (int)(window.Height * 0.09f)),
                     sb);
 
-                //draw walls
-                foreach (SceneObject obj in walls)
-                {
-                    obj.Draw(sb);
-                }
+                
             }
         }
+
+        /// <summary>
+        /// creates wall objects based on where 1 values in the grid are
+        /// </summary>
         public void GenerateRoom()
         {
-
+            walls.Clear();
+            for (int i = 0; i < grid.GetLength(1); i++)
+            {
+                for (int j = 0; j < grid.GetLength(0); j++)
+                {
+                    if (grid[j,i] == 1)
+                    {
+                        walls.Add(new SceneObject(true, whiteRectangle, new Rectangle(j*64, i*64, 64, 64)));
+                    }
+                }
+            }
         }
 
         public void WallCollision(GameObject entity, List<SceneObject> walls)
@@ -267,6 +285,12 @@ namespace SwordRush
         {
             gameActive = true;
             player.NewRound();
+
+            //create temporary testing block
+            grid[10, 7] = 1;
+            
+            //generates curent room based on grid
+            GenerateRoom();
             // TODO: Reset game code goes here
         }
 
