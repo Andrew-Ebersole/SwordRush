@@ -46,9 +46,13 @@ namespace SwordRush
 
         }
         */
-        public void Damage()
+        public virtual void Damage()
         {
 
+        }
+
+        public virtual void Damaged()
+        {
         }
 
         public virtual void Update(GameTime gt) { 

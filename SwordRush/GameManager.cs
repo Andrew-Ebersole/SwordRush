@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
+using System;
 
 namespace SwordRush
 {
@@ -93,7 +94,7 @@ namespace SwordRush
                     WallCollision(enemy, walls);
                     if (Collision(enemy, player.Sword))
                     {
-                        enemy.Damage();
+                        enemy.Damaged();
                     }
                 }
 
@@ -121,8 +122,6 @@ namespace SwordRush
                     enemy.Draw(sb);
                 }
 
-                //sb.Draw(dungeontilesTexture2D, enemies[0].Rectangle, new Rectangle(368, 80, 16, 16), Color.White);
-                
                 // Display health and xp bars
                 drawBar(healthBarTexture,
                     player.Health,
@@ -242,10 +241,6 @@ namespace SwordRush
                 return false;
             }
         }
-
-
-
-
 
         public void StartGame()
         {
