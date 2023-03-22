@@ -121,6 +121,8 @@ namespace SwordRush
                     enemy.Draw(sb);
                 }
 
+                //sb.Draw(dungeontilesTexture2D, enemies[0].Rectangle, new Rectangle(368, 80, 16, 16), Color.White);
+                
                 // Display health and xp bars
                 drawBar(healthBarTexture,
                     player.Health,

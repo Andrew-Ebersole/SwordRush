@@ -53,5 +53,9 @@ namespace SwordRush
 
         public virtual void Update(GameTime gt) { 
         }
+        public void Draw(SpriteBatch sb)
+        {
+            sb.Draw(dungeontilesTexture2D, Rectangle, new Rectangle(368, 80, 16, 16), Color.White);
+        }
     }
 }
