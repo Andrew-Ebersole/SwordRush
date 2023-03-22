@@ -53,7 +53,7 @@ namespace SwordRush
 
         public void Draw(SpriteBatch sb)
         {
-
+            sb.Draw(DungeonTilesTexture2D, Rectangle, new Rectangle(368, 80, 16, 16), Color.White);
         }
 
         public override void Update(GameTime gt)

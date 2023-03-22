@@ -20,11 +20,23 @@ namespace SwordRush
         protected int atk;
         protected int health;
 
-        // --- Constructor --- //
+        //Texture
+        private Texture2D dungeontilesTexture2D;
 
+        public Texture2D DungeonTilesTexture2D
+        {
+            get
+            {
+                return dungeontilesTexture2D;
+            }
+        }
+
+
+        // --- Constructor --- //
         public Enemy (Texture2D texture, Rectangle rectangle, Player player) : base (texture, rectangle)
         {
             this.player = player;
+            dungeontilesTexture2D = texture;
         }
 
         // --- Constructor --- //
