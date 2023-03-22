@@ -31,12 +31,13 @@ namespace SwordRush
         /// <summary>
         /// Push the enemy away from the player when it was damaged
         /// </summary>
-        public void Damaged()
+        public override void Damaged()
         {
             Vector2 distance = position - player.Position;
             Vector2 direction = Vector2.Normalize(distance);
 
             Position += direction * 10;
+            Debug.WriteLine(health);
         }
 
         /// <summary>

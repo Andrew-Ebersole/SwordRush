@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -186,7 +187,7 @@ namespace SwordRush
         {
             float angle = (float)Math.Atan2(currentMouseState.Y - Position.Y, currentMouseState.X - Position.X);
             float rotationAngle = angle - (float)(Math.PI / 2);
-
+            
             return rotationAngle;
         }
 
