@@ -7,11 +7,13 @@ namespace SwordRush
     internal class ShortRangeEnemy:Enemy
     {
         Player player;
+        private Texture2D dungeontilesTexture2D;
 
         // --- Constructor --- //
         public ShortRangeEnemy(Texture2D texture, Rectangle rectangle, Player player) : base(texture, rectangle, player)
         {
             this.player = player;
+            dungeontilesTexture2D = texture;
         }
 
         // --- Constructor --- //
@@ -53,7 +55,7 @@ namespace SwordRush
 
         public void Draw(SpriteBatch sb)
         {
-            sb.Draw(texture, rectangle, new Rectangle(368, 80, 16, 16), Color.White);
+            
         }
 
         public override void Update(GameTime gt)

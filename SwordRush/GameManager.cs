@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -64,8 +65,8 @@ namespace SwordRush
             //objects
             enemies = new List<Enemy>();
             player = new Player(dungeontilesTexture2D, new Rectangle(500, 500, 32, 64));
-            //test enemy
-            enemies.Add(new ShortRangeEnemy(dungeontilesTexture2D, new Rectangle(10, 10, 32, 32), player));
+            enemies.Add(new ShortRangeEnemy(null, new Rectangle(10, 10, 32, 32), player));
+            //temporary test walls
 
 
             //tiling
@@ -102,9 +103,14 @@ namespace SwordRush
                 foreach (Enemy enemy in enemies)
                 {
                     enemy.Update(gt);
+                    
 
                     //update enemy collision
                     WallCollision(enemy, walls);
+                    if (Collision(enemy, player.Sword))
+                    {
+                        enemy.Damage();
+                    }
                 }
 
                 // End game if player health runs out
@@ -126,13 +132,13 @@ namespace SwordRush
                 sb.Draw(dungeontilesTexture2D, new Vector2(0, 0), new Rectangle(0, 64, 16, 32), Color.White);
 
                 player.Draw(sb);
-                foreach (ShortRangeEnemy enemy in enemies)
+                foreach (Enemy enemy in enemies)
                 {
                     enemy.Draw(sb);
                 }
 
                 //sb.Draw(dungeontilesTexture2D, enemies[0].Rectangle, new Rectangle(368, 80, 16, 16), Color.White);
-
+                
                 // Display health and xp bars
                 drawBar(healthBarTexture,
                     player.Health,

@@ -95,6 +95,13 @@ namespace SwordRush
             }
         }
 
+        public GameObject Sword
+        {
+            get
+            {
+                return sword;
+            }
+        }
 
         // --- Constructor --- //
 
@@ -167,7 +174,8 @@ namespace SwordRush
         /// <returns>return the vector2 of the sword's location</returns>
         public Vector2 SwordLocation()
         {
-            return new Vector2(Rectangle.X + Rectangle.Width / 2, Rectangle.Y + Rectangle.Height / 1.5f);
+            sword.Position = new Vector2(Rectangle.X + Rectangle.Width / 2, Rectangle.Y + Rectangle.Height / 1.5f);
+            return sword.Position;
         }
 
         /// <summary>
@@ -189,7 +197,7 @@ namespace SwordRush
         public void Draw(SpriteBatch sb)
         {
             sb.Draw(dungeontilesTexture2D, Rectangle, new Rectangle(128, 64, 16, 32), Color.White);
-            sb.Draw(dungeontilesTexture2D, SwordLocation(), new Rectangle(320, 80, 16, 32), Color.White, SwordRotateAngle(), new Vector2(8, -8), 2.0f, SpriteEffects.FlipVertically, 0.0f);
+            sb.Draw(dungeontilesTexture2D, sword.Position, new Rectangle(320, 80, 16, 32), Color.White, SwordRotateAngle(), new Vector2(8, -8), 2.0f, SpriteEffects.FlipVertically, 0.0f);
         }
 
         /// <summary>
@@ -199,6 +207,7 @@ namespace SwordRush
         public void Update(GameTime gt)
         {
             playerControl();
+            SwordLocation();
         }
 
         /// <summary>
