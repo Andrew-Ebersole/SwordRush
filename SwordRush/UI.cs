@@ -265,12 +265,68 @@ namespace SwordRush
                     break;
 
                 case GameFSM.Credits: // --- Credits --------------------------------------------//
+
+                    sb.DrawString(
+                        bellMT48,                       // Font
+                        $"Developers",                  // Text
+                        new Vector2(window.Width * 0.1f,// X Position
+                        window.Height * 0.1f),          // Y Position
+                        Color.White);                   // Color
+
+                    sb.DrawString(
+                        bellMT36,                       // Font
+                        $"Andrew Ebersole" +
+                        $"\nBin Xu" +
+                        $"\nJosh Leong" +
+                        $"\nWeijie Ye",                  // Text
+                        new Vector2(window.Width * 0.1f,// X Position
+                        window.Height * 0.3f),          // Y Position
+                        Color.White);                   // Color
+
+
+                    sb.DrawString(
+                        bellMT48,                       // Font
+                        $"Art",                         // Text
+                        new Vector2(window.Width * 0.4f,// X Position
+                        window.Height * 0.1f),          // Y Position
+                        Color.LightGray);                   // Color
+
+                    sb.DrawString(
+                        bellMT36,                       // Font
+                        $"frosty_rabbid" +
+                        $"\nguilemus" +
+                        $"\n0x72 \"Robert\"",                  // Text
+                        new Vector2(window.Width * 0.4f,// X Position
+                        window.Height * 0.3f),          // Y Position
+                        Color.LightGray);                   // Color
+
+                    sb.DrawString(
+                        bellMT48,                       // Font
+                        $"Audio",                       // Text
+                        new Vector2(window.Width * 0.7f,// X Position
+                        window.Height * 0.1f),          // Y Position
+                        Color.White);                   // Color
                     break;
 
                 case GameFSM.HighScores: // --- HighScores --------------------------------------//
+
+                    sb.DrawString(
+                        bellMT72,                       // Font
+                        $"High Scores",                 // Text
+                        new Vector2(window.Width * 0.1f,// X Position
+                        window.Height * 0.1f),          // Y Position
+                        Color.White);                   // Color
+
                     break;
 
                 case GameFSM.Settings: // --- Settings ------------------------------------------//
+                    
+                    sb.DrawString(
+                        bellMT72,                       // Font
+                        $"Settings",                    // Text
+                        new Vector2(window.Width * 0.1f,// X Position
+                        window.Height * 0.1f),          // Y Position
+                        Color.White);                   // Color
                     break;
 
             }
@@ -320,8 +376,8 @@ namespace SwordRush
             settingButtons.Add(new TextButton(new Rectangle(
                 (int)(window.Width * 0.10f), (int)(window.Height * 0.30f),  // Location
                 (int)(window.Width * 0.23f), (int)(window.Height * 0.09f)), // Hitbox
-                "<",                                                        // Text
-                bellMT48));                                                 // Font
+                "-",                                                        // Text
+                bellMT36));                                                 // Font
         }
 
         public void EndGame()
