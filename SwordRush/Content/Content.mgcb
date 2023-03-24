@@ -32,6 +32,13 @@
 /processorParam:TextureFormat=Compressed
 /build:Bell_MT-24.spritefont
 
+#begin Bell_MT-36.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Bell_MT-36.spritefont
+
 #begin Bell_MT-48.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor

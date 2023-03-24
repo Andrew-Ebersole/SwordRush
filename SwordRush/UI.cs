@@ -1,4 +1,4 @@
-using System;
+ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -33,6 +33,7 @@ namespace SwordRush
         private GameFSM gameFSM;
 
         // Fonts
+        private SpriteFont bellMT36;
         private SpriteFont bellMT48;
         private SpriteFont bellMT72;
 
@@ -85,6 +86,7 @@ namespace SwordRush
             gameFSM = GameFSM.Menu;
 
             // Fonts
+            bellMT36 = content.Load<SpriteFont>("Bell_MT-36");
             bellMT48 = content.Load<SpriteFont>("Bell_MT-48");
             bellMT72 = content.Load<SpriteFont>("Bell_MT-72");
 
@@ -119,7 +121,7 @@ namespace SwordRush
             // Loads the 
             switch (gameFSM)
             {
-                case GameFSM.Menu:
+                case GameFSM.Menu: // --- Menu --------------------------------------------------//
                     
                     // Updates hover color change
                     foreach (TextButton b in menuButtons)
@@ -153,7 +155,7 @@ namespace SwordRush
                     }
                     break;
 
-                case GameFSM.Game:
+                case GameFSM.Game: // --- Game --------------------------------------------------//
                     // Right click to quit the game
                     if (currentMState.RightButton == ButtonState.Pressed
                         && previousMState.RightButton == ButtonState.Released)
@@ -164,7 +166,7 @@ namespace SwordRush
                     }
                     break;
 
-                default:
+                default:  // --- Other ----------------------------------------------------------//
                     // In any state that is not game left click will bring you back to menu
                     if (currentMState.LeftButton == ButtonState.Pressed
                         && previousMState.LeftButton == ButtonState.Released)
@@ -182,7 +184,7 @@ namespace SwordRush
             // Testing Menu Text
             switch (gameFSM)
             {
-                case GameFSM.Menu:
+                case GameFSM.Menu:  // --- Menu -------------------------------------------------//
 
                     // Draw Title
                     sb.DrawString(
@@ -202,7 +204,7 @@ namespace SwordRush
                     
                     break;
 
-                case GameFSM.GameOver:
+                case GameFSM.GameOver:  // --- Menu -----------------------------------------------//
                     // Draw Game over
                     sb.DrawString(
                         bellMT72,
@@ -213,23 +215,129 @@ namespace SwordRush
 
                     // Draw Score
                     sb.DrawString(
-                        bellMT48,
-                        $"YOU CLEARED __ ROOMS",
-                        new Vector2((window.Width * 0.3f),
-                        (window.Height * 0.5f)),
-                        Color.White);
+                        bellMT48,                           // Font
+                        $"YOU CLEARED __ ROOMS",            // Text
+                        new Vector2((window.Width * 0.3f),  // X Position
+                        (window.Height * 0.5f)),            // Y Position
+                        Color.White);                       // Color
                     break;
 
-                case GameFSM.Instructions:
+                case GameFSM.Instructions: // --- Instructions ----------------------------------//
+                    sb.DrawString(
+                        bellMT72,                       // Font
+                        $"How to Play",                 // Text
+                        new Vector2(window.Width * 0.1f,// X Position
+                        window.Height * 0.1f),          // Y Position
+                        Color.White);                   // Color
+
+                    sb.DrawString(
+                        bellMT72,                       // Font
+                        $"Controls",                    // Text
+                        new Vector2(window.Width * 0.6f,// X Position
+                        window.Height * 0.1f),          // Y Position
+                        Color.White);                   // Color
+
+                    sb.DrawString(
+                        bellMT36,                       // Font
+                        $"Attack to move, Kill as " +
+                        $"\nmany enemies as you can" +
+                        $"\nto unlock the next room." +
+                        $"\nSee how many rooms you " +
+                        $"\ncan clear before you die." +
+                        $"\nGain XP to unlock abilities.", // Text
+                        new Vector2(window.Width * 0.1f,// X Position
+                        window.Height * 0.3f),          // Y Position
+                        Color.White);                   // Color
+
+                    sb.DrawString(
+                        bellMT36,                       // Font
+                        $"Attack" +
+                        $"\n - Left Click" +
+                        $"\nMove" +
+                        $"\n - Left Click" +
+                        $"\nQuit" +
+                        $"\n - Escape",                 // Text
+                        new Vector2(window.Width * 0.6f,// X Position
+                        window.Height * 0.3f),          // Y Position
+                        Color.White);                   // Color
+
+
                     break;
 
-                case GameFSM.Credits:
+                case GameFSM.Credits: // --- Credits --------------------------------------------//
+
+                    sb.DrawString(
+                        bellMT48,                       // Font
+                        $"Developers",                  // Text
+                        new Vector2(window.Width * 0.1f,// X Position
+                        window.Height * 0.1f),          // Y Position
+                        Color.White);                   // Color
+
+                    sb.DrawString(
+                        bellMT36,                       // Font
+                        $"Andrew Ebersole" +
+                        $"\nBin Xu" +
+                        $"\nJosh Leong" +
+                        $"\nWeijie Ye",                  // Text
+                        new Vector2(window.Width * 0.1f,// X Position
+                        window.Height * 0.3f),          // Y Position
+                        Color.White);                   // Color
+
+
+                    sb.DrawString(
+                        bellMT48,                       // Font
+                        $"Art",                         // Text
+                        new Vector2(window.Width * 0.4f,// X Position
+                        window.Height * 0.1f),          // Y Position
+                        Color.LightGray);                   // Color
+
+                    sb.DrawString(
+                        bellMT36,                       // Font
+                        $"frosty_rabbid" +
+                        $"\nguilemus" +
+                        $"\n0x72 \"Robert\"",                  // Text
+                        new Vector2(window.Width * 0.4f,// X Position
+                        window.Height * 0.3f),          // Y Position
+                        Color.LightGray);                   // Color
+
+                    sb.DrawString(
+                        bellMT48,                       // Font
+                        $"Audio",                       // Text
+                        new Vector2(window.Width * 0.7f,// X Position
+                        window.Height * 0.1f),          // Y Position
+                        Color.White);                   // Color
                     break;
 
-                case GameFSM.HighScores:
+                case GameFSM.HighScores: // --- HighScores --------------------------------------//
+
+                    sb.DrawString(
+                        bellMT72,                       // Font
+                        $"High Scores",                 // Text
+                        new Vector2(window.Width * 0.1f,// X Position
+                        window.Height * 0.1f),          // Y Position
+                        Color.White);                   // Color
+
+                    sb.DrawString(
+                        bellMT48,                       // Font
+                        $"1:" +
+                        $"\n2:" +
+                        $"\n3:" +
+                        $"\n4:" +
+                        $"\n5:",                        // Text
+                        new Vector2(window.Width * 0.1f,// X Position
+                        window.Height * 0.3f),          // Y Position
+                        Color.White);                   // Color
+
                     break;
 
-                case GameFSM.Settings:
+                case GameFSM.Settings: // --- Settings ------------------------------------------//
+                    
+                    sb.DrawString(
+                        bellMT72,                       // Font
+                        $"Settings",                    // Text
+                        new Vector2(window.Width * 0.1f,// X Position
+                        window.Height * 0.1f),          // Y Position
+                        Color.White);                   // Color
                     break;
 
             }
@@ -279,8 +387,8 @@ namespace SwordRush
             settingButtons.Add(new TextButton(new Rectangle(
                 (int)(window.Width * 0.10f), (int)(window.Height * 0.30f),  // Location
                 (int)(window.Width * 0.23f), (int)(window.Height * 0.09f)), // Hitbox
-                "<",                                                        // Text
-                bellMT48));                                                 // Font
+                "-",                                                        // Text
+                bellMT36));                                                 // Font
         }
 
         public void EndGame()
