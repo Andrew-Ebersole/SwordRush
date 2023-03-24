@@ -166,6 +166,43 @@ namespace SwordRush
                     }
                     break;
 
+                case GameFSM.Settings:
+
+                    foreach(TextButton b in settingButtons)
+                    {
+                        b.Update(gt);
+                    }
+
+                    // TODO: implement debug code here to adjust volumes and enable invincibility
+                    // Lower SFX
+                    if (settingButtons[0].LeftClicked)
+                    {
+                        
+                    }
+                    // Raise SFX
+                    if (settingButtons[1].LeftClicked)
+                    {
+
+                    }
+                    // Lower Music
+                    if (settingButtons[2].LeftClicked)
+                    {
+
+                    }
+                    // Raise Music
+                    if (settingButtons[3].LeftClicked)
+                    {
+
+                    }
+                    // Toggle TakeDamage
+                    if (settingButtons[4].LeftClicked)
+                    {
+                        // Not implemented properly yet
+                        settingButtons[4].Text = "False";
+                    }
+
+                    break;
+
                 default:  // --- Other ----------------------------------------------------------//
                     // In any state that is not game left click will bring you back to menu
                     if (currentMState.LeftButton == ButtonState.Pressed
@@ -275,10 +312,10 @@ namespace SwordRush
 
                     sb.DrawString(
                         bellMT36,                       // Font
-                        $"Andrew Ebersole" +
-                        $"\nBin Xu" +
+                        $"Bin Xu" +
                         $"\nJosh Leong" +
-                        $"\nWeijie Ye",                  // Text
+                        $"\nWeijie Ye" +
+                        $"\nAndrew Ebersole",           // Text
                         new Vector2(window.Width * 0.1f,// X Position
                         window.Height * 0.3f),          // Y Position
                         Color.White);                   // Color
@@ -338,6 +375,46 @@ namespace SwordRush
                         new Vector2(window.Width * 0.1f,// X Position
                         window.Height * 0.1f),          // Y Position
                         Color.White);                   // Color
+
+                    sb.DrawString(
+                        bellMT48,                       // Font
+                        $"SFX Volume",                  // Text
+                        new Vector2(window.Width * 0.1f,// X Position
+                        window.Height * 0.3f),          // Y Position
+                        Color.White);                   // Color
+
+                    sb.DrawString(
+                        bellMT36,                       // Font
+                        $"10",                          // Text
+                        new Vector2(window.Width * 0.63f,// X Position
+                        window.Height * 0.30f),          // Y Position
+                        Color.White);                   // Color
+
+                    sb.DrawString(
+                        bellMT48,                       // Font
+                        $"Music Volume",                // Text
+                        new Vector2(window.Width * 0.1f,// X Position
+                        window.Height * 0.4f),          // Y Position
+                        Color.White);                   // Color
+
+                    sb.DrawString(
+                        bellMT36,                       // Font
+                        $"10",                          // Text
+                        new Vector2(window.Width * 0.63f,// X Position
+                        window.Height * 0.40f),          // Y Position
+                        Color.White);                   // Color
+
+                    sb.DrawString(
+                        bellMT48,                       // Font
+                        $"Take Damage",                 // Text
+                        new Vector2(window.Width * 0.1f,// X Position
+                        window.Height * 0.5f),          // Y Position
+                        Color.White);                   // Color
+
+                    foreach (TextButton b in settingButtons)
+                    {
+                        b.Draw(sb);
+                    }
                     break;
 
             }
@@ -385,9 +462,33 @@ namespace SwordRush
             settingButtons = new List<TextButton>();
 
             settingButtons.Add(new TextButton(new Rectangle(
-                (int)(window.Width * 0.10f), (int)(window.Height * 0.30f),  // Location
-                (int)(window.Width * 0.23f), (int)(window.Height * 0.09f)), // Hitbox
-                "-",                                                        // Text
+                (int)(window.Width * 0.60f), (int)(window.Height * 0.30f),  // Location
+                (int)(window.Width * 0.02f), (int)(window.Height * 0.09f)), // Hitbox
+                "<",                                                        // Text
+                bellMT36));                                                 // Font
+
+            settingButtons.Add(new TextButton(new Rectangle(
+                (int)(window.Width * 0.68f), (int)(window.Height * 0.30f),  // Location
+                (int)(window.Width * 0.02f), (int)(window.Height * 0.09f)), // Hitbox
+                ">",                                                        // Text
+                bellMT36));                                                 // Font
+
+            settingButtons.Add(new TextButton(new Rectangle(
+                (int)(window.Width * 0.60f), (int)(window.Height * 0.40f),  // Location
+                (int)(window.Width * 0.02f), (int)(window.Height * 0.09f)), // Hitbox
+                "<",                                                        // Text
+                bellMT36));                                                 // Font
+
+            settingButtons.Add(new TextButton(new Rectangle(
+                (int)(window.Width * 0.68f), (int)(window.Height * 0.40f),  // Location
+                (int)(window.Width * 0.02f), (int)(window.Height * 0.09f)), // Hitbox
+                ">",                                                        // Text
+                bellMT36));                                                 // Font
+
+            settingButtons.Add(new TextButton(new Rectangle(
+                (int)(window.Width * 0.60f), (int)(window.Height * 0.50f),  // Location
+                (int)(window.Width * 0.10f), (int)(window.Height * 0.09f)), // Hitbox
+                "True",                                                     // Text
                 bellMT36));                                                 // Font
         }
 
