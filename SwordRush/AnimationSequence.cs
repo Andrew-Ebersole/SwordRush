@@ -9,17 +9,30 @@ using Microsoft.Xna.Framework.Input;
 
 namespace SwordRush
 {
-    internal class Animation
+    internal class AnimationSequence
     {
         List<Texture2D> frameTextures_;
         double frameSeconds_;
         int frameIndex_ = 0;
         double curFrameSeconds_ = 0;
+        bool loop_ = false;
+        bool end_ = false;
 
-        public Animation(List<Texture2D> frameTextures, double frameSeconds)
+        public bool Loop
+        {
+            get { return loop_; }
+        }
+
+        public bool End
+        {
+            get { return end_; }
+        }
+
+        public AnimationSequence(List<Texture2D> frameTextures, double frameSeconds, bool loop)
         {
             this.frameTextures_ = frameTextures;
             this.frameSeconds_ = frameSeconds;
+            this.loop_ = loop;
         }
 
         public void Update(GameTime gt)
@@ -27,26 +40,34 @@ namespace SwordRush
             curFrameSeconds_ += gt.ElapsedGameTime.TotalSeconds;
             if(curFrameSeconds_ >= frameSeconds_)
             {
-                NextFrame();
+                curFrameSeconds_ = 0;
+                if (frameIndex_ < frameTextures_.Count - 1)
+                {
+                    frameIndex_++;
+                } else
+                {
+                    end_ = true;
+                }
             }
+
+            System.Diagnostics.Debug.WriteLine(frameIndex_);
         }
 
-        public void NextFrame()
+        public void Reset()
         {
-            if(frameIndex_ == frameTextures_.Count - 1)
-            {
-                frameIndex_ = 0;
-            }
-            else
-            {
-                frameIndex_++;
-            }
+            frameIndex_ = 0;
             curFrameSeconds_ = 0;
+            end_ = false;
         }
 
         public Texture2D GetCurrentFrame()
         {
             return frameTextures_[frameIndex_];
+        }
+
+        public bool ShouldEnd()
+        {
+            return end_;
         }
     }
 }
