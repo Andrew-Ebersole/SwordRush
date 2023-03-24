@@ -50,6 +50,7 @@ namespace SwordRush
 
         // Textures
         private Texture2D menuImageTexture;
+        private Texture2D singleColor;
 
         // Event to communicate with GameManager
         public event ToggleGameState startGame;
@@ -80,7 +81,7 @@ namespace SwordRush
 
         // --- Constructor --- //
 
-        public void Initialize(ContentManager content, Point windowSize)
+        public void Initialize(ContentManager content, Point windowSize, GraphicsDevice gd)
         {
             // State Machine
             gameFSM = GameFSM.Menu;
@@ -91,7 +92,10 @@ namespace SwordRush
             bellMT72 = content.Load<SpriteFont>("Bell_MT-72");
 
             // Textures
-            menuImageTexture = content.Load<Texture2D>("DungeonTiles");
+            menuImageTexture = content.Load<Texture2D>("MenuBackground3");
+            singleColor = new Texture2D(gd, 1, 1);
+            singleColor.SetData(new Color[] { Color.White });
+
 
             // Controls Mouse
             currentMState = new MouseState();
@@ -133,7 +137,7 @@ namespace SwordRush
                     if (menuButtons[0].LeftClicked)
                     {
                         gameFSM = GameFSM.Game;
-
+                       
                         // Sends event that will be recieved by game manager
                         startGame();
                     }
@@ -174,32 +178,42 @@ namespace SwordRush
                     }
 
                     // TODO: implement debug code here to adjust volumes and enable invincibility
-                    // Lower SFX
-                    if (settingButtons[0].LeftClicked)
+                    if (currentMState.LeftButton == ButtonState.Pressed 
+                        && previousMState.LeftButton == ButtonState.Released)
                     {
-                        
-                    }
-                    // Raise SFX
-                    if (settingButtons[1].LeftClicked)
-                    {
+                        // Lower SFX
+                        if (settingButtons[0].LeftClicked)
+                        {
 
-                    }
-                    // Lower Music
-                    if (settingButtons[2].LeftClicked)
-                    {
+                        }
+                        // Raise SFX
+                        else if (settingButtons[1].LeftClicked)
+                        {
 
-                    }
-                    // Raise Music
-                    if (settingButtons[3].LeftClicked)
-                    {
+                        }
+                        // Lower Music
+                        else if (settingButtons[2].LeftClicked)
+                        {
 
+                        }
+                        // Raise Music
+                        else if (settingButtons[3].LeftClicked)
+                        {
+
+                        }
+                        // Toggle TakeDamage
+                        else if (settingButtons[4].LeftClicked)
+                        {
+                            // Not implemented properly yet
+                            settingButtons[4].Text = "False";
+                        }
+                        else
+                        {
+                            gameFSM = GameFSM.Menu;
+                        }
                     }
-                    // Toggle TakeDamage
-                    if (settingButtons[4].LeftClicked)
-                    {
-                        // Not implemented properly yet
-                        settingButtons[4].Text = "False";
-                    }
+                    
+                    
 
                     break;
 
@@ -223,6 +237,18 @@ namespace SwordRush
             {
                 case GameFSM.Menu:  // --- Menu -------------------------------------------------//
 
+                    // Background Image
+                    sb.Draw(
+                     menuImageTexture,
+                     window,
+                     Color.White);
+
+                    // Background for title
+                    sb.Draw(singleColor,                                                        // Texture
+                        new Rectangle((int)(window.Width * 0.10f), (int)(window.Height*0.1f),   // X / Y
+                        (int)(window.Width*0.5f),(int)(window.Height*0.13f)),                   // Width / Height
+                        new Color(32, 32, 32));                                                        // Color
+
                     // Draw Title
                     sb.DrawString(
                         bellMT72,                           // Font
@@ -231,13 +257,36 @@ namespace SwordRush
                         (window.Height * 0.10f)),           // Y Pos
                         Color.Goldenrod);                   // Color
 
+                    sb.Draw(singleColor,                                                        // Texture
+                        new Rectangle((int)(window.Width * 0.10f), (int)(window.Height * 0.3f),   // X / Y
+                        (int)(window.Width * 0.24f), (int)(window.Height * 0.08f)),                   // Width / Height
+                        new Color(32, 32, 32));
+
+                    sb.Draw(singleColor,                                                        // Texture
+                        new Rectangle((int)(window.Width * 0.10f), (int)(window.Height * 0.42f),   // X / Y
+                        (int)(window.Width * 0.25f), (int)(window.Height * 0.08f)),                   // Width / Height
+                        new Color(32, 32, 32));
+
+                    sb.Draw(singleColor,                                                        // Texture
+                        new Rectangle((int)(window.Width * 0.10f), (int)(window.Height * 0.54f),   // X / Y
+                        (int)(window.Width * 0.15f), (int)(window.Height * 0.08f)),                   // Width / Height
+                        new Color(32, 32, 32));
+
+                    sb.Draw(singleColor,                                                        // Texture
+                        new Rectangle((int)(window.Width * 0.10f), (int)(window.Height * 0.66f),   // X / Y
+                        (int)(window.Width * 0.25f), (int)(window.Height * 0.08f)),                   // Width / Height
+                        new Color(32, 32, 32));
+
+                    sb.Draw(singleColor,                                                        // Texture
+                        new Rectangle((int)(window.Width * 0.10f), (int)(window.Height * 0.78f),   // X / Y
+                        (int)(window.Width * 0.17f), (int)(window.Height * 0.08f)),                   // Width / Height
+                        new Color(32, 32, 32));
+
                     // Draw all Buttons
                     foreach (TextButton b in menuButtons)
                     {
                         b.Draw(sb);
                     }
-
-                    // Draw Image
                     
                     break;
 
@@ -332,7 +381,8 @@ namespace SwordRush
                         bellMT36,                       // Font
                         $"frosty_rabbid" +
                         $"\nguilemus" +
-                        $"\n0x72 \"Robert\"",                  // Text
+                        $"\n0x72 \"Robert\"" +
+                        $"\nThe Outlander",                  // Text
                         new Vector2(window.Width * 0.4f,// X Position
                         window.Height * 0.3f),          // Y Position
                         Color.LightGray);                   // Color
@@ -356,7 +406,7 @@ namespace SwordRush
 
                     sb.DrawString(
                         bellMT48,                       // Font
-                        $"1:" +
+                        $"1: Not implemented yet" +
                         $"\n2:" +
                         $"\n3:" +
                         $"\n4:" +
