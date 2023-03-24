@@ -17,6 +17,8 @@ namespace SwordRush
     {
         // --- Fields --- //
 
+        private ContentManager contentManager_;
+
         //game states
         private bool gameActive;
         private Rectangle window;
@@ -59,10 +61,13 @@ namespace SwordRush
             // NEVER a set for the instance
         }
 
+        public ContentManager ContentManager { get { return contentManager_; } }
+
         // --- Constructor --- //
 
         public void Initialize(ContentManager content, Point windowSize, Texture2D whiteRectangle)
         {
+            contentManager_ = content;
             //sprites & game states
             this.spriteSheet = spriteSheet;
             gameActive = false;
