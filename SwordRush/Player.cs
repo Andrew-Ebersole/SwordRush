@@ -52,6 +52,8 @@ namespace SwordRush
         //Texture
         private Texture2D dungeontilesTexture2D;
 
+        private Animation animation_;
+
         // --- Properties --- //
 
         public Point Size
@@ -127,6 +129,15 @@ namespace SwordRush
 
             sword = new GameObject(null, Rectangle);
             dungeontilesTexture2D = texture;
+
+            List<Texture2D> frames = new List<Texture2D>();
+
+            frames.Add(GameManager.Get.ContentManager.Load<Texture2D>("knight_f_idle_anim_f0"));
+            frames.Add(GameManager.Get.ContentManager.Load<Texture2D>("knight_f_idle_anim_f1"));
+            frames.Add(GameManager.Get.ContentManager.Load<Texture2D>("knight_f_idle_anim_f2"));
+            frames.Add(GameManager.Get.ContentManager.Load<Texture2D>("knight_f_idle_anim_f3"));
+
+            animation_ = new Animation(frames, 0.25);
         }
 
 
@@ -203,7 +214,8 @@ namespace SwordRush
         /// <param name="sb"></param>
         public void Draw(SpriteBatch sb)
         {
-            sb.Draw(dungeontilesTexture2D, Rectangle, new Rectangle(128, 64, 16, 32), Color.White);
+            sb.Draw(animation_.GetCurrentFrame(), Rectangle, Color.White);
+            //sb.Draw(dungeontilesTexture2D, Rectangle, new Rectangle(128, 64, 16, 32), Color.White);
             sb.Draw(dungeontilesTexture2D, sword.Position, new Rectangle(320, 80, 16, 32), Color.White, SwordRotateAngle(), new Vector2(8, -8), 2.0f, SpriteEffects.FlipVertically, 0.0f);
         }
 
@@ -216,6 +228,7 @@ namespace SwordRush
             playerControl();
             SwordLocation();
             SwordRotateAngle();
+            animation_.Update(gt);
         }
 
         /// <summary>
