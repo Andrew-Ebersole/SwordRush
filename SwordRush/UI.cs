@@ -317,6 +317,17 @@ namespace SwordRush
                         window.Height * 0.1f),          // Y Position
                         Color.White);                   // Color
 
+                    sb.DrawString(
+                        bellMT48,                       // Font
+                        $"1:" +
+                        $"\n2:" +
+                        $"\n3:" +
+                        $"\n4:" +
+                        $"\n5:",                        // Text
+                        new Vector2(window.Width * 0.1f,// X Position
+                        window.Height * 0.3f),          // Y Position
+                        Color.White);                   // Color
+
                     break;
 
                 case GameFSM.Settings: // --- Settings ------------------------------------------//
