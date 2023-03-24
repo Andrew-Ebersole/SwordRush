@@ -48,7 +48,7 @@ namespace SwordRush
             Vector2 distance = position - player.Position;
             Vector2 direction = Vector2.Normalize(distance);
 
-            Position += direction * 10;
+            Position += direction * 100;
             Debug.WriteLine(health);
         }
 
@@ -62,7 +62,7 @@ namespace SwordRush
             {
                 Vector2 direction = Vector2.Normalize(distance);
 
-                Position -= direction * 2;
+                Position -= direction *2;
             }
         }
 

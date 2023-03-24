@@ -55,22 +55,9 @@ namespace SwordRush
         private AnimationComposer animation_;
 
         // --- Properties --- //
+        public Point Size => size;
 
-        public Point Size
-        {
-            get
-            {
-                return size;
-            }
-        }
-
-        public int Health
-        {
-            get
-            {
-                return health;
-            }
-        }
+        public int Health => health;
 
         public int MaxHealth
         {

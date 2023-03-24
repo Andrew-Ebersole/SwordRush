@@ -76,6 +76,7 @@ namespace SwordRush
             UI.Get.quitGame += GameManager.Get.QuitGame;
 
             
+
         }
 
         protected override void Update(GameTime gameTime)
