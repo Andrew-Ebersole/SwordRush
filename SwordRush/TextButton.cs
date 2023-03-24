@@ -29,6 +29,11 @@ namespace SwordRush
         /// </summary>
         public bool LeftClicked { get { return leftClicked; } }
 
+        /// <summary>
+        /// The text the button will display
+        /// </summary>
+        public string Text { get { return text; } set { text = value; } }
+
 
 
         // --- Constructor --- //
