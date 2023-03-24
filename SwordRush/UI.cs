@@ -257,6 +257,7 @@ namespace SwordRush
                         (window.Height * 0.10f)),           // Y Pos
                         Color.Goldenrod);                   // Color
 
+                    // Rectangles behind the menu buttons
                     sb.Draw(singleColor,                                                        // Texture
                         new Rectangle((int)(window.Width * 0.10f), (int)(window.Height * 0.3f),   // X / Y
                         (int)(window.Width * 0.24f), (int)(window.Height * 0.08f)),                   // Width / Height

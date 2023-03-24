@@ -27,8 +27,7 @@ namespace SwordRush
             int[,] grid = null;
 
 
-
-
+            return grid;
         }
     }
 }

@@ -150,9 +150,7 @@
 /build:knight_f_idle_anim_f3.png
 
 #begin Level0.txt
-/importer:
-/processor:
-/build:Level0.txt
+/copy:Level0.txt
 
 #begin magic_bar.png
 /importer:TextureImporter
