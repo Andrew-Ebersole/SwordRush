@@ -119,7 +119,7 @@ namespace SwordRush
 
                     //update enemy collision
                     WallCollision(enemy, walls);
-                    if (SwordCollision(player.CreateSwordCollider(player.SwordLocation(), player.SwordRotateAngle(), new Vector2(1, 1)), enemy.Rectangle))
+                    if (SwordCollision(player.Sword.Rectangle, enemy.Rectangle))
                     {
                         enemy.Damaged();
                     }
@@ -273,12 +273,9 @@ namespace SwordRush
         /// <param name="obj1"></param>
         /// <param name="obj2"></param>
         /// <returns></returns>
-        public bool SwordCollision(RectangleF rect1, Rectangle rect2)
+        public bool SwordCollision(Rectangle rect1, Rectangle rect2)
         {
-            player.CreateSwordCollider(player.SwordLocation(), player.SwordRotateAngle(), new Vector2(1, 1));
-            RectangleF rect1f = new RectangleF(rect1.Location, rect1.Size);
-            RectangleF rect2f = new RectangleF((int)rect2.X, (int)rect2.Y, rect2.Width, rect2.Height);
-            if (rect1f.IntersectsWith(rect2f))
+            if (rect1.Intersects(rect2))
             {
                 return true;
             }

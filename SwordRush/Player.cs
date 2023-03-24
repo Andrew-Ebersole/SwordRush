@@ -41,6 +41,7 @@ namespace SwordRush
         private int levelUpExp;
         private int roomsCleared;
 
+        private Vector2 origin;
         // Player weapon
         private GameObject sword;
 
@@ -206,44 +207,6 @@ namespace SwordRush
             return rotationAngle;
         }
 
-        public RectangleF CreateSwordCollider(Vector2 position, float rotation, Vector2 scale)
-        {
-            Vector2 swordTopLeft = new Vector2(0, -20); // top-left corner of the sword sprite
-            Vector2 swordDimensions = new Vector2(40, 80); // dimensions of the sword sprite
-
-            // Calculate the four corners of the sword sprite
-            Vector2 topLeft = position + swordTopLeft * scale;
-            Vector2 topRight = position + new Vector2(swordDimensions.X, -20) * scale;
-            Vector2 bottomLeft = position + new Vector2(0, swordDimensions.Y) * scale;
-            Vector2 bottomRight = position + swordDimensions * scale;
-
-            // Rotate each corner around the center of the sword sprite
-            Vector2 center = position + swordDimensions / 2 * scale;
-            topLeft = RotatePoint(topLeft, center, rotation);
-            topRight = RotatePoint(topRight, center, rotation);
-            bottomLeft = RotatePoint(bottomLeft, center, rotation);
-            bottomRight = RotatePoint(bottomRight, center, rotation);
-
-            // Calculate the minimum and maximum X and Y values of the rotated corners
-            float minX = Math.Min(Math.Min(topLeft.X, topRight.X), Math.Min(bottomLeft.X, bottomRight.X));
-            float minY = Math.Min(Math.Min(topLeft.Y, topRight.Y), Math.Min(bottomLeft.Y, bottomRight.Y));
-            float maxX = Math.Max(Math.Max(topLeft.X, topRight.X), Math.Max(bottomLeft.X, bottomRight.X));
-            float maxY = Math.Max(Math.Max(topLeft.Y, topRight.Y), Math.Max(bottomLeft.Y, bottomRight.Y));
-
-            // Create and return the final RectangleF
-            return new RectangleF(minX, minY, maxX - minX, maxY - minY);
-        }
-
-        private Vector2 RotatePoint(Vector2 point, Vector2 center, float angle)
-        {
-            float cos = (float)Math.Cos(angle);
-            float sin = (float)Math.Sin(angle);
-            Vector2 rotated = new Vector2(
-                cos * (point.X - center.X) - sin * (point.Y - center.Y),
-                sin * (point.X - center.X) + cos * (point.Y - center.Y)
-            );
-            return rotated + center;
-        }
 
         /// <summary>
         /// 
@@ -251,12 +214,7 @@ namespace SwordRush
         /// <param name="sb"></param>
         public void Draw(SpriteBatch sb)
         {
-            RectangleF rectF = CreateSwordCollider(SwordLocation(), SwordRotateAngle(), new Vector2(1, 1));
-            Rectangle rect = new Rectangle((int)rectF.X, (int)rectF.Y, (int)rectF.Width, (int)rectF.Height);
-
-            sb.Draw(texture, rect, Color.White);
-            sb.Draw(animation_.GetCurrentFrame(), Rectangle, Color.White);
-            //sb.Draw(dungeontilesTexture2D, Rectangle, new Rectangle(128, 64, 16, 32), Color.White);
+            sb.Draw(dungeontilesTexture2D, Rectangle, new Rectangle(128, 64, 16, 32), Color.White);
             sb.Draw(dungeontilesTexture2D, sword.Position, new Rectangle(320, 80, 16, 32), Color.White, SwordRotateAngle(), new Vector2(8, -8), 2.0f, SpriteEffects.FlipVertically, 0.0f);
         }
 
@@ -267,8 +225,8 @@ namespace SwordRush
         public void Update(GameTime gt)
         {
             playerControl();
-            CreateSwordCollider(SwordLocation(), SwordRotateAngle(), new Vector2(1, 1));
-            animation_.Update(gt);
+            SwordLocation();
+            SwordRotateAngle();
         }
 
         /// <summary>
