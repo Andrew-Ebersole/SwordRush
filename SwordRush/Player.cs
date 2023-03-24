@@ -52,7 +52,7 @@ namespace SwordRush
         //Texture
         private Texture2D dungeontilesTexture2D;
 
-        private Animation animation_;
+        private AnimationComposer animation_;
 
         // --- Properties --- //
 
@@ -137,7 +137,8 @@ namespace SwordRush
             frames.Add(GameManager.Get.ContentManager.Load<Texture2D>("knight_f_idle_anim_f2"));
             frames.Add(GameManager.Get.ContentManager.Load<Texture2D>("knight_f_idle_anim_f3"));
 
-            animation_ = new Animation(frames, 0.25);
+            animation_ = new AnimationComposer();
+            animation_.PlaySequence(new AnimationSequence(frames, 0.25, true));
         }
 
 
@@ -214,7 +215,7 @@ namespace SwordRush
         /// <param name="sb"></param>
         public void Draw(SpriteBatch sb)
         {
-            sb.Draw(animation_.GetCurrentFrame(), Rectangle, Color.White);
+            sb.Draw(animation_.GetCurrentSequence().GetCurrentFrame(), Rectangle, Color.White);
             //sb.Draw(dungeontilesTexture2D, Rectangle, new Rectangle(128, 64, 16, 32), Color.White);
             sb.Draw(dungeontilesTexture2D, sword.Position, new Rectangle(320, 80, 16, 32), Color.White, SwordRotateAngle(), new Vector2(8, -8), 2.0f, SpriteEffects.FlipVertically, 0.0f);
         }
