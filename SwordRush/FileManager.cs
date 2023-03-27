@@ -24,9 +24,18 @@ namespace SwordRush
         public int[,] LoadGrid(string path)
         {
             StreamReader reader = new StreamReader(path);
-            int[,] grid = null;
+            int[,] grid = new int[20,12];
 
+            for (int i = 0; i < 12; i++)
+            {
+                string[] row = reader.ReadLine().Split(',');
+                for (int j = 0; j < 20; j++)
+                {
+                    grid[j,i] = int.Parse(row[j]);
+                }
+            }
 
+            reader.Close();
             return grid;
         }
     }

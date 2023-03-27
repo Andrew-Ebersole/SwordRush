@@ -18,6 +18,7 @@ namespace SwordRush
         // --- Fields --- //
 
         private ContentManager contentManager_;
+        private FileManager fileManager_;
 
         //game states
         private bool gameActive;
@@ -68,6 +69,9 @@ namespace SwordRush
         public void Initialize(ContentManager content, Point windowSize, Texture2D whiteRectangle)
         {
             contentManager_ = content;
+            fileManager_ = new FileManager();
+
+
             //sprites & game states
             this.spriteSheet = spriteSheet;
             gameActive = false;
@@ -386,8 +390,8 @@ namespace SwordRush
             gameActive = true;
             player.NewRound();
 
-            //create temporary testing block
-            grid[10, 7] = 1;
+            //load grid
+            grid = fileManager_.LoadGrid("Content/Level0.txt");
             
             //generates curent room based on grid
             GenerateRoom();
