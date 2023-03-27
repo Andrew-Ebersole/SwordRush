@@ -11,6 +11,13 @@ namespace SwordRush
     {
         // --- Fields --- //
 
+        private enum GameFSM
+        {
+            Playing,
+            Paused,
+            LevelUp
+        }
+        private GameFSM gameFSM;
         private Texture2D spriteSheet;
         private bool gameActive;
         private Player player;
@@ -23,8 +30,12 @@ namespace SwordRush
         private Rectangle window;
         private SpriteFont BellMT24;
         private List<SceneObject> walls;
-        
         private static GameManager instance = null;
+        private Texture2D singleTexture;
+
+
+        // --- Properties --- //
+
         public static GameManager Get
         {
             get
