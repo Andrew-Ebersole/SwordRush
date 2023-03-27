@@ -1,9 +1,15 @@
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
+using System;
+using System.Drawing;
+using Color = Microsoft.Xna.Framework.Color;
+using Point = Microsoft.Xna.Framework.Point;
+using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
 namespace SwordRush
 {
@@ -19,17 +25,33 @@ namespace SwordRush
         }
         private GameFSM gameFSM;
         private Texture2D spriteSheet;
+        private ContentManager contentManager_;
+        private FileManager fileManager_;
+
+        //game states
         private bool gameActive;
+        private Rectangle window;
+        public event ToggleGameState gameOver;
+
+        //objects
         private Player player;
         private List<Enemy> enemies;
-        public event ToggleGameState gameOver;
+
+        //textures
+        private Texture2D spriteSheet;
         private Texture2D dungeontilesTexture2D;
         private Texture2D healthBarTexture;
         private Texture2D xpBarTexture;
         private Texture2D emptyBarTexture;
-        private Rectangle window;
+        private Texture2D whiteRectangle;
+        
         private SpriteFont BellMT24;
+
+        //tiling
         private List<SceneObject> walls;
+        private int[,] grid;
+        
+        private static GameManager instance = null;
         private static GameManager instance = null;
         private Texture2D singleTexture;
 
@@ -54,22 +76,36 @@ namespace SwordRush
             // NEVER a set for the instance
         }
 
+        public ContentManager ContentManager { get { return contentManager_; } }
+
         // --- Constructor --- //
 
         public void Initialize(ContentManager content, Point windowSize, Texture2D whiteRectangle)
         {
+            contentManager_ = content;
+            fileManager_ = new FileManager();
+
+
+            //sprites & game states
             this.spriteSheet = spriteSheet;
             gameActive = false;
             dungeontilesTexture2D = content.Load<Texture2D>("DungeonTiles");
-            walls = new List<SceneObject>();
+            this.whiteRectangle = whiteRectangle;
+            
+            //objects
             enemies = new List<Enemy>();
-            player = new Player(dungeontilesTexture2D, new Rectangle(500, 500, 32, 64));
-            enemies.Add(new ShortRangeEnemy(null, new Rectangle(10, 10, 32, 32), player));
+            player = new Player(dungeontilesTexture2D, new Rectangle(500, 300, 32, 64));
+            
             //temporary test walls
 
-            walls.Add(new SceneObject(true, whiteRectangle, new Rectangle(500, 500, 80, 80)));
 
+            //tiling
+            grid = new int[20, 12];
+            walls = new List<SceneObject>();
+            //test wall
+            walls.Add(new SceneObject(true, whiteRectangle, new Rectangle(500, 500, 64, 64)));
 
+            //window
             this.window = new Rectangle(0, 0,
                 windowSize.X, windowSize.Y);
 
@@ -80,6 +116,8 @@ namespace SwordRush
 
             // Font
             BellMT24 = content.Load<SpriteFont>("Bell_MT-24");
+
+            
         }
 
         public Player LocalPlayer
@@ -97,9 +135,17 @@ namespace SwordRush
                 foreach (Enemy enemy in enemies)
                 {
                     enemy.Update(gt);
+                    
 
                     //update enemy collision
                     WallCollision(enemy, walls);
+                    
+                    if (SwordCollision(enemy.Rectangle, 0, player.Sword.Rectangle, player.SwordRotateAngle()))
+                    {
+                        enemy.Damaged();
+                        Rectangle r0 = player.Sword.Rectangle;
+                        Debug.WriteLine(new Vector2(r0.X + r0.Width * .5f, r0.Y + r0.Height * .5f));
+                    }
                 }
 
                 // End game if player health runs out
@@ -120,8 +166,17 @@ namespace SwordRush
             {
                 sb.Draw(dungeontilesTexture2D, new Vector2(0, 0), new Rectangle(0, 64, 16, 32), Color.White);
 
+                //draw walls
+                foreach (SceneObject obj in walls)
+                {
+                    obj.Draw(sb);
+                }
+
                 player.Draw(sb);
-                sb.Draw(dungeontilesTexture2D, enemies[0].Rectangle, new Rectangle(368, 80, 16, 16), Color.White);
+                foreach (Enemy enemy in enemies)
+                {
+                    enemy.Draw(sb);
+                }
 
                 // Display health and xp bars
                 drawBar(healthBarTexture,
@@ -138,16 +193,30 @@ namespace SwordRush
                     (int)(window.Width * 0.3f), (int)(window.Height * 0.09f)),
                     sb);
 
-                //draw walls
-                foreach (SceneObject obj in walls)
-                {
-                    obj.Draw(sb);
-                }
+                
             }
         }
+
+        /// <summary>
+        /// creates wall objects based on where 1 values in the grid are
+        /// </summary>
         public void GenerateRoom()
         {
-
+            walls.Clear();
+            for (int i = 0; i < grid.GetLength(1); i++)
+            {
+                for (int j = 0; j < grid.GetLength(0); j++)
+                {
+                    if (grid[j,i] == 1)
+                    {
+                        walls.Add(new SceneObject(true, whiteRectangle, new Rectangle(j*64, i*64, 64, 64)));
+                    }
+                    else if (grid[j,i] == 2)
+                    {
+                        enemies.Add(new ShortRangeEnemy(dungeontilesTexture2D, new Rectangle(j*64 +32, i*64 +32, 32, 32), player));
+                    }
+                }
+            }
         }
 
         public void WallCollision(GameObject entity, List<SceneObject> walls)
@@ -226,31 +295,123 @@ namespace SwordRush
         }
 
         /// <summary>
-        /// returns true if two game objects are colliding and returns false otherwise
+        /// check collision of the sword and other objects
         /// </summary>
-        /// <param name="obj1"></param>
-        /// <param name="obj2"></param>
-        /// <returns></returns>
-        public bool Collision(GameObject obj1, GameObject obj2)
+        /// <param name="other">rectangle of other</param>
+        /// <param name="rotationR0">rotation angle of other</param>
+        /// <param name="sword">rectangle of the sword</param>
+        /// <param name="rotationR1">rotation angle of the sword</param>
+        /// <returns>if collision had happen</returns>
+        public static bool SwordCollision(Rectangle other, float rotationR0, Rectangle sword, float rotationR1)
         {
-            if (obj1.Rectangle.Intersects(obj2.Rectangle))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            Vector2 rotOriginR0 = new Vector2(other.X + other.Width * .5f, other.Y + other.Height * .5f);
+            Vector2 rotOriginR1 = new Vector2(sword.X + 16, sword.Y + 16);
+
+            // get rotated points of rectangle 1
+            Vector2 A0 = new Vector2(other.Left, other.Top);
+            Vector2 B0 = new Vector2(other.Right, other.Top);
+            Vector2 C0 = new Vector2(other.Right, other.Bottom);
+            Vector2 D0 = new Vector2(other.Left, other.Bottom);
+            // optimally you store the shapes points in clockwise (cw) or ccw order.
+            // we could also do this with just two rotations saving a lot of this extra work
+            A0 = RotatePoint(A0, rotOriginR0, rotationR0);
+            B0 = RotatePoint(B0, rotOriginR0, rotationR0);
+            C0 = RotatePoint(C0, rotOriginR0, rotationR0);
+            D0 = RotatePoint(D0, rotOriginR0, rotationR0);
+
+            // get rotated points of rectangle 2
+            Vector2 A1 = new Vector2(sword.Left, sword.Top);
+            Vector2 B1 = new Vector2(sword.Right, sword.Top);
+            Vector2 C1 = new Vector2(sword.Right, sword.Bottom);
+            Vector2 D1 = new Vector2(sword.Left, sword.Bottom);
+            A1 = RotatePoint(A1, rotOriginR1, rotationR1);
+            B1 = RotatePoint(B1, rotOriginR1, rotationR1);
+            C1 = RotatePoint(C1, rotOriginR1, rotationR1);
+            D1 = RotatePoint(D1, rotOriginR1, rotationR1);
+
+            // you can return true with just one match but this is left to demonstrate.
+            bool match = false;
+
+            // first rectangle
+            if (IsPointWithinRectangle(A0, B0, C0, D0, A1)) { match = true; }
+            if (IsPointWithinRectangle(A0, B0, C0, D0, B1)) { match = true; }
+            if (IsPointWithinRectangle(A0, B0, C0, D0, C1)) { match = true; }
+            if (IsPointWithinRectangle(A0, B0, C0, D0, D1)) { match = true; }
+            // second rectangle
+            if (IsPointWithinRectangle(A1, B1, C1, D1, A0)) { match = true; }
+            if (IsPointWithinRectangle(A1, B1, C1, D1, B0)) { match = true; }
+            if (IsPointWithinRectangle(A1, B1, C1, D1, C0)) { match = true; }
+            if (IsPointWithinRectangle(A1, B1, C1, D1, D0)) { match = true; }
+
+            return match;
         }
 
+        /// <summary>
+        /// check if the collision point in in the rectangle
+        /// </summary>
+        /// <param name="A">point A</param>
+        /// <param name="B">point B</param>
+        /// <param name="C">point C</param>
+        /// <param name="D">point D</param>
+        /// <param name="collision_point">the collision point</param>
+        /// <returns>if the point is in the rectangle</returns>
+        public static bool IsPointWithinRectangle(Vector2 A, Vector2 B, Vector2 C, Vector2 D, Vector2 collision_point)
+        {
+            int numberofplanescrossed = 0;
+            if (HasPointCrossedPlane(A, B, collision_point)) { numberofplanescrossed++; } else { numberofplanescrossed--; }
+            if (HasPointCrossedPlane(B, C, collision_point)) { numberofplanescrossed++; } else { numberofplanescrossed--; }
+            if (HasPointCrossedPlane(C, D, collision_point)) { numberofplanescrossed++; } else { numberofplanescrossed--; }
+            if (HasPointCrossedPlane(D, A, collision_point)) { numberofplanescrossed++; } else { numberofplanescrossed--; }
 
+            return numberofplanescrossed >= 4;
+        }
 
+        /// <summary>
+        /// calculate if the point has cross the plane
+        /// </summary>
+        /// <param name="start">start point</param>
+        /// <param name="end">end point</param>
+        /// <param name="collision_point">the point to be check</param>
+        /// <returns>if the point had crossed plane</returns>
+        public static bool HasPointCrossedPlane(Vector2 start, Vector2 end, Vector2 collision_point)
+        {
+            Vector2 B = (end - start);
+            Vector2 A = (collision_point - start);
+            // We only need the signed result
+            // cross right and dot 
+            float sign = A.X * -B.Y + A.Y * B.X;
+            return sign > 0.0f;
+        }
 
+        /// <summary>
+        /// rotate the point
+        /// </summary>
+        /// <param name="p">the point</param>
+        /// <param name="o">the origin</param>
+        /// <param name="q">the rotating angle</param>
+        /// <returns>the new point</returns>
+        public static Vector2 RotatePoint(Vector2 p, Vector2 o, double q)
+        {
+            //x' = x*cos s - y*sin s , y' = x*sin s + y*cos s 
+            double x = p.X - o.X; // transform locally to the orgin
+            double y = p.Y - o.Y;
+            double rx = x * Math.Cos(q) - y * Math.Sin(q);
+            double ry = x * Math.Sin(q) + y * Math.Cos(q);
+            p.X = (float)rx + o.X; // translate back to non local
+            p.Y = (float)ry + o.Y;
+            return p;
+        }
 
         public void StartGame()
         {
             gameActive = true;
             player.NewRound();
+
+            //load grid
+            grid = fileManager_.LoadGrid("Content/Level0.txt");
+            
+            //generates curent room based on grid
+            GenerateRoom();
             // TODO: Reset game code goes here
         }
 

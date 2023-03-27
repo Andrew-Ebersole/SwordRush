@@ -38,7 +38,7 @@ namespace SwordRush
 
             // Change window size
             _graphics.PreferredBackBufferWidth = 1280;
-            _graphics.PreferredBackBufferHeight = 720;
+            _graphics.PreferredBackBufferHeight = 768;
             _graphics.ApplyChanges();
         }
 
@@ -66,7 +66,7 @@ namespace SwordRush
             bellMT24 = Content.Load<SpriteFont>("Bell_MT-24");
 
             // UI Manager
-            UI.Get.Initialize(Content, windowSize);
+            UI.Get.Initialize(Content, windowSize, GraphicsDevice);
             // Game Manager
             GameManager.Get.Initialize(Content, windowSize, whiteRectangle);
             
@@ -76,6 +76,7 @@ namespace SwordRush
             UI.Get.quitGame += GameManager.Get.QuitGame;
 
             
+
         }
 
         protected override void Update(GameTime gameTime)

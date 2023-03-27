@@ -32,7 +32,7 @@ namespace SwordRush
                 return position;
             }
 
-            protected set 
+            set 
             {
                 position = value;
                 rectangle = new Rectangle((int)(position.X - rectangle.Width / 2), (int)(position.Y - rectangle.Height / 2), size.X,size.Y);

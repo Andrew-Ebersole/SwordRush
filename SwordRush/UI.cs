@@ -1,4 +1,4 @@
-using System;
+ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -33,6 +33,7 @@ namespace SwordRush
         private GameFSM gameFSM;
 
         // Fonts
+        private SpriteFont bellMT36;
         private SpriteFont bellMT48;
         private SpriteFont bellMT72;
 
@@ -49,6 +50,7 @@ namespace SwordRush
 
         // Textures
         private Texture2D menuImageTexture;
+        private Texture2D singleColor;
 
         // Event to communicate with GameManager
         public event ToggleGameState startGame;
@@ -79,17 +81,21 @@ namespace SwordRush
 
         // --- Constructor --- //
 
-        public void Initialize(ContentManager content, Point windowSize)
+        public void Initialize(ContentManager content, Point windowSize, GraphicsDevice gd)
         {
             // State Machine
             gameFSM = GameFSM.Menu;
 
             // Fonts
+            bellMT36 = content.Load<SpriteFont>("Bell_MT-36");
             bellMT48 = content.Load<SpriteFont>("Bell_MT-48");
             bellMT72 = content.Load<SpriteFont>("Bell_MT-72");
 
             // Textures
-            menuImageTexture = content.Load<Texture2D>("DungeonTiles");
+            menuImageTexture = content.Load<Texture2D>("MenuBackground3");
+            singleColor = new Texture2D(gd, 1, 1);
+            singleColor.SetData(new Color[] { Color.White });
+
 
             // Controls Mouse
             currentMState = new MouseState();
@@ -119,7 +125,7 @@ namespace SwordRush
             // Loads the 
             switch (gameFSM)
             {
-                case GameFSM.Menu:
+                case GameFSM.Menu: // --- Menu --------------------------------------------------//
                     
                     // Updates hover color change
                     foreach (TextButton b in menuButtons)
@@ -131,7 +137,7 @@ namespace SwordRush
                     if (menuButtons[0].LeftClicked)
                     {
                         gameFSM = GameFSM.Game;
-
+                       
                         // Sends event that will be recieved by game manager
                         startGame();
                     }
@@ -153,7 +159,7 @@ namespace SwordRush
                     }
                     break;
 
-                case GameFSM.Game:
+                case GameFSM.Game: // --- Game --------------------------------------------------//
                     // Right click to quit the game
                     if (currentMState.RightButton == ButtonState.Pressed
                         && previousMState.RightButton == ButtonState.Released)
@@ -164,7 +170,54 @@ namespace SwordRush
                     }
                     break;
 
-                default:
+                case GameFSM.Settings:
+
+                    foreach(TextButton b in settingButtons)
+                    {
+                        b.Update(gt);
+                    }
+
+                    // TODO: implement debug code here to adjust volumes and enable invincibility
+                    if (currentMState.LeftButton == ButtonState.Pressed 
+                        && previousMState.LeftButton == ButtonState.Released)
+                    {
+                        // Lower SFX
+                        if (settingButtons[0].LeftClicked)
+                        {
+
+                        }
+                        // Raise SFX
+                        else if (settingButtons[1].LeftClicked)
+                        {
+
+                        }
+                        // Lower Music
+                        else if (settingButtons[2].LeftClicked)
+                        {
+
+                        }
+                        // Raise Music
+                        else if (settingButtons[3].LeftClicked)
+                        {
+
+                        }
+                        // Toggle TakeDamage
+                        else if (settingButtons[4].LeftClicked)
+                        {
+                            // Not implemented properly yet
+                            settingButtons[4].Text = "False";
+                        }
+                        else
+                        {
+                            gameFSM = GameFSM.Menu;
+                        }
+                    }
+                    
+                    
+
+                    break;
+
+                default:  // --- Other ----------------------------------------------------------//
                     // In any state that is not game left click will bring you back to menu
                     if (currentMState.LeftButton == ButtonState.Pressed
                         && previousMState.LeftButton == ButtonState.Released)
@@ -182,7 +235,19 @@ namespace SwordRush
             // Testing Menu Text
             switch (gameFSM)
             {
-                case GameFSM.Menu:
+                case GameFSM.Menu:  // --- Menu -------------------------------------------------//
+
+                    // Background Image
+                    sb.Draw(
+                     menuImageTexture,
+                     window,
+                     Color.White);
+
+                    // Background for title
+                    sb.Draw(singleColor,                                                        // Texture
+                        new Rectangle((int)(window.Width * 0.10f), (int)(window.Height*0.1f),   // X / Y
+                        (int)(window.Width*0.5f),(int)(window.Height*0.13f)),                   // Width / Height
+                        new Color(32, 32, 32));                                                        // Color
 
                     // Draw Title
                     sb.DrawString(
@@ -192,17 +257,41 @@ namespace SwordRush
                         (window.Height * 0.10f)),           // Y Pos
                         Color.Goldenrod);                   // Color
 
+                    // Rectangles behind the menu buttons
+                    sb.Draw(singleColor,                                                        // Texture
+                        new Rectangle((int)(window.Width * 0.10f), (int)(window.Height * 0.3f),   // X / Y
+                        (int)(window.Width * 0.24f), (int)(window.Height * 0.08f)),                   // Width / Height
+                        new Color(32, 32, 32));
+
+                    sb.Draw(singleColor,                                                        // Texture
+                        new Rectangle((int)(window.Width * 0.10f), (int)(window.Height * 0.42f),   // X / Y
+                        (int)(window.Width * 0.25f), (int)(window.Height * 0.08f)),                   // Width / Height
+                        new Color(32, 32, 32));
+
+                    sb.Draw(singleColor,                                                        // Texture
+                        new Rectangle((int)(window.Width * 0.10f), (int)(window.Height * 0.54f),   // X / Y
+                        (int)(window.Width * 0.15f), (int)(window.Height * 0.08f)),                   // Width / Height
+                        new Color(32, 32, 32));
+
+                    sb.Draw(singleColor,                                                        // Texture
+                        new Rectangle((int)(window.Width * 0.10f), (int)(window.Height * 0.66f),   // X / Y
+                        (int)(window.Width * 0.25f), (int)(window.Height * 0.08f)),                   // Width / Height
+                        new Color(32, 32, 32));
+
+                    sb.Draw(singleColor,                                                        // Texture
+                        new Rectangle((int)(window.Width * 0.10f), (int)(window.Height * 0.78f),   // X / Y
+                        (int)(window.Width * 0.17f), (int)(window.Height * 0.08f)),                   // Width / Height
+                        new Color(32, 32, 32));
+
                     // Draw all Buttons
                     foreach (TextButton b in menuButtons)
                     {
                         b.Draw(sb);
                     }
-
-                    // Draw Image
                     
                     break;
 
-                case GameFSM.GameOver:
+                case GameFSM.GameOver:  // --- Menu -----------------------------------------------//
                     // Draw Game over
                     sb.DrawString(
                         bellMT72,
@@ -213,23 +302,170 @@ namespace SwordRush
 
                     // Draw Score
                     sb.DrawString(
-                        bellMT48,
-                        $"YOU CLEARED __ ROOMS",
-                        new Vector2((window.Width * 0.3f),
-                        (window.Height * 0.5f)),
-                        Color.White);
+                        bellMT48,                           // Font
+                        $"YOU CLEARED __ ROOMS",            // Text
+                        new Vector2((window.Width * 0.3f),  // X Position
+                        (window.Height * 0.5f)),            // Y Position
+                        Color.White);                       // Color
                     break;
 
-                case GameFSM.Instructions:
+                case GameFSM.Instructions: // --- Instructions ----------------------------------//
+                    sb.DrawString(
+                        bellMT72,                       // Font
+                        $"How to Play",                 // Text
+                        new Vector2(window.Width * 0.1f,// X Position
+                        window.Height * 0.1f),          // Y Position
+                        Color.White);                   // Color
+
+                    sb.DrawString(
+                        bellMT72,                       // Font
+                        $"Controls",                    // Text
+                        new Vector2(window.Width * 0.6f,// X Position
+                        window.Height * 0.1f),          // Y Position
+                        Color.White);                   // Color
+
+                    sb.DrawString(
+                        bellMT36,                       // Font
+                        $"Attack to move, Kill as " +
+                        $"\nmany enemies as you can" +
+                        $"\nto unlock the next room." +
+                        $"\nSee how many rooms you " +
+                        $"\ncan clear before you die." +
+                        $"\nGain XP to unlock abilities.", // Text
+                        new Vector2(window.Width * 0.1f,// X Position
+                        window.Height * 0.3f),          // Y Position
+                        Color.White);                   // Color
+
+                    sb.DrawString(
+                        bellMT36,                       // Font
+                        $"Attack" +
+                        $"\n - Left Click" +
+                        $"\nMove" +
+                        $"\n - Left Click" +
+                        $"\nQuit" +
+                        $"\n - Escape",                 // Text
+                        new Vector2(window.Width * 0.6f,// X Position
+                        window.Height * 0.3f),          // Y Position
+                        Color.White);                   // Color
+
+
                     break;
 
-                case GameFSM.Credits:
+                case GameFSM.Credits: // --- Credits --------------------------------------------//
+
+                    sb.DrawString(
+                        bellMT48,                       // Font
+                        $"Developers",                  // Text
+                        new Vector2(window.Width * 0.1f,// X Position
+                        window.Height * 0.1f),          // Y Position
+                        Color.White);                   // Color
+
+                    sb.DrawString(
+                        bellMT36,                       // Font
+                        $"Bin Xu" +
+                        $"\nJosh Leong" +
+                        $"\nWeijie Ye" +
+                        $"\nAndrew Ebersole",           // Text
+                        new Vector2(window.Width * 0.1f,// X Position
+                        window.Height * 0.3f),          // Y Position
+                        Color.White);                   // Color
+
+
+                    sb.DrawString(
+                        bellMT48,                       // Font
+                        $"Art",                         // Text
+                        new Vector2(window.Width * 0.4f,// X Position
+                        window.Height * 0.1f),          // Y Position
+                        Color.LightGray);                   // Color
+
+                    sb.DrawString(
+                        bellMT36,                       // Font
+                        $"frosty_rabbid" +
+                        $"\nguilemus" +
+                        $"\n0x72 \"Robert\"" +
+                        $"\nThe Outlander",                  // Text
+                        new Vector2(window.Width * 0.4f,// X Position
+                        window.Height * 0.3f),          // Y Position
+                        Color.LightGray);                   // Color
+
+                    sb.DrawString(
+                        bellMT48,                       // Font
+                        $"Audio",                       // Text
+                        new Vector2(window.Width * 0.7f,// X Position
+                        window.Height * 0.1f),          // Y Position
+                        Color.White);                   // Color
                     break;
 
-                case GameFSM.HighScores:
+                case GameFSM.HighScores: // --- HighScores --------------------------------------//
+
+                    sb.DrawString(
+                        bellMT72,                       // Font
+                        $"High Scores",                 // Text
+                        new Vector2(window.Width * 0.1f,// X Position
+                        window.Height * 0.1f),          // Y Position
+                        Color.White);                   // Color
+
+                    sb.DrawString(
+                        bellMT48,                       // Font
+                        $"1: Not implemented yet" +
+                        $"\n2:" +
+                        $"\n3:" +
+                        $"\n4:" +
+                        $"\n5:",                        // Text
+                        new Vector2(window.Width * 0.1f,// X Position
+                        window.Height * 0.3f),          // Y Position
+                        Color.White);                   // Color
+
                     break;
 
-                case GameFSM.Settings:
+                case GameFSM.Settings: // --- Settings ------------------------------------------//
+                    
+                    sb.DrawString(
+                        bellMT72,                       // Font
+                        $"Settings",                    // Text
+                        new Vector2(window.Width * 0.1f,// X Position
+                        window.Height * 0.1f),          // Y Position
+                        Color.White);                   // Color
+
+                    sb.DrawString(
+                        bellMT48,                       // Font
+                        $"SFX Volume",                  // Text
+                        new Vector2(window.Width * 0.1f,// X Position
+                        window.Height * 0.3f),          // Y Position
+                        Color.White);                   // Color
+
+                    sb.DrawString(
+                        bellMT36,                       // Font
+                        $"10",                          // Text
+                        new Vector2(window.Width * 0.63f,// X Position
+                        window.Height * 0.30f),          // Y Position
+                        Color.White);                   // Color
+
+                    sb.DrawString(
+                        bellMT48,                       // Font
+                        $"Music Volume",                // Text
+                        new Vector2(window.Width * 0.1f,// X Position
+                        window.Height * 0.4f),          // Y Position
+                        Color.White);                   // Color
+
+                    sb.DrawString(
+                        bellMT36,                       // Font
+                        $"10",                          // Text
+                        new Vector2(window.Width * 0.63f,// X Position
+                        window.Height * 0.40f),          // Y Position
+                        Color.White);                   // Color
+
+                    sb.DrawString(
+                        bellMT48,                       // Font
+                        $"Take Damage",                 // Text
+                        new Vector2(window.Width * 0.1f,// X Position
+                        window.Height * 0.5f),          // Y Position
+                        Color.White);                   // Color
+
+                    foreach (TextButton b in settingButtons)
+                    {
+                        b.Draw(sb);
+                    }
                     break;
 
             }
@@ -277,10 +513,34 @@ namespace SwordRush
             settingButtons = new List<TextButton>();
 
             settingButtons.Add(new TextButton(new Rectangle(
-                (int)(window.Width * 0.10f), (int)(window.Height * 0.30f),  // Location
-                (int)(window.Width * 0.23f), (int)(window.Height * 0.09f)), // Hitbox
+                (int)(window.Width * 0.60f), (int)(window.Height * 0.30f),  // Location
+                (int)(window.Width * 0.02f), (int)(window.Height * 0.09f)), // Hitbox
                 "<",                                                        // Text
-                bellMT48));                                                 // Font
+                bellMT36));                                                 // Font
+
+            settingButtons.Add(new TextButton(new Rectangle(
+                (int)(window.Width * 0.68f), (int)(window.Height * 0.30f),  // Location
+                (int)(window.Width * 0.02f), (int)(window.Height * 0.09f)), // Hitbox
+                ">",                                                        // Text
+                bellMT36));                                                 // Font
+
+            settingButtons.Add(new TextButton(new Rectangle(
+                (int)(window.Width * 0.60f), (int)(window.Height * 0.40f),  // Location
+                (int)(window.Width * 0.02f), (int)(window.Height * 0.09f)), // Hitbox
+                "<",                                                        // Text
+                bellMT36));                                                 // Font
+
+            settingButtons.Add(new TextButton(new Rectangle(
+                (int)(window.Width * 0.68f), (int)(window.Height * 0.40f),  // Location
+                (int)(window.Width * 0.02f), (int)(window.Height * 0.09f)), // Hitbox
+                ">",                                                        // Text
+                bellMT36));                                                 // Font
+
+            settingButtons.Add(new TextButton(new Rectangle(
+                (int)(window.Width * 0.60f), (int)(window.Height * 0.50f),  // Location
+                (int)(window.Width * 0.10f), (int)(window.Height * 0.09f)), // Hitbox
+                "True",                                                     // Text
+                bellMT36));                                                 // Font
         }
 
         public void EndGame()

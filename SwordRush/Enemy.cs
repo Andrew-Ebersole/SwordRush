@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -20,11 +22,24 @@ namespace SwordRush
         protected int atk;
         protected int health;
 
-        // --- Constructor --- //
 
-        public Enemy (Texture2D texture, Rectangle rectangle, Player player) : base (texture, rectangle)
+        //Texture
+        private Texture2D dungeontilesTexture2D;
+
+        public Texture2D DungeonTilesTexture2D
+        {
+            get
+            {
+                return dungeontilesTexture2D;
+            }
+        }
+
+
+        // --- Constructor --- //
+        public Enemy(Texture2D texture, Rectangle rectangle, Player player) : base(texture, rectangle)
         {
             this.player = player;
+            dungeontilesTexture2D = texture;
         }
 
         // --- Constructor --- //
@@ -34,12 +49,22 @@ namespace SwordRush
 
         }
         */
-        public void Damage()
+        public virtual void Damage()
         {
 
         }
 
-        public virtual void Update(GameTime gt) { 
+        public virtual void Damaged()
+        {
+        }
+
+        public virtual void Update(GameTime gt)
+        {
+
+        }
+        public virtual void Draw(SpriteBatch sb)
+        {
+            sb.Draw(dungeontilesTexture2D, Rectangle, new Rectangle(368, 80, 16, 16), Color.White);
         }
     }
 }

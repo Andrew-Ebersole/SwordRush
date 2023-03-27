@@ -3,11 +3,16 @@ using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Input;
 using System.Threading;
+using System.Drawing;
+using Color = Microsoft.Xna.Framework.Color;
+using Point = Microsoft.Xna.Framework.Point;
+using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
 namespace SwordRush
 {
@@ -36,6 +41,7 @@ namespace SwordRush
         private int levelUpExp;
         private int roomsCleared;
 
+        private Vector2 origin;
         // Player weapon
         private GameObject sword;
 
@@ -46,23 +52,12 @@ namespace SwordRush
         //Texture
         private Texture2D dungeontilesTexture2D;
 
+        private AnimationComposer animation_;
+
         // --- Properties --- //
+        public Point Size => size;
 
-        public Point Size
-        {
-            get
-            {
-                return size;
-            }
-        }
-
-        public int Health
-        {
-            get
-            {
-                return health;
-            }
-        }
+        public int Health => health;
 
         public int MaxHealth
         {
@@ -95,6 +90,13 @@ namespace SwordRush
             }
         }
 
+        public GameObject Sword
+        {
+            get
+            {
+                return sword;
+            }
+        }
 
         // --- Constructor --- //
 
@@ -114,6 +116,16 @@ namespace SwordRush
 
             sword = new GameObject(null, Rectangle);
             dungeontilesTexture2D = texture;
+
+            List<Texture2D> frames = new List<Texture2D>();
+
+            frames.Add(GameManager.Get.ContentManager.Load<Texture2D>("knight_f_idle_anim_f0"));
+            frames.Add(GameManager.Get.ContentManager.Load<Texture2D>("knight_f_idle_anim_f1"));
+            frames.Add(GameManager.Get.ContentManager.Load<Texture2D>("knight_f_idle_anim_f2"));
+            frames.Add(GameManager.Get.ContentManager.Load<Texture2D>("knight_f_idle_anim_f3"));
+
+            animation_ = new AnimationComposer();
+            animation_.PlaySequence(new AnimationSequence(frames, 0.25, true));
         }
 
 
@@ -167,7 +179,8 @@ namespace SwordRush
         /// <returns>return the vector2 of the sword's location</returns>
         public Vector2 SwordLocation()
         {
-            return new Vector2(Rectangle.X + Rectangle.Width / 2, Rectangle.Y + Rectangle.Height / 1.5f);
+            sword.Position = new Vector2(Rectangle.X + Rectangle.Width / 2, Rectangle.Y + Rectangle.Height / 1.5f);
+            return sword.Position;
         }
 
         /// <summary>
@@ -178,9 +191,10 @@ namespace SwordRush
         {
             float angle = (float)Math.Atan2(currentMouseState.Y - Position.Y, currentMouseState.X - Position.X);
             float rotationAngle = angle - (float)(Math.PI / 2);
-
+            
             return rotationAngle;
         }
+
 
         /// <summary>
         /// 
@@ -188,8 +202,9 @@ namespace SwordRush
         /// <param name="sb"></param>
         public void Draw(SpriteBatch sb)
         {
-            sb.Draw(dungeontilesTexture2D, Rectangle, new Rectangle(128, 64, 16, 32), Color.White);
-            sb.Draw(dungeontilesTexture2D, SwordLocation(), new Rectangle(320, 80, 16, 32), Color.White, SwordRotateAngle(), new Vector2(8, -8), 2.0f, SpriteEffects.FlipVertically, 0.0f);
+            sb.Draw(animation_.GetCurrentSequence().GetCurrentFrame(), Rectangle, Color.White);
+            //sb.Draw(dungeontilesTexture2D, Rectangle, new Rectangle(128, 64, 16, 32), Color.White);
+            sb.Draw(dungeontilesTexture2D, sword.Position, new Rectangle(320, 80, 16, 32), Color.White, SwordRotateAngle(), new Vector2(8, -8), 2.0f, SpriteEffects.FlipVertically, 0.0f);
         }
 
         /// <summary>
@@ -199,6 +214,9 @@ namespace SwordRush
         public void Update(GameTime gt)
         {
             playerControl();
+            SwordLocation();
+            SwordRotateAngle();
+            animation_.Update(gt);
         }
 
         /// <summary>
