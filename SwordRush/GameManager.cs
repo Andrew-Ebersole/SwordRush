@@ -81,8 +81,7 @@ namespace SwordRush
             //objects
             enemies = new List<Enemy>();
             player = new Player(dungeontilesTexture2D, new Rectangle(500, 300, 32, 64));
-            enemies.Add(new ShortRangeEnemy(dungeontilesTexture2D, new Rectangle(100, 100, 32, 32), player));
-            enemies.Add(new ShortRangeEnemy(dungeontilesTexture2D, new Rectangle(800, 600, 32, 32), player));
+            
             //temporary test walls
 
 
@@ -197,6 +196,10 @@ namespace SwordRush
                     if (grid[j,i] == 1)
                     {
                         walls.Add(new SceneObject(true, whiteRectangle, new Rectangle(j*64, i*64, 64, 64)));
+                    }
+                    else if (grid[j,i] == 2)
+                    {
+                        enemies.Add(new ShortRangeEnemy(dungeontilesTexture2D, new Rectangle(j*64 +32, i*64 +32, 32, 32), player));
                     }
                 }
             }
