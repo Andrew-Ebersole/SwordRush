@@ -56,6 +56,10 @@ namespace SwordRush
         public event ToggleGameState startGame;
         public event ToggleGameState quitGame;
 
+        // Settings - Debug
+        private int sfxLevel;
+        private int musicLevel;
+        private bool takeDamage;
 
 
         private static UI instance = null;
@@ -77,6 +81,11 @@ namespace SwordRush
 
         public GameFSM GameFSM { get { return gameFSM; } }
 
+        public int SfxLevel { get { return sfxLevel; } }
+
+        public int MusicLevel { get { return musicLevel; } }
+
+        public bool TakeDamage { get { return takeDamage; } }
 
 
         // --- Constructor --- //
@@ -184,28 +193,50 @@ namespace SwordRush
                         // Lower SFX
                         if (settingButtons[0].LeftClicked)
                         {
-
+                            if (sfxLevel > 0)
+                            {
+                                sfxLevel--;
+                            }
                         }
                         // Raise SFX
                         else if (settingButtons[1].LeftClicked)
                         {
-
+                            if (sfxLevel < 10)
+                            {
+                                sfxLevel++;
+                            }
                         }
                         // Lower Music
                         else if (settingButtons[2].LeftClicked)
                         {
-
+                            if (musicLevel > 0)
+                            {
+                                musicLevel--;
+                            }
                         }
                         // Raise Music
                         else if (settingButtons[3].LeftClicked)
                         {
-
+                            if (musicLevel < 10)
+                            {
+                                musicLevel++;
+                                
+                            }
                         }
                         // Toggle TakeDamage
                         else if (settingButtons[4].LeftClicked)
                         {
-                            // Not implemented properly yet
-                            settingButtons[4].Text = "False";
+                            if (takeDamage == false)
+                            {
+                                takeDamage = true;
+                                settingButtons[4].Text = "True";
+                            }
+                            else
+                            {
+                                takeDamage = false;
+                                settingButtons[4].Text = "False";
+                            }
+                            
                         }
                         else
                         {
@@ -436,7 +467,7 @@ namespace SwordRush
 
                     sb.DrawString(
                         bellMT36,                       // Font
-                        $"10",                          // Text
+                        $"{sfxLevel}",                  // Text
                         new Vector2(window.Width * 0.63f,// X Position
                         window.Height * 0.30f),          // Y Position
                         Color.White);                   // Color
@@ -450,7 +481,7 @@ namespace SwordRush
 
                     sb.DrawString(
                         bellMT36,                       // Font
-                        $"10",                          // Text
+                        $"{musicLevel}",                // Text
                         new Vector2(window.Width * 0.63f,// X Position
                         window.Height * 0.40f),          // Y Position
                         Color.White);                   // Color
