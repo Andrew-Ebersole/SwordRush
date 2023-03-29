@@ -30,7 +30,7 @@ namespace SwordRush
         {
             if (Rectangle.Intersects(GameManager.Get.LocalPlayer.Rectangle))
             {
-                GameManager.Get.LocalPlayer.Damage();
+                GameManager.Get.LocalPlayer.Damaged();
             }
         }
     }

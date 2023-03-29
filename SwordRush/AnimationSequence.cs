@@ -49,8 +49,6 @@ namespace SwordRush
                     end_ = true;
                 }
             }
-
-            System.Diagnostics.Debug.WriteLine(frameIndex_);
         }
 
         public void Reset()

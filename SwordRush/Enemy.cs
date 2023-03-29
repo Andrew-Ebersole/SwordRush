@@ -16,7 +16,7 @@ namespace SwordRush
 
     internal class Enemy : GameObject
     {
-        private EnemyStateMachine enemyState;
+        protected EnemyStateMachine enemyState;
         protected Player player;
         protected int level;
         protected int atk;
@@ -34,6 +34,8 @@ namespace SwordRush
             }
         }
 
+        public EnemyStateMachine EnemyState => enemyState;
+        public int Health => health;
 
         // --- Constructor --- //
         public Enemy(Texture2D texture, Rectangle rectangle, Player player) : base(texture, rectangle)

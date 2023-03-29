@@ -40,6 +40,7 @@ namespace SwordRush
         private float distance;
         private int levelUpExp;
         private int roomsCleared;
+        private double attackFrame;
 
         private Vector2 origin;
         // Player weapon
@@ -55,6 +56,8 @@ namespace SwordRush
         private AnimationComposer animation_;
 
         // --- Properties --- //
+        public PlayerStateMachine PlayerState => playerState;
+
         public Point Size => size;
 
         public int Health => health;
@@ -135,15 +138,25 @@ namespace SwordRush
         /// <summary>
         /// move the player toward the mouse cursor when left clicked
         /// </summary>
-        public void playerControl()
+        public void playerControl(GameTime gameTime)
         {
+            attackFrame += gameTime.TotalGameTime.TotalSeconds;
             currentMouseState = Mouse.GetState();
-            if (currentMouseState.LeftButton == ButtonState.Pressed && 
-                preMouseState.LeftButton == ButtonState.Released)
+            if (attackFrame >= 100)
             {
-                //move the player's location
-                Position -= GetDirection() * 25 * distance;
-                
+                playerState = PlayerStateMachine.Idle;
+                if (currentMouseState.LeftButton == ButtonState.Pressed &&
+                    preMouseState.LeftButton == ButtonState.Released)
+                {
+                    //move the player's location
+                    Position -= GetDirection() * 25 * distance;
+
+                    attackFrame = 0;
+                }
+            }
+            else
+            {
+                playerState = PlayerStateMachine.Attack;
             }
 
             preMouseState = currentMouseState;
@@ -163,9 +176,9 @@ namespace SwordRush
             return Vector2.Normalize(position - currentMouseState.Position.ToVector2()); ;
         }
 
-        public void Damage()
+        public void Damaged()
         {
-
+            health -= 1;
         }
 
         public void LevelUp()
@@ -213,7 +226,7 @@ namespace SwordRush
         /// <param name="gt"></param>
         public void Update(GameTime gt)
         {
-            playerControl();
+            playerControl(gt);
             SwordLocation();
             SwordRotateAngle();
             animation_.Update(gt);

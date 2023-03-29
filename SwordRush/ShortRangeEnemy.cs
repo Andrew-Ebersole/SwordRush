@@ -9,6 +9,7 @@ namespace SwordRush
     internal class ShortRangeEnemy : Enemy
     {
         Player player;
+        private double damageFrame;
         private Texture2D dungeontilesTexture2D;
         private AnimationComposer animationComposer_ = new AnimationComposer();
 
@@ -26,18 +27,12 @@ namespace SwordRush
             frames.Add(GameManager.Get.ContentManager.Load<Texture2D>("skelet_idle_anim_f3"));
 
             animationComposer_.PlaySequence(new AnimationSequence(frames, 0.2, true));
+            initStat(10);
         }
-
-        // --- Constructor --- //
-        /*
-        public ShortRangeEnemy(Texture2D texture, Vector2 position, Point size) : base(texture, position, size)
-        {
-
-        }
-        */
+        
         public void initStat(int level)
         {
-
+            health = level;
         }
 
         /// <summary>
@@ -45,24 +40,37 @@ namespace SwordRush
         /// </summary>
         public override void Damaged()
         {
-            Vector2 distance = position - player.Position;
-            Vector2 direction = Vector2.Normalize(distance);
+            if (enemyState != EnemyStateMachine.Damaged)
+            {
+                Vector2 distance = position - player.Position;
+                Vector2 direction = Vector2.Normalize(distance);
+                health -= 1;
+                Position += direction * 100;
+                enemyState = EnemyStateMachine.Damaged;
+            }
 
-            Position += direction * 100;
-            Debug.WriteLine(health);
         }
 
         /// <summary>
         /// Move the enemy towards to player
         /// </summary>
-        public void AI()
+        public void AI(GameTime gameTime)
         {
-            Vector2 distance = position - player.Position;
-            if (distance.Length() < 300 && distance.Length() > 1)
+            damageFrame += gameTime.TotalGameTime.TotalSeconds;
+            if (damageFrame >= 100)
             {
-                Vector2 direction = Vector2.Normalize(distance);
+                Vector2 distance = position - player.Position;
+                if (distance.Length() < 300 && distance.Length() > 1)
+                {
+                    Vector2 direction = Vector2.Normalize(distance);
 
-                Position -= direction *2;
+                    Position -= direction * 2;
+                    enemyState = EnemyStateMachine.Move;
+                }
+                else
+                {
+                    enemyState = EnemyStateMachine.Idle;
+                }
             }
         }
 
@@ -74,7 +82,7 @@ namespace SwordRush
 
         public override void Update(GameTime gt)
         {
-            AI();
+            AI(gt);
             animationComposer_.Update(gt);
         }
     }

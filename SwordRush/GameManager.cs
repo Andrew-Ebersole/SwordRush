@@ -119,19 +119,29 @@ namespace SwordRush
             if (gameActive)
             {
                 player.Update(gt);
-                foreach (Enemy enemy in enemies)
+                for (int i = 0; i < enemies.Count; i++)
                 {
-                    enemy.Update(gt);
-                    
+                    enemies[i].Update(gt);
 
                     //update enemy collision
-                    WallCollision(enemy, walls);
-                    
-                    if (SwordCollision(enemy.Rectangle, 0, player.Sword.Rectangle, player.SwordRotateAngle()))
+                    WallCollision(enemies[i], walls);
+
+                    if (player.PlayerState == PlayerStateMachine.Attack &&
+                        SwordCollision(enemies[i].Rectangle, 0, player.Sword.Rectangle, player.SwordRotateAngle()))
                     {
-                        enemy.Damaged();
+                        enemies[i].Damaged();
                         Rectangle r0 = player.Sword.Rectangle;
-                        Debug.WriteLine(new Vector2(r0.X + r0.Width * .5f, r0.Y + r0.Height * .5f));
+                    }
+
+                    if (enemies[i].Health <= 0)
+                    {
+                        enemies.RemoveAt(i);
+                    }
+
+                    if (enemies[i].Rectangle.Intersects(player.Rectangle) && enemies[i].Health > 0)
+                    {
+                        enemies.RemoveAt(i);
+                        player.Damaged();
                     }
                 }
 
