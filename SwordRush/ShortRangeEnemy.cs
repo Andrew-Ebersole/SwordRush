@@ -49,7 +49,7 @@ namespace SwordRush
             {
                 Vector2 distance = position - player.Position;
                 Vector2 direction = Vector2.Normalize(distance);
-                health -= player.Atk;
+                health -= (int)player.Atk;
                 Position += direction * 100;
                 enemyState = EnemyStateMachine.Damaged;
             }
