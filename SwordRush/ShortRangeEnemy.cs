@@ -27,12 +27,14 @@ namespace SwordRush
             frames.Add(GameManager.Get.ContentManager.Load<Texture2D>("skelet_idle_anim_f3"));
 
             animationComposer_.PlaySequence(new AnimationSequence(frames, 0.2, true));
-            initStat(10);
+            level = 2;
+            initStat(level);
         }
         
         public void initStat(int level)
         {
             health = level;
+            atk = level;
         }
 
         /// <summary>
@@ -44,7 +46,7 @@ namespace SwordRush
             {
                 Vector2 distance = position - player.Position;
                 Vector2 direction = Vector2.Normalize(distance);
-                health -= 1;
+                health -= player.Atk;
                 Position += direction * 100;
                 enemyState = EnemyStateMachine.Damaged;
             }

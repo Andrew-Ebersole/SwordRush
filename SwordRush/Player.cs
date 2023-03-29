@@ -60,6 +60,7 @@ namespace SwordRush
 
         public Point Size => size;
 
+        public int Atk => atk;
         public int Health => health;
 
         public int MaxHealth
@@ -70,6 +71,7 @@ namespace SwordRush
             }
         }
 
+        public int Level => level;
         public int Exp
         {
             get
@@ -142,7 +144,7 @@ namespace SwordRush
         {
             attackFrame += gameTime.TotalGameTime.TotalSeconds;
             currentMouseState = Mouse.GetState();
-            if (attackFrame >= 100)
+            if (attackFrame >= 200/atkSpd)
             {
                 playerState = PlayerStateMachine.Idle;
                 if (currentMouseState.LeftButton == ButtonState.Pressed &&
@@ -176,14 +178,34 @@ namespace SwordRush
             return Vector2.Normalize(position - currentMouseState.Position.ToVector2()); ;
         }
 
-        public void Damaged()
+        public void Damaged(int dmg)
         {
-            health -= 1;
+            health -= dmg;
         }
 
         public void LevelUp()
         {
+            exp -= levelUpExp;
+            level += 1;
+            levelUpExp += level * 10;
 
+            /*
+             * the code below is just a place holder for level up
+             */
+            maxHealth += level;
+            health = maxHealth;
+            atk += 1;
+            //end here
+        }
+
+        public void GainExp(int enemyLevel)
+        {
+            exp += enemyLevel * 10;
+
+            if (exp >= levelUpExp)
+            {
+                LevelUp();
+            }
         }
 
         /// <summary>

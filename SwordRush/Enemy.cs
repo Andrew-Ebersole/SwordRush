@@ -35,7 +35,9 @@ namespace SwordRush
         }
 
         public EnemyStateMachine EnemyState => enemyState;
+        public int Atk => atk;
         public int Health => health;
+        public int Level => level;
 
         // --- Constructor --- //
         public Enemy(Texture2D texture, Rectangle rectangle, Player player) : base(texture, rectangle)

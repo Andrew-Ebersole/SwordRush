@@ -142,16 +142,19 @@ namespace SwordRush
                         Rectangle r0 = player.Sword.Rectangle;
                     }
 
+                    if (enemies[i].Rectangle.Intersects(player.Rectangle) && enemies[i].Health > 0)
+                    {
+                        enemies[i].Damaged();
+                        player.Damaged(enemies[i].Atk);
+                    }
+
                     if (enemies[i].Health <= 0)
                     {
+                        player.GainExp(enemies[i].Level);
                         enemies.RemoveAt(i);
                     }
 
-                    if (enemies[i].Rectangle.Intersects(player.Rectangle) && enemies[i].Health > 0)
-                    {
-                        enemies.RemoveAt(i);
-                        player.Damaged();
-                    }
+                    //Debug.WriteLine(player.Exp +":" +player.LevelUpExp+":"+player.Level);
                 }
 
                 // End game if player health runs out
