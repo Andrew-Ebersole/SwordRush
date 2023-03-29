@@ -17,6 +17,13 @@ namespace SwordRush
     {
         // --- Fields --- //
 
+        private enum GameFSM
+        {
+            Playing,
+            Paused,
+            LevelUp
+        }
+        private GameFSM gameFSM;
         private ContentManager contentManager_;
         private FileManager fileManager_;
 
@@ -44,6 +51,11 @@ namespace SwordRush
         private int[,] grid;
         
         private static GameManager instance = null;
+        private Texture2D singleTexture;
+
+
+        // --- Properties --- //
+
         public static GameManager Get
         {
             get
@@ -80,10 +92,7 @@ namespace SwordRush
             
             //objects
             enemies = new List<Enemy>();
-            player = new Player(dungeontilesTexture2D, new Rectangle(500, 300, 32, 64));
-            enemies.Add(new ShortRangeEnemy(dungeontilesTexture2D, new Rectangle(100, 100, 32, 32), player));
-            enemies.Add(new ShortRangeEnemy(dungeontilesTexture2D, new Rectangle(800, 600, 32, 32), player));
-            //temporary test walls
+            player = new Player(dungeontilesTexture2D, new Rectangle(0,0, 32, 64));
 
 
             //tiling
@@ -179,15 +188,15 @@ namespace SwordRush
                 drawBar(healthBarTexture,
                     player.Health,
                     player.MaxHealth,
-                    new Rectangle((int)(window.Width * 0.1f), (int)(window.Height * 0.9f),
-                    (int)(window.Width * 0.3f), (int)(window.Height * 0.09f)), 
+                    new Rectangle((int)(window.Width * 0.12f), (int)(window.Height * 0.92f),
+                    (int)(window.Width * 0.3f), (int)(window.Height * 0.079)), 
                     sb);
 
                 drawBar(xpBarTexture,
                     player.Exp,
                     player.LevelUpExp,
-                    new Rectangle((int)(window.Width * 0.6f), (int)(window.Height * 0.9f),
-                    (int)(window.Width * 0.3f), (int)(window.Height * 0.09f)),
+                    new Rectangle((int)(window.Width * 0.62f), (int)(window.Height * 0.92f),
+                    (int)(window.Width * 0.3f), (int)(window.Height * 0.079f)),
                     sb);
 
                 
@@ -207,6 +216,15 @@ namespace SwordRush
                     if (grid[j,i] == 1)
                     {
                         walls.Add(new SceneObject(true, whiteRectangle, new Rectangle(j*64, i*64, 64, 64)));
+                    }
+                    else if (grid[j,i] == 2)
+                    {
+                        enemies.Add(new ShortRangeEnemy(dungeontilesTexture2D, new Rectangle(j*64 +32, i*64 +32, 32, 32), player));
+                    }
+                    else if (grid[j,i] == 3)
+                    {
+                        player.X = (j * 64 + 32);
+                        player.Y = (i * 64 + 32);
                     }
                 }
             }
