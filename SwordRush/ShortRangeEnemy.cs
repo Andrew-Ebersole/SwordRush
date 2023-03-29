@@ -12,12 +12,14 @@ namespace SwordRush
         private double damageFrame;
         private Texture2D dungeontilesTexture2D;
         private AnimationComposer animationComposer_ = new AnimationComposer();
+        private int maxHP;
 
         // --- Constructor --- //
-        public ShortRangeEnemy(Texture2D texture, Rectangle rectangle, Player player,int level) : base(texture, rectangle, player)
+        public ShortRangeEnemy(Texture2D texture, Rectangle rectangle, Player player,int level, GraphicsDevice graphicsDevice) : base(texture, rectangle, player, graphicsDevice)
         {
             this.player = player;
             dungeontilesTexture2D = texture;
+
 
             List<Texture2D> frames = new List<Texture2D>();
 
@@ -34,6 +36,7 @@ namespace SwordRush
         {
             health = level;
             atk = level;
+            maxHP = health;
         }
 
         /// <summary>
@@ -79,6 +82,12 @@ namespace SwordRush
         {
             sb.Draw(animationComposer_.GetCurrentSequence().GetCurrentFrame(), Rectangle, Color.White);
             //sb.Draw(dungeontilesTexture2D, Rectangle, new Rectangle(368, 80, 16, 16), Color.White);
+
+            // Draw Healthbar
+            sb.Draw(singleColor,                                                    // Texture
+                new Rectangle((int)this.Position.X - 16, (int)this.Position.Y - 10, // X-Y position
+                (int)(this.Rectangle.Width * (health / maxHP)), 3),                               // Width-Height
+                Color.DarkRed);                                                         // Color
         }
 
         public override void Update(GameTime gt)
