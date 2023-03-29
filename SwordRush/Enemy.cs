@@ -24,6 +24,8 @@ namespace SwordRush
 
 
         //Texture
+        protected Texture2D singleColor;
+
         private Texture2D dungeontilesTexture2D;
 
         public Texture2D DungeonTilesTexture2D
@@ -40,10 +42,14 @@ namespace SwordRush
         public int Level => level;
 
         // --- Constructor --- //
-        public Enemy(Texture2D texture, Rectangle rectangle, Player player) : base(texture, rectangle)
+        public Enemy(Texture2D texture, Rectangle rectangle, Player player, GraphicsDevice graphicsDevice) : base(texture, rectangle)
         {
             this.player = player;
             dungeontilesTexture2D = texture;
+
+            // Single Color Texture
+            singleColor = new Texture2D(graphicsDevice, 1, 1);
+            singleColor.SetData(new[] { Color.White });
         }
 
         // --- Constructor --- //
@@ -69,6 +75,7 @@ namespace SwordRush
         public virtual void Draw(SpriteBatch sb)
         {
             sb.Draw(dungeontilesTexture2D, Rectangle, new Rectangle(368, 80, 16, 16), Color.White);
+
         }
     }
 }

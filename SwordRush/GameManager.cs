@@ -43,7 +43,7 @@ namespace SwordRush
         private Texture2D xpBarTexture;
         private Texture2D emptyBarTexture;
         private Texture2D whiteRectangle;
-        
+
         private SpriteFont BellMT24;
 
         //tiling
@@ -53,6 +53,8 @@ namespace SwordRush
         private static GameManager instance = null;
         private Texture2D singleTexture;
 
+        // Graphics Device
+        private GraphicsDevice graphicsDevice;
 
         // --- Properties --- //
 
@@ -78,7 +80,7 @@ namespace SwordRush
 
         // --- Constructor --- //
 
-        public void Initialize(ContentManager content, Point windowSize, Texture2D whiteRectangle)
+        public void Initialize(ContentManager content, Point windowSize, Texture2D whiteRectangle, GraphicsDevice graphicsDevice)
         {
             contentManager_ = content;
             fileManager_ = new FileManager();
@@ -113,7 +115,9 @@ namespace SwordRush
             // Font
             BellMT24 = content.Load<SpriteFont>("Bell_MT-24");
 
-            
+            // graphicsDevice
+            this.graphicsDevice = graphicsDevice;
+
         }
 
         public Player LocalPlayer
@@ -229,7 +233,7 @@ namespace SwordRush
                     }
                     else if (grid[j,i] == 2)
                     {
-                        enemies.Add(new ShortRangeEnemy(dungeontilesTexture2D, new Rectangle(j*64 +32, i*64 +32, 32, 32), player, (player.RoomsCleared / 2 ) + 1));
+                        enemies.Add(new ShortRangeEnemy(dungeontilesTexture2D, new Rectangle(j*64 +32, i*64 +32, 32, 32), player, (player.RoomsCleared / 2) + 1, graphicsDevice));
                     }
                     else if (grid[j,i] == 3)
                     {

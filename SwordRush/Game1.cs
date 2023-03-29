@@ -68,7 +68,7 @@ namespace SwordRush
             // UI Manager
             UI.Get.Initialize(Content, windowSize, GraphicsDevice);
             // Game Manager
-            GameManager.Get.Initialize(Content, windowSize, whiteRectangle);
+            GameManager.Get.Initialize(Content, windowSize, whiteRectangle, GraphicsDevice);
             
             // Events and delegates
             UI.Get.startGame += GameManager.Get.StartGame;
