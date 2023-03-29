@@ -169,6 +169,15 @@ namespace SwordRush
 
                 //update player collision
                 WallCollision(player, walls);
+
+                Debug.WriteLine(enemies.Count);
+
+                //check if enemies are all dead
+                if (enemies.Count == 0 && UI.Get.GameFSM == SwordRush.GameFSM.Game)
+                {
+                    player.RoomsCleared += 1;
+                    StartGame();
+                }
                 
             }
         }
@@ -226,7 +235,7 @@ namespace SwordRush
                     }
                     else if (grid[j,i] == 2)
                     {
-                        enemies.Add(new ShortRangeEnemy(dungeontilesTexture2D, new Rectangle(j*64 +32, i*64 +32, 32, 32), player,1, graphicsDevice));
+                        enemies.Add(new ShortRangeEnemy(dungeontilesTexture2D, new Rectangle(j*64 +32, i*64 +32, 32, 32), player, (player.RoomsCleared / 2) + 1, graphicsDevice));
                     }
                     else if (grid[j,i] == 3)
                     {
@@ -423,11 +432,12 @@ namespace SwordRush
         public void StartGame()
         {
             gameActive = true;
-            player.NewRound();
+            
 
             //load grid
-            grid = fileManager_.LoadGrid("Content/Level0.txt");
+            grid = fileManager_.LoadGrid($"Content/Level{player.RoomsCleared%2}.txt");
             
+
             //generates curent room based on grid
             GenerateRoom();
             // TODO: Reset game code goes here

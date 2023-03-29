@@ -29,6 +29,7 @@ namespace SwordRush
             frames.Add(GameManager.Get.ContentManager.Load<Texture2D>("skelet_idle_anim_f3"));
 
             animationComposer_.PlaySequence(new AnimationSequence(frames, 0.2, true));
+            this.level = level;
             initStat(level);
         }
         
@@ -86,8 +87,8 @@ namespace SwordRush
             // Draw Healthbar
             sb.Draw(singleColor,                                                    // Texture
                 new Rectangle((int)this.Position.X - 16, (int)this.Position.Y - 10, // X-Y position
-                (int)(this.Rectangle.Width * (health / maxHP)), 3),                               // Width-Height
-                Color.DarkRed);                                                         // Color
+                (int)((this.Rectangle.Width * health / maxHP)), 3),                 // Width-Height
+                Color.DarkRed);                                                     // Color
         }
 
         public override void Update(GameTime gt)
