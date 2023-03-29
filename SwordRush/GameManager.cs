@@ -222,7 +222,7 @@ namespace SwordRush
                     }
                     else if (grid[j,i] == 2)
                     {
-                        enemies.Add(new ShortRangeEnemy(dungeontilesTexture2D, new Rectangle(j*64 +32, i*64 +32, 32, 32), player));
+                        enemies.Add(new ShortRangeEnemy(dungeontilesTexture2D, new Rectangle(j*64 +32, i*64 +32, 32, 32), player,1));
                     }
                     else if (grid[j,i] == 3)
                     {

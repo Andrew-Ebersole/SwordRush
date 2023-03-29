@@ -14,7 +14,7 @@ namespace SwordRush
         private AnimationComposer animationComposer_ = new AnimationComposer();
 
         // --- Constructor --- //
-        public ShortRangeEnemy(Texture2D texture, Rectangle rectangle, Player player) : base(texture, rectangle, player)
+        public ShortRangeEnemy(Texture2D texture, Rectangle rectangle, Player player,int level) : base(texture, rectangle, player)
         {
             this.player = player;
             dungeontilesTexture2D = texture;
@@ -27,7 +27,6 @@ namespace SwordRush
             frames.Add(GameManager.Get.ContentManager.Load<Texture2D>("skelet_idle_anim_f3"));
 
             animationComposer_.PlaySequence(new AnimationSequence(frames, 0.2, true));
-            level = 2;
             initStat(level);
         }
         
