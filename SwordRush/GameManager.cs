@@ -168,8 +168,6 @@ namespace SwordRush
                 //update player collision
                 WallCollision(player, walls);
 
-                Debug.WriteLine(enemies.Count);
-
                 //check if enemies are all dead
                 if (enemies.Count == 0 && UI.Get.GameFSM == SwordRush.GameFSM.Game)
                 {

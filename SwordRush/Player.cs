@@ -203,7 +203,7 @@ namespace SwordRush
              */
             maxHealth += level;
             health = maxHealth;
-            atk += 1;
+            atk += 1/2;
             //end here
         }
 
@@ -275,7 +275,7 @@ namespace SwordRush
             atk = 1;
             maxHealth = 10;
             health = maxHealth;
-            atkSpd = 1;
+            atkSpd = 10;
             distance = 1;
             range = 1;
             roomsCleared = 0;
