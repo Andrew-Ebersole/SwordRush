@@ -211,7 +211,12 @@ namespace SwordRush
                     (int)(window.Width * 0.3f), (int)(window.Height * 0.079f)),
                     sb);
 
-                
+
+                // Draw Room Number top right
+                sb.DrawString(BellMT24,
+                    $"Room: {player.RoomsCleared}",
+                    new Vector2(10, 10),
+                    Color.Black);
             }
         }
 
