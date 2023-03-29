@@ -93,6 +93,10 @@ namespace SwordRush
             {
                 return roomsCleared;
             }
+            set
+            {
+                roomsCleared = value;
+            }
         }
 
         public GameObject Sword
