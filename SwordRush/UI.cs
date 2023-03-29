@@ -146,9 +146,11 @@ namespace SwordRush
                     if (menuButtons[0].LeftClicked)
                     {
                         gameFSM = GameFSM.Game;
-                       
+
                         // Sends event that will be recieved by game manager
+                        GameManager.Get.LocalPlayer.NewRound();
                         startGame();
+                        
                     }
                     if (menuButtons[1].LeftClicked)
                     {
