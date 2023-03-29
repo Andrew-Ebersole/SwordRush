@@ -148,10 +148,9 @@ namespace SwordRush
         {
             attackFrame += gameTime.ElapsedGameTime.TotalMilliseconds;
             currentMouseState = Mouse.GetState();
-            if (attackFrame >= 1000/atkSpd)
+            if (attackFrame >= 600/atkSpd)
             {
-                if (currentMouseState.LeftButton == ButtonState.Pressed &&
-                    preMouseState.LeftButton == ButtonState.Released)
+                if (currentMouseState.LeftButton == ButtonState.Pressed)
                 {
                     //move the player's location
                     Position -= GetDirection() * 25 * distance;
