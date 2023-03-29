@@ -146,11 +146,10 @@ namespace SwordRush
         /// </summary>
         public void playerControl(GameTime gameTime)
         {
-            attackFrame += gameTime.TotalGameTime.TotalSeconds;
+            attackFrame += gameTime.ElapsedGameTime.TotalMilliseconds;
             currentMouseState = Mouse.GetState();
-            if (attackFrame >= 200/atkSpd)
+            if (attackFrame >= 1000/atkSpd)
             {
-                playerState = PlayerStateMachine.Idle;
                 if (currentMouseState.LeftButton == ButtonState.Pressed &&
                     preMouseState.LeftButton == ButtonState.Released)
                 {
@@ -160,10 +159,16 @@ namespace SwordRush
                     attackFrame = 0;
                 }
             }
-            else
+            
+            if (attackFrame < 100)
             {
                 playerState = PlayerStateMachine.Attack;
             }
+            else
+            {
+                playerState = PlayerStateMachine.Idle;
+            }
+            
 
             preMouseState = currentMouseState;
         }

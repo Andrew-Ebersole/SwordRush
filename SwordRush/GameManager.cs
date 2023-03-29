@@ -157,8 +157,6 @@ namespace SwordRush
                         player.GainExp(enemies[i].Level);
                         enemies.RemoveAt(i);
                     }
-
-                    //Debug.WriteLine(player.Exp +":" +player.LevelUpExp+":"+player.Level);
                 }
 
                 // End game if player health runs out
