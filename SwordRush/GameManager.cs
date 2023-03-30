@@ -30,7 +30,7 @@ namespace SwordRush
         //game states
         private bool gameActive;
         private Rectangle window;
-        public event ToggleGameState gameOver;
+        public event GameOver gameOver;
         private KeyboardState currentKeyState;
         private KeyboardState previousKeyState;
 
@@ -165,7 +165,7 @@ namespace SwordRush
                 if (player.Health <= 0)
                 {
                     gameActive = false;
-                    gameOver();
+                    gameOver(player.RoomsCleared);
                 }
 
                 //update player collision
