@@ -476,11 +476,11 @@ namespace SwordRush
                 new Rectangle(0, (int)(texture.Height * 0.55f), texture.Width / 3, texture.Height / 2),
                 Color.White);
 
-            int barPercent = value * 6 / maxValue;
+            int barPercent = value * 120 / maxValue;
 
             sb.Draw(texture,
-                new Rectangle(size.X,size.Y,(size.Width * barPercent) / 6,size.Height),
-                new Rectangle(0,0,(texture.Width* barPercent) / 6,(int)(texture.Height*0.25f)),
+                new Rectangle(size.X,size.Y,(size.Width * barPercent) / 120,size.Height),
+                new Rectangle(0,0,(texture.Width* barPercent) / 120,(int)(texture.Height*0.25f)),
                 Color.White);
 
             sb.DrawString(
