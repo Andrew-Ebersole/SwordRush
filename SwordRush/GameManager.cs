@@ -164,6 +164,7 @@ namespace SwordRush
                 // End game if player health runs out
                 if (player.Health <= 0)
                 {
+                    gameActive = false;
                     gameOver();
                 }
 
