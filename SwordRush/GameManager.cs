@@ -436,7 +436,7 @@ namespace SwordRush
             
 
             //load grid
-            grid = fileManager_.LoadGrid($"Content/Level{player.RoomsCleared%2}.txt");
+            grid = fileManager_.LoadGrid($"Content/Level{player.RoomsCleared%3}.txt");
             
 
             //generates curent room based on grid
