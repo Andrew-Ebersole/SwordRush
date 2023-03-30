@@ -32,9 +32,9 @@ namespace SwordRush
         // Plater stats
         private int exp;
         private int level;
-        private int atk;
         private int health;
         private int maxHealth;
+        private float atk;
         private float atkSpd;
         private float range;
         private float distance;
@@ -60,7 +60,7 @@ namespace SwordRush
 
         public Point Size => size;
 
-        public int Atk => atk;
+        public float Atk => atk;
         public int Health => health;
 
         public int MaxHealth
@@ -148,13 +148,14 @@ namespace SwordRush
         {
             attackFrame += gameTime.ElapsedGameTime.TotalMilliseconds;
             currentMouseState = Mouse.GetState();
-            if (attackFrame >= 1000/atkSpd)
+            if (attackFrame >= 600/atkSpd)
             {
-                if (currentMouseState.LeftButton == ButtonState.Pressed &&
-                    preMouseState.LeftButton == ButtonState.Released)
+                if (currentMouseState.LeftButton == ButtonState.Pressed && playerState == PlayerStateMachine.Idle)
                 {
                     //move the player's location
                     Position -= GetDirection() * 25 * distance;
+
+                    System.Diagnostics.Debug.WriteLine(position.X + "," + position.Y +":"+ atkSpd);
 
                     attackFrame = 0;
                 }
@@ -198,7 +199,11 @@ namespace SwordRush
              */
             maxHealth += level;
             health = maxHealth;
-            atk += 1/2;
+            if (atkSpd < 9)
+            {
+                atkSpd += 0.5f;
+            }
+            atk += 0.5f;
             //end here
         }
 
