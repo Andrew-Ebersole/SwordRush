@@ -31,6 +31,8 @@ namespace SwordRush
         private bool gameActive;
         private Rectangle window;
         public event ToggleGameState gameOver;
+        private KeyboardState currentKeyState;
+        private KeyboardState previousKeyState;
 
         //objects
         private Player player;
@@ -51,7 +53,7 @@ namespace SwordRush
         private int[,] grid;
         
         private static GameManager instance = null;
-        private Texture2D singleTexture;
+        
 
         // Graphics Device
         private GraphicsDevice graphicsDevice;
@@ -167,6 +169,18 @@ namespace SwordRush
 
                 //update player collision
                 WallCollision(player, walls);
+
+
+                //get keyboard state
+                currentKeyState = Keyboard.GetState();
+
+                //go to next level shortcut
+                if (currentKeyState.IsKeyDown(Keys.Enter) && previousKeyState.IsKeyUp(Keys.Enter))
+                {
+                    enemies.Clear();
+                }
+
+                previousKeyState = currentKeyState;
 
                 //check if enemies are all dead
                 if (enemies.Count == 0 && UI.Get.GameFSM == SwordRush.GameFSM.Game)
