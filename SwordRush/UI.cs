@@ -116,6 +116,7 @@ namespace SwordRush
 
             // Creates all the buttons
             initalizeButtons();
+            takeDamage = true;
         }
 
 
