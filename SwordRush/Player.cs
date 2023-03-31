@@ -261,7 +261,6 @@ namespace SwordRush
             SwordLocation();
             SwordRotateAngle();
             animation_.Update(gt);
-            Debug.WriteLine(UI.Get.TakeDamage);
             if (UI.Get.TakeDamage == false)
             {
                 maxHealth = 9999;

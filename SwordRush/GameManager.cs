@@ -453,7 +453,7 @@ namespace SwordRush
             //load grid
             grid = fileManager_.LoadGrid($"Content/Level{player.RoomsCleared%3}.txt");
             
-
+            enemies.Clear();
             //generates curent room based on grid
             GenerateRoom();
             // TODO: Reset game code goes here
