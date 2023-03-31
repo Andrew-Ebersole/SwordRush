@@ -30,7 +30,9 @@ namespace SwordRush
         
         //game event
         private Rectangle window;
-        public event ToggleGameState gameOver;
+        public event GameOver gameOver;
+        private KeyboardState currentKeyState;
+        private KeyboardState previousKeyState;
 
         //objects
         private Player player;
@@ -51,7 +53,7 @@ namespace SwordRush
         private int[,] grid;
         
         private static GameManager instance = null;
-        private Texture2D singleTexture;
+        
 
         // Graphics Device
         private GraphicsDevice graphicsDevice;
@@ -170,11 +172,24 @@ namespace SwordRush
                 // End game if player health runs out
                 if (player.Health <= 0)
                 {
-                    gameOver();
+                    gameActive = false;
+                    gameOver(player.RoomsCleared);
                 }
 
                 //update player collision
                 WallCollision(player, walls);
+
+
+                //get keyboard state
+                currentKeyState = Keyboard.GetState();
+
+                //go to next level shortcut
+                if (currentKeyState.IsKeyDown(Keys.Enter) && previousKeyState.IsKeyUp(Keys.Enter))
+                {
+                    enemies.Clear();
+                }
+
+                previousKeyState = currentKeyState;
 
                 //check if enemies are all dead
                 if (enemies.Count == 0 && UI.Get.GameFSM == SwordRush.GameFSM.Game)
@@ -471,9 +486,9 @@ namespace SwordRush
             
 
             //load grid
-            grid = fileManager_.LoadGrid($"Content/Level{player.RoomsCleared%2}.txt");
+            grid = fileManager_.LoadGrid($"Content/Level{player.RoomsCleared%3}.txt");
             
-
+            enemies.Clear();
             //generates curent room based on grid
             GenerateRoom();
             // TODO: Reset game code goes here
@@ -497,11 +512,11 @@ namespace SwordRush
                 new Rectangle(0, (int)(texture.Height * 0.55f), texture.Width / 3, texture.Height / 2),
                 Color.White);
 
-            int barPercent = value * 6 / maxValue;
+            int barPercent = value * 120 / maxValue;
 
             sb.Draw(texture,
-                new Rectangle(size.X,size.Y,(size.Width * barPercent) / 6,size.Height),
-                new Rectangle(0,0,(texture.Width* barPercent) / 6,(int)(texture.Height*0.25f)),
+                new Rectangle(size.X,size.Y,(size.Width * barPercent) / 120,size.Height),
+                new Rectangle(0,0,(texture.Width* barPercent) / 120,(int)(texture.Height*0.25f)),
                 Color.White);
 
             sb.DrawString(

@@ -12,6 +12,7 @@ namespace SwordRush
 {
     // Delegates
     public delegate void ToggleGameState();
+    public delegate void GameOver(int roomsCleared);
 
     public class Game1 : Game
     {

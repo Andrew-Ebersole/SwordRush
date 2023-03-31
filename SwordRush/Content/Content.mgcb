@@ -155,6 +155,9 @@
 #begin Level1.txt
 /copy:Level1.txt
 
+#begin Level2.txt
+/copy:Level2.txt
+
 #begin magic_bar.png
 /importer:TextureImporter
 /processor:TextureProcessor

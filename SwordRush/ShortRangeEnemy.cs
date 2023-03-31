@@ -10,7 +10,6 @@ namespace SwordRush
     {
         Player player;
         private double damageFrame;
-        private Texture2D dungeontilesTexture2D;
         private AnimationComposer animationComposer_ = new AnimationComposer();
         private int maxHP;
 
@@ -18,7 +17,6 @@ namespace SwordRush
         public ShortRangeEnemy(Texture2D texture, Rectangle rectangle, Player player,int level, GraphicsDevice graphicsDevice) : base(texture, rectangle, player, graphicsDevice)
         {
             this.player = player;
-            dungeontilesTexture2D = texture;
 
 
             List<Texture2D> frames = new List<Texture2D>();

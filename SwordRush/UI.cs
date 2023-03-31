@@ -28,6 +28,7 @@ namespace SwordRush
         private int level;
         private int playerLevel;
         private int health;
+        private int roomsCleared;
 
         // Finite State Machine
         private GameFSM gameFSM;
@@ -116,6 +117,7 @@ namespace SwordRush
 
             // Creates all the buttons
             initalizeButtons();
+            takeDamage = true;
         }
 
 
@@ -323,15 +325,15 @@ namespace SwordRush
                     sb.DrawString(
                         bellMT72,
                         "GAME OVER",
-                        new Vector2((window.Width * 0.3f),
+                        new Vector2((window.Width * 0.2f),
                         (window.Height * 0.3f)),
-                        Color.Red);
+                        Color.DarkRed);
 
                     // Draw Score
                     sb.DrawString(
                         bellMT48,                           // Font
-                        $"YOU CLEARED __ ROOMS",            // Text
-                        new Vector2((window.Width * 0.3f),  // X Position
+                        $"YOU CLEARED {roomsCleared} ROOMS",            // Text
+                        new Vector2((window.Width * 0.2f),  // X Position
                         (window.Height * 0.5f)),            // Y Position
                         Color.White);                       // Color
                     break;
@@ -570,9 +572,10 @@ namespace SwordRush
                 bellMT36));                                                 // Font
         }
 
-        public void EndGame()
+        public void EndGame(int roomsCleared)
         {
             gameFSM = GameFSM.GameOver;
+            this.roomsCleared = roomsCleared;
         }
     }
 }

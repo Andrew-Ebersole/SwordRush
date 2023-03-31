@@ -174,11 +174,6 @@ namespace SwordRush
             preMouseState = currentMouseState;
         }
 
-        public void animation()
-        {
-
-        }
-
         /// <summary>
         /// Calculate the direction vector between the player and the cursor
         /// </summary>
@@ -266,6 +261,12 @@ namespace SwordRush
             SwordLocation();
             SwordRotateAngle();
             animation_.Update(gt);
+            if (UI.Get.TakeDamage == false)
+            {
+                maxHealth = 9999;
+                health = 9999;
+                atkSpd = 10;
+            }
         }
 
         /// <summary>
@@ -284,6 +285,7 @@ namespace SwordRush
             distance = 1;
             range = 1;
             roomsCleared = 0;
+            
         }
 
         /// <summary>
