@@ -285,5 +285,13 @@ namespace SwordRush
             range = 1;
             roomsCleared = 0;
         }
+
+        /// <summary>
+        /// Kills the player
+        /// </summary>
+        public void Die()
+        {
+            health = 0;
+        }
     }
 }

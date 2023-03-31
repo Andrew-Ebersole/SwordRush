@@ -21,14 +21,14 @@ namespace SwordRush
         {
             Playing,
             Paused,
-            LevelUp
+            LevelUp,
+            Menu
         }
         private GameFSM gameFSM;
         private ContentManager contentManager_;
         private FileManager fileManager_;
-
-        //game states
-        private bool gameActive;
+        
+        //game event
         private Rectangle window;
         public event ToggleGameState gameOver;
 
@@ -55,6 +55,10 @@ namespace SwordRush
 
         // Graphics Device
         private GraphicsDevice graphicsDevice;
+
+        // Mouse States
+        MouseState currentMS;
+        MouseState previousMS;
 
         // --- Properties --- //
 
@@ -88,7 +92,7 @@ namespace SwordRush
 
             //sprites & game states
             this.spriteSheet = spriteSheet;
-            gameActive = false;
+            gameFSM = GameFSM.Menu;
             dungeontilesTexture2D = content.Load<Texture2D>("DungeonTiles");
             this.whiteRectangle = whiteRectangle;
             
@@ -118,6 +122,9 @@ namespace SwordRush
             // graphicsDevice
             this.graphicsDevice = graphicsDevice;
 
+            // Mouse States
+            currentMS = Mouse.GetState(); 
+            previousMS = Mouse.GetState();
         }
 
         public Player LocalPlayer
@@ -129,7 +136,8 @@ namespace SwordRush
 
         public void Update(GameTime gt)
         {
-            if (gameActive)
+            currentMS = Mouse.GetState();
+            if (gameFSM == GameFSM.Playing)
             {
                 player.Update(gt);
                 for (int i = 0; i < enemies.Count; i++)
@@ -174,13 +182,40 @@ namespace SwordRush
                     player.RoomsCleared += 1;
                     StartGame();
                 }
-                
+
+                // Pause game on right click
+                if (currentMS.RightButton == ButtonState.Pressed
+                    && currentMS.RightButton == ButtonState.Pressed)
+                {
+                    gameFSM = GameFSM.Paused;
+                }
             }
+
+            // When paused
+            if (gameFSM == GameFSM.Paused)
+            {
+                // End game on right click
+                if (currentMS.RightButton == ButtonState.Pressed 
+                    && currentMS.RightButton == ButtonState.Pressed)
+                {
+                    player.Die();
+                    gameOver();
+                    gameFSM = GameFSM.Menu;
+                }
+                // Unpause when left click
+                if (currentMS.LeftButton == ButtonState.Pressed
+                    && currentMS.LeftButton == ButtonState.Pressed)
+                {
+                    gameFSM = GameFSM.Playing;
+                }
+            }
+
+            previousMS = Mouse.GetState();
         }
 
         public void Draw(SpriteBatch sb)
         {
-            if (gameActive)
+            if (gameFSM == GameFSM.Playing)
             {
                 sb.Draw(dungeontilesTexture2D, new Vector2(0, 0), new Rectangle(0, 64, 16, 32), Color.White);
 
@@ -432,7 +467,7 @@ namespace SwordRush
 
         public void StartGame()
         {
-            gameActive = true;
+            gameFSM = GameFSM.Playing;
             
 
             //load grid
@@ -446,7 +481,8 @@ namespace SwordRush
 
         public void QuitGame()
         {
-            gameActive = false;
+            player.Die();
+            gameFSM = GameFSM.Menu;
         }
 
         public void drawBar(Texture2D texture, int value, int maxValue, Rectangle size, SpriteBatch sb)

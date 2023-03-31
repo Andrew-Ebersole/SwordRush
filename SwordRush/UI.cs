@@ -172,13 +172,7 @@ namespace SwordRush
 
                 case GameFSM.Game: // --- Game --------------------------------------------------//
                     // Right click to quit the game
-                    if (currentMState.RightButton == ButtonState.Pressed
-                        && previousMState.RightButton == ButtonState.Released)
-                    {
-                        quitGame();
-                        gameFSM = GameFSM.Menu;
-                        
-                    }
+                    // Code for quitting game in GameManager
                     break;
 
                 case GameFSM.Settings:
@@ -502,7 +496,7 @@ namespace SwordRush
                     break;
 
             }
-
+            
 
         }
 
