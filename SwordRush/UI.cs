@@ -61,6 +61,8 @@ namespace SwordRush
         private int sfxLevel;
         private int musicLevel;
         private bool takeDamage;
+        private bool showHitboxes;
+        private bool showLocations;
 
 
         private static UI instance = null;
@@ -87,6 +89,10 @@ namespace SwordRush
         public int MusicLevel { get { return musicLevel; } }
 
         public bool TakeDamage { get { return takeDamage; } }
+
+        public bool ShowHitboxes { get {  return showHitboxes; } }
+
+        public bool ShowLocations { get { return showLocations; } }
 
 
         // --- Constructor --- //
@@ -118,16 +124,13 @@ namespace SwordRush
             // Creates all the buttons
             initalizeButtons();
             takeDamage = true;
+            showHitboxes = true;
+            showLocations = true;
         }
 
 
 
         // --- Methods --- //
-
-        public void LoadContent()
-        {
-
-        }
 
         public void Update(GameTime gt)
         {
@@ -235,6 +238,36 @@ namespace SwordRush
                                 settingButtons[4].Text = "False";
                             }
                             
+                        }
+                        // Toggle Show Hitboxes
+                        else if (settingButtons[5].LeftClicked)
+                        {
+                            if (showHitboxes == false)
+                            {
+                                showHitboxes = true;
+                                settingButtons[5].Text = "True";
+                            }
+                            else
+                            {
+                                showHitboxes = false;
+                                settingButtons[5].Text = "False";
+                            }
+
+                        }
+                        // Show locations
+                        else if (settingButtons[6].LeftClicked)
+                        {
+                            if (showLocations == false)
+                            {
+                                showLocations = true;
+                                settingButtons[6].Text = "True";
+                            }
+                            else
+                            {
+                                showLocations = false;
+                                settingButtons[6].Text = "False";
+                            }
+
                         }
                         else
                         {
@@ -491,6 +524,20 @@ namespace SwordRush
                         window.Height * 0.5f),          // Y Position
                         Color.White);                   // Color
 
+                    sb.DrawString(
+                        bellMT48,                       // Font
+                        $"Show Hitboxes",               // Text
+                        new Vector2(window.Width * 0.1f,// X Position
+                        window.Height * 0.6f),          // Y Position
+                        Color.White);                   // Color
+
+                    sb.DrawString(
+                       bellMT48,                       // Font
+                       $"Show Locations",               // Text
+                       new Vector2(window.Width * 0.1f,// X Position
+                       window.Height * 0.7f),          // Y Position
+                       Color.White);                   // Color
+
                     foreach (TextButton b in settingButtons)
                     {
                         b.Draw(sb);
@@ -567,6 +614,18 @@ namespace SwordRush
 
             settingButtons.Add(new TextButton(new Rectangle(
                 (int)(window.Width * 0.60f), (int)(window.Height * 0.50f),  // Location
+                (int)(window.Width * 0.10f), (int)(window.Height * 0.09f)), // Hitbox
+                "True",                                                     // Text
+                bellMT36));                                                 // Font
+
+            settingButtons.Add(new TextButton(new Rectangle(
+                (int)(window.Width * 0.60f), (int)(window.Height * 0.60f),  // Location
+                (int)(window.Width * 0.10f), (int)(window.Height * 0.09f)), // Hitbox
+                "True",                                                     // Text
+                bellMT36));                                                 // Font
+
+            settingButtons.Add(new TextButton(new Rectangle(
+                (int)(window.Width * 0.60f), (int)(window.Height * 0.70f),  // Location
                 (int)(window.Width * 0.10f), (int)(window.Height * 0.09f)), // Hitbox
                 "True",                                                     // Text
                 bellMT36));                                                 // Font
