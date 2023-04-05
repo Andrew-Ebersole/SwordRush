@@ -159,7 +159,7 @@ namespace SwordRush
                 if (currentMouseState.LeftButton == ButtonState.Pressed && playerState == PlayerStateMachine.Idle)
                 {
                     //move the player's location
-                    Position -= GetDirection() * 25 * distance;
+                    Position -= GetDirection() * 100 * distance;
 
                     System.Diagnostics.Debug.WriteLine(position.X + "," + position.Y +":"+ atkSpd);
 
@@ -259,7 +259,10 @@ namespace SwordRush
             // Draw Hitboxes
             if (UI.Get.ShowHitboxes == true)
             {
-                sb.Draw(singleColor,Rectangle,Color.White * 0.2f);
+                sb.Draw(singleColor,
+                    new Rectangle(rectangle.X,rectangle.Y+rectangle.Height/2,
+                    rectangle.Width,rectangle.Height/2),
+                    Color.White * 0.2f);
             }
         }
 

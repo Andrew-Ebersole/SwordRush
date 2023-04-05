@@ -86,6 +86,7 @@ namespace SwordRush
 
         public ContentManager ContentManager { get { return contentManager_; } }
 
+        public int[,] Grid { get { return grid; } }
         // --- Constructor --- //
 
         public void Initialize(ContentManager content, Point windowSize, Texture2D whiteRectangle, GraphicsDevice graphicsDevice)
@@ -284,13 +285,13 @@ namespace SwordRush
 
                     sb.DrawString(BellMT72,
                         $"Paused",
-                        new Vector2(window.Width *0.38f, window.Height * 0.41f),
+                        new Vector2(window.Width *0.38f, window.Height * 0.36f),
                         Color.White);
 
                     sb.DrawString(BellMT24,
                         $"Right Click to Quit\n" +
                         $"Left Click to Resume",
-                        new Vector2(window.Width * 0.38f, window.Height * 0.61f),
+                        new Vector2(window.Width * 0.38f, window.Height * 0.56f),
                         Color.White);
                     break;
             }

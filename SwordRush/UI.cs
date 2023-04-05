@@ -120,8 +120,7 @@ namespace SwordRush
             // Used for window height and width
             this.window = new Rectangle(0,0,
                 windowSize.X, windowSize.Y);
-
-            // Creates all the buttons
+                        // Creates all the buttons
             initalizeButtons();
             takeDamage = true;
             showHitboxes = false;
