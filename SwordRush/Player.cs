@@ -19,7 +19,8 @@ namespace SwordRush
     enum PlayerStateMachine{
         Idle,
         Attack,
-        Damaged
+        Damaged,
+        AttackCoolDown
     }
 
     internal class Player : GameObject
@@ -52,6 +53,7 @@ namespace SwordRush
 
         //Texture
         private Texture2D dungeontilesTexture2D;
+        private Texture2D singleColor;
 
         private AnimationComposer animation_;
 
@@ -109,7 +111,7 @@ namespace SwordRush
 
         // --- Constructor --- //
 
-        public Player(Texture2D texture, Rectangle rectangle) : base(texture, rectangle)
+        public Player(Texture2D texture, Rectangle rectangle, GraphicsDevice graphics) : base(texture, rectangle)
         {
             exp = 0;
             levelUpExp = 100;
@@ -123,10 +125,15 @@ namespace SwordRush
             currentMouseState = Mouse.GetState();
             preMouseState = Mouse.GetState();
 
+            // Create a texture for blank rectangle
+            singleColor = new Texture2D(graphics, 1, 1);
+            singleColor.SetData(new[] { Color.White });
+
             sword = new GameObject(null, Rectangle);
             dungeontilesTexture2D = texture;
 
             List<Texture2D> frames = new List<Texture2D>();
+
 
             frames.Add(GameManager.Get.ContentManager.Load<Texture2D>("knight_f_idle_anim_f0"));
             frames.Add(GameManager.Get.ContentManager.Load<Texture2D>("knight_f_idle_anim_f1"));
@@ -134,7 +141,7 @@ namespace SwordRush
             frames.Add(GameManager.Get.ContentManager.Load<Texture2D>("knight_f_idle_anim_f3"));
 
             animation_ = new AnimationComposer();
-            animation_.PlaySequence(new AnimationSequence(frames, 0.25, true));
+            animation_.PlayMovementAnimation(new AnimationSequence(frames, 0.25, true));
         }
 
 
@@ -146,31 +153,40 @@ namespace SwordRush
         /// </summary>
         public void playerControl(GameTime gameTime)
         {
-            attackFrame += gameTime.ElapsedGameTime.TotalMilliseconds;
-            currentMouseState = Mouse.GetState();
-            if (attackFrame >= 600/atkSpd)
-            {
-                if (currentMouseState.LeftButton == ButtonState.Pressed && playerState == PlayerStateMachine.Idle)
-                {
-                    //move the player's location
-                    Position -= GetDirection() * 25 * distance;
-
-                    System.Diagnostics.Debug.WriteLine(position.X + "," + position.Y +":"+ atkSpd);
-
-                    attackFrame = 0;
-                }
-            }
-            
+            // Move when attacking
             if (attackFrame < 100)
             {
                 playerState = PlayerStateMachine.Attack;
+
+                //move the player's location
+                Position -= GetDirection() * 1f * distance * gameTime.ElapsedGameTime.Milliseconds;
             }
+            // Cooldown after attack based off attack speed
+            else if (attackFrame >= 100 && attackFrame <= 600/atkSpd)
+            {
+                playerState = PlayerStateMachine.AttackCoolDown;
+            }
+            // Wait until next attack in idle
             else
             {
                 playerState = PlayerStateMachine.Idle;
             }
-            
 
+            // Update mouse state and attack time
+            attackFrame += gameTime.ElapsedGameTime.TotalMilliseconds;
+            currentMouseState = Mouse.GetState();
+
+            // If player clicks and attack
+            if (currentMouseState.LeftButton == ButtonState.Pressed 
+                && preMouseState.LeftButton == ButtonState.Pressed
+                && playerState == PlayerStateMachine.Idle)
+            {
+                //System.Diagnostics.Debug.WriteLine(position.X + "," + position.Y +":"+ atkSpd);
+
+                attackFrame = 0;
+            }
+
+            // Previous mouse state
             preMouseState = currentMouseState;
         }
 
@@ -248,7 +264,26 @@ namespace SwordRush
         {
             sb.Draw(animation_.GetCurrentSequence().GetCurrentFrame(), Rectangle, Color.White);
             //sb.Draw(dungeontilesTexture2D, Rectangle, new Rectangle(128, 64, 16, 32), Color.White);
-            sb.Draw(dungeontilesTexture2D, sword.Position, new Rectangle(320, 80, 16, 32), Color.White, SwordRotateAngle(), new Vector2(8, -8), 2.0f, SpriteEffects.FlipVertically, 0.0f);
+
+            Color swordTint;
+            // Make sword transparent during cooldown
+            if (playerState == PlayerStateMachine.AttackCoolDown)
+            {
+                swordTint = Color.White * 0.2f;
+            } else
+            {
+                swordTint = Color.White;
+            }
+            sb.Draw(dungeontilesTexture2D, sword.Position, new Rectangle(320, 80, 16, 32), swordTint, SwordRotateAngle(), new Vector2(8, -8), 2.0f, SpriteEffects.FlipVertically, 0.0f);
+
+            // Draw Hitboxes
+            if (UI.Get.ShowHitboxes == true)
+            {
+                sb.Draw(singleColor,
+                    new Rectangle(rectangle.X,rectangle.Y+rectangle.Height/2,
+                    rectangle.Width,rectangle.Height/2),
+                    Color.White * 0.2f);
+            }
         }
 
         /// <summary>
@@ -267,6 +302,7 @@ namespace SwordRush
                 health = 9999;
                 atkSpd = 10;
             }
+
         }
 
         /// <summary>
@@ -286,6 +322,14 @@ namespace SwordRush
             range = 1;
             roomsCleared = 0;
             
+        }
+
+        /// <summary>
+        /// Kills the player
+        /// </summary>
+        public void Die()
+        {
+            health = 0;
         }
     }
 }

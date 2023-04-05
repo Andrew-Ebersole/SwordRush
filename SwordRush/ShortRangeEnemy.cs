@@ -26,7 +26,7 @@ namespace SwordRush
             frames.Add(GameManager.Get.ContentManager.Load<Texture2D>("skelet_idle_anim_f2"));
             frames.Add(GameManager.Get.ContentManager.Load<Texture2D>("skelet_idle_anim_f3"));
 
-            animationComposer_.PlaySequence(new AnimationSequence(frames, 0.2, true));
+            animationComposer_.PlayMovementAnimation(new AnimationSequence(frames, 0.2, true));
             this.level = level;
             initStat(level);
         }
@@ -79,6 +79,7 @@ namespace SwordRush
 
         public override void Draw(SpriteBatch sb)
         {
+
             sb.Draw(animationComposer_.GetCurrentSequence().GetCurrentFrame(), Rectangle, Color.White);
             //sb.Draw(dungeontilesTexture2D, Rectangle, new Rectangle(368, 80, 16, 16), Color.White);
 

@@ -21,6 +21,7 @@ namespace SwordRush
         private SpriteBatch _spriteBatch;
 
         // Fonts
+        SpriteFont bellMT16;
         SpriteFont bellMT24;
 
         // window
@@ -65,6 +66,7 @@ namespace SwordRush
 
             // Load Fonts
             bellMT24 = Content.Load<SpriteFont>("Bell_MT-24");
+            bellMT16 = Content.Load<SpriteFont>("Bell_MT-16");
 
             // UI Manager
             UI.Get.Initialize(Content, windowSize, GraphicsDevice);
@@ -102,9 +104,48 @@ namespace SwordRush
             
             GameManager.Get.Draw(_spriteBatch);
 
+            if (UI.Get.ShowGrid
+                && UI.Get.GameFSM == GameFSM.Game) 
+            {
+                DrawCords(_spriteBatch);
+            }
+
             _spriteBatch.End();
             base.Draw(gameTime);
         }
 
+        private void DrawCords(SpriteBatch sb)
+        {
+            
+            for (int x = 0; x < 20; x++)
+            {
+                for (int y = 0; y < 12; y++)
+                {
+                    Color gridColor = new Color();
+
+                    if ((x+y)%2 == 0)
+                    {
+                        gridColor = Color.White * 0.05f;
+                    } else
+                    {
+                        gridColor = Color.Gray * 0.05f;
+                    }
+
+                    // Draw Tile size
+                    sb.Draw(whiteRectangle,
+                        new Rectangle(x * windowSize.X / 20, y * windowSize.Y / 12,
+                        windowSize.X / 20, windowSize.Y / 12),
+                        gridColor);
+                    
+                    // Draw Tile location
+                    sb.DrawString(
+                        bellMT16,
+                        $"{GameManager.Get.Grid[x,y]}",
+                        new Vector2(x*windowSize.X/20+10,y*windowSize.Y/12+9),
+                        Color.Black);
+                    
+                }
+            }
+        }
     }
 }

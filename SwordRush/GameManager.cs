@@ -21,14 +21,14 @@ namespace SwordRush
         {
             Playing,
             Paused,
-            LevelUp
+            LevelUp,
+            Menu
         }
         private GameFSM gameFSM;
         private ContentManager contentManager_;
         private FileManager fileManager_;
-
-        //game states
-        private bool gameActive;
+        
+        //game event
         private Rectangle window;
         public event GameOver gameOver;
         private KeyboardState currentKeyState;
@@ -46,7 +46,9 @@ namespace SwordRush
         private Texture2D emptyBarTexture;
         private Texture2D whiteRectangle;
 
+        // fonts
         private SpriteFont BellMT24;
+        private SpriteFont BellMT72;
 
         //tiling
         private List<SceneObject> walls;
@@ -57,6 +59,10 @@ namespace SwordRush
 
         // Graphics Device
         private GraphicsDevice graphicsDevice;
+
+        // Mouse States
+        MouseState currentMS;
+        MouseState previousMS;
 
         // --- Properties --- //
 
@@ -80,6 +86,8 @@ namespace SwordRush
 
         public ContentManager ContentManager { get { return contentManager_; } }
 
+        public int[,] Grid { get { return grid; } }
+
         // --- Constructor --- //
 
         public void Initialize(ContentManager content, Point windowSize, Texture2D whiteRectangle, GraphicsDevice graphicsDevice)
@@ -90,13 +98,13 @@ namespace SwordRush
 
             //sprites & game states
             this.spriteSheet = spriteSheet;
-            gameActive = false;
+            gameFSM = GameFSM.Menu;
             dungeontilesTexture2D = content.Load<Texture2D>("DungeonTiles");
             this.whiteRectangle = whiteRectangle;
             
             //objects
             enemies = new List<Enemy>();
-            player = new Player(dungeontilesTexture2D, new Rectangle(0,0, 32, 64));
+            player = new Player(dungeontilesTexture2D, new Rectangle(0,0, 32, 64), graphicsDevice);
 
 
             //tiling
@@ -116,10 +124,14 @@ namespace SwordRush
 
             // Font
             BellMT24 = content.Load<SpriteFont>("Bell_MT-24");
+            BellMT72 = content.Load<SpriteFont>("Bell_MT-72");
 
             // graphicsDevice
             this.graphicsDevice = graphicsDevice;
 
+            // Mouse States
+            currentMS = Mouse.GetState(); 
+            previousMS = Mouse.GetState();
         }
 
         public Player LocalPlayer
@@ -131,122 +143,162 @@ namespace SwordRush
 
         public void Update(GameTime gt)
         {
-            if (gameActive)
+            currentMS = Mouse.GetState();
+
+            switch (gameFSM)
             {
-                player.Update(gt);
-                for (int i = 0; i < enemies.Count; i++)
-                {
-                    enemies[i].Update(gt);
+                case GameFSM.Playing: // Playing Game
 
-                    //update enemy collision
-                    WallCollision(enemies[i], walls);
-
-                    if (player.PlayerState == PlayerStateMachine.Attack &&
-                        SwordCollision(enemies[i].Rectangle, 0, player.Sword.Rectangle, player.SwordRotateAngle()))
+                    player.Update(gt);
+                    for (int i = 0; i < enemies.Count; i++)
                     {
-                        enemies[i].Damaged();
-                        Rectangle r0 = player.Sword.Rectangle;
+                        enemies[i].Update(gt);
+
+                        //update enemy collision
+                        WallCollision(enemies[i], walls);
+
+                        if (player.PlayerState == PlayerStateMachine.Attack &&
+                            SwordCollision(enemies[i].Rectangle, 0, player.Sword.Rectangle, player.SwordRotateAngle()))
+                        {
+                            enemies[i].Damaged();
+                            Rectangle r0 = player.Sword.Rectangle;
+                        }
+
+                        if (enemies[i].Rectangle.Intersects(player.Rectangle) && enemies[i].Health > 0)
+                        {
+                            enemies[i].Damaged();
+                            player.Damaged(enemies[i].Atk);
+                        }
+
+                        if (enemies[i].Health <= 0)
+                        {
+                            player.GainExp(enemies[i].Level);
+                            enemies.RemoveAt(i);
+                        }
                     }
 
-                    if (enemies[i].Rectangle.Intersects(player.Rectangle) && enemies[i].Health > 0)
+                    // End game if player health runs out
+                    if (player.Health <= 0)
                     {
-                        enemies[i].Damaged();
-                        player.Damaged(enemies[i].Atk);
+                        gameFSM = GameFSM.Menu;
+                        gameOver(player.RoomsCleared);
                     }
 
-                    if (enemies[i].Health <= 0)
+                    //update player collision
+                    WallCollision(player, walls);
+
+
+                    //get keyboard state
+                    currentKeyState = Keyboard.GetState();
+
+                    //go to next level shortcut
+                    if (currentKeyState.IsKeyDown(Keys.Enter) && previousKeyState.IsKeyUp(Keys.Enter))
                     {
-                        player.GainExp(enemies[i].Level);
-                        enemies.RemoveAt(i);
+                        enemies.Clear();
                     }
 
-                    AStar aStar = new AStar();
-                    Point enemyPoint = new Point((int)enemies[0].Position.X, (int)enemies[0].Position.Y);
-                    Point playerPoint = new Point((int)player.Position.X, (int)player.Position.Y);
-                    List<Rectangle> obstacles = new List<Rectangle>();
-                    foreach (SceneObject wall in walls)
+                    previousKeyState = currentKeyState;
+
+                    //check if enemies are all dead
+                    if (enemies.Count == 0 && UI.Get.GameFSM == SwordRush.GameFSM.Game)
                     {
-                        obstacles.Add(wall.Rectangle);
+                        player.RoomsCleared += 1;
+                        StartGame();
                     }
 
-                    //List<Point> points = aStar.FindPath(enemyPoint,playerPoint,obstacles);
+                    // Pause game on right click
+                    if (currentMS.RightButton == ButtonState.Pressed
+                        && previousMS.RightButton == ButtonState.Released)
+                    {
+                        gameFSM = GameFSM.Paused;
+                    }
+                    break;
 
+                case GameFSM.Paused:
 
-                    //Debug.WriteLine("__________________________");
+                    // End game on right click
+                    if (currentMS.RightButton == ButtonState.Pressed
+                        && previousMS.RightButton == ButtonState.Released)
+                    {
+                        player.Die();
+                        gameOver(player.RoomsCleared);
+                        gameFSM = GameFSM.Menu;
+                    }
+                    // Unpause when left click
+                    if (currentMS.LeftButton == ButtonState.Pressed
+                        && previousMS.LeftButton == ButtonState.Released)
+                    {
+                        gameFSM = GameFSM.Playing;
+                    }
 
-                }
-
-                // End game if player health runs out
-                if (player.Health <= 0)
-                {
-                    gameActive = false;
-                    gameOver(player.RoomsCleared);
-                }
-
-                //update player collision
-                WallCollision(player, walls);
-
-
-                //get keyboard state
-                currentKeyState = Keyboard.GetState();
-
-                //go to next level shortcut
-                if (currentKeyState.IsKeyDown(Keys.Enter) && previousKeyState.IsKeyUp(Keys.Enter))
-                {
-                    enemies.Clear();
-                }
-
-                previousKeyState = currentKeyState;
-
-                //check if enemies are all dead
-                if (enemies.Count == 0 && UI.Get.GameFSM == SwordRush.GameFSM.Game)
-                {
-                    player.RoomsCleared += 1;
-                    StartGame();
-                }
-                
+                    break;
             }
+
+            previousMS = Mouse.GetState();
+
+            UpdateGrid();
         }
 
         public void Draw(SpriteBatch sb)
         {
-            if (gameActive)
+            switch (gameFSM)
             {
-                sb.Draw(dungeontilesTexture2D, new Vector2(0, 0), new Rectangle(0, 64, 16, 32), Color.White);
+                case GameFSM.Playing:
+                    sb.Draw(dungeontilesTexture2D, new Vector2(0, 0), new Rectangle(0, 64, 16, 32), Color.White);
 
-                //draw walls
-                foreach (SceneObject obj in walls)
-                {
-                    obj.Draw(sb);
-                }
+                    //draw walls
+                    foreach (SceneObject obj in walls)
+                    {
+                        obj.Draw(sb);
+                    }
 
-                player.Draw(sb);
-                foreach (Enemy enemy in enemies)
-                {
-                    enemy.Draw(sb);
-                }
+                    player.Draw(sb);
+                    foreach (Enemy enemy in enemies)
+                    {
+                        enemy.Draw(sb);
+                    }
 
-                // Display health and xp bars
-                drawBar(healthBarTexture,
-                    player.Health,
-                    player.MaxHealth,
-                    new Rectangle((int)(window.Width * 0.12f), (int)(window.Height * 0.92f),
-                    (int)(window.Width * 0.3f), (int)(window.Height * 0.079)), 
-                    sb);
+                    // Display health and xp bars
+                    drawBar(healthBarTexture,
+                        player.Health,
+                        player.MaxHealth,
+                        new Rectangle((int)(window.Width * 0.12f), (int)(window.Height * 0.92f),
+                        (int)(window.Width * 0.3f), (int)(window.Height * 0.079)),
+                        sb);
 
-                drawBar(xpBarTexture,
-                    player.Exp,
-                    player.LevelUpExp,
-                    new Rectangle((int)(window.Width * 0.62f), (int)(window.Height * 0.92f),
-                    (int)(window.Width * 0.3f), (int)(window.Height * 0.079f)),
-                    sb);
+                    drawBar(xpBarTexture,
+                        player.Exp,
+                        player.LevelUpExp,
+                        new Rectangle((int)(window.Width * 0.62f), (int)(window.Height * 0.92f),
+                        (int)(window.Width * 0.3f), (int)(window.Height * 0.079f)),
+                        sb);
 
 
-                // Draw Room Number top right
-                sb.DrawString(BellMT24,
-                    $"Rooms Cleared: {player.RoomsCleared}",
-                    new Vector2(10, 10),
-                    Color.Black);
+                    // Draw Room Number top right
+                    sb.DrawString(BellMT24,
+                        $"Rooms Cleared: {player.RoomsCleared}",
+                        new Vector2(10, 10),
+                        Color.Black);
+
+                    break;
+
+                case GameFSM.Paused:
+
+                    sb.DrawString(BellMT72,
+                        $"Paused",
+                        new Vector2(window.Width *0.38f, window.Height * 0.36f),
+                        Color.White);
+
+                    sb.DrawString(BellMT24,
+                        $"Right Click to Quit\n" +
+                        $"Left Click to Resume",
+                        new Vector2(window.Width * 0.38f, window.Height * 0.56f),
+                        Color.White);
+                    break;
+            }
+            if (gameFSM == GameFSM.Playing)
+            {
+                
             }
         }
 
@@ -275,6 +327,33 @@ namespace SwordRush
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// updates the position of the player and enemies on the grid
+        /// </summary>
+        public void UpdateGrid()
+        {
+            //clear old positions of enemies and players
+            for (int i = 0; i < grid.GetLength(1); i++)
+            {
+                for (int j = 0; j < grid.GetLength(0); j++)
+                {
+                    if (grid[j,i] == 3 || grid[j,i] == 2)
+                    {
+                        grid[j,i] = 0;
+                    }
+                }
+            }
+
+            //add enemy positions
+            foreach (ShortRangeEnemy SRenemy in enemies)
+            {
+                grid[Convert.ToInt32(SRenemy.Position.X) / 64, Convert.ToInt32(SRenemy.Position.Y) / 64] = 2;
+            }
+
+            //add player position
+            grid[Convert.ToInt32(player.Position.X) / 64, Convert.ToInt32(player.Position.Y) / 64] = 3;
         }
 
         public void WallCollision(GameObject entity, List<SceneObject> walls)
@@ -462,7 +541,7 @@ namespace SwordRush
 
         public void StartGame()
         {
-            gameActive = true;
+            gameFSM = GameFSM.Playing;
             
 
             //load grid
@@ -476,7 +555,8 @@ namespace SwordRush
 
         public void QuitGame()
         {
-            gameActive = false;
+            player.Die();
+            gameFSM = GameFSM.Menu;
         }
 
         public void drawBar(Texture2D texture, int value, int maxValue, Rectangle size, SpriteBatch sb)

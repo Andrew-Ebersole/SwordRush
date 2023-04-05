@@ -61,6 +61,8 @@ namespace SwordRush
         private int sfxLevel;
         private int musicLevel;
         private bool takeDamage;
+        private bool showHitboxes;
+        private bool showGrid;
 
 
         private static UI instance = null;
@@ -88,6 +90,10 @@ namespace SwordRush
 
         public bool TakeDamage { get { return takeDamage; } }
 
+        public bool ShowHitboxes { get {  return showHitboxes; } }
+
+        public bool ShowGrid { get { return showGrid; } }
+
 
         // --- Constructor --- //
 
@@ -114,20 +120,16 @@ namespace SwordRush
             // Used for window height and width
             this.window = new Rectangle(0,0,
                 windowSize.X, windowSize.Y);
-
-            // Creates all the buttons
+                        // Creates all the buttons
             initalizeButtons();
             takeDamage = true;
+            showHitboxes = false;
+            showGrid = false;
         }
 
 
 
         // --- Methods --- //
-
-        public void LoadContent()
-        {
-
-        }
 
         public void Update(GameTime gt)
         {
@@ -174,13 +176,7 @@ namespace SwordRush
 
                 case GameFSM.Game: // --- Game --------------------------------------------------//
                     // Right click to quit the game
-                    if (currentMState.RightButton == ButtonState.Pressed
-                        && previousMState.RightButton == ButtonState.Released)
-                    {
-                        quitGame();
-                        gameFSM = GameFSM.Menu;
-                        
-                    }
+                    // Code for quitting game in GameManager
                     break;
 
                 case GameFSM.Settings:
@@ -241,6 +237,36 @@ namespace SwordRush
                                 settingButtons[4].Text = "False";
                             }
                             
+                        }
+                        // Toggle Show Hitboxes
+                        else if (settingButtons[5].LeftClicked)
+                        {
+                            if (showHitboxes == false)
+                            {
+                                showHitboxes = true;
+                                settingButtons[5].Text = "True";
+                            }
+                            else
+                            {
+                                showHitboxes = false;
+                                settingButtons[5].Text = "False";
+                            }
+
+                        }
+                        // Show locations
+                        else if (settingButtons[6].LeftClicked)
+                        {
+                            if (showGrid == false)
+                            {
+                                showGrid = true;
+                                settingButtons[6].Text = "True";
+                            }
+                            else
+                            {
+                                showGrid = false;
+                                settingButtons[6].Text = "False";
+                            }
+
                         }
                         else
                         {
@@ -497,6 +523,20 @@ namespace SwordRush
                         window.Height * 0.5f),          // Y Position
                         Color.White);                   // Color
 
+                    sb.DrawString(
+                        bellMT48,                       // Font
+                        $"Show Hitboxes",               // Text
+                        new Vector2(window.Width * 0.1f,// X Position
+                        window.Height * 0.6f),          // Y Position
+                        Color.White);                   // Color
+
+                    sb.DrawString(
+                       bellMT48,                       // Font
+                       $"Show Tile Grid",               // Text
+                       new Vector2(window.Width * 0.1f,// X Position
+                       window.Height * 0.7f),          // Y Position
+                       Color.White);                   // Color
+
                     foreach (TextButton b in settingButtons)
                     {
                         b.Draw(sb);
@@ -504,7 +544,7 @@ namespace SwordRush
                     break;
 
             }
-
+            
 
         }
 
@@ -575,6 +615,18 @@ namespace SwordRush
                 (int)(window.Width * 0.60f), (int)(window.Height * 0.50f),  // Location
                 (int)(window.Width * 0.10f), (int)(window.Height * 0.09f)), // Hitbox
                 "True",                                                     // Text
+                bellMT36));                                                 // Font
+
+            settingButtons.Add(new TextButton(new Rectangle(
+                (int)(window.Width * 0.60f), (int)(window.Height * 0.60f),  // Location
+                (int)(window.Width * 0.10f), (int)(window.Height * 0.09f)), // Hitbox
+                "False",                                                     // Text
+                bellMT36));                                                 // Font
+
+            settingButtons.Add(new TextButton(new Rectangle(
+                (int)(window.Width * 0.60f), (int)(window.Height * 0.70f),  // Location
+                (int)(window.Width * 0.10f), (int)(window.Height * 0.09f)), // Hitbox
+                "False",                                                     // Text
                 bellMT36));                                                 // Font
         }
 
