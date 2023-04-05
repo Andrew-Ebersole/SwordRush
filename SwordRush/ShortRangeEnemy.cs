@@ -79,6 +79,7 @@ namespace SwordRush
 
         public override void Draw(SpriteBatch sb)
         {
+
             sb.Draw(animationComposer_.GetCurrentSequence().GetCurrentFrame(), Rectangle, Color.White);
             //sb.Draw(dungeontilesTexture2D, Rectangle, new Rectangle(368, 80, 16, 16), Color.White);
 
