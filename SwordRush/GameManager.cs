@@ -102,7 +102,7 @@ namespace SwordRush
             
             //objects
             enemies = new List<Enemy>();
-            player = new Player(dungeontilesTexture2D, new Rectangle(0,0, 32, 64));
+            player = new Player(dungeontilesTexture2D, new Rectangle(0,0, 32, 64), graphicsDevice);
 
 
             //tiling

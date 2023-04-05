@@ -62,7 +62,7 @@ namespace SwordRush
         private int musicLevel;
         private bool takeDamage;
         private bool showHitboxes;
-        private bool showLocations;
+        private bool showGrid;
 
 
         private static UI instance = null;
@@ -92,7 +92,7 @@ namespace SwordRush
 
         public bool ShowHitboxes { get {  return showHitboxes; } }
 
-        public bool ShowLocations { get { return showLocations; } }
+        public bool ShowGrid { get { return showGrid; } }
 
 
         // --- Constructor --- //
@@ -124,8 +124,8 @@ namespace SwordRush
             // Creates all the buttons
             initalizeButtons();
             takeDamage = true;
-            showHitboxes = true;
-            showLocations = true;
+            showHitboxes = false;
+            showGrid = false;
         }
 
 
@@ -257,14 +257,14 @@ namespace SwordRush
                         // Show locations
                         else if (settingButtons[6].LeftClicked)
                         {
-                            if (showLocations == false)
+                            if (showGrid == false)
                             {
-                                showLocations = true;
+                                showGrid = true;
                                 settingButtons[6].Text = "True";
                             }
                             else
                             {
-                                showLocations = false;
+                                showGrid = false;
                                 settingButtons[6].Text = "False";
                             }
 
@@ -533,7 +533,7 @@ namespace SwordRush
 
                     sb.DrawString(
                        bellMT48,                       // Font
-                       $"Show Locations",               // Text
+                       $"Show Tile Grid",               // Text
                        new Vector2(window.Width * 0.1f,// X Position
                        window.Height * 0.7f),          // Y Position
                        Color.White);                   // Color
@@ -621,13 +621,13 @@ namespace SwordRush
             settingButtons.Add(new TextButton(new Rectangle(
                 (int)(window.Width * 0.60f), (int)(window.Height * 0.60f),  // Location
                 (int)(window.Width * 0.10f), (int)(window.Height * 0.09f)), // Hitbox
-                "True",                                                     // Text
+                "False",                                                     // Text
                 bellMT36));                                                 // Font
 
             settingButtons.Add(new TextButton(new Rectangle(
                 (int)(window.Width * 0.60f), (int)(window.Height * 0.70f),  // Location
                 (int)(window.Width * 0.10f), (int)(window.Height * 0.09f)), // Hitbox
-                "True",                                                     // Text
+                "False",                                                     // Text
                 bellMT36));                                                 // Font
         }
 

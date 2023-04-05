@@ -25,6 +25,13 @@
 /processorParam:TextureFormat=Color
 /build:AbilityIcons.png
 
+#begin Bell_MT-16.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Bell_MT-16.spritefont
+
 #begin Bell_MT-24.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
