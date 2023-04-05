@@ -11,39 +11,53 @@ namespace SwordRush
 {
     internal class AnimationComposer
     {
-        List<AnimationSequence> sequences_ = new List<AnimationSequence>();
+        AnimationSequence movementSequence_ = null;
+        AnimationSequence slotSequence_ = null;
 
         public AnimationSequence GetCurrentSequence()
         {
-            return sequences_.Last();
-        }
-
-        public void Update(GameTime gameTime)
-        {
-            for(int i = 0; i < sequences_.Count; i++)
+            if(slotSequence_ == null)
             {
-                AnimationSequence sequence = sequences_[i];
-                sequence.Update(gameTime);
-                if(sequence.End)
+                return movementSequence_;
+            } else
+            {
+                if(slotSequence_.End)
                 {
-                    if(sequence.Loop)
-                    {
-                        sequence.Reset();
-                    } else
-                    {
-                        if(sequences_.Count > 1)
-                        {
-                            sequences_.RemoveAt(i);
-                            i--;
-                        }
-                    }
+                    return movementSequence_;
+                } else
+                {
+                    return slotSequence_;
                 }
             }
         }
 
-        public void PlaySequence(AnimationSequence animationSequence)
+        public void Update(GameTime gameTime)
         {
-            sequences_.Add(animationSequence);
+            if(slotSequence_ != null)
+            {
+                if (slotSequence_.End)
+                {
+                    movementSequence_.Update(gameTime);
+                }
+                else
+                {
+                    slotSequence_.Update(gameTime);
+                }
+                
+            } else
+            {
+                movementSequence_.Update(gameTime);
+            }
+        }
+
+        public void PlayActionAnimation()
+        {
+
+        }
+
+        public void PlayMovementAnimation(AnimationSequence movementAnimation)
+        {
+            movementSequence_ = movementAnimation;
         }
     }
 }

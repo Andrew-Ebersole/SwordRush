@@ -233,6 +233,8 @@ namespace SwordRush
             }
 
             previousMS = Mouse.GetState();
+
+            UpdateGrid();
         }
 
         public void Draw(SpriteBatch sb)
@@ -323,6 +325,33 @@ namespace SwordRush
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// updates the position of the player and enemies on the grid
+        /// </summary>
+        public void UpdateGrid()
+        {
+            //clear old positions of enemies and players
+            for (int i = 0; i < grid.GetLength(1); i++)
+            {
+                for (int j = 0; j < grid.GetLength(0); j++)
+                {
+                    if (grid[j,i] == 3 || grid[j,i] == 2)
+                    {
+                        grid[j,i] = 0;
+                    }
+                }
+            }
+
+            //add enemy positions
+            foreach (ShortRangeEnemy SRenemy in enemies)
+            {
+                grid[Convert.ToInt32(SRenemy.Position.X) / 64, Convert.ToInt32(SRenemy.Position.Y) / 64] = 2;
+            }
+
+            //add player position
+            grid[Convert.ToInt32(player.Position.X) / 64, Convert.ToInt32(player.Position.Y) / 64] = 3;
         }
 
         public void WallCollision(GameObject entity, List<SceneObject> walls)

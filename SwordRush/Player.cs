@@ -140,7 +140,7 @@ namespace SwordRush
             frames.Add(GameManager.Get.ContentManager.Load<Texture2D>("knight_f_idle_anim_f3"));
 
             animation_ = new AnimationComposer();
-            animation_.PlaySequence(new AnimationSequence(frames, 0.25, true));
+            animation_.PlayMovementAnimation(new AnimationSequence(frames, 0.25, true));
         }
 
 
