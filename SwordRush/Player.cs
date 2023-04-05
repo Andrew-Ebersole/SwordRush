@@ -158,10 +158,7 @@ namespace SwordRush
             {
                 if (currentMouseState.LeftButton == ButtonState.Pressed && playerState == PlayerStateMachine.Idle)
                 {
-                    //move the player's location
-                    Position -= GetDirection() * 100 * distance;
-
-                    System.Diagnostics.Debug.WriteLine(position.X + "," + position.Y +":"+ atkSpd);
+                    //System.Diagnostics.Debug.WriteLine(position.X + "," + position.Y +":"+ atkSpd);
 
                     attackFrame = 0;
                 }
@@ -170,6 +167,9 @@ namespace SwordRush
             if (attackFrame < 100)
             {
                 playerState = PlayerStateMachine.Attack;
+
+                //move the player's location
+                Position -= GetDirection() * 1f * distance * gameTime.ElapsedGameTime.Milliseconds;
             }
             else
             {
@@ -282,6 +282,7 @@ namespace SwordRush
                 health = 9999;
                 atkSpd = 10;
             }
+
         }
 
         /// <summary>

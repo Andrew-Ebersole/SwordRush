@@ -87,6 +87,7 @@ namespace SwordRush
         public ContentManager ContentManager { get { return contentManager_; } }
 
         public int[,] Grid { get { return grid; } }
+
         // --- Constructor --- //
 
         public void Initialize(ContentManager content, Point windowSize, Texture2D whiteRectangle, GraphicsDevice graphicsDevice)
