@@ -37,13 +37,22 @@ namespace SwordRush
 
         public void Update(GameTime gt)
         {
-            curFrameSeconds_ += gt.ElapsedGameTime.TotalSeconds;
-            if(curFrameSeconds_ >= frameSeconds_)
+            if(frameIndex_ < frameTextures_.Count - 1)
             {
-                curFrameSeconds_ = 0;
-                if (frameIndex_ < frameTextures_.Count - 1)
+                if (curFrameSeconds_ >= frameSeconds_)
                 {
                     frameIndex_++;
+                    curFrameSeconds_ = 0;
+                }
+                else
+                {
+                    curFrameSeconds_ += gt.ElapsedGameTime.TotalSeconds;
+                }
+            } else
+            {
+                if(Loop)
+                {
+                    Reset();
                 } else
                 {
                     end_ = true;
@@ -55,7 +64,6 @@ namespace SwordRush
         {
             frameIndex_ = 0;
             curFrameSeconds_ = 0;
-            end_ = false;
         }
 
         public Texture2D GetCurrentFrame()
