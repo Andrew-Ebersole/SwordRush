@@ -159,6 +159,21 @@ namespace SwordRush
                         player.GainExp(enemies[i].Level);
                         enemies.RemoveAt(i);
                     }
+
+                    AStar aStar = new AStar();
+                    Point enemyPoint = new Point((int)enemies[0].Position.X, (int)enemies[0].Position.Y);
+                    Point playerPoint = new Point((int)player.Position.X, (int)player.Position.Y);
+                    List<Rectangle> obstacles = new List<Rectangle>();
+                    foreach (SceneObject wall in walls)
+                    {
+                        obstacles.Add(wall.Rectangle);
+                    }
+
+                    //List<Point> points = aStar.FindPath(enemyPoint,playerPoint,obstacles);
+
+
+                    //Debug.WriteLine("__________________________");
+
                 }
 
                 // End game if player health runs out
