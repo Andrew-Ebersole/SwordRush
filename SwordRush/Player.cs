@@ -23,6 +23,14 @@ namespace SwordRush
         AttackCoolDown
     }
 
+    enum LevelUpAbility
+    {
+        Heal,
+        MaxHealth,
+        AttackSpeed,
+        AttackDamage,
+        Range
+    }
     internal class Player : GameObject
     {
         // --- Fields --- //
@@ -215,11 +223,36 @@ namespace SwordRush
             health -= dmg;
         }
 
-        public void LevelUp()
+        public void LevelUp(LevelUpAbility ability)
         {
             exp -= levelUpExp;
             level += 1;
             levelUpExp += level * 10;
+
+            switch (ability)
+            {
+                case LevelUpAbility.Heal:
+                    health = maxHealth; 
+                    break;
+
+                case LevelUpAbility.MaxHealth:
+                    int healthDiff = maxHealth - health;
+                    maxHealth = (int)(maxHealth * 1.5f);
+                    health = maxHealth - healthDiff;
+                    break;
+
+                case LevelUpAbility.AttackSpeed:
+                    atkSpd++;
+                    break;
+
+                case LevelUpAbility.AttackDamage:
+                    atk *= 1.2f;
+                    break;
+
+                case LevelUpAbility.Range:
+                    range++;
+                    break;
+            }
         }
 
         public void GainExp(int enemyLevel)
@@ -227,37 +260,6 @@ namespace SwordRush
             exp += enemyLevel * 10;
         }
 
-        public void Heal()
-        {
-            health = maxHealth;
-            LevelUp();
-        }
-
-        public void IncreaseMaxHealth()
-        {
-            int healthDiff = maxHealth - health;
-            maxHealth = (int)(maxHealth * 1.5f);
-            health = maxHealth - healthDiff;
-            LevelUp();
-        }
-
-        public void IncreaseAttackSpeed()
-        {
-            atkSpd++;
-            LevelUp();
-        }
-
-        public void IncreaseAttackDamage()
-        {
-            atk++;
-            LevelUp();
-        }
-
-        public void IncreaseAttackRange()
-        {
-            range += 1.5f;
-            LevelUp();
-        }
         /// <summary>
         /// get the location of the sword
         /// </summary>

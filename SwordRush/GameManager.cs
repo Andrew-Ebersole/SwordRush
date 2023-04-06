@@ -242,30 +242,36 @@ namespace SwordRush
                     break;
 
                 case GameFSM.LevelUp:
+
                     // Temporary level up system
                     if (Keyboard.GetState().IsKeyDown(Keys.D1))
                     {
-                        player.Heal();
+                        // Heal to max health
+                        player.LevelUp(LevelUpAbility.Heal);
                         gameFSM = GameFSM.Playing;
                     }
                     else if (Keyboard.GetState().IsKeyDown(Keys.D2))
                     {
-                        player.IncreaseMaxHealth();
+                        // Increase max health
+                        player.LevelUp(LevelUpAbility.MaxHealth);
                         gameFSM = GameFSM.Playing;
                     }
                     else if (Keyboard.GetState().IsKeyDown(Keys.D3))
                     {
-                        player.IncreaseAttackSpeed();
+                        // Increase attack speed
+                        player.LevelUp(LevelUpAbility.AttackSpeed);
                         gameFSM = GameFSM.Playing;
                     }
                     else if (Keyboard.GetState().IsKeyDown(Keys.D4))
                     {
-                        player.IncreaseAttackDamage();
+                        // Increase attack damage
+                        player.LevelUp(LevelUpAbility.AttackDamage);
                         gameFSM = GameFSM.Playing;
                     }
                     else if (Keyboard.GetState().IsKeyDown(Keys.D5))
                     {
-                        player.IncreaseAttackRange();
+                        // Increase movement range
+                        player.LevelUp(LevelUpAbility.Range);
                         gameFSM = GameFSM.Playing;
                     }
                     break;
