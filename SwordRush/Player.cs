@@ -110,6 +110,9 @@ namespace SwordRush
             }
         }
 
+        public float AtkSpd { get { return atkSpd; } }
+        public float Range { get { return range; } }
+
         // --- Constructor --- //
 
         public Player(Texture2D texture, Rectangle rectangle, GraphicsDevice graphics) : base(texture, rectangle)
@@ -156,7 +159,7 @@ namespace SwordRush
         public void playerControl(GameTime gameTime)
         {
             // Move when attacking
-            if (attackFrame < 100)
+            if (attackFrame < 100*range)
             {
                 playerState = PlayerStateMachine.Attack;
 
@@ -164,7 +167,7 @@ namespace SwordRush
                 Position -= direction * distance * gameTime.ElapsedGameTime.Milliseconds;
             }
             // Cooldown after attack based off attack speed
-            else if (attackFrame >= 100 && attackFrame <= 800 - 50 * atkSpd)
+            else if (attackFrame >= 100*range && attackFrame <= 100*range + 800 - 50 * atkSpd)
             {
                 playerState = PlayerStateMachine.AttackCoolDown;
             }
@@ -186,6 +189,12 @@ namespace SwordRush
                 //System.Diagnostics.Debug.WriteLine(position.X + "," + position.Y +":"+ atkSpd);
                 direction = GetDirection();
                 attackFrame = 0;
+            }
+
+            // Auto level up
+            if (Keyboard.GetState().IsKeyDown(Keys.P))
+            {
+                exp = LevelUpExp;
             }
 
             // Previous mouse state
@@ -211,30 +220,44 @@ namespace SwordRush
             exp -= levelUpExp;
             level += 1;
             levelUpExp += level * 10;
-
-            /*
-             * the code below is just a place holder for level up
-             */
-            maxHealth += level;
-            health = maxHealth;
-            if (atkSpd < 9)
-            {
-                atkSpd += 0.5f;
-            }
-            atk += 0.5f;
-            //end here
         }
 
         public void GainExp(int enemyLevel)
         {
             exp += enemyLevel * 10;
-
-            if (exp >= levelUpExp)
-            {
-                LevelUp();
-            }
         }
 
+        public void Heal()
+        {
+            health = maxHealth;
+            LevelUp();
+        }
+
+        public void IncreaseMaxHealth()
+        {
+            int healthDiff = maxHealth - health;
+            maxHealth = (int)(maxHealth * 1.5f);
+            health = maxHealth - healthDiff;
+            LevelUp();
+        }
+
+        public void IncreaseAttackSpeed()
+        {
+            atkSpd++;
+            LevelUp();
+        }
+
+        public void IncreaseAttackDamage()
+        {
+            atk++;
+            LevelUp();
+        }
+
+        public void IncreaseAttackRange()
+        {
+            range += 1.5f;
+            LevelUp();
+        }
         /// <summary>
         /// get the location of the sword
         /// </summary>
@@ -324,6 +347,11 @@ namespace SwordRush
             range = 1;
             roomsCleared = 0;
             
+        }
+
+        public void NewRoom()
+        {
+            attackFrame = 100 * range + 800 - 50 * atkSpd;
         }
 
         /// <summary>

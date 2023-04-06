@@ -91,10 +91,13 @@ namespace SwordRush
             //sb.Draw(dungeontilesTexture2D, Rectangle, new Rectangle(368, 80, 16, 16), Color.White);
 
             // Draw Healthbar
-            sb.Draw(singleColor,                                                    // Texture
+            if (enemyState != EnemyStateMachine.Idle)
+            {
+                sb.Draw(singleColor,                                                    // Texture
                 new Rectangle((int)this.Position.X - 16, (int)this.Position.Y - 10, // X-Y position
                 (int)((this.Rectangle.Width * health / maxHP)), 3),                 // Width-Height
                 Color.DarkRed);                                                     // Color
+            }
 
             if (UI.Get.ShowHitboxes == true)
             {

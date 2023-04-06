@@ -205,6 +205,7 @@ namespace SwordRush
                     {
                         player.RoomsCleared += 1;
                         StartGame();
+                        player.NewRoom();
                     }
 
                     // Pause game on right click
@@ -212,6 +213,12 @@ namespace SwordRush
                         && previousMS.RightButton == ButtonState.Released)
                     {
                         gameFSM = GameFSM.Paused;
+                    }
+
+                    // Go To Level Up Screen
+                    if (player.Exp >= player.LevelUpExp)
+                    {
+                        gameFSM |= GameFSM.LevelUp;
                     }
                     break;
 
@@ -232,6 +239,35 @@ namespace SwordRush
                         gameFSM = GameFSM.Playing;
                     }
 
+                    break;
+
+                case GameFSM.LevelUp:
+                    // Temporary level up system
+                    if (Keyboard.GetState().IsKeyDown(Keys.D1))
+                    {
+                        player.Heal();
+                        gameFSM = GameFSM.Playing;
+                    }
+                    else if (Keyboard.GetState().IsKeyDown(Keys.D2))
+                    {
+                        player.IncreaseMaxHealth();
+                        gameFSM = GameFSM.Playing;
+                    }
+                    else if (Keyboard.GetState().IsKeyDown(Keys.D3))
+                    {
+                        player.IncreaseAttackSpeed();
+                        gameFSM = GameFSM.Playing;
+                    }
+                    else if (Keyboard.GetState().IsKeyDown(Keys.D4))
+                    {
+                        player.IncreaseAttackDamage();
+                        gameFSM = GameFSM.Playing;
+                    }
+                    else if (Keyboard.GetState().IsKeyDown(Keys.D5))
+                    {
+                        player.IncreaseAttackRange();
+                        gameFSM = GameFSM.Playing;
+                    }
                     break;
             }
 
@@ -294,6 +330,33 @@ namespace SwordRush
                         $"Right Click to Quit\n" +
                         $"Left Click to Resume",
                         new Vector2(window.Width * 0.38f, window.Height * 0.56f),
+                        Color.White);
+                    break;
+
+                case GameFSM.LevelUp:
+                    sb.DrawString(BellMT72,
+                        $"Level up!",
+                        new Vector2(window.Width * 0.38f, window.Height * 0.36f),
+                        Color.White);
+
+                    sb.DrawString(BellMT24,
+                        $"[Temporary System]" +
+                        $"\n1: Health" +
+                        $"\n2: Max Health" +
+                        $"\n3: Attack Speed" +
+                        $"\n4: Attack Damage" +
+                        $"\n5: Attack Range",
+                        new Vector2(window.Width* 0.38f, window.Height * 0.56f),
+                        Color.White);
+
+                    sb.DrawString(BellMT24,
+                        $"" +
+                        $"\n:Current:{player.Health}" +
+                        $"\n:Current:{player.MaxHealth}" +
+                        $"\n:Current:{player.AtkSpd}" +
+                        $"\n:Current:{player.Atk}" +
+                        $"\n:Current:{player.Range}",
+                        new Vector2(window.Width * 0.58f, window.Height * 0.56f),
                         Color.White);
                     break;
             }
