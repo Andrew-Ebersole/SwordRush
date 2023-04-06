@@ -42,6 +42,7 @@ namespace SwordRush
         private int levelUpExp;
         private int roomsCleared;
         private double attackFrame;
+        private Vector2 direction;
 
         private Vector2 origin;
         // Player weapon
@@ -124,6 +125,7 @@ namespace SwordRush
             range = 1;
             currentMouseState = Mouse.GetState();
             preMouseState = Mouse.GetState();
+            direction = new Vector2();
 
             // Create a texture for blank rectangle
             singleColor = new Texture2D(graphics, 1, 1);
@@ -159,10 +161,10 @@ namespace SwordRush
                 playerState = PlayerStateMachine.Attack;
 
                 //move the player's location
-                Position -= GetDirection() * 1f * distance * gameTime.ElapsedGameTime.Milliseconds;
+                Position -= direction * distance * gameTime.ElapsedGameTime.Milliseconds;
             }
             // Cooldown after attack based off attack speed
-            else if (attackFrame >= 100 && attackFrame <= 600/atkSpd)
+            else if (attackFrame >= 100 && attackFrame <= 800 - 50 * atkSpd)
             {
                 playerState = PlayerStateMachine.AttackCoolDown;
             }
@@ -178,11 +180,11 @@ namespace SwordRush
 
             // If player clicks and attack
             if (currentMouseState.LeftButton == ButtonState.Pressed 
-                && preMouseState.LeftButton == ButtonState.Pressed
+                && preMouseState.LeftButton == ButtonState.Released
                 && playerState == PlayerStateMachine.Idle)
             {
                 //System.Diagnostics.Debug.WriteLine(position.X + "," + position.Y +":"+ atkSpd);
-
+                direction = GetDirection();
                 attackFrame = 0;
             }
 
@@ -318,7 +320,7 @@ namespace SwordRush
             maxHealth = 10;
             health = maxHealth;
             atkSpd = 1;
-            distance = 1;
+            distance = 1.1f;
             range = 1;
             roomsCleared = 0;
             

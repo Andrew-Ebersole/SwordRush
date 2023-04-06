@@ -68,6 +68,10 @@ namespace SwordRush
         {
         }
 
+        public virtual void AttackCooldown()
+        {
+        }
+
         public virtual void Update(GameTime gt)
         {
 

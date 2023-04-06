@@ -164,9 +164,10 @@ namespace SwordRush
                             Rectangle r0 = player.Sword.Rectangle;
                         }
 
-                        if (enemies[i].Rectangle.Intersects(player.Rectangle) && enemies[i].Health > 0)
+                        if (enemies[i].Rectangle.Intersects(player.Rectangle) && enemies[i].Health > 0
+                            && enemies[i].EnemyState == EnemyStateMachine.Move)
                         {
-                            enemies[i].Damaged();
+                            enemies[i].AttackCooldown();
                             player.Damaged(enemies[i].Atk);
                         }
 
@@ -349,11 +350,19 @@ namespace SwordRush
             //add enemy positions
             foreach (ShortRangeEnemy SRenemy in enemies)
             {
-                grid[Convert.ToInt32(SRenemy.Position.X) / 64, Convert.ToInt32(SRenemy.Position.Y) / 64] = 2;
+                if (SRenemy.Position.X > 0 && SRenemy.Position.Y > 0
+                && SRenemy.Position.X < window.Width && SRenemy.Position.Y < window.Height)
+                {
+                    grid[Convert.ToInt32(SRenemy.Position.X) / 64, Convert.ToInt32(SRenemy.Position.Y) / 64] = 2;
+                }
             }
 
             //add player position
-            grid[Convert.ToInt32(player.Position.X) / 64, Convert.ToInt32(player.Position.Y) / 64] = 3;
+            if (player.Position.X > 0 && player.Position.Y > 0
+                && player.Position.X < window.Width && player.Position.Y < window.Height)
+            {
+                grid[Convert.ToInt32(player.Position.X) / 64, Convert.ToInt32(player.Position.Y) / 64] = 3;
+            }
         }
 
         public void WallCollision(GameObject entity, List<SceneObject> walls)

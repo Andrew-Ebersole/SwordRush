@@ -392,17 +392,17 @@ namespace SwordRush
                         $"\nto unlock the next room." +
                         $"\nSee how many rooms you " +
                         $"\ncan clear before you die." +
-                        $"\nGain XP to unlock abilities.", // Text
+                        $"\nGain XP to upgrade stats.", // Text
                         new Vector2(window.Width * 0.1f,// X Position
                         window.Height * 0.3f),          // Y Position
                         Color.White);                   // Color
 
                     sb.DrawString(
                         bellMT36,                       // Font
-                        $"Attack" +
+                        $"Attack/Move" +
                         $"\n - Left Click" +
-                        $"\nMove" +
-                        $"\n - Left Click" +
+                        $"\nPause" +
+                        $"\n - Right Click" +
                         $"\nQuit" +
                         $"\n - Escape",                 // Text
                         new Vector2(window.Width * 0.6f,// X Position
