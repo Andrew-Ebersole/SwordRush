@@ -12,6 +12,7 @@ namespace SwordRush
         private double damageFrame;
         private AnimationComposer animationComposer_ = new AnimationComposer();
         private int maxHP;
+        private Vector2 direction;
 
         // --- Constructor --- //
         public ShortRangeEnemy(Texture2D texture, Rectangle rectangle, Player player,int level, GraphicsDevice graphicsDevice) : base(texture, rectangle, player, graphicsDevice)
@@ -29,6 +30,7 @@ namespace SwordRush
             animationComposer_.PlayMovementAnimation(new AnimationSequence(frames, 0.2, true));
             this.level = level;
             initStat(level);
+            direction = new Vector2(0, 0);
         }
         
         public void initStat(int level)
@@ -45,11 +47,10 @@ namespace SwordRush
         {
             if (enemyState != EnemyStateMachine.Damaged)
             {
-                Vector2 distance = position - player.Position;
-                Vector2 direction = Vector2.Normalize(distance);
                 health -= (int)player.Atk;
-                Position += direction * 100;
-                enemyState = EnemyStateMachine.Damaged;
+                Vector2 distance = position - player.Position;
+                direction = Vector2.Normalize(distance);
+                AttackCooldown();
             }
 
         }
@@ -74,6 +75,12 @@ namespace SwordRush
                 {
                     enemyState = EnemyStateMachine.Idle;
                 }
+            } else if (damageFrame < 200)
+            {
+                Position += direction * 20;
+            } else
+            {
+                enemyState = EnemyStateMachine.Idle;
             }
         }
 
@@ -84,16 +91,38 @@ namespace SwordRush
             //sb.Draw(dungeontilesTexture2D, Rectangle, new Rectangle(368, 80, 16, 16), Color.White);
 
             // Draw Healthbar
-            sb.Draw(singleColor,                                                    // Texture
+            if (enemyState != EnemyStateMachine.Idle)
+            {
+                sb.Draw(singleColor,                                                    // Texture
                 new Rectangle((int)this.Position.X - 16, (int)this.Position.Y - 10, // X-Y position
                 (int)((this.Rectangle.Width * health / maxHP)), 3),                 // Width-Height
                 Color.DarkRed);                                                     // Color
+            }
+
+            if (UI.Get.ShowHitboxes == true)
+            {
+                sb.Draw(singleColor,
+                    new Rectangle(rectangle.X, rectangle.Y,
+                    rectangle.Width, rectangle.Height),
+                    Color.Red * 0.3f);
+            }
         }
 
         public override void Update(GameTime gt)
         {
             AI(gt);
             animationComposer_.Update(gt);
+
+            
+        }
+
+        /// <summary>
+        /// Reset the enemies attack when its hit or does damage
+        /// </summary>
+        public override void AttackCooldown()
+        {
+            damageFrame = 0;
+            enemyState = EnemyStateMachine.Damaged;
         }
     }
 }

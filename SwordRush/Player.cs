@@ -23,6 +23,14 @@ namespace SwordRush
         AttackCoolDown
     }
 
+    enum LevelUpAbility
+    {
+        Heal,
+        MaxHealth,
+        AttackSpeed,
+        AttackDamage,
+        Range
+    }
     internal class Player : GameObject
     {
         // --- Fields --- //
@@ -42,6 +50,7 @@ namespace SwordRush
         private int levelUpExp;
         private int roomsCleared;
         private double attackFrame;
+        private Vector2 direction;
 
         private Vector2 origin;
         // Player weapon
@@ -109,6 +118,9 @@ namespace SwordRush
             }
         }
 
+        public float AtkSpd { get { return atkSpd; } }
+        public float Range { get { return range; } }
+
         // --- Constructor --- //
 
         public Player(Texture2D texture, Rectangle rectangle, GraphicsDevice graphics) : base(texture, rectangle)
@@ -124,6 +136,7 @@ namespace SwordRush
             range = 1;
             currentMouseState = Mouse.GetState();
             preMouseState = Mouse.GetState();
+            direction = new Vector2();
 
             // Create a texture for blank rectangle
             singleColor = new Texture2D(graphics, 1, 1);
@@ -154,15 +167,15 @@ namespace SwordRush
         public void playerControl(GameTime gameTime)
         {
             // Move when attacking
-            if (attackFrame < 100)
+            if (attackFrame < 100*range)
             {
                 playerState = PlayerStateMachine.Attack;
 
                 //move the player's location
-                Position -= GetDirection() * 1f * distance * gameTime.ElapsedGameTime.Milliseconds;
+                Position -= direction * distance * gameTime.ElapsedGameTime.Milliseconds;
             }
             // Cooldown after attack based off attack speed
-            else if (attackFrame >= 100 && attackFrame <= 600/atkSpd)
+            else if (attackFrame >= 100*range && attackFrame <= 100*range + 800 - 50 * atkSpd)
             {
                 playerState = PlayerStateMachine.AttackCoolDown;
             }
@@ -178,12 +191,18 @@ namespace SwordRush
 
             // If player clicks and attack
             if (currentMouseState.LeftButton == ButtonState.Pressed 
-                && preMouseState.LeftButton == ButtonState.Pressed
+                && preMouseState.LeftButton == ButtonState.Released
                 && playerState == PlayerStateMachine.Idle)
             {
                 //System.Diagnostics.Debug.WriteLine(position.X + "," + position.Y +":"+ atkSpd);
-
+                direction = GetDirection();
                 attackFrame = 0;
+            }
+
+            // Auto level up
+            if (Keyboard.GetState().IsKeyDown(Keys.P))
+            {
+                exp = LevelUpExp;
             }
 
             // Previous mouse state
@@ -204,33 +223,41 @@ namespace SwordRush
             health -= dmg;
         }
 
-        public void LevelUp()
+        public void LevelUp(LevelUpAbility ability)
         {
             exp -= levelUpExp;
             level += 1;
             levelUpExp += level * 10;
 
-            /*
-             * the code below is just a place holder for level up
-             */
-            maxHealth += level;
-            health = maxHealth;
-            if (atkSpd < 9)
+            switch (ability)
             {
-                atkSpd += 0.5f;
+                case LevelUpAbility.Heal:
+                    health = maxHealth; 
+                    break;
+
+                case LevelUpAbility.MaxHealth:
+                    int healthDiff = maxHealth - health;
+                    maxHealth = (int)(maxHealth * 1.5f);
+                    health = maxHealth - healthDiff;
+                    break;
+
+                case LevelUpAbility.AttackSpeed:
+                    atkSpd++;
+                    break;
+
+                case LevelUpAbility.AttackDamage:
+                    atk *= 1.2f;
+                    break;
+
+                case LevelUpAbility.Range:
+                    range++;
+                    break;
             }
-            atk += 0.5f;
-            //end here
         }
 
         public void GainExp(int enemyLevel)
         {
             exp += enemyLevel * 10;
-
-            if (exp >= levelUpExp)
-            {
-                LevelUp();
-            }
         }
 
         /// <summary>
@@ -318,10 +345,15 @@ namespace SwordRush
             maxHealth = 10;
             health = maxHealth;
             atkSpd = 1;
-            distance = 1;
+            distance = 1.1f;
             range = 1;
             roomsCleared = 0;
             
+        }
+
+        public void NewRoom()
+        {
+            attackFrame = 100 * range + 800 - 50 * atkSpd;
         }
 
         /// <summary>

@@ -164,9 +164,10 @@ namespace SwordRush
                             Rectangle r0 = player.Sword.Rectangle;
                         }
 
-                        if (enemies[i].Rectangle.Intersects(player.Rectangle) && enemies[i].Health > 0)
+                        if (enemies[i].Rectangle.Intersects(player.Rectangle) && enemies[i].Health > 0
+                            && enemies[i].EnemyState == EnemyStateMachine.Move)
                         {
-                            enemies[i].Damaged();
+                            enemies[i].AttackCooldown();
                             player.Damaged(enemies[i].Atk);
                         }
 
@@ -204,6 +205,7 @@ namespace SwordRush
                     {
                         player.RoomsCleared += 1;
                         StartGame();
+                        player.NewRoom();
                     }
 
                     // Pause game on right click
@@ -211,6 +213,12 @@ namespace SwordRush
                         && previousMS.RightButton == ButtonState.Released)
                     {
                         gameFSM = GameFSM.Paused;
+                    }
+
+                    // Go To Level Up Screen
+                    if (player.Exp >= player.LevelUpExp)
+                    {
+                        gameFSM |= GameFSM.LevelUp;
                     }
                     break;
 
@@ -231,6 +239,41 @@ namespace SwordRush
                         gameFSM = GameFSM.Playing;
                     }
 
+                    break;
+
+                case GameFSM.LevelUp:
+
+                    // Temporary level up system
+                    if (Keyboard.GetState().IsKeyDown(Keys.D1))
+                    {
+                        // Heal to max health
+                        player.LevelUp(LevelUpAbility.Heal);
+                        gameFSM = GameFSM.Playing;
+                    }
+                    else if (Keyboard.GetState().IsKeyDown(Keys.D2))
+                    {
+                        // Increase max health
+                        player.LevelUp(LevelUpAbility.MaxHealth);
+                        gameFSM = GameFSM.Playing;
+                    }
+                    else if (Keyboard.GetState().IsKeyDown(Keys.D3))
+                    {
+                        // Increase attack speed
+                        player.LevelUp(LevelUpAbility.AttackSpeed);
+                        gameFSM = GameFSM.Playing;
+                    }
+                    else if (Keyboard.GetState().IsKeyDown(Keys.D4))
+                    {
+                        // Increase attack damage
+                        player.LevelUp(LevelUpAbility.AttackDamage);
+                        gameFSM = GameFSM.Playing;
+                    }
+                    else if (Keyboard.GetState().IsKeyDown(Keys.D5))
+                    {
+                        // Increase movement range
+                        player.LevelUp(LevelUpAbility.Range);
+                        gameFSM = GameFSM.Playing;
+                    }
                     break;
             }
 
@@ -295,6 +338,33 @@ namespace SwordRush
                         new Vector2(window.Width * 0.38f, window.Height * 0.56f),
                         Color.White);
                     break;
+
+                case GameFSM.LevelUp:
+                    sb.DrawString(BellMT72,
+                        $"Level up!",
+                        new Vector2(window.Width * 0.38f, window.Height * 0.36f),
+                        Color.White);
+
+                    sb.DrawString(BellMT24,
+                        $"[Temporary System]" +
+                        $"\n1: Health" +
+                        $"\n2: Max Health" +
+                        $"\n3: Attack Speed" +
+                        $"\n4: Attack Damage" +
+                        $"\n5: Attack Range",
+                        new Vector2(window.Width* 0.38f, window.Height * 0.56f),
+                        Color.White);
+
+                    sb.DrawString(BellMT24,
+                        $"" +
+                        $"\n:Current:{player.Health}" +
+                        $"\n:Current:{player.MaxHealth}" +
+                        $"\n:Current:{player.AtkSpd}" +
+                        $"\n:Current:{player.Atk}" +
+                        $"\n:Current:{player.Range}",
+                        new Vector2(window.Width * 0.58f, window.Height * 0.56f),
+                        Color.White);
+                    break;
             }
             if (gameFSM == GameFSM.Playing)
             {
@@ -349,11 +419,19 @@ namespace SwordRush
             //add enemy positions
             foreach (ShortRangeEnemy SRenemy in enemies)
             {
-                grid[Convert.ToInt32(SRenemy.Position.X) / 64, Convert.ToInt32(SRenemy.Position.Y) / 64] = 2;
+                if (SRenemy.Position.X > 0 && SRenemy.Position.Y > 0
+                && SRenemy.Position.X < window.Width && SRenemy.Position.Y < window.Height)
+                {
+                    grid[Convert.ToInt32(SRenemy.Position.X) / 64, Convert.ToInt32(SRenemy.Position.Y) / 64] = 2;
+                }
             }
 
             //add player position
-            grid[Convert.ToInt32(player.Position.X) / 64, Convert.ToInt32(player.Position.Y) / 64] = 3;
+            if (player.Position.X > 0 && player.Position.Y > 0
+                && player.Position.X < window.Width && player.Position.Y < window.Height)
+            {
+                grid[Convert.ToInt32(player.Position.X) / 64, Convert.ToInt32(player.Position.Y) / 64] = 3;
+            }
         }
 
         public void WallCollision(GameObject entity, List<SceneObject> walls)
