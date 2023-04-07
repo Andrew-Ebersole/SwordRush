@@ -175,7 +175,7 @@ namespace SwordRush
                 Position -= direction * distance * gameTime.ElapsedGameTime.Milliseconds;
             }
             // Cooldown after attack based off attack speed
-            else if (attackFrame >= 100*range && attackFrame <= 100*range + 800 - 50 * atkSpd)
+            else if (attackFrame >= 100*range && attackFrame <= 100*range + 800 - 75 * atkSpd)
             {
                 playerState = PlayerStateMachine.AttackCoolDown;
             }
