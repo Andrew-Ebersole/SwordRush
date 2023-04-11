@@ -45,17 +45,19 @@ namespace SwordRush
         private Texture2D xpBarTexture;
         private Texture2D emptyBarTexture;
         private Texture2D whiteRectangle;
+        private Texture2D abilityIcons;
 
         // fonts
         private SpriteFont BellMT24;
         private SpriteFont BellMT72;
-
         //tiling
         private List<SceneObject> walls;
         private int[,] grid;
         
         private static GameManager instance = null;
-        
+
+        // Level up buttons
+        private List<ImageButton> levelUpButtons;
 
         // Graphics Device
         private GraphicsDevice graphicsDevice;
@@ -132,6 +134,11 @@ namespace SwordRush
             // Mouse States
             currentMS = Mouse.GetState(); 
             previousMS = Mouse.GetState();
+
+            // level up buttons
+            levelUpButtons = new List<ImageButton>();
+            abilityIcons = content.Load<Texture2D>("AbilityIcons");
+            InitializeLevelUpButtons();
         }
 
         public Player LocalPlayer
@@ -347,7 +354,7 @@ namespace SwordRush
 
                     sb.DrawString(BellMT24,
                         $"[Temporary System]" +
-                        $"\n1: Health" +
+                        $"\n1: Heal" +
                         $"\n2: Max Health" +
                         $"\n3: Attack Speed" +
                         $"\n4: Attack Damage" +
@@ -364,6 +371,8 @@ namespace SwordRush
                         $"\n:Current:{player.Range}",
                         new Vector2(window.Width * 0.58f, window.Height * 0.56f),
                         Color.White);
+
+                    foreach () ;
                     break;
             }
             if (gameFSM == GameFSM.Playing)
@@ -661,6 +670,17 @@ namespace SwordRush
                 $"{value}",
                 new Vector2(size.X+ window.Width * 0.015f, size.Y + window.Height * 0.015f),
                 Color.White);
+        }
+
+        public void InitializeLevelUpButtons()
+        {
+            levelUpButtons.Add(new ImageButton(
+                new Rectangle(0,0,
+                (int)(window.Height * 0.3f), (int)(window.Height * 0.3f)),
+                "Heal",
+                BellMT72,
+                abilityIcons,
+                new Vector2(6,2)));
         }
     }
 }

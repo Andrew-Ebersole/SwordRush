@@ -8,19 +8,15 @@ using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-
 namespace SwordRush
 {
-    internal class TextButton : GameObject
+    internal class ImageButton : TextButton
     {
         // --- Fields --- //
 
-        protected string text;
-        protected Color color;
-        protected SpriteFont font;
-        protected MouseState currentMState;
-        protected MouseState previousMState;
-        protected bool leftClicked;
+        private Texture2D image;
+        private Vector2 tile;
+
 
         // --- Properties --- //
 
@@ -35,29 +31,28 @@ namespace SwordRush
         public string Text { get { return text; } set { text = value; } }
 
 
-
         // --- Constructor --- //
 
-        public TextButton(Rectangle rectangle, string text, SpriteFont font) 
-            : base(null, rectangle)
+        public ImageButton(Rectangle rectangle, string text, SpriteFont font, Texture2D image, Vector2 tile) 
+            : base(rectangle,text,font)
         {
-            this.text = text;
-            color = Color.LightGray;
-            this.font = font;
-            currentMState = new MouseState();
-            previousMState = new MouseState();
-            leftClicked = false;
+            this.image = image;
+            this.tile = tile;
         }
+
+
+        // --- Methods --- //
 
         public override void Update(GameTime gt)
         {
             currentMState = Mouse.GetState();
 
             // Highlight text when mouse hovers
-            if (new Rectangle(currentMState.Position,new Point(0,0)).Intersects(rectangle))
+            if (new Rectangle(currentMState.Position, new Point(0, 0)).Intersects(rectangle))
             {
                 color = Color.DarkGoldenrod;
-            } else
+            }
+            else
             {
                 color = Color.LightGray;
             }
@@ -68,7 +63,8 @@ namespace SwordRush
                 && previousMState.LeftButton == ButtonState.Released)
             {
                 leftClicked = true;
-            } else
+            }
+            else
             {
                 leftClicked = false;
             }
@@ -78,10 +74,21 @@ namespace SwordRush
 
         public override void Draw(SpriteBatch sb)
         {
+            sb.Draw(image,
+                rectangle,
+                new Rectangle((int)(tile.X*(image.Width/16)),(int)(tile.Y*(image.Height/16)),
+                (int)(image.Width/16),(int)(image.Height/16)),
+                Color.White,
+                0f,
+                new Vector2(0,0),
+                SpriteEffects.None,
+                0);
+
             sb.DrawString(
                 font,
                 text,
-                new Vector2(rectangle.X,rectangle.Y),
+                new Vector2(rectangle.X, rectangle.Y+rectangle.Height),
                 color);
         }
+    }
 }
