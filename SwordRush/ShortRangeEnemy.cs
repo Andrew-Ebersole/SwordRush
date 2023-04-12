@@ -14,13 +14,13 @@ namespace SwordRush
         private int maxHP;
         private Vector2 direction;
         private Astar astar;
-        
+        private Stack<AStarNode> path;
 
         // --- Constructor --- //
         public ShortRangeEnemy(Texture2D texture, Rectangle rectangle, Player player,int level, GraphicsDevice graphicsDevice) : base(texture, rectangle, player, graphicsDevice)
         {
             this.player = player;
-
+            astar = new Astar(null);
 
             List<Texture2D> frames = new List<Texture2D>();
 
@@ -62,6 +62,9 @@ namespace SwordRush
         /// </summary>
         public void AI(GameTime gameTime)
         {
+            astar.UpdateGraph(GameManager.Get.Graph);
+            path = astar.FindPath(position, player.Position);
+
             damageFrame += gameTime.ElapsedGameTime.TotalMilliseconds;
             if (damageFrame >= 1000)
             {

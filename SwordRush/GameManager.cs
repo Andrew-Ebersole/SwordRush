@@ -6,7 +6,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
 using System;
-using System.Drawing;
 using Color = Microsoft.Xna.Framework.Color;
 using Point = Microsoft.Xna.Framework.Point;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
@@ -53,7 +52,8 @@ namespace SwordRush
         //tiling
         private List<SceneObject> walls;
         private int[,] grid;
-        
+        private List<List<AStarNode>> graph;
+
         private static GameManager instance = null;
         
 
@@ -87,6 +87,7 @@ namespace SwordRush
         public ContentManager ContentManager { get { return contentManager_; } }
 
         public int[,] Grid { get { return grid; } }
+        public List<List<AStarNode>> Graph { get { return graph; } }
 
         // --- Constructor --- //
 
@@ -94,7 +95,6 @@ namespace SwordRush
         {
             contentManager_ = content;
             fileManager_ = new FileManager();
-            Debug.WriteLine(1);
             //sprites & game states
             this.spriteSheet = spriteSheet;
             gameFSM = GameFSM.Menu;
@@ -108,6 +108,7 @@ namespace SwordRush
 
             //tiling
             grid = new int[20, 12];
+            graph = new List<List<AStarNode>>();
             walls = new List<SceneObject>();
             //test wall
             walls.Add(new SceneObject(true, whiteRectangle, new Rectangle(500, 500, 64, 64)));
@@ -149,6 +150,8 @@ namespace SwordRush
                 case GameFSM.Playing: // Playing Game
 
                     player.Update(gt);
+
+                    //update all the enemies
                     for (int i = 0; i < enemies.Count; i++)
                     {
                         enemies[i].Update(gt);
@@ -279,6 +282,7 @@ namespace SwordRush
             previousMS = Mouse.GetState();
 
             UpdateGrid();
+            UpdateGraph();
         }
 
         public void Draw(SpriteBatch sb)
@@ -368,6 +372,25 @@ namespace SwordRush
             if (gameFSM == GameFSM.Playing)
             {
                 
+            }
+        }
+
+        public void UpdateGraph()
+        {
+            graph.Clear();
+            for (int i = 0; i < grid.GetLength(1); i++)
+            {
+                List<AStarNode> temp = new List<AStarNode>();
+                for (int j = 0; j < grid.GetLength(0); j++)
+                {
+                    bool walkable = true;
+                    if (grid[j, i] == 1)
+                    {
+                        walkable = true;
+                    }
+                    temp.Add(new AStarNode(new Vector2(j*64,i*64),walkable,1));
+                }
+                graph.Add(temp);
             }
         }
 
