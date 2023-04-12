@@ -16,8 +16,7 @@ namespace SwordRush
         private Vector2 direction;
         private Astar astar;
         private Stack<AStarNode> path;
-        public int x;
-        public int y;
+        public Point graphPoint;
 
         // --- Constructor --- //
         public ShortRangeEnemy(Texture2D texture, Rectangle rectangle, Player player,int level, GraphicsDevice graphicsDevice) : base(texture, rectangle, player, graphicsDevice)
@@ -66,12 +65,14 @@ namespace SwordRush
         public void AI(GameTime gameTime)
         {
             astar.UpdateGraph(GameManager.Get.Graph);
-            path = astar.FindPath(new Vector2(x*64,y*64), new Vector2(3*64,3*64));
-
+            path = astar.FindPath(graphPoint.ToVector2() * 64, player.graphPoint.ToVector2()*64);
+            
             damageFrame += gameTime.ElapsedGameTime.TotalMilliseconds;
             if (damageFrame >= 1000)
             {
-                Vector2 distance = position - player.Position;
+                AStarNode pos = path.Pop();
+                Vector2 distance = position - pos.Center;
+                Debug.WriteLine(pos.Position/64);
                 if (distance.Length() < 300 && distance.Length() > 1)
                 {
                     Vector2 direction = Vector2.Normalize(distance);
