@@ -344,9 +344,9 @@ namespace SwordRush
             atk = 1;
             maxHealth = 10;
             health = maxHealth;
-            atkSpd = 1;
+            atkSpd = 1.5f;
             distance = 10f;
-            range = 1;
+            range = 3;
             roomsCleared = 0;
             
         }

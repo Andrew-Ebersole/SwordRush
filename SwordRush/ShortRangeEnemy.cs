@@ -67,6 +67,7 @@ namespace SwordRush
         /// </summary>
         public void AI(GameTime gameTime)
         {
+            //update the graph, and get the path
             astar.UpdateGraph(GameManager.Get.Graph);
             path = astar.FindPath(graphPoint.ToVector2() * 64, player.graphPoint.ToVector2()*64);
             
