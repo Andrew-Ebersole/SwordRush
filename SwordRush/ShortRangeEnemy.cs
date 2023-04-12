@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using System.Xml.Linq;
@@ -17,13 +18,15 @@ namespace SwordRush
         private Astar astar;
         private Stack<AStarNode> path;
         public Point graphPoint;
+        private Vector2 distance;
+        private AStarNode pos;
 
         // --- Constructor --- //
         public ShortRangeEnemy(Texture2D texture, Rectangle rectangle, Player player,int level, GraphicsDevice graphicsDevice) : base(texture, rectangle, player, graphicsDevice)
         {
             this.player = player;
             astar = new Astar(null);
-
+            pos = new AStarNode(position,true,1);
             List<Texture2D> frames = new List<Texture2D>();
 
             frames.Add(GameManager.Get.ContentManager.Load<Texture2D>("skelet_idle_anim_f0"));
@@ -70,14 +73,29 @@ namespace SwordRush
             damageFrame += gameTime.ElapsedGameTime.TotalMilliseconds;
             if (damageFrame >= 1000)
             {
-                AStarNode pos = path.Pop();
-                Vector2 distance = position - pos.Center;
-                //Debug.WriteLine(pos.Position/64);
-                if (distance.Length() < 300 && distance.Length() > 1)
+                Vector2 playerDistance = position - player.Position;
+                while (position == pos.Center)
+                {
+                    if (path != null)
+                    {
+                        pos = path.Pop();
+                    }
+                }
+
+                if (player.graphPoint == graphPoint)
+                {
+                    distance = position - playerDistance;
+                }
+                else
+                {
+                    distance = position - pos.Center;
+                }
+
+                if (playerDistance.Length() < 300 && playerDistance.Length() > 1)
                 {
                     Vector2 direction = Vector2.Normalize(distance);
 
-                    Position -= direction * 2;
+                    Position -= direction * 2;//will cause error if increase speed
                     enemyState = EnemyStateMachine.Move;
                 }
                 else
