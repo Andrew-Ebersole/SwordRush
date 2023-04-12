@@ -13,6 +13,8 @@ namespace SwordRush
         private AnimationComposer animationComposer_ = new AnimationComposer();
         private int maxHP;
         private Vector2 direction;
+        private Astar astar;
+        
 
         // --- Constructor --- //
         public ShortRangeEnemy(Texture2D texture, Rectangle rectangle, Player player,int level, GraphicsDevice graphicsDevice) : base(texture, rectangle, player, graphicsDevice)

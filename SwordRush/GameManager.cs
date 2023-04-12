@@ -94,7 +94,7 @@ namespace SwordRush
         {
             contentManager_ = content;
             fileManager_ = new FileManager();
-
+            Debug.WriteLine(1);
             //sprites & game states
             this.spriteSheet = spriteSheet;
             gameFSM = GameFSM.Menu;
