@@ -393,7 +393,7 @@ namespace SwordRush
                     bool walkable = true;
                     if (grid[j, i] == 1)
                     {
-                        walkable = true;
+                        walkable = false;
                     }
                     temp.Add(new AStarNode(new Vector2(j*64,i*64),walkable,1));
                 }
@@ -456,6 +456,7 @@ namespace SwordRush
                 if (SRenemy.Position.X > 0 && SRenemy.Position.Y > 0
                 && SRenemy.Position.X < window.Width && SRenemy.Position.Y < window.Height)
                 {
+                    SRenemy.graphPoint = new Point(Convert.ToInt32(SRenemy.Position.X) / 64, Convert.ToInt32(SRenemy.Position.Y) / 64);
                     grid[Convert.ToInt32(SRenemy.Position.X) / 64, Convert.ToInt32(SRenemy.Position.Y) / 64] = 2;
                 }
             }
@@ -464,6 +465,7 @@ namespace SwordRush
             if (player.Position.X > 0 && player.Position.Y > 0
                 && player.Position.X < window.Width && player.Position.Y < window.Height)
             {
+                player.graphPoint = new Point(Convert.ToInt32(player.Position.X) / 64, Convert.ToInt32(player.Position.Y) / 64);
                 grid[Convert.ToInt32(player.Position.X) / 64, Convert.ToInt32(player.Position.Y) / 64] = 3;
             }
 

@@ -51,8 +51,7 @@ namespace SwordRush
         private int roomsCleared;
         private double attackFrame;
         private Vector2 direction;
-
-        private Vector2 origin;
+        public Point graphPoint;
         // Player weapon
         private GameObject sword;
 
@@ -67,6 +66,7 @@ namespace SwordRush
         private AnimationComposer animation_;
 
         // --- Properties --- //
+        
         public PlayerStateMachine PlayerState => playerState;
 
         public Point Size => size;
