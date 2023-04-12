@@ -172,7 +172,7 @@ namespace SwordRush
                 playerState = PlayerStateMachine.Attack;
 
                 //move the player's location
-                Position -= direction * distance * gameTime.ElapsedGameTime.Milliseconds;
+                Position -= direction * distance;
             }
             // Cooldown after attack based off attack speed
             else if (attackFrame >= 100*range && attackFrame <= 100*range + 800 - 75 * atkSpd)
@@ -345,7 +345,7 @@ namespace SwordRush
             maxHealth = 10;
             health = maxHealth;
             atkSpd = 1;
-            distance = 1.1f;
+            distance = 10f;
             range = 1;
             roomsCleared = 0;
             
