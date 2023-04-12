@@ -782,7 +782,11 @@ namespace SwordRush
             Random rng = new Random();
 
             // Generate 3 unique numbers
-            int[] randomAbilities = new int[3];
+            int[] randomAbilities = new int[3]
+            {
+                -1,-1,-1
+            };
+
             for (int i = 0; i < 3; i+= 0)
             {
                 int next = rng.Next(0, 5);
