@@ -6,6 +6,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
 using System;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Media;
 using Color = Microsoft.Xna.Framework.Color;
 using Point = Microsoft.Xna.Framework.Point;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
@@ -56,7 +58,6 @@ namespace SwordRush
         private List<List<AStarNode>> graph;
 
         private static GameManager instance = null;
-        
 
         // Graphics Device
         private GraphicsDevice graphicsDevice;
@@ -64,6 +65,9 @@ namespace SwordRush
         // Mouse States
         MouseState currentMS;
         MouseState previousMS;
+
+        //Sound
+        SoundEffect BGM;
 
         // --- Properties --- //
 
@@ -139,6 +143,14 @@ namespace SwordRush
             // Mouse States
             currentMS = Mouse.GetState(); 
             previousMS = Mouse.GetState();
+
+            //sounds
+
+            //loop the bgm
+            BGM = content.Load<SoundEffect>("BGM");
+            var bgm = BGM.CreateInstance();
+            bgm.IsLooped = true;
+            bgm.Play();
         }
 
         public Player LocalPlayer
@@ -176,6 +188,8 @@ namespace SwordRush
                         if (enemies[i].Rectangle.Intersects(player.Rectangle) && enemies[i].Health > 0
                             && enemies[i].EnemyState == EnemyStateMachine.Move)
                         {
+                            //uncomment below
+                            //((ShortRangeEnemy)enemies[i]).AttackSoundEffect.Play();
                             enemies[i].AttackCooldown();
                             player.Damaged(enemies[i].Atk);
                         }

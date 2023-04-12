@@ -60,6 +60,12 @@
 /processorParam:TextureFormat=Compressed
 /build:Bell_MT-72.spritefont
 
+#begin BGM.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:BGM.wav
+
 #begin DungeonTiles.png
 /importer:TextureImporter
 /processor:TextureProcessor

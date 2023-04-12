@@ -5,6 +5,7 @@ using System.IO;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using System.Xml.Linq;
+using Microsoft.Xna.Framework.Audio;
 
 namespace SwordRush
 {
@@ -20,7 +21,9 @@ namespace SwordRush
         public Point graphPoint;
         private Vector2 distance;
         private AStarNode pos;
-
+        private SoundEffect damagedSoundEffect;
+        private SoundEffect attackSoundEffect;
+        public SoundEffect AttackSoundEffect => attackSoundEffect;
         // --- Constructor --- //
         public ShortRangeEnemy(Texture2D texture, Rectangle rectangle, Player player,int level, GraphicsDevice graphicsDevice) : base(texture, rectangle, player, graphicsDevice)
         {
@@ -58,6 +61,8 @@ namespace SwordRush
                 Vector2 distance = position - player.Position;
                 direction = Vector2.Normalize(distance);
                 AttackCooldown();
+                //uncomment below
+                //damagedSoundEffect.Play();
             }
 
         }
@@ -119,7 +124,6 @@ namespace SwordRush
 
         public override void Draw(SpriteBatch sb)
         {
-
             sb.Draw(animationComposer_.GetCurrentSequence().GetCurrentFrame(), Rectangle, Color.White);
             //sb.Draw(dungeontilesTexture2D, Rectangle, new Rectangle(368, 80, 16, 16), Color.White);
 
@@ -145,8 +149,6 @@ namespace SwordRush
         {
             AI(gt);
             animationComposer_.Update(gt);
-
-            
         }
 
         /// <summary>
