@@ -73,7 +73,10 @@ namespace SwordRush
             damageFrame += gameTime.ElapsedGameTime.TotalMilliseconds;
             if (damageFrame >= 1000)
             {
+                //get the distance between the enemy and the player
                 Vector2 playerDistance = position - player.Position;
+
+                //get the next position to get to
                 while (position == pos.Center)
                 {
                     if (path != null)
@@ -82,6 +85,7 @@ namespace SwordRush
                     }
                 }
 
+                //make the enemy move toward the player when they are at the same grid
                 if (player.graphPoint == graphPoint)
                 {
                     distance = position - playerDistance;
@@ -91,6 +95,7 @@ namespace SwordRush
                     distance = position - pos.Center;
                 }
 
+                //move the enemy toward to player when they are in certain range
                 if (playerDistance.Length() < 300 && playerDistance.Length() > 1)
                 {
                     Vector2 direction = Vector2.Normalize(distance);
