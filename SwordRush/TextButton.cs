@@ -38,7 +38,7 @@ namespace SwordRush
 
         // --- Constructor --- //
 
-        public TextButton(Rectangle rectangle, string text, SpriteFont font) 
+        public TextButton(Rectangle rectangle, string text, SpriteFont font)
             : base(null, rectangle)
         {
             this.text = text;
@@ -54,10 +54,11 @@ namespace SwordRush
             currentMState = Mouse.GetState();
 
             // Highlight text when mouse hovers
-            if (new Rectangle(currentMState.Position,new Point(0,0)).Intersects(rectangle))
+            if (new Rectangle(currentMState.Position, new Point(0, 0)).Intersects(rectangle))
             {
                 color = Color.DarkGoldenrod;
-            } else
+            }
+            else
             {
                 color = Color.LightGray;
             }
@@ -68,7 +69,8 @@ namespace SwordRush
                 && previousMState.LeftButton == ButtonState.Released)
             {
                 leftClicked = true;
-            } else
+            }
+            else
             {
                 leftClicked = false;
             }
@@ -81,7 +83,8 @@ namespace SwordRush
             sb.DrawString(
                 font,
                 text,
-                new Vector2(rectangle.X,rectangle.Y),
+                new Vector2(rectangle.X, rectangle.Y),
                 color);
         }
+    }
 }

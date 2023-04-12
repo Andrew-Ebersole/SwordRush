@@ -371,7 +371,6 @@ namespace SwordRush
                         new Vector2(window.Width * 0.58f, window.Height * 0.56f),
                         Color.White);
 
-                    foreach () ;
                     break;
             }
             if (gameFSM == GameFSM.Playing)
