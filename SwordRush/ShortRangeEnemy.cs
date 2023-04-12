@@ -101,7 +101,7 @@ namespace SwordRush
                 {
                     Vector2 direction = Vector2.Normalize(distance);
 
-                    Position -= direction * 2;//will cause error if increase speed
+                    Position -= direction * 2.99f;//will cause error if increase speed, should be lower than 3
                     enemyState = EnemyStateMachine.Move;
                 }
                 else
