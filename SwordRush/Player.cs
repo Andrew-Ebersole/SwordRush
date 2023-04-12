@@ -348,7 +348,6 @@ namespace SwordRush
             distance = 10f;
             range = 3;
             roomsCleared = 0;
-            
         }
 
         public void NewRoom()
