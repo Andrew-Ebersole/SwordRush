@@ -115,12 +115,12 @@ namespace SwordRush
             grid = new int[20, 12];
             graph = new List<List<AStarNode>>();
             walls = new List<SceneObject>();
-            floorTiles = new SceneObject[20, 12];
+            floorTiles = new SceneObject[40, 24];
             for (int i = 0; i < floorTiles.GetLength(1); i++)
             {
                 for (int j = 0; j < floorTiles.GetLength(0); j++)
                 {
-                    floorTiles[j,i] = new SceneObject(false, 1, dungeontilesTexture2D, new Rectangle(j * 64, i * 64, 64, 64));
+                    floorTiles[j,i] = new SceneObject(false, 1, dungeontilesTexture2D, new Rectangle(j * 32, i * 32, 32, 32));
                 }
             }
 
@@ -318,8 +318,11 @@ namespace SwordRush
 
             switch (gameFSM)
             {
-                case GameFSM.Playing: // --- Playing --------------------------------------------//
-                    sb.Draw(dungeontilesTexture2D, new Vector2(0, 0), new Rectangle(0, 64, 16, 32), Color.White);
+                case GameFSM.Playing:
+                    foreach (SceneObject tile in floorTiles)
+                    {
+                        tile.Draw(sb);
+                    }
 
                     //draw walls
                     foreach (SceneObject obj in walls)
