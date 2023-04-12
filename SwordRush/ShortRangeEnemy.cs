@@ -67,6 +67,7 @@ namespace SwordRush
         /// </summary>
         public void AI(GameTime gameTime)
         {
+            //update the graph, and get the path
             astar.UpdateGraph(GameManager.Get.Graph);
             path = astar.FindPath(graphPoint.ToVector2() * 64, player.graphPoint.ToVector2()*64);
             
@@ -96,7 +97,7 @@ namespace SwordRush
                 }
 
                 //move the enemy toward to player when they are in certain range
-                if (playerDistance.Length() < 300 && playerDistance.Length() > 1)
+                if (path != null && path.Count < 6+1 && playerDistance.Length() < 300)
                 {
                     Vector2 direction = Vector2.Normalize(distance);
 

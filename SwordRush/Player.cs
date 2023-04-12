@@ -246,7 +246,7 @@ namespace SwordRush
                     break;
 
                 case LevelUpAbility.AttackDamage:
-                    atk *= 1.2f;
+                    atk += 2f;
                     break;
 
                 case LevelUpAbility.Range:
@@ -344,11 +344,10 @@ namespace SwordRush
             atk = 1;
             maxHealth = 10;
             health = maxHealth;
-            atkSpd = 1;
+            atkSpd = 1.5f;
             distance = 10f;
             range = 3;
             roomsCleared = 0;
-            
         }
 
         public void NewRoom()
