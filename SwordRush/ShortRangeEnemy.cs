@@ -72,7 +72,7 @@ namespace SwordRush
             {
                 AStarNode pos = path.Pop();
                 Vector2 distance = position - pos.Center;
-                Debug.WriteLine(pos.Position/64);
+                //Debug.WriteLine(pos.Position/64);
                 if (distance.Length() < 300 && distance.Length() > 1)
                 {
                     Vector2 direction = Vector2.Normalize(distance);

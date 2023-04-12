@@ -116,7 +116,7 @@ namespace SwordRush
             {
                 for (int j = 0; j < floorTiles.GetLength(0); j++)
                 {
-                    //floorTiles[j,i] = new SceneObject(false,dungeontilesTexture2D, new Rectangle(i * 64, j * 64, 64, 64));
+                    floorTiles[j,i] = new SceneObject(false, 1, dungeontilesTexture2D, new Rectangle(j * 64, i * 64, 64, 64));
                 }
             }
 
@@ -413,7 +413,7 @@ namespace SwordRush
                 {
                     if (grid[j,i] == 1)
                     {
-                        walls.Add(new SceneObject(true, whiteRectangle, new Rectangle(j*64, i*64, 64, 64)));
+                        walls.Add(new SceneObject(true,0, whiteRectangle, new Rectangle(j*64, i*64, 64, 64)));
                     }
                     else if (grid[j,i] == 2)
                     {
