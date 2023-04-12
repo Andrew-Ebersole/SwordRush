@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using System.Xml.Linq;
 
 namespace SwordRush
 {
@@ -15,13 +17,16 @@ namespace SwordRush
         private Vector2 direction;
         private Astar astar;
         private Stack<AStarNode> path;
+        public Point graphPoint;
+        private Vector2 distance;
+        private AStarNode pos;
 
         // --- Constructor --- //
         public ShortRangeEnemy(Texture2D texture, Rectangle rectangle, Player player,int level, GraphicsDevice graphicsDevice) : base(texture, rectangle, player, graphicsDevice)
         {
             this.player = player;
             astar = new Astar(null);
-
+            pos = new AStarNode(position,true,1);
             List<Texture2D> frames = new List<Texture2D>();
 
             frames.Add(GameManager.Get.ContentManager.Load<Texture2D>("skelet_idle_anim_f0"));
@@ -62,18 +67,41 @@ namespace SwordRush
         /// </summary>
         public void AI(GameTime gameTime)
         {
+            //update the graph, and get the path
             astar.UpdateGraph(GameManager.Get.Graph);
-            path = astar.FindPath(position, player.Position);
-
+            path = astar.FindPath(graphPoint.ToVector2() * 64, player.graphPoint.ToVector2()*64);
+            
             damageFrame += gameTime.ElapsedGameTime.TotalMilliseconds;
             if (damageFrame >= 1000)
             {
-                Vector2 distance = position - player.Position;
-                if (distance.Length() < 300 && distance.Length() > 1)
+                //get the distance between the enemy and the player
+                Vector2 playerDistance = position - player.Position;
+
+                //get the next position to get to
+                while (position == pos.Center)
+                {
+                    if (path != null)
+                    {
+                        pos = path.Pop();
+                    }
+                }
+
+                //make the enemy move toward the player when they are at the same grid
+                if (player.graphPoint == graphPoint)
+                {
+                    distance = position - playerDistance;
+                }
+                else
+                {
+                    distance = position - pos.Center;
+                }
+
+                //move the enemy toward to player when they are in certain range
+                if (path != null && path.Count < 6+1 && playerDistance.Length() < 300)
                 {
                     Vector2 direction = Vector2.Normalize(distance);
 
-                    Position -= direction * 2;
+                    Position -= direction * 2;//will cause error if increase speed
                     enemyState = EnemyStateMachine.Move;
                 }
                 else

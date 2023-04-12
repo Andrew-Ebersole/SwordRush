@@ -15,15 +15,22 @@ namespace SwordRush
 
         // --- Constructor --- //
 
-        public SceneObject(bool wall, /*int tile,*/ Texture2D texture, Rectangle rectangle) : base(texture, rectangle)
+        public SceneObject(bool wall, int tile, Texture2D texture, Rectangle rectangle) : base(texture, rectangle)
         {
             this.wall = wall;
-            //this.tile = tile;
+            this.tile = tile;
         }
 
         public void Draw(SpriteBatch sb)
         {
-            sb.Draw(texture, Rectangle, Color.White);
+            if (tile == 0)
+            {
+                sb.Draw(texture, Rectangle, Color.White);
+            }
+            else if (tile == 1)
+            {
+                sb.Draw(texture, Rectangle, Color.White);
+            }
         }
 
         public void Update(GameTime gt, GameObject collider)

@@ -51,8 +51,7 @@ namespace SwordRush
         private int roomsCleared;
         private double attackFrame;
         private Vector2 direction;
-
-        private Vector2 origin;
+        public Point graphPoint;
         // Player weapon
         private GameObject sword;
 
@@ -67,6 +66,7 @@ namespace SwordRush
         private AnimationComposer animation_;
 
         // --- Properties --- //
+        
         public PlayerStateMachine PlayerState => playerState;
 
         public Point Size => size;
@@ -172,7 +172,7 @@ namespace SwordRush
                 playerState = PlayerStateMachine.Attack;
 
                 //move the player's location
-                Position -= direction * distance * gameTime.ElapsedGameTime.Milliseconds;
+                Position -= direction * distance;
             }
             // Cooldown after attack based off attack speed
             else if (attackFrame >= 100*range && attackFrame <= 100*range + 800 - 75 * atkSpd)
@@ -344,11 +344,10 @@ namespace SwordRush
             atk = 1;
             maxHealth = 10;
             health = maxHealth;
-            atkSpd = 1;
-            distance = 1.1f;
-            range = 1;
+            atkSpd = 1.5f;
+            distance = 10f;
+            range = 3;
             roomsCleared = 0;
-            
         }
 
         public void NewRoom()
