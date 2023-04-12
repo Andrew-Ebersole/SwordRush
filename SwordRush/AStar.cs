@@ -23,6 +23,12 @@ namespace SwordRush
             Grid = grid;
         }
 
+
+        public void UpdateGraph(List<List<AStarNode>> graph)
+        {
+            Grid = graph;
+        }
+
         /// <summary>
         /// pass in the start and end point
         /// </summary>
@@ -97,24 +103,24 @@ namespace SwordRush
         {
             List<AStarNode> temp = new List<AStarNode>();
 
-            int row = (int)n.Position.Y / 32;
-            int col = (int)n.Position.X / 32;
+            int x = (int)n.Position.X / 64;
+            int y = (int)n.Position.Y / 64;
 
-            if (row + 1 < Grid[0].Count)
+            if (x + 1 < Grid[0].Count)
             {
-                temp.Add(Grid[col][row + 1]);
+                temp.Add(Grid[y][x + 1]);
             }
-            if (row - 1 >= 0)
+            if (x - 1 >= 0)
             {
-                temp.Add(Grid[col][row - 1]);
+                temp.Add(Grid[y][x - 1]);
             }
-            if (col - 1 >= 0)
+            if (y - 1 >= 0)
             {
-                temp.Add(Grid[col - 1][row]);
+                temp.Add(Grid[y - 1][x]);
             }
-            if (col + 1 < Grid.Count)
+            if (y + 1 < Grid.Count)
             {
-                temp.Add(Grid[col + 1][row]);
+                temp.Add(Grid[y + 1][x]);
             }
 
             return temp;
