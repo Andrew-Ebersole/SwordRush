@@ -67,6 +67,7 @@ namespace SwordRush
         private AnimationComposer animation_;
 
         // --- Properties --- //
+        
         public PlayerStateMachine PlayerState => playerState;
 
         public Point Size => size;

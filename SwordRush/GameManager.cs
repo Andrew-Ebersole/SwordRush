@@ -444,6 +444,8 @@ namespace SwordRush
                 if (SRenemy.Position.X > 0 && SRenemy.Position.Y > 0
                 && SRenemy.Position.X < window.Width && SRenemy.Position.Y < window.Height)
                 {
+                    SRenemy.x = Convert.ToInt32(SRenemy.Position.X) / 64;
+                    SRenemy.y = Convert.ToInt32(SRenemy.Position.Y) / 64;
                     grid[Convert.ToInt32(SRenemy.Position.X) / 64, Convert.ToInt32(SRenemy.Position.Y) / 64] = 2;
                 }
             }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using System.Xml.Linq;
 
 namespace SwordRush
 {
@@ -15,6 +16,8 @@ namespace SwordRush
         private Vector2 direction;
         private Astar astar;
         private Stack<AStarNode> path;
+        public int x;
+        public int y;
 
         // --- Constructor --- //
         public ShortRangeEnemy(Texture2D texture, Rectangle rectangle, Player player,int level, GraphicsDevice graphicsDevice) : base(texture, rectangle, player, graphicsDevice)
@@ -63,7 +66,7 @@ namespace SwordRush
         public void AI(GameTime gameTime)
         {
             astar.UpdateGraph(GameManager.Get.Graph);
-            path = astar.FindPath(position, player.Position);
+            path = astar.FindPath(new Vector2(x*64,y*64), new Vector2(3*64,3*64));
 
             damageFrame += gameTime.ElapsedGameTime.TotalMilliseconds;
             if (damageFrame >= 1000)
