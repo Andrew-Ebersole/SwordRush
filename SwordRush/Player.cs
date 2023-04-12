@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Input;
 using System.Threading;
 using System.Drawing;
+using Microsoft.Xna.Framework.Audio;
 using Color = Microsoft.Xna.Framework.Color;
 using Point = Microsoft.Xna.Framework.Point;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
@@ -64,6 +65,11 @@ namespace SwordRush
         private Texture2D singleColor;
 
         private AnimationComposer animation_;
+
+        //sound
+        private SoundEffect attackSoundEffect;
+        private SoundEffect damagedSoundEffect;
+        private SoundEffect levelUpSoundEffect;
 
         // --- Properties --- //
         
@@ -194,7 +200,8 @@ namespace SwordRush
                 && preMouseState.LeftButton == ButtonState.Released
                 && playerState == PlayerStateMachine.Idle)
             {
-                //System.Diagnostics.Debug.WriteLine(position.X + "," + position.Y +":"+ atkSpd);
+                //uncomment below
+                //attackSoundEffect.Play();
                 direction = GetDirection();
                 attackFrame = 0;
             }
@@ -221,10 +228,14 @@ namespace SwordRush
         public void Damaged(int dmg)
         {
             health -= dmg;
+            //uncomment below
+            //damagedSoundEffect.Play();
         }
 
         public void LevelUp(LevelUpAbility ability)
         {
+            //uncomment below
+            //levelUpSoundEffect.Play();
             exp -= levelUpExp;
             level += 1;
             levelUpExp += level * 10;
