@@ -352,7 +352,7 @@ namespace SwordRush
                     
                     break;
 
-                case GameFSM.GameOver:  // --- Menu -----------------------------------------------//
+                case GameFSM.GameOver:  // --- Game Over -----------------------------------------------//
                     // Draw Game over
                     sb.DrawString(
                         bellMT72,

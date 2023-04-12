@@ -30,6 +30,10 @@ namespace SwordRush
         /// </summary>
         public string Text { get { return text; } set { text = value; } }
 
+        /// <summary>
+        /// Rectangle of the image
+        /// </summary>
+        public Rectangle Rectangle { get { return rectangle; } set { rectangle = value; } }
 
         // --- Constructor --- //
 
@@ -87,7 +91,7 @@ namespace SwordRush
             sb.DrawString(
                 font,
                 text,
-                new Vector2(rectangle.X, rectangle.Y+rectangle.Height),
+                new Vector2(rectangle.X+rectangle.Width*(0.5f-(text.Count()*0.03f)), rectangle.Y+rectangle.Height),
                 color);
         }
     }
