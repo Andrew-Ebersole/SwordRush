@@ -12,6 +12,8 @@ namespace SwordRush
     {
         private bool wall;
         private int tile;
+        private Rectangle sourceRectangle;
+        private Random rng;
 
         // --- Constructor --- //
 
@@ -19,17 +21,24 @@ namespace SwordRush
         {
             this.wall = wall;
             this.tile = tile;
+            rng = new Random();
+            if (tile == 1)
+            {
+                sourceRectangle = new Rectangle(16, 64, 16, 16);
+            }
+
         }
 
         public void Draw(SpriteBatch sb)
         {
+            
             if (tile == 0)
             {
                 sb.Draw(texture, Rectangle, Color.White);
             }
             else if (tile == 1)
             {
-                sb.Draw(texture, Rectangle, Color.White);
+                sb.Draw(texture, Rectangle, sourceRectangle, Color.White);
             }
         }
 

@@ -257,7 +257,7 @@ namespace SwordRush
                     break;
 
                 case LevelUpAbility.AttackDamage:
-                    atk *= 1.2f;
+                    atk += 2f;
                     break;
 
                 case LevelUpAbility.Range:

@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework.Media;
 using Color = Microsoft.Xna.Framework.Color;
 using Point = Microsoft.Xna.Framework.Point;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
+using System.Linq;
 
 namespace SwordRush
 {
@@ -46,11 +47,12 @@ namespace SwordRush
         private Texture2D xpBarTexture;
         private Texture2D emptyBarTexture;
         private Texture2D whiteRectangle;
+        private Texture2D abilityIcons;
 
         // fonts
         private SpriteFont BellMT24;
+        private SpriteFont BellMT48;
         private SpriteFont BellMT72;
-
         //tiling
         private List<SceneObject> walls;
         private int[,] grid;
@@ -58,6 +60,9 @@ namespace SwordRush
         private List<List<AStarNode>> graph;
 
         private static GameManager instance = null;
+
+        // Level up buttons
+        private List<ImageButton> levelUpButtons;
 
         // Graphics Device
         private GraphicsDevice graphicsDevice;
@@ -115,12 +120,12 @@ namespace SwordRush
             grid = new int[20, 12];
             graph = new List<List<AStarNode>>();
             walls = new List<SceneObject>();
-            floorTiles = new SceneObject[20, 12];
+            floorTiles = new SceneObject[40, 24];
             for (int i = 0; i < floorTiles.GetLength(1); i++)
             {
                 for (int j = 0; j < floorTiles.GetLength(0); j++)
                 {
-                    floorTiles[j,i] = new SceneObject(false, 1, dungeontilesTexture2D, new Rectangle(j * 64, i * 64, 64, 64));
+                    floorTiles[j,i] = new SceneObject(false, 1, dungeontilesTexture2D, new Rectangle(j * 32, i * 32, 32, 32));
                 }
             }
 
@@ -135,6 +140,7 @@ namespace SwordRush
 
             // Font
             BellMT24 = content.Load<SpriteFont>("Bell_MT-24");
+            BellMT48 = content.Load<SpriteFont>("Bell_MT-48");
             BellMT72 = content.Load<SpriteFont>("Bell_MT-72");
 
             // graphicsDevice
@@ -143,6 +149,11 @@ namespace SwordRush
             // Mouse States
             currentMS = Mouse.GetState(); 
             previousMS = Mouse.GetState();
+
+            // level up buttons
+            levelUpButtons = new List<ImageButton>();
+            abilityIcons = content.Load<Texture2D>("AbilityIcons");
+            InitializeLevelUpButtons();
 
             //sounds
 
@@ -242,6 +253,7 @@ namespace SwordRush
                     if (player.Exp >= player.LevelUpExp)
                     {
                         gameFSM |= GameFSM.LevelUp;
+                        RandomizeLevelUpAbilities();
                     }
                     break;
 
@@ -266,32 +278,38 @@ namespace SwordRush
 
                 case GameFSM.LevelUp:
 
-                    // Temporary level up system
-                    if (Keyboard.GetState().IsKeyDown(Keys.D1))
+                    // Update buttons to check if clicked
+                    foreach (ImageButton b in levelUpButtons)
+                    {
+                        b.Update(gt);
+                    }
+
+                    // Increase Stat when pressed
+                    if (levelUpButtons[0].LeftClicked)
                     {
                         // Heal to max health
                         player.LevelUp(LevelUpAbility.Heal);
                         gameFSM = GameFSM.Playing;
                     }
-                    else if (Keyboard.GetState().IsKeyDown(Keys.D2))
+                    else if (levelUpButtons[1].LeftClicked)
                     {
                         // Increase max health
                         player.LevelUp(LevelUpAbility.MaxHealth);
                         gameFSM = GameFSM.Playing;
                     }
-                    else if (Keyboard.GetState().IsKeyDown(Keys.D3))
+                    else if (levelUpButtons[2].LeftClicked)
                     {
                         // Increase attack speed
                         player.LevelUp(LevelUpAbility.AttackSpeed);
                         gameFSM = GameFSM.Playing;
                     }
-                    else if (Keyboard.GetState().IsKeyDown(Keys.D4))
+                    else if (levelUpButtons[3].LeftClicked)
                     {
                         // Increase attack damage
                         player.LevelUp(LevelUpAbility.AttackDamage);
                         gameFSM = GameFSM.Playing;
                     }
-                    else if (Keyboard.GetState().IsKeyDown(Keys.D5))
+                    else if (levelUpButtons[4].LeftClicked)
                     {
                         // Increase movement range
                         player.LevelUp(LevelUpAbility.Range);
@@ -299,6 +317,8 @@ namespace SwordRush
                     }
                     break;
             }
+
+            
 
             previousMS = Mouse.GetState();
 
@@ -308,10 +328,16 @@ namespace SwordRush
 
         public void Draw(SpriteBatch sb)
         {
+            // Testing image buttons
+            
+
             switch (gameFSM)
             {
                 case GameFSM.Playing:
-                    sb.Draw(dungeontilesTexture2D, new Vector2(0, 0), new Rectangle(0, 64, 16, 32), Color.White);
+                    foreach (SceneObject tile in floorTiles)
+                    {
+                        tile.Draw(sb);
+                    }
 
                     //draw walls
                     foreach (SceneObject obj in walls)
@@ -349,7 +375,7 @@ namespace SwordRush
 
                     break;
 
-                case GameFSM.Paused:
+                case GameFSM.Paused: // --- Paused --------------------------------------------//
 
                     sb.DrawString(BellMT72,
                         $"Paused",
@@ -365,29 +391,15 @@ namespace SwordRush
 
                 case GameFSM.LevelUp:
                     sb.DrawString(BellMT72,
-                        $"Level up!",
-                        new Vector2(window.Width * 0.38f, window.Height * 0.36f),
-                        Color.White);
+                        $"LEVEL UP",
+                        new Vector2(window.Width * 0.3f, window.Height * 0.16f),
+                        Color.LightGreen);
 
-                    sb.DrawString(BellMT24,
-                        $"[Temporary System]" +
-                        $"\n1: Health" +
-                        $"\n2: Max Health" +
-                        $"\n3: Attack Speed" +
-                        $"\n4: Attack Damage" +
-                        $"\n5: Attack Range",
-                        new Vector2(window.Width* 0.38f, window.Height * 0.56f),
-                        Color.White);
+                    foreach (ImageButton i in levelUpButtons)
+                    {
+                        i.Draw(sb);
+                    }
 
-                    sb.DrawString(BellMT24,
-                        $"" +
-                        $"\n:Current:{player.Health}" +
-                        $"\n:Current:{player.MaxHealth}" +
-                        $"\n:Current:{player.AtkSpd}" +
-                        $"\n:Current:{player.Atk}" +
-                        $"\n:Current:{player.Range}",
-                        new Vector2(window.Width * 0.58f, window.Height * 0.56f),
-                        Color.White);
                     break;
             }
             if (gameFSM == GameFSM.Playing)
@@ -723,6 +735,94 @@ namespace SwordRush
                 $"{value}",
                 new Vector2(size.X+ window.Width * 0.015f, size.Y + window.Height * 0.015f),
                 Color.White);
+        }
+
+        /// <summary>
+        /// Set the defualt values of all the upgrade buttons
+        /// </summary>
+        public void InitializeLevelUpButtons()
+        {
+            levelUpButtons.Add(new ImageButton(
+                new Rectangle(window.Height * 2,0,
+                (int)(window.Height * 0.2f), (int)(window.Height * 0.2f)),
+                "Heal",
+                BellMT24,
+                abilityIcons,
+                new Vector2(6,2)));
+
+            levelUpButtons.Add(new ImageButton(
+                new Rectangle(window.Height * 2, 0,
+                (int)(window.Height * 0.2f), (int)(window.Height * 0.2f)),
+                "Max Health",
+                BellMT24,
+                abilityIcons,
+                new Vector2(12, 5)));
+
+            levelUpButtons.Add(new ImageButton(
+                new Rectangle(window.Height*2, 0,
+                (int)(window.Height * 0.2f), (int)(window.Height * 0.2f)),
+                "Attack Speed",
+                BellMT24,
+                abilityIcons,
+                new Vector2(11, 3)));
+
+            levelUpButtons.Add(new ImageButton(
+                new Rectangle(window.Height*2, 0,
+                (int)(window.Height * 0.2f), (int)(window.Height * 0.2f)),
+                "Damage",
+                BellMT24,
+                abilityIcons,
+                new Vector2(0, 3)));
+
+            levelUpButtons.Add(new ImageButton(
+                new Rectangle(window.Height*2, 0,
+                (int)(window.Height * 0.2f), (int)(window.Height * 0.2f)),
+                "Range",
+                BellMT24,
+                abilityIcons,
+                new Vector2(10, 3)));
+        }
+
+        /// <summary>
+        /// Randomly pick 3 abilities to offer
+        /// </summary>
+        public void RandomizeLevelUpAbilities()
+        {
+            // remove all buttons from the screen
+            foreach (ImageButton button in levelUpButtons)
+            {
+                button.Rectangle = new Rectangle(button.Rectangle.X, window.Height*2,
+                    button.Rectangle.Width, button.Rectangle.Height);
+            }
+            Random rng = new Random();
+
+            // Generate 3 unique numbers
+            int[] randomAbilities = new int[3];
+            for (int i = 0; i < 3; i+= 0)
+            {
+                int next = rng.Next(0, 5);
+                if (!randomAbilities.Contains(next))
+                {
+                    randomAbilities[i] = next;
+                    i++;
+                }
+            }
+
+            // 1st ability
+            levelUpButtons[randomAbilities[0]].Rectangle =
+                new Rectangle((int)(window.Width*0.1f),(int)(window.Height*0.4f),
+                (int)(window.Width*0.2f),(int)(window.Width*0.2f));
+
+            // 2nd ability
+            levelUpButtons[randomAbilities[1]].Rectangle =
+                new Rectangle((int)(window.Width * 0.4f), (int)(window.Height * 0.4f),
+                (int)(window.Width * 0.2f), (int)(window.Width * 0.2f));
+
+            // 3rd ability
+            levelUpButtons[randomAbilities[2]].Rectangle =
+                new Rectangle((int)(window.Width * 0.7f), (int)(window.Height * 0.4f),
+                (int)(window.Width * 0.2f), (int)(window.Width * 0.2f));
+
         }
     }
 }
