@@ -52,6 +52,7 @@ namespace SwordRush
         //tiling
         private List<SceneObject> walls;
         private int[,] grid;
+        private SceneObject[,] floorTiles;
         private List<List<AStarNode>> graph;
 
         private static GameManager instance = null;
@@ -110,8 +111,14 @@ namespace SwordRush
             grid = new int[20, 12];
             graph = new List<List<AStarNode>>();
             walls = new List<SceneObject>();
-            //test wall
-            walls.Add(new SceneObject(true, whiteRectangle, new Rectangle(500, 500, 64, 64)));
+            floorTiles = new SceneObject[20, 12];
+            for (int i = 0; i < floorTiles.GetLength(1); i++)
+            {
+                for (int j = 0; j < floorTiles.GetLength(0); j++)
+                {
+                    //floorTiles[j,i] = new SceneObject(false,dungeontilesTexture2D, new Rectangle(i * 64, j * 64, 64, 64));
+                }
+            }
 
             //window
             this.window = new Rectangle(0, 0,
@@ -426,11 +433,16 @@ namespace SwordRush
         /// </summary>
         public void UpdateGrid()
         {
-            //clear old positions of enemies and players
+            //clear old positions of enemies and players and save wall positions
+            int[,] tempWallGrid = new int[20, 12];
             for (int i = 0; i < grid.GetLength(1); i++)
             {
                 for (int j = 0; j < grid.GetLength(0); j++)
                 {
+                    if (grid[j,i] == 1)
+                    {
+                        tempWallGrid[j,i] = 1;
+                    }
                     if (grid[j,i] == 3 || grid[j,i] == 2)
                     {
                         grid[j,i] = 0;
@@ -455,6 +467,18 @@ namespace SwordRush
             {
                 player.graphPoint = new Point(Convert.ToInt32(player.Position.X) / 64, Convert.ToInt32(player.Position.Y) / 64);
                 grid[Convert.ToInt32(player.Position.X) / 64, Convert.ToInt32(player.Position.Y) / 64] = 3;
+            }
+
+            //return walls to old values
+            for (int i = 0; i < grid.GetLength(1); i++)
+            {
+                for (int j = 0; j < grid.GetLength(0); j++)
+                {
+                    if (tempWallGrid[j, i] == 1)
+                    {
+                        grid[j, i] = 1;
+                    }
+                }
             }
         }
 
