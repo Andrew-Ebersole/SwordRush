@@ -738,7 +738,7 @@ namespace SwordRush
                 "Max Health",
                 BellMT24,
                 abilityIcons,
-                new Vector2(6, 2)));
+                new Vector2(12, 5)));
 
             levelUpButtons.Add(new ImageButton(
                 new Rectangle(window.Height*2, 0,
@@ -746,7 +746,7 @@ namespace SwordRush
                 "Attack Speed",
                 BellMT24,
                 abilityIcons,
-                new Vector2(6, 2)));
+                new Vector2(11, 3)));
 
             levelUpButtons.Add(new ImageButton(
                 new Rectangle(window.Height*2, 0,
@@ -754,7 +754,7 @@ namespace SwordRush
                 "Damage",
                 BellMT24,
                 abilityIcons,
-                new Vector2(6, 2)));
+                new Vector2(0, 3)));
 
             levelUpButtons.Add(new ImageButton(
                 new Rectangle(window.Height*2, 0,
@@ -762,9 +762,12 @@ namespace SwordRush
                 "Range",
                 BellMT24,
                 abilityIcons,
-                new Vector2(6, 2)));
+                new Vector2(10, 3)));
         }
 
+        /// <summary>
+        /// Randomly pick 3 abilities to offer
+        /// </summary>
         public void RandomizeLevelUpAbilities()
         {
             // remove all buttons from the screen
