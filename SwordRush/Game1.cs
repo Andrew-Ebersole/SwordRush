@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Microsoft.Xna.Framework;
@@ -34,6 +35,8 @@ namespace SwordRush
 
         public Game1()
         {
+            this.IsFixedTimeStep = true;//false;
+            this.TargetElapsedTime = TimeSpan.FromSeconds(1d / 30d); //second number is the fps
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
