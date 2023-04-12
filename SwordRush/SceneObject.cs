@@ -18,7 +18,7 @@ namespace SwordRush
         public SceneObject(bool wall, /*int tile,*/ Texture2D texture, Rectangle rectangle) : base(texture, rectangle)
         {
             this.wall = wall;
-            //this.tile = tile;
+            this.tile = tile;
         }
 
         public void Draw(SpriteBatch sb)
