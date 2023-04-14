@@ -72,7 +72,8 @@ namespace SwordRush
         MouseState previousMS;
 
         //Sound
-        SoundEffect BGM;
+        private SoundEffect BGM;
+        private SoundEffect clearedLevelSoundEffect;
 
         // --- Properties --- //
 
@@ -156,9 +157,10 @@ namespace SwordRush
             InitializeLevelUpButtons();
 
             //sounds
+            BGM = content.Load<SoundEffect>("BGM");
+            clearedLevelSoundEffect = content.Load<SoundEffect>("clearLevel");
 
             //loop the bgm
-            BGM = content.Load<SoundEffect>("BGM");
             var bgm = BGM.CreateInstance();
             bgm.IsLooped = true;
             bgm.Play();
@@ -199,8 +201,7 @@ namespace SwordRush
                         if (enemies[i].Rectangle.Intersects(player.Rectangle) && enemies[i].Health > 0
                             && enemies[i].EnemyState == EnemyStateMachine.Move)
                         {
-                            //uncomment below
-                            //((ShortRangeEnemy)enemies[i]).AttackSoundEffect.Play();
+                            ((ShortRangeEnemy)enemies[i]).AttackSoundEffect.Play();
                             enemies[i].AttackCooldown();
                             player.Damaged(enemies[i].Atk);
                         }
@@ -208,6 +209,7 @@ namespace SwordRush
                         if (enemies[i].Health <= 0)
                         {
                             player.GainExp(enemies[i].Level);
+                            ((ShortRangeEnemy)enemies[i]).DeathSoundEffect.Play();
                             enemies.RemoveAt(i);
                         }
                     }
@@ -237,6 +239,7 @@ namespace SwordRush
                     //check if enemies are all dead
                     if (enemies.Count == 0 && UI.Get.GameFSM == SwordRush.GameFSM.Game)
                     {
+                        clearedLevelSoundEffect.Play();
                         player.RoomsCleared += 1;
                         StartGame();
                         player.NewRoom();

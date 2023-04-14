@@ -153,6 +153,9 @@ namespace SwordRush
 
             List<Texture2D> frames = new List<Texture2D>();
 
+            levelUpSoundEffect = GameManager.Get.ContentManager.Load<SoundEffect>("powerUp");
+            attackSoundEffect = GameManager.Get.ContentManager.Load<SoundEffect>("attack2");
+            damagedSoundEffect = GameManager.Get.ContentManager.Load<SoundEffect>("hitHurt");
 
             frames.Add(GameManager.Get.ContentManager.Load<Texture2D>("knight_f_idle_anim_f0"));
             frames.Add(GameManager.Get.ContentManager.Load<Texture2D>("knight_f_idle_anim_f1"));
@@ -200,8 +203,7 @@ namespace SwordRush
                 && preMouseState.LeftButton == ButtonState.Released
                 && playerState == PlayerStateMachine.Idle)
             {
-                //uncomment below
-                //attackSoundEffect.Play();
+                attackSoundEffect.Play();
                 direction = GetDirection();
                 attackFrame = 0;
             }
@@ -228,14 +230,12 @@ namespace SwordRush
         public void Damaged(int dmg)
         {
             health -= dmg;
-            //uncomment below
-            //damagedSoundEffect.Play();
+            damagedSoundEffect.Play();
         }
 
         public void LevelUp(LevelUpAbility ability)
         {
-            //uncomment below
-            //levelUpSoundEffect.Play();
+            levelUpSoundEffect.Play();
             exp -= levelUpExp;
             level += 1;
             levelUpExp += level * 10;
