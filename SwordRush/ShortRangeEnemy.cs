@@ -23,11 +23,6 @@ namespace SwordRush
         public Point graphPoint;
         private Vector2 distance;
         private AStarNode pos;
-        private SoundEffect damagedSoundEffect;
-        private SoundEffect attackSoundEffect;
-        private SoundEffect deathSoundEffect;
-        public SoundEffect AttackSoundEffect => attackSoundEffect;
-        public SoundEffect DeathSoundEffect => deathSoundEffect;
         // --- Constructor --- //
         public ShortRangeEnemy(Texture2D texture, Rectangle rectangle, Player player,int level, GraphicsDevice graphicsDevice) : base(texture, rectangle, player, graphicsDevice)
         {
@@ -35,10 +30,6 @@ namespace SwordRush
             astar = new Astar(null);
             pos = new AStarNode(position,true,1);
             List<Texture2D> frames = new List<Texture2D>();
-
-            damagedSoundEffect = GameManager.Get.ContentManager.Load<SoundEffect>("hitHurt");
-            attackSoundEffect = GameManager.Get.ContentManager.Load<SoundEffect>("attack");
-            deathSoundEffect = GameManager.Get.ContentManager.Load<SoundEffect>("death");
 
             frames.Add(GameManager.Get.ContentManager.Load<Texture2D>("skelet_idle_anim_f0"));
             frames.Add(GameManager.Get.ContentManager.Load<Texture2D>("skelet_idle_anim_f1"));
@@ -69,7 +60,7 @@ namespace SwordRush
                 Vector2 distance = position - player.Position;
                 direction = Vector2.Normalize(distance);
                 AttackCooldown();
-                damagedSoundEffect.Play();
+                SoundManager.Get.EnemyDamagedEffect.Play();
             }
 
         }
