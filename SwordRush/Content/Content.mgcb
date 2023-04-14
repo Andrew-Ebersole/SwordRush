@@ -25,6 +25,24 @@
 /processorParam:TextureFormat=Color
 /build:AbilityIcons.png
 
+#begin attack.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:attack.wav
+
+#begin attack2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:attack2.wav
+
+#begin attack3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:attack3.wav
+
 #begin Bell_MT-16.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
@@ -65,6 +83,30 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:BGM.wav
+
+#begin blipSelect.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:blipSelect.wav
+
+#begin clearLevel.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:clearLevel.wav
+
+#begin click.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:click.wav
+
+#begin death.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:death.wav
 
 #begin DungeonTiles.png
 /importer:TextureImporter
@@ -113,6 +155,12 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:health_bar.png
+
+#begin hitHurt.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:hitHurt.wav
 
 #begin knight_f_idle_anim_f0.png
 /importer:TextureImporter
@@ -218,6 +266,24 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:MenuBackground3.jpg
+
+#begin powerUp.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:powerUp.wav
+
+#begin powerUp2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:powerUp2.wav
+
+#begin random.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:random.wav
 
 #begin shield_bar.png
 /importer:TextureImporter

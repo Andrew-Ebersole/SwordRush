@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Net.Mime;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using System.Xml.Linq;
 using Microsoft.Xna.Framework.Audio;
+using System.Reflection.Metadata;
 
 namespace SwordRush
 {
@@ -21,9 +23,6 @@ namespace SwordRush
         public Point graphPoint;
         private Vector2 distance;
         private AStarNode pos;
-        private SoundEffect damagedSoundEffect;
-        private SoundEffect attackSoundEffect;
-        public SoundEffect AttackSoundEffect => attackSoundEffect;
         // --- Constructor --- //
         public ShortRangeEnemy(Texture2D texture, Rectangle rectangle, Player player,int level, GraphicsDevice graphicsDevice) : base(texture, rectangle, player, graphicsDevice)
         {
@@ -61,8 +60,7 @@ namespace SwordRush
                 Vector2 distance = position - player.Position;
                 direction = Vector2.Normalize(distance);
                 AttackCooldown();
-                //uncomment below
-                //damagedSoundEffect.Play();
+                SoundManager.Get.EnemyDamagedEffect.Play();
             }
 
         }
