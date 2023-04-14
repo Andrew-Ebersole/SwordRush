@@ -217,6 +217,10 @@ namespace SwordRushLevelEditor
                             {
                                 writer.Write("0");
                             }
+                            else if (map[j, i].BackColor == Color.Purple)
+                            {
+                                writer.Write("0");
+                            }
                             if (j < map.GetLength(0) - 1)
                             {
                                 writer.Write(",");
@@ -349,6 +353,10 @@ namespace SwordRushLevelEditor
                             {
                                 map[j, i].BackColor = Color.Black;
                             }
+                            else if (collisions[i][j] == "6")
+                            {
+                                map[j, i].BackColor = Color.Purple;
+                            }
 
                             collisionGrid[j, i] = Convert.ToInt32(collisions[i][j]);
                         }
@@ -405,8 +413,26 @@ namespace SwordRushLevelEditor
         {
             if (collisionLayer)
             {
-                collisionLayer = false;
+                buttonGray.Text = "Top Wall";
+                buttonGreen.Text = "Bottom Wall";
+                buttonBrown.Text = "Top Left";
+                buttonRed.Text = "Top Right";
+                buttonPurple.Text = "Bottom Left";
+                buttonBlue.Text = "Bottom Right";
+                labelLayer.Text = "Tiles";
             }
+            else
+            {
+                buttonGray.Text = "Wall";
+                buttonGreen.Text = "N/A";
+                buttonBrown.Text = "N/A";
+                buttonRed.Text = "SR Enemy";
+                buttonPurple.Text = "N/A";
+                buttonBlue.Text = "Player";
+                labelLayer.Text = "Collisions";
+            }
+            ChangeLayer();
+            
         }
 
         /// <summary>
@@ -414,7 +440,150 @@ namespace SwordRushLevelEditor
         /// </summary>
         private void ChangeLayer()
         {
+            if (collisionLayer)
+            {
+                for (int i = 0; i < map.GetLength(1); i++)
+                {
+                    for (int j = 0; j < map.GetLength(0); j++)
+                    {
+                        //save collision layer
+                        if (map[j, i].BackColor == Color.Green)
+                        {
+                            collisionGrid[j, i] = 0;
+                        }
+                        else if (map[j, i].BackColor == Color.LightGray)
+                        {
+                            collisionGrid[j, i] = 1;
+                        }
+                        else if (map[j, i].BackColor == Color.DarkGoldenrod)
+                        {
+                            collisionGrid[j, i] = 0;
+                        }
+                        else if (map[j, i].BackColor == Color.Firebrick)
+                        {
+                            collisionGrid[j, i] = 2;
+                        }
+                        else if (map[j, i].BackColor == Color.LightSkyBlue)
+                        {
+                            collisionGrid[j, i] = 3;
+                        }
+                        else if (map[j, i].BackColor == Color.Black)
+                        {
+                            collisionGrid[j, i] = 0;
+                        }
+                        else if (map[j, i].BackColor == Color.Purple)
+                        {
+                            collisionGrid[j, i] = 0;
+                        }
 
+                        //put out tile layer
+                        if (tileGrid[j,i] == 4)
+                        {
+                            map[j, i].BackColor = Color.Green;
+                        }
+                        else if (tileGrid[j, i] == 1)
+                        {
+                            map[j, i].BackColor = Color.LightGray;
+                        }
+                        else if (tileGrid[j, i] == 5)
+                        {
+                            map[j, i].BackColor = Color.DarkGoldenrod;
+                        }
+                        else if (tileGrid[j, i] == 2)
+                        {
+                            map[j, i].BackColor = Color.Firebrick;
+                        }
+                        else if (tileGrid[j, i] == 3)
+                        {
+                            map[j, i].BackColor = Color.LightSkyBlue;
+                        }
+                        else if (tileGrid[j, i] == 0)
+                        {
+                            map[j, i].BackColor = Color.Black;
+                        }
+                        else if (tileGrid[j, i] == 6)
+                        {
+                            map[j, i].BackColor = Color.Purple;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 0; i < map.GetLength(1); i++)
+                {
+                    for (int j = 0; j < map.GetLength(0); j++)
+                    {
+                        //save tile layer
+                        if (map[j, i].BackColor == Color.Green)
+                        {
+                            tileGrid[j, i] = 4;
+                        }
+                        else if (map[j, i].BackColor == Color.LightGray)
+                        {
+                            tileGrid[j, i] = 1;
+                        }
+                        else if (map[j, i].BackColor == Color.DarkGoldenrod)
+                        {
+                            tileGrid[j, i] = 5;
+                        }
+                        else if (map[j, i].BackColor == Color.Firebrick)
+                        {
+                            tileGrid[j, i] = 2;
+                        }
+                        else if (map[j, i].BackColor == Color.LightSkyBlue)
+                        {
+                            tileGrid[j, i] = 3;
+                        }
+                        else if (map[j, i].BackColor == Color.Black)
+                        {
+                            tileGrid[j, i] = 0;
+                        }
+                        else if (map[j, i].BackColor == Color.Purple)
+                        {
+                            tileGrid[j, i] = 6;
+                        }
+
+                        //put out collision layer
+                        if (collisionGrid[j, i] == 4)
+                        {
+                            map[j, i].BackColor = Color.Green;
+                        }
+                        else if (collisionGrid[j, i] == 1)
+                        {
+                            map[j, i].BackColor = Color.LightGray;
+                        }
+                        else if (collisionGrid[j, i] == 5)
+                        {
+                            map[j, i].BackColor = Color.DarkGoldenrod;
+                        }
+                        else if (collisionGrid[j, i] == 2)
+                        {
+                            map[j, i].BackColor = Color.Firebrick;
+                        }
+                        else if (collisionGrid[j, i] == 3)
+                        {
+                            map[j, i].BackColor = Color.LightSkyBlue;
+                        }
+                        else if (collisionGrid[j, i] == 0)
+                        {
+                            map[j, i].BackColor = Color.Black;
+                        }
+                        else if (collisionGrid[j, i] == 6)
+                        {
+                            map[j, i].BackColor = Color.Purple;
+                        }
+                    }
+                }
+            }
+
+            collisionLayer = !collisionLayer;
+        }
+
+        private void buttonPurple_Click(object sender, EventArgs e)
+        {
+            selectedColor = Color.Purple;
+            pictureBoxSelected.BackColor = selectedColor;
         }
     }
 }
