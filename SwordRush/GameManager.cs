@@ -169,7 +169,6 @@ namespace SwordRush
             switch (gameFSM)
             {
                 case GameFSM.Playing: // Playing Game
-
                     player.Update(gt);
 
                     //update all the enemies

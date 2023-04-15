@@ -1,9 +1,12 @@
 ﻿using Microsoft.Xna.Framework.Audio;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework.Media;
 
 namespace SwordRush
 {
@@ -20,6 +23,7 @@ namespace SwordRush
         private SoundEffect levelCleardEffect;
         private SoundEffect clickEffect;
         private SoundEffect BGM;
+        private SoundEffectInstance bgm;
 
         //properties
         public SoundEffect PlayerAttackEffect => playerAttackEffect;
@@ -31,7 +35,7 @@ namespace SwordRush
         public SoundEffect GameoverEffect => gameoverEffect;
         public SoundEffect LevelCleardEffect => levelCleardEffect;
         public SoundEffect ClickEffect => clickEffect;
-
+        
         public static SoundManager Get
         {
             get
@@ -52,6 +56,7 @@ namespace SwordRush
 
         public SoundManager()
         {
+            
             playerAttackEffect = GameManager.Get.ContentManager.Load<SoundEffect>("attack2");
             playerDamagedEffect = GameManager.Get.ContentManager.Load<SoundEffect>("hitHurt");
             playerLevelUpEffect = GameManager.Get.ContentManager.Load<SoundEffect>("powerUp");
@@ -64,9 +69,16 @@ namespace SwordRush
             BGM = GameManager.Get.ContentManager.Load<SoundEffect>("BGM");
 
             //loop the bgm
-            var bgm = BGM.CreateInstance();
+            bgm = BGM.CreateInstance();
             bgm.IsLooped = true;
             bgm.Play();
+            //UpdateVolume();
+        }
+
+        public void UpdateVolume()
+        {
+            SoundEffect.MasterVolume = UI.Get.SfxLevel;
+            bgm.Volume = UI.Get.MusicLevel;
         }
     }
 }
