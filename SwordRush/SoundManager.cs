@@ -57,7 +57,6 @@ namespace SwordRush
 
         public SoundManager()
         {
-            //UpdateVolume();
         }
 
         public void Initialize(ContentManager content)
@@ -77,12 +76,15 @@ namespace SwordRush
             bgm = BGM.CreateInstance();
             bgm.IsLooped = true;
             bgm.Play();
+
+            UpdateVolume();
         }
 
+        
         public void UpdateVolume()
         {
-            SoundEffect.MasterVolume = UI.Get.SfxLevel;
-            bgm.Volume = UI.Get.MusicLevel;
+            SoundEffect.MasterVolume = (float)(UI.Get.SfxLevel) / 10;
+            bgm.Volume = (float)(UI.Get.MusicLevel) / 10;
         }
     }
 }

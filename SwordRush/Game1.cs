@@ -71,13 +71,14 @@ namespace SwordRush
             bellMT24 = Content.Load<SpriteFont>("Bell_MT-24");
             bellMT16 = Content.Load<SpriteFont>("Bell_MT-16");
 
-            //Sound Manager
-            SoundManager.Get.Initialize(Content);
+            
             // UI Manager
             UI.Get.Initialize(Content, windowSize, GraphicsDevice);
             // Game Manager
             GameManager.Get.Initialize(Content, windowSize, whiteRectangle, GraphicsDevice);
-            
+            //Sound Manager
+            SoundManager.Get.Initialize(Content);
+
             // Events and delegates
             UI.Get.startGame += GameManager.Get.StartGame;
             GameManager.Get.gameOver += UI.Get.EndGame;

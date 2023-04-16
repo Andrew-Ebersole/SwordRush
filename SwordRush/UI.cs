@@ -125,6 +125,9 @@ namespace SwordRush
             takeDamage = true;
             showHitboxes = false;
             showGrid = false;
+
+            sfxLevel = 10;
+            musicLevel = 10;
         }
 
 
@@ -196,6 +199,7 @@ namespace SwordRush
                             if (sfxLevel > 0)
                             {
                                 sfxLevel--;
+                                SoundManager.Get.UpdateVolume();
                             }
                         }
                         // Raise SFX
@@ -204,6 +208,7 @@ namespace SwordRush
                             if (sfxLevel < 10)
                             {
                                 sfxLevel++;
+                                SoundManager.Get.UpdateVolume();
                             }
                         }
                         // Lower Music
@@ -212,6 +217,7 @@ namespace SwordRush
                             if (musicLevel > 0)
                             {
                                 musicLevel--;
+                                SoundManager.Get.UpdateVolume();
                             }
                         }
                         // Raise Music
@@ -220,7 +226,8 @@ namespace SwordRush
                             if (musicLevel < 10)
                             {
                                 musicLevel++;
-                                
+                                SoundManager.Get.UpdateVolume();
+
                             }
                         }
                         // Toggle TakeDamage
