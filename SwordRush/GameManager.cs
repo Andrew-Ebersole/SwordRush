@@ -29,7 +29,6 @@ namespace SwordRush
         private GameFSM gameFSM;
         private ContentManager contentManager_;
         private FileManager fileManager_;
-        
         //game event
         private Rectangle window;
         public event GameOver gameOver;
@@ -70,9 +69,6 @@ namespace SwordRush
         // Mouse States
         MouseState currentMS;
         MouseState previousMS;
-
-        //Sound
-        SoundEffect BGM;
 
         // --- Properties --- //
 
@@ -155,13 +151,6 @@ namespace SwordRush
             abilityIcons = content.Load<Texture2D>("AbilityIcons");
             InitializeLevelUpButtons();
 
-            //sounds
-
-            //loop the bgm
-            BGM = content.Load<SoundEffect>("BGM");
-            var bgm = BGM.CreateInstance();
-            bgm.IsLooped = true;
-            bgm.Play();
         }
 
         public Player LocalPlayer
@@ -178,7 +167,6 @@ namespace SwordRush
             switch (gameFSM)
             {
                 case GameFSM.Playing: // Playing Game
-
                     player.Update(gt);
 
                     //update all the enemies
@@ -199,8 +187,7 @@ namespace SwordRush
                         if (enemies[i].Rectangle.Intersects(player.Rectangle) && enemies[i].Health > 0
                             && enemies[i].EnemyState == EnemyStateMachine.Move)
                         {
-                            //uncomment below
-                            //((ShortRangeEnemy)enemies[i]).AttackSoundEffect.Play();
+                            SoundManager.Get.EnemyAttackEffect.Play();
                             enemies[i].AttackCooldown();
                             player.Damaged(enemies[i].Atk);
                         }
@@ -208,6 +195,7 @@ namespace SwordRush
                         if (enemies[i].Health <= 0)
                         {
                             player.GainExp(enemies[i].Level);
+                            SoundManager.Get.EnemyDeathEffect.Play();
                             enemies.RemoveAt(i);
                         }
                     }
@@ -237,6 +225,7 @@ namespace SwordRush
                     //check if enemies are all dead
                     if (enemies.Count == 0 && UI.Get.GameFSM == SwordRush.GameFSM.Game)
                     {
+                        SoundManager.Get.LevelCleardEffect.Play();
                         player.RoomsCleared += 1;
                         StartGame();
                         player.NewRoom();
@@ -694,7 +683,6 @@ namespace SwordRush
         public void StartGame()
         {
             gameFSM = GameFSM.Playing;
-            
 
             //load grid
             // change number after player.RoomsCleared to be the amount of level files
