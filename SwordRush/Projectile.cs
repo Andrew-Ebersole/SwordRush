@@ -12,34 +12,30 @@ namespace SwordRush
 {
     internal class Projectile : GameObject
     {
-        private Point position_;
-        private Vector2 direction_;
-        private float speed_ = 5;
-        private int damage_ = 1;
+        private readonly Vector2 _direction;
+        private const float Speed = 5;
+        private readonly int _damage;
+        private readonly LongRangeEnemy _owner;
 
         // --- Constructor --- //
-        public Projectile() : base(null, new Rectangle())
+        public Projectile(Point position, Vector2 direction, LongRangeEnemy owner) : base(GameManager.Get.ContentManager.Load<Texture2D>("coin_anim_f0") ,new Rectangle(position, new Point(10, 10)))
         {
-            damage_ = 10;
-        }
-
-        public override void Draw(SpriteBatch sb)
-        {
-
+            _direction = direction;
+            _damage = 10;
+            _owner = owner;
         }
 
         public override void Update(GameTime gt)
         {
-            direction_.Normalize();
-            Rectangle rect = new Rectangle();
-            rect.X = rectangle.X + (int)(speed_ * direction_.X);
-            rect.Y = rectangle.Y + (int)(speed_ * direction_.Y);
-            rect.Size = rectangle.Size;
-            rectangle = rect;
+            Rectangle newRect = rectangle;
+            newRect.X = rectangle.X + (int)(_direction.X * Speed * gt.ElapsedGameTime.TotalSeconds);
+            newRect.Y = rectangle.Y + (int)(_direction.Y * Speed * gt.ElapsedGameTime.TotalSeconds);
+            rectangle = newRect;
 
             if (Rectangle.Intersects(GameManager.Get.LocalPlayer.Rectangle))
             {
-                GameManager.Get.LocalPlayer.Damaged(damage_);
+                GameManager.Get.LocalPlayer.Damaged(_damage);
+                _owner.Projectiles.Remove(this);
             }
         }
     }

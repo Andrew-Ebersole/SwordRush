@@ -8,44 +8,46 @@ using System.Threading.Tasks;
 
 namespace SwordRush
 {
-    internal class LongRangeEnemy:Enemy
+    internal class LongRangeEnemy : Enemy
     {
-        private List<Projectile> projectiles;
+        private double _currentShootCd;
+
+        public List<Projectile> Projectiles { get; }
 
         // --- Constructor --- //
-        public LongRangeEnemy(Texture2D texture, Rectangle rectangle,Player player, GraphicsDevice graphicsDevice) : base(texture, rectangle, player, graphicsDevice)
+        public LongRangeEnemy(Texture2D texture, Rectangle rectangle, Player player, GraphicsDevice graphicsDevice) :
+            base(texture, rectangle, player, graphicsDevice)
         {
-
-        }
-
-        public void initStat(int level)
-        {
-
-        }
-
-        public void shoot()
-        {
-
-        }
-
-        public void AI()
-        {
-
+            Projectiles = new List<Projectile>();
         }
 
         public override void Draw(SpriteBatch sb)
         {
-            for(int i = 0; i < projectiles.Count; i++)
+            foreach (var projectile in Projectiles)
             {
-                projectiles[i].Draw(sb);
+                projectile.Draw(sb);
             }
         }
 
         public override void Update(GameTime gt)
         {
-            for (int i = 0; i < projectiles.Count; i++)
+            foreach (var projectile in Projectiles)
             {
-                projectiles[i].Update(gt);
+                projectile.Update(gt);
+            }
+
+            if (_currentShootCd <= 0)
+            {
+                _currentShootCd = 3;
+
+                Vector2 fireDirection = Position - GameManager.Get.LocalPlayer.Position;
+                fireDirection.Normalize();
+
+                Projectiles.Add(new Projectile(rectangle.Center, fireDirection, this));
+            }
+            else
+            {
+                _currentShootCd -= gt.ElapsedGameTime.TotalSeconds;
             }
         }
     }
