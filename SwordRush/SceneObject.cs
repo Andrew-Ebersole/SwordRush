@@ -34,7 +34,7 @@ namespace SwordRush
             
             if (tile == 0)
             {
-                sb.Draw(texture, Rectangle, Color.White);
+                sb.Draw(texture, Rectangle, Color.Black);
             }
             else if (tile == 1)
             {
