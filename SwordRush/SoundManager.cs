@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Media;
+using Microsoft.Xna.Framework.Content;
 
 namespace SwordRush
 {
@@ -56,23 +57,26 @@ namespace SwordRush
 
         public SoundManager()
         {
-            
-            playerAttackEffect = GameManager.Get.ContentManager.Load<SoundEffect>("attack2");
-            playerDamagedEffect = GameManager.Get.ContentManager.Load<SoundEffect>("hitHurt");
-            playerLevelUpEffect = GameManager.Get.ContentManager.Load<SoundEffect>("powerUp");
-            enemyAttackEffect = GameManager.Get.ContentManager.Load<SoundEffect>("attack3");
-            enemyDamagedEffect = GameManager.Get.ContentManager.Load<SoundEffect>("hitHurt");
-            enemyDeathEffect = GameManager.Get.ContentManager.Load<SoundEffect>("death");
-            gameoverEffect = GameManager.Get.ContentManager.Load<SoundEffect>("random");
-            levelCleardEffect = GameManager.Get.ContentManager.Load<SoundEffect>("clearLevel");
-            clickEffect = GameManager.Get.ContentManager.Load<SoundEffect>("click");
-            BGM = GameManager.Get.ContentManager.Load<SoundEffect>("BGM");
+            //UpdateVolume();
+        }
+
+        public void Initialize(ContentManager content)
+        {
+            playerAttackEffect = content.Load<SoundEffect>("attack2");
+            playerDamagedEffect = content.Load<SoundEffect>("hitHurt");
+            playerLevelUpEffect = content.Load<SoundEffect>("powerUp");
+            enemyAttackEffect = content.Load<SoundEffect>("attack3");
+            enemyDamagedEffect = content.Load<SoundEffect>("hitHurt");
+            enemyDeathEffect = content.Load<SoundEffect>("death");
+            gameoverEffect = content.Load<SoundEffect>("random");
+            levelCleardEffect = content.Load<SoundEffect>("clearLevel");
+            clickEffect = content.Load<SoundEffect>("click");
+            BGM = content.Load<SoundEffect>("BGM");
 
             //loop the bgm
             bgm = BGM.CreateInstance();
             bgm.IsLooped = true;
             bgm.Play();
-            //UpdateVolume();
         }
 
         public void UpdateVolume()

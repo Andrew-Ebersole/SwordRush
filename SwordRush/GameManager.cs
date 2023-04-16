@@ -29,7 +29,6 @@ namespace SwordRush
         private GameFSM gameFSM;
         private ContentManager contentManager_;
         private FileManager fileManager_;
-        private SoundManager soundManager;
         //game event
         private Rectangle window;
         public event GameOver gameOver;
@@ -102,7 +101,6 @@ namespace SwordRush
         {
             contentManager_ = content;
             fileManager_ = new FileManager();
-            soundManager = new SoundManager();
             //sprites & game states
             this.spriteSheet = spriteSheet;
             gameFSM = GameFSM.Menu;
@@ -189,7 +187,7 @@ namespace SwordRush
                         if (enemies[i].Rectangle.Intersects(player.Rectangle) && enemies[i].Health > 0
                             && enemies[i].EnemyState == EnemyStateMachine.Move)
                         {
-                            soundManager.EnemyAttackEffect.Play();
+                            SoundManager.Get.EnemyAttackEffect.Play();
                             enemies[i].AttackCooldown();
                             player.Damaged(enemies[i].Atk);
                         }
@@ -197,7 +195,7 @@ namespace SwordRush
                         if (enemies[i].Health <= 0)
                         {
                             player.GainExp(enemies[i].Level);
-                            soundManager.EnemyDeathEffect.Play();
+                            SoundManager.Get.EnemyDeathEffect.Play();
                             enemies.RemoveAt(i);
                         }
                     }
@@ -227,7 +225,7 @@ namespace SwordRush
                     //check if enemies are all dead
                     if (enemies.Count == 0 && UI.Get.GameFSM == SwordRush.GameFSM.Game)
                     {
-                        soundManager.LevelCleardEffect.Play();
+                        SoundManager.Get.LevelCleardEffect.Play();
                         player.RoomsCleared += 1;
                         StartGame();
                         player.NewRoom();
@@ -685,7 +683,6 @@ namespace SwordRush
         public void StartGame()
         {
             gameFSM = GameFSM.Playing;
-            
 
             //load grid
             grid = fileManager_.LoadGrid($"Content/Level{player.RoomsCleared%3}.txt");
