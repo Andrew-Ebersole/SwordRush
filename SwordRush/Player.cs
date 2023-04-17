@@ -234,7 +234,12 @@ namespace SwordRush
             switch (ability)
             {
                 case LevelUpAbility.Heal:
-                    health = maxHealth; 
+                    health += maxHealth/2;
+                    if (health > maxHealth)
+                    {
+                        health = maxHealth;
+                    }
+
                     break;
 
                 case LevelUpAbility.MaxHealth:
