@@ -501,7 +501,7 @@ namespace SwordRush
             else
             {
                 //the second parameter is the number of total room
-                tileGrid = fileManager_.LoadWallTiles($"Content/Level{new Random().Next(1,6)}.txt");
+                tileGrid = fileManager_.LoadWallTiles($"Content/Level{player.RoomsCleared % 6}.txt");
             }
 
 
