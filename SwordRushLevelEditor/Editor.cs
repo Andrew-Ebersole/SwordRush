@@ -68,6 +68,7 @@ namespace SwordRushLevelEditor
                         map[j, i].Size = new Size(tileSize, tileSize);
                         map[j, i].Click += ChangeTileColor;
                         map[j, i].BackColor = selectedColor;
+                        map[j, i].BorderStyle = BorderStyle.FixedSingle;
 
                         //populate data arrays
                         collisionGrid[j, i] = 0;
@@ -309,6 +310,7 @@ namespace SwordRushLevelEditor
                             map[j, i].Location = new Point(j * tileSize + 10, i * tileSize + 20);
                             map[j, i].Size = new Size(tileSize, tileSize);
                             map[j, i].Click += ChangeTileColor;
+                            map[j, i].BorderStyle = BorderStyle.FixedSingle;
                         }
                     }
 
@@ -349,6 +351,38 @@ namespace SwordRushLevelEditor
                             else if (collisions[i][j] == "6")
                             {
                                 map[j, i].BackColor = Color.Purple;
+                            }
+                            else if (collisions[i][j] == "7")
+                            {
+                                map[j, i].BackColor = Color.Orange;
+                            }
+                            else if (collisions[i][j] == "8")
+                            {
+                                map[j, i].BackColor = Color.Teal;
+                            }
+                            else if (collisions[i][j] == "9")
+                            {
+                                map[j, i].BackColor = Color.Gold;
+                            }
+                            else if (collisions[i][j] == "10")
+                            {
+                                map[j, i].BackColor = Color.Tan;
+                            }
+                            else if (collisions[i][j] == "11")
+                            {
+                                map[j, i].BackColor = Color.Pink;
+                            }
+                            else if (collisions[i][j] == "12")
+                            {
+                                map[j, i].BackColor = Color.Aquamarine;
+                            }
+                            else if (collisions[i][j] == "13")
+                            {
+                                map[j, i].BackColor = Color.Indigo;
+                            }
+                            else if (collisions[i][j] == "14")
+                            {
+                                map[j, i].BackColor = Color.Olive;
                             }
 
                             collisionGrid[j, i] = Convert.ToInt32(collisions[i][j]);
@@ -407,21 +441,37 @@ namespace SwordRushLevelEditor
             if (collisionLayer)
             {
                 buttonGray.Text = "Top Wall";
-                buttonGreen.Text = "Bottom Wall";
+                buttonGreen.Text = "Bot Wall";
                 buttonBrown.Text = "Top Left";
                 buttonRed.Text = "Top Right";
-                buttonPurple.Text = "Bottom Left";
-                buttonBlue.Text = "Bottom Right";
+                buttonPurple.Text = "Bot Left";
+                buttonBlue.Text = "Bot Right";
+                buttonOrange.Text = "Left Wall";
+                buttonTeal.Text = "Right Wall";
+                buttonGold.Text = "lBot corner";
+                buttonTan.Text = "rBot corner";
+                buttonPink.Text = "Wall Top";
+                buttonAqua.Text = "One Square";
+                buttonIndigo.Text = "long Bot l";
+                buttonOlive.Text = "long Bot r";
                 labelLayer.Text = "Tiles";
             }
             else
             {
                 buttonGray.Text = "Wall";
                 buttonGreen.Text = "N/A";
-                buttonBrown.Text = "N/A";
+                buttonBrown.Text = "LR Enemy";
                 buttonRed.Text = "SR Enemy";
                 buttonPurple.Text = "N/A";
                 buttonBlue.Text = "Player";
+                buttonOrange.Text = "N/A";
+                buttonTeal.Text = "N/A";
+                buttonGold.Text = "N/A";
+                buttonTan.Text = "N/A";
+                buttonPink.Text = "N/A";
+                buttonAqua.Text = "N/A";
+                buttonIndigo.Text = "N/A";
+                buttonOlive.Text = "N/A";
                 labelLayer.Text = "Collisions";
             }
             ChangeLayer();
@@ -450,7 +500,7 @@ namespace SwordRushLevelEditor
                         }
                         else if (map[j, i].BackColor == Color.DarkGoldenrod)
                         {
-                            collisionGrid[j, i] = 0;
+                            collisionGrid[j, i] = 5;
                         }
                         else if (map[j, i].BackColor == Color.Firebrick)
                         {
@@ -465,6 +515,38 @@ namespace SwordRushLevelEditor
                             collisionGrid[j, i] = 0;
                         }
                         else if (map[j, i].BackColor == Color.Purple)
+                        {
+                            collisionGrid[j, i] = 0;
+                        }
+                        else if (map[j, i].BackColor == Color.Orange)
+                        {
+                            collisionGrid[j, i] = 0;
+                        }
+                        else if (map[j, i].BackColor == Color.Teal)
+                        {
+                            collisionGrid[j, i] = 0;
+                        }
+                        else if (map[j, i].BackColor == Color.Gold)
+                        {
+                            collisionGrid[j, i] = 0;
+                        }
+                        else if (map[j, i].BackColor == Color.Tan)
+                        {
+                            collisionGrid[j, i] = 0;
+                        }
+                        else if (map[j, i].BackColor == Color.Pink)
+                        {
+                            collisionGrid[j, i] = 0;
+                        }
+                        else if (map[j, i].BackColor == Color.Aquamarine)
+                        {
+                            collisionGrid[j, i] = 0;
+                        }
+                        else if (map[j, i].BackColor == Color.Indigo)
+                        {
+                            collisionGrid[j, i] = 0;
+                        }
+                        else if (map[j, i].BackColor == Color.Olive)
                         {
                             collisionGrid[j, i] = 0;
                         }
@@ -497,6 +579,38 @@ namespace SwordRushLevelEditor
                         else if (tileGrid[j, i] == 6)
                         {
                             map[j, i].BackColor = Color.Purple;
+                        }
+                        else if (tileGrid[j, i] == 7)
+                        {
+                            map[j, i].BackColor = Color.Orange;
+                        }
+                        else if (tileGrid[j, i] == 8)
+                        {
+                            map[j, i].BackColor = Color.Teal;
+                        }
+                        else if (tileGrid[j, i] == 9)
+                        {
+                            map[j, i].BackColor = Color.Gold;
+                        }
+                        else if (tileGrid[j, i] == 10)
+                        {
+                            map[j, i].BackColor = Color.Tan;
+                        }
+                        else if (tileGrid[j, i] == 11)
+                        {
+                            map[j, i].BackColor = Color.Pink;
+                        }
+                        else if (tileGrid[j, i] == 12)
+                        {
+                            map[j, i].BackColor = Color.Aquamarine;
+                        }
+                        else if (tileGrid[j, i] == 13)
+                        {
+                            map[j, i].BackColor = Color.Indigo;
+                        }
+                        else if (tileGrid[j, i] == 14)
+                        {
+                            map[j, i].BackColor = Color.Olive;
                         }
                     }
                 }
@@ -536,6 +650,38 @@ namespace SwordRushLevelEditor
                         {
                             tileGrid[j, i] = 6;
                         }
+                        else if (map[j, i].BackColor == Color.Orange)
+                        {
+                            tileGrid[j, i] = 7;
+                        }
+                        else if (map[j, i].BackColor == Color.Teal)
+                        {
+                            tileGrid[j, i] = 8;
+                        }
+                        else if (map[j, i].BackColor == Color.Gold)
+                        {
+                            tileGrid[j, i] = 9;
+                        }
+                        else if (map[j, i].BackColor == Color.Tan)
+                        {
+                            tileGrid[j, i] = 10;
+                        }
+                        else if (map[j, i].BackColor == Color.Pink)
+                        {
+                            tileGrid[j, i] = 11;
+                        }
+                        else if (map[j, i].BackColor == Color.Aquamarine)
+                        {
+                            tileGrid[j, i] = 12;
+                        }
+                        else if (map[j, i].BackColor == Color.Indigo)
+                        {
+                            tileGrid[j, i] = 13;
+                        }
+                        else if (map[j, i].BackColor == Color.Olive)
+                        {
+                            tileGrid[j, i] = 14;
+                        }
 
                         //put out collision layer
                         if (collisionGrid[j, i] == 4)
@@ -566,6 +712,38 @@ namespace SwordRushLevelEditor
                         {
                             map[j, i].BackColor = Color.Purple;
                         }
+                        else if (collisionGrid[j, i] == 7)
+                        {
+                            map[j, i].BackColor = Color.Orange;
+                        }
+                        else if (collisionGrid[j, i] == 8)
+                        {
+                            map[j, i].BackColor = Color.Teal;
+                        }
+                        else if (collisionGrid[j, i] == 9)
+                        {
+                            map[j, i].BackColor = Color.Gold;
+                        }
+                        else if (collisionGrid[j, i] == 10)
+                        {
+                            map[j, i].BackColor = Color.Tan;
+                        }
+                        else if (collisionGrid[j, i] == 11)
+                        {
+                            map[j, i].BackColor = Color.Pink;
+                        }
+                        else if (collisionGrid[j, i] == 12)
+                        {
+                            map[j, i].BackColor = Color.Aquamarine;
+                        }
+                        else if (collisionGrid[j, i] == 13)
+                        {
+                            map[j, i].BackColor = Color.Indigo;
+                        }
+                        else if (collisionGrid[j, i] == 14)
+                        {
+                            map[j, i].BackColor = Color.Olive;
+                        }
                     }
                 }
             }
@@ -576,6 +754,54 @@ namespace SwordRushLevelEditor
         private void buttonPurple_Click(object sender, EventArgs e)
         {
             selectedColor = Color.Purple;
+            pictureBoxSelected.BackColor = selectedColor;
+        }
+
+        private void buttonOrange_Click(object sender, EventArgs e)
+        {
+            selectedColor = Color.Orange;
+            pictureBoxSelected.BackColor = selectedColor;
+        }
+
+        private void buttonTeal_Click(object sender, EventArgs e)
+        {
+            selectedColor = Color.Teal;
+            pictureBoxSelected.BackColor = selectedColor;
+        }
+
+        private void buttonGold_Click(object sender, EventArgs e)
+        {
+            selectedColor = Color.Gold;
+            pictureBoxSelected.BackColor = selectedColor;
+        }
+
+        private void buttonTan_Click(object sender, EventArgs e)
+        {
+            selectedColor = Color.Tan;
+            pictureBoxSelected.BackColor = selectedColor;
+        }
+
+        private void buttonPink_Click(object sender, EventArgs e)
+        {
+            selectedColor = Color.Pink;
+            pictureBoxSelected.BackColor = selectedColor;
+        }
+
+        private void buttonAqua_Click(object sender, EventArgs e)
+        {
+            selectedColor = Color.Aquamarine;
+            pictureBoxSelected.BackColor = selectedColor;
+        }
+
+        private void buttonIndigo_Click(object sender, EventArgs e)
+        {
+            selectedColor = Color.Indigo;
+            pictureBoxSelected.BackColor = selectedColor;
+        }
+
+        private void buttonOlive_Click(object sender, EventArgs e)
+        {
+            selectedColor = Color.Olive;
             pictureBoxSelected.BackColor = selectedColor;
         }
     }

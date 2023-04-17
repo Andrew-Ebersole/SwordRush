@@ -1,3 +1,5 @@
+using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.IO;
 
 namespace SwordRush
@@ -37,6 +39,31 @@ namespace SwordRush
 
             reader.Close();
             return grid;
+        }
+
+
+        public int[,] LoadWallTiles(string path)
+        {
+            StreamReader reader = new StreamReader(path);
+            int[,] grid = new int[20, 12];
+
+            for (int i = 0; i < 13; i++)
+            {
+                reader.ReadLine();
+            }
+
+            for (int i = 0; i < 12; i++)
+            {
+                string[] row = reader.ReadLine().Split(',');
+                for (int j = 0; j < 20; j++)
+                {
+                    grid[j, i] = int.Parse(row[j]);
+                }
+            }
+            
+            reader.Close();
+            return grid;
+
         }
     }
 }

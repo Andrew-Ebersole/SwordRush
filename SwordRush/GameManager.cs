@@ -56,6 +56,7 @@ namespace SwordRush
         private List<SceneObject> walls;
         private int[,] grid;
         private SceneObject[,] floorTiles;
+        private List<SceneObject> wallTiles;
         private List<List<AStarNode>> graph;
 
         private static GameManager instance = null;
@@ -117,11 +118,12 @@ namespace SwordRush
             graph = new List<List<AStarNode>>();
             walls = new List<SceneObject>();
             floorTiles = new SceneObject[40, 24];
+            wallTiles = new List<SceneObject>();
             for (int i = 0; i < floorTiles.GetLength(1); i++)
             {
                 for (int j = 0; j < floorTiles.GetLength(0); j++)
                 {
-                    floorTiles[j,i] = new SceneObject(false, 1, dungeontilesTexture2D, new Rectangle(j * 32, i * 32, 32, 32));
+                    floorTiles[j,i] = new SceneObject(false, 20, dungeontilesTexture2D, new Rectangle(j * 32, i * 32, 32, 32));
                 }
             }
 
@@ -323,6 +325,7 @@ namespace SwordRush
             switch (gameFSM)
             {
                 case GameFSM.Playing:
+                    //draw floor
                     foreach (SceneObject tile in floorTiles)
                     {
                         tile.Draw(sb);
@@ -332,6 +335,12 @@ namespace SwordRush
                     foreach (SceneObject obj in walls)
                     {
                         obj.Draw(sb);
+                    }
+                    
+                    //draw wall tiles
+                    foreach (SceneObject tile in wallTiles)
+                    {
+                        tile.Draw(sb);
                     }
 
                     player.Draw(sb);
@@ -445,6 +454,80 @@ namespace SwordRush
                     }
                 }
             }
+
+            wallTiles.Clear();
+            int[,] tileGrid = fileManager_.LoadWallTiles($"Content/Level{player.RoomsCleared % 6}.txt");
+            for (int i = 0; i < tileGrid.GetLength(1); i++)
+            {
+                for (int j = 0; j < tileGrid.GetLength(0); j++)
+                {
+                    switch (tileGrid[j,i])
+                    {
+                        case 1:
+                            wallTiles.Add(new SceneObject(false, 1, dungeontilesTexture2D, new Rectangle(j * 64, i * 64, 32, 32)));
+                            wallTiles.Add(new SceneObject(false, 1, dungeontilesTexture2D, new Rectangle(j * 64 + 32, i * 64, 32, 32)));
+                            wallTiles.Add(new SceneObject(false, 4, dungeontilesTexture2D, new Rectangle(j * 64, i * 64 + 32, 32, 32)));
+                            wallTiles.Add(new SceneObject(false, 4, dungeontilesTexture2D, new Rectangle(j * 64 + 32, i * 64 + 32, 32, 32)));
+                            break;
+                        case 2:
+                            wallTiles.Add(new SceneObject(false, 2, dungeontilesTexture2D, new Rectangle(j * 64, i * 64, 32, 32)));
+                            wallTiles.Add(new SceneObject(false, 8, dungeontilesTexture2D, new Rectangle(j * 64, i * 64 + 32, 32, 32)));
+                            break;
+                        case 3:
+                            wallTiles.Add(new SceneObject(false, 3, dungeontilesTexture2D, new Rectangle(j * 64, i * 64, 32, 32)));
+                            break;
+                        case 4:
+                            wallTiles.Add(new SceneObject(false, 4, dungeontilesTexture2D, new Rectangle(j * 64, i * 64, 32, 32)));
+                            wallTiles.Add(new SceneObject(false, 4, dungeontilesTexture2D, new Rectangle(j * 64 + 32, i * 64, 32, 32)));
+                            break;
+                        case 5:
+                            wallTiles.Add(new SceneObject(false, 5, dungeontilesTexture2D, new Rectangle(j * 64 + 32, i * 64, 32, 32)));
+                            wallTiles.Add(new SceneObject(false, 7, dungeontilesTexture2D, new Rectangle(j * 64 + 32, i * 64 +32, 32, 32)));
+                            break;
+                        case 6:
+                            wallTiles.Add(new SceneObject(false, 6, dungeontilesTexture2D, new Rectangle(j * 64 + 32, i * 64, 32, 32)));
+                            break;
+                        case 7:
+                            wallTiles.Add(new SceneObject(false, 7, dungeontilesTexture2D, new Rectangle(j * 64 + 32, i * 64, 32, 32)));
+                            wallTiles.Add(new SceneObject(false, 7, dungeontilesTexture2D, new Rectangle(j * 64 + 32, i * 64 + 32, 32, 32)));
+                            break;
+                        case 8:
+                            wallTiles.Add(new SceneObject(false, 8, dungeontilesTexture2D, new Rectangle(j * 64 , i * 64, 32, 32)));
+                            wallTiles.Add(new SceneObject(false, 8, dungeontilesTexture2D, new Rectangle(j * 64 , i * 64 + 32, 32, 32)));
+                            break;
+                        case 9:
+                            wallTiles.Add(new SceneObject(false, 8, dungeontilesTexture2D, new Rectangle(j * 64, i * 64, 32, 32)));
+                            wallTiles.Add(new SceneObject(false, 9, dungeontilesTexture2D, new Rectangle(j * 64, i * 64 + 32, 32, 32)));
+                            wallTiles.Add(new SceneObject(false, 1, dungeontilesTexture2D, new Rectangle(j * 64 + 32, i * 64 + 32, 32, 32)));
+                            break;
+                        case 10:
+                            wallTiles.Add(new SceneObject(false, 7, dungeontilesTexture2D, new Rectangle(j * 64 + 32, i * 64, 32, 32)));
+                            wallTiles.Add(new SceneObject(false, 10, dungeontilesTexture2D, new Rectangle(j * 64 + 32, i * 64 + 32, 32, 32)));
+                            wallTiles.Add(new SceneObject(false, 1, dungeontilesTexture2D, new Rectangle(j * 64, i * 64 + 32, 32, 32)));
+                            break;
+                        case 11:
+                            wallTiles.Add(new SceneObject(false, 1, dungeontilesTexture2D, new Rectangle(j * 64, i * 64 + 32, 32, 32)));
+                            wallTiles.Add(new SceneObject(false, 1, dungeontilesTexture2D, new Rectangle(j * 64 + 32, i * 64 + 32, 32, 32)));
+                            break;
+                        case 12:
+                            wallTiles.Add(new SceneObject(false, 4, dungeontilesTexture2D, new Rectangle(j * 64, i * 64 + 32, 32, 32)));
+                            wallTiles.Add(new SceneObject(false, 4, dungeontilesTexture2D, new Rectangle(j * 64 + 32, i * 64 + 32, 32, 32)));
+                            wallTiles.Add(new SceneObject(false, 9, dungeontilesTexture2D, new Rectangle(j * 64, i * 64, 32, 32)));
+                            wallTiles.Add(new SceneObject(false, 10, dungeontilesTexture2D, new Rectangle(j * 64 + 32, i * 64, 32, 32)));
+                            break;
+                        case 13:
+                            wallTiles.Add(new SceneObject(false, 6, dungeontilesTexture2D, new Rectangle(j * 64 + 32, i * 64 + 32, 32, 32)));
+                            wallTiles.Add(new SceneObject(false, 7, dungeontilesTexture2D, new Rectangle(j * 64 + 32, i * 64, 32, 32)));
+                            break;
+                        case 14:
+                            wallTiles.Add(new SceneObject(false, 3, dungeontilesTexture2D, new Rectangle(j * 64, i * 64 + 32, 32, 32)));
+                            wallTiles.Add(new SceneObject(false, 8, dungeontilesTexture2D, new Rectangle(j * 64, i * 64, 32, 32)));
+                            break;
+                    }
+                    
+                }
+            }
+
         }
 
         /// <summary>
