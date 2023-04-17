@@ -257,7 +257,7 @@ namespace SwordRush
                     break;
 
                 case LevelUpAbility.Range:
-                    range+=1.5f;
+                    range+=1f;
                     break;
             }
         }
