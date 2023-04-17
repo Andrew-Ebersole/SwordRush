@@ -456,7 +456,7 @@ namespace SwordRush
             sb.DrawString(BellMT24,
                 $"Rooms Cleared: {player.RoomsCleared}",
                 new Vector2(10, 10),
-                Color.Black);
+                Color.LightGray);
         }
 
         /// <summary>
