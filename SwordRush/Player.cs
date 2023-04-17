@@ -90,6 +90,11 @@ namespace SwordRush
             {
                 return exp;
             }
+
+            set
+            {
+                exp = value;
+            }
         }
 
         public int LevelUpExp
@@ -264,7 +269,7 @@ namespace SwordRush
 
         public void GainExp(int enemyLevel)
         {
-            exp += enemyLevel * 10;
+            exp += enemyLevel * 10 * ((int)(enemyLevel / 2) + 1);
         }
 
         /// <summary>

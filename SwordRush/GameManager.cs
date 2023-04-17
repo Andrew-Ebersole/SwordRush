@@ -237,6 +237,7 @@ namespace SwordRush
                         player.RoomsCleared += 1;
                         StartGame();
                         player.NewRoom();
+
                     }
 
                     // Pause game on right click
@@ -832,15 +833,13 @@ namespace SwordRush
             enemies.Clear();
             //generates curent room based on grid
             GenerateRoom();
-            // TODO: Reset game code goes here
-            
+
             if (player.RoomsCleared == 0)
             {
                 // start with 90 xp so the player gets to level up
                 // on the tutorial level (level0)
-                player.GainExp(9);
+                player.Exp += 90;
             }
-            
         }
 
         public void QuitGame()
