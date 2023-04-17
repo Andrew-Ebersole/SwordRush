@@ -81,13 +81,7 @@ namespace SwordRush
                 Vector2 playerDistance = position - player.Position;
 
                 //get the next position to get to
-                while (position == pos.Center)
-                {
-                    if (path != null)
-                    {
-                        pos = path.Pop();
-                    }
-                }
+                pos = path.Pop();
 
                 //make the enemy move toward the player when they are at the same grid
                 if (player.graphPoint == graphPoint)
