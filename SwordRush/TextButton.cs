@@ -69,6 +69,7 @@ namespace SwordRush
                 && previousMState.LeftButton == ButtonState.Released)
             {
                 leftClicked = true;
+                SoundManager.Get.ClickEffect.Play();
             }
             else
             {
