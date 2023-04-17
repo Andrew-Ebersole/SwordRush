@@ -41,26 +41,27 @@ namespace SwordRush
             AStarNode end = new AStarNode(new Vector2((int)(End.X), (int)(End.Y)), true);
 
             Stack<AStarNode> Path = new Stack<AStarNode>();
-            PriorityQueue<AStarNode, float> OpenList = new PriorityQueue<AStarNode, float>();
-            List<AStarNode> ClosedList = new List<AStarNode>();
+            PriorityQueue<AStarNode, float> queue = new PriorityQueue<AStarNode, float>();
+            //visited
+            List<AStarNode> visitedList = new List<AStarNode>();
             List<AStarNode> adjacencies;
             AStarNode current = start;
 
             // add start AStarNode to Open List
-            OpenList.Enqueue(start, start.F);
+            queue.Enqueue(start, start.F);
 
-            while (OpenList.Count != 0 && !ClosedList.Exists(x => x.Position == end.Position))
+            while (queue.Count != 0 && !visitedList.Exists(x => x.Position == end.Position))
             {
-                current = OpenList.Dequeue();
-                ClosedList.Add(current);
+                current = queue.Dequeue();
+                visitedList.Add(current);
                 adjacencies = GetAdjacentNodes(current);
 
                 foreach (AStarNode n in adjacencies)
                 {
-                    if (!ClosedList.Contains(n) && n.Walkable)
+                    if (!visitedList.Contains(n) && n.Walkable)
                     {
                         bool isFound = false;
-                        foreach (var oLNode in OpenList.UnorderedItems)
+                        foreach (var oLNode in queue.UnorderedItems)
                         {
                             if (oLNode.Element == n)
                             {
@@ -72,21 +73,21 @@ namespace SwordRush
                             n.Parent = current;
                             n.DistanceToTarget = Math.Abs(n.Position.X - end.Position.X) + Math.Abs(n.Position.Y - end.Position.Y);
                             n.Cost = n.Weight + n.Parent.Cost;
-                            OpenList.Enqueue(n, n.F);
+                            queue.Enqueue(n, n.F);
                         }
                     }
                 }
             }
 
             //if enemy couldn't get to player, this should never happen
-            if (!ClosedList.Exists(x => x.Position == end.Position))
+            if (!visitedList.Exists(x => x.Position == end.Position))
             {
                 return null;
             }
 
 
             //return the path
-            AStarNode temp = ClosedList[ClosedList.IndexOf(current)];
+            AStarNode temp = visitedList[visitedList.IndexOf(current)];
 
             if (temp == null) return null;
             do
