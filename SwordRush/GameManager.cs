@@ -418,16 +418,16 @@ namespace SwordRush
                 tile.Draw(sb);
             }
 
-            //draw tiles
-            foreach (SceneObject tile in wallTiles)
-            {
-                tile.Draw(sb);
-            }
-
             //draw walls
             foreach (SceneObject obj in walls)
             {
                 obj.Draw(sb);
+            }
+
+            //draw tiles
+            foreach (SceneObject tile in wallTiles)
+            {
+                tile.Draw(sb);
             }
 
             player.Draw(sb);
