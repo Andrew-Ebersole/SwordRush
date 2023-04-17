@@ -439,6 +439,10 @@ namespace SwordRush
                         player.X = (j * 64 + 32);
                         player.Y = (i * 64 + 32);
                     }
+                    else if (grid[j, i] == 5)
+                    {
+                        enemies.Add(new LongRangeEnemy(dungeontilesTexture2D, new Rectangle(j * 64, i * 64, 32, 32), player, graphicsDevice));
+                    }
                 }
             }
         }
@@ -466,13 +470,20 @@ namespace SwordRush
             }
 
             //add enemy positions
-            foreach (ShortRangeEnemy SRenemy in enemies)
+            foreach (Enemy enemy in enemies)
             {
-                if (SRenemy.Position.X > 0 && SRenemy.Position.Y > 0
-                && SRenemy.Position.X < window.Width && SRenemy.Position.Y < window.Height)
+
+
+                if (enemy.Position.X > 0 && enemy.Position.Y > 0
+                && enemy.Position.X < window.Width && enemy.Position.Y < window.Height)
                 {
-                    SRenemy.graphPoint = new Point(Convert.ToInt32(SRenemy.Position.X) / 64, Convert.ToInt32(SRenemy.Position.Y) / 64);
-                    grid[Convert.ToInt32(SRenemy.Position.X) / 64, Convert.ToInt32(SRenemy.Position.Y) / 64] = 2;
+                    if (enemy is ShortRangeEnemy)
+                    {
+                        ShortRangeEnemy SRenemy = (ShortRangeEnemy)enemy;
+                        SRenemy.graphPoint = new Point(Convert.ToInt32(enemy.Position.X) / 64, Convert.ToInt32(enemy.Position.Y) / 64);
+                        grid[Convert.ToInt32(enemy.Position.X) / 64, Convert.ToInt32(enemy.Position.Y) / 64] = 2;
+                    }
+                    
                 }
             }
 

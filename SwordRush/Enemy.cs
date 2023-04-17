@@ -27,6 +27,7 @@ namespace SwordRush
         protected Texture2D singleColor;
 
         private Texture2D dungeontilesTexture2D;
+        
 
         public Texture2D DungeonTilesTexture2D
         {
@@ -46,6 +47,7 @@ namespace SwordRush
         {
             this.player = player;
             dungeontilesTexture2D = texture;
+            
 
             // Single Color Texture
             singleColor = new Texture2D(graphicsDevice, 1, 1);

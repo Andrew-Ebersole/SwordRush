@@ -186,51 +186,44 @@ namespace SwordRushLevelEditor
             {
                 using (StreamWriter writer = new StreamWriter(saveDialog.OpenFile()))
                 {
-                    
+
                     //write each tile's color
-                    for (int i = 0; i < map.GetLength(1); i++)
+                    for (int i = 0; i < collisionGrid.GetLength(1); i++)
                     {
-                        for (int j = 0; j < map.GetLength(0); j++)
+                        for (int j = 0; j < collisionGrid.GetLength(0); j++)
                         {
 
-                            if (map[j, i].BackColor == Color.Green)
-                            {
-                                writer.Write("0");
-                            }
-                            else if (map[j, i].BackColor == Color.LightGray)
-                            {
-                                writer.Write("1");
-                            }
-                            else if (map[j, i].BackColor == Color.DarkGoldenrod)
-                            {
-                                writer.Write("0");
-                            }
-                            else if (map[j, i].BackColor == Color.Firebrick)
-                            {
-                                writer.Write("2");
-                            }
-                            else if (map[j, i].BackColor == Color.LightSkyBlue)
-                            {
-                                writer.Write("3");
-                            }
-                            else if (map[j, i].BackColor == Color.Black)
-                            {
-                                writer.Write("0");
-                            }
-                            else if (map[j, i].BackColor == Color.Purple)
-                            {
-                                writer.Write("0");
-                            }
-                            if (j < map.GetLength(0) - 1)
+                            writer.Write(collisionGrid[j, i]);
+
+                            if (j < collisionGrid.GetLength(0) - 1)
                             {
                                 writer.Write(",");
                             }
                         }
-                        if (i < map.GetLength(1) - 1)
+                        writer.Write('\n');
+                    }
+
+                    writer.Write('\n');
+
+
+                    for (int i = 0; i < tileGrid.GetLength(1); i++)
+                    {
+                        for (int j = 0; j < tileGrid.GetLength(0); j++)
+                        {
+
+                            writer.Write(tileGrid[j, i]);
+
+                            if (j < tileGrid.GetLength(0) - 1)
+                            {
+                                writer.Write(",");
+                            }
+                        }
+                        if (i < tileGrid.GetLength(1) - 1)
                         {
                             writer.Write("\n");
                         }
                     }
+
                 }
                 //show successful save message
                 MessageBox.Show("File saved successfully", "File saved");
@@ -432,7 +425,7 @@ namespace SwordRushLevelEditor
                 labelLayer.Text = "Collisions";
             }
             ChangeLayer();
-            
+
         }
 
         /// <summary>
@@ -477,7 +470,7 @@ namespace SwordRushLevelEditor
                         }
 
                         //put out tile layer
-                        if (tileGrid[j,i] == 4)
+                        if (tileGrid[j, i] == 4)
                         {
                             map[j, i].BackColor = Color.Green;
                         }
