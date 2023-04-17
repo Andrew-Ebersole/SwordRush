@@ -13,6 +13,7 @@ using Point = Microsoft.Xna.Framework.Point;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
 using System.Linq;
 using System.Transactions;
+using System.Drawing;
 
 namespace SwordRush
 {
@@ -55,6 +56,8 @@ namespace SwordRush
         private SpriteFont BellMT48;
         private SpriteFont BellMT72;
         //tiling
+        private int mapNum;
+        private int totalRoom;
         private List<SceneObject> walls;
         private int[,] grid;
         private SceneObject[,] floorTiles;
@@ -116,6 +119,8 @@ namespace SwordRush
 
 
             //tiling
+            mapNum = 0;
+            totalRoom = 6;
             grid = new int[20, 12];
             graph = new List<List<AStarNode>>();
             walls = new List<SceneObject>();
@@ -327,8 +332,6 @@ namespace SwordRush
         public void Draw(SpriteBatch sb)
         {
             // Testing image buttons
-            
-
             switch (gameFSM)
             {
                 case GameFSM.Playing:
@@ -492,7 +495,6 @@ namespace SwordRush
 
             wallTiles.Clear();
             int[,] tileGrid;
-
             //if game just start generate the intro room, else randomly pick room
             if (player.RoomsCleared == 0)
             {
@@ -501,7 +503,7 @@ namespace SwordRush
             else
             {
                 //the second parameter is the number of total room
-                tileGrid = fileManager_.LoadWallTiles($"Content/Level{player.RoomsCleared % 6}.txt");
+                tileGrid = fileManager_.LoadWallTiles($"Content/Level{mapNum}.txt");
             }
 
 
@@ -603,10 +605,8 @@ namespace SwordRush
             //add enemy positions
             foreach (Enemy enemy in enemies)
             {
-
-
                 if (enemy.Position.X > 0 && enemy.Position.Y > 0
-                && enemy.Position.X < window.Width && enemy.Position.Y < window.Height)
+                                         && enemy.Position.X < window.Width && enemy.Position.Y < window.Height)
                 {
                     if (enemy is ShortRangeEnemy)
                     {
@@ -827,8 +827,22 @@ namespace SwordRush
             gameFSM = GameFSM.Playing;
 
             //load grid
-            // change number after player.RoomsCleared to be the amount of level files
-            grid = fileManager_.LoadGrid($"Content/Level{player.RoomsCleared%6}.txt");
+            // randomly pick a room to generate
+            if (player.RoomsCleared == 0)
+            {
+                mapNum = 0;
+            }
+            else
+            {
+                int temp = new Random().Next(1, totalRoom);
+                while (mapNum != temp)
+                {
+                    mapNum = temp;
+                }
+            }
+
+            
+            grid = fileManager_.LoadGrid($"Content/Level{mapNum}.txt");
             
             enemies.Clear();
             //generates curent room based on grid
@@ -862,9 +876,10 @@ namespace SwordRush
 
             sb.DrawString(
                 BellMT24,
-                $"{value}",
+                $"{value}/{maxValue}",
                 new Vector2(size.X+ window.Width * 0.015f, size.Y + window.Height * 0.015f),
                 Color.White);
+            
         }
 
         /// <summary>
