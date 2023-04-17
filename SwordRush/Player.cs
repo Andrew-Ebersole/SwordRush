@@ -244,15 +244,15 @@ namespace SwordRush
                     break;
 
                 case LevelUpAbility.AttackSpeed:
-                    atkSpd++;
+                    atkSpd+=2;
                     break;
 
                 case LevelUpAbility.AttackDamage:
-                    atk += 2f;
+                    atk += 1f;
                     break;
 
                 case LevelUpAbility.Range:
-                    range++;
+                    range+=2;
                     break;
             }
         }
@@ -346,9 +346,9 @@ namespace SwordRush
             atk = 1;
             maxHealth = 10;
             health = maxHealth;
-            atkSpd = 1.75f;
+            atkSpd = 5f;
             distance = 10f;
-            range = 3.5f;
+            range = 3f;
             roomsCleared = 0;
         }
 
