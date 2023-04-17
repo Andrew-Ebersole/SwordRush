@@ -833,13 +833,6 @@ namespace SwordRush
             enemies.Clear();
             //generates curent room based on grid
             GenerateRoom();
-
-            if (player.RoomsCleared == 0)
-            {
-                // start with 90 xp so the player gets to level up
-                // on the tutorial level (level0)
-                player.Exp += 90;
-            }
         }
 
         public void QuitGame()

@@ -90,11 +90,6 @@ namespace SwordRush
             {
                 return exp;
             }
-
-            set
-            {
-                exp = value;
-            }
         }
 
         public int LevelUpExp
@@ -131,7 +126,7 @@ namespace SwordRush
 
         public Player(Texture2D texture, Rectangle rectangle, GraphicsDevice graphics) : base(texture, rectangle)
         {
-            exp = 0;
+            exp = 90;
             levelUpExp = 100;
             level = 1;
             atk = 1;
@@ -350,7 +345,7 @@ namespace SwordRush
         public void NewRound()
         {
             roomsCleared = 0;
-            exp = 0;
+            exp = 90;
             levelUpExp = 100;
             level = 1;
             atk = 1;
