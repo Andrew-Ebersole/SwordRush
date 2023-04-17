@@ -45,7 +45,7 @@ namespace SwordRush
         public void initStat(int level)
         {
             health = level;
-            atk = level;
+            atk = (level/2)+1;
             maxHP = health;
         }
 
@@ -81,13 +81,7 @@ namespace SwordRush
                 Vector2 playerDistance = position - player.Position;
 
                 //get the next position to get to
-                while (position == pos.Center)
-                {
-                    if (path != null)
-                    {
-                        pos = path.Pop();
-                    }
-                }
+                pos = path.Pop();
 
                 //make the enemy move toward the player when they are at the same grid
                 if (player.graphPoint == graphPoint)
@@ -100,7 +94,7 @@ namespace SwordRush
                 }
 
                 //move the enemy toward to player when they are in certain range
-                if (path != null && path.Count < 6+1 && playerDistance.Length() < 300)
+                if (path != null && path.Count < 7+1 && playerDistance.Length() < 350)
                 {
                     Vector2 direction = Vector2.Normalize(distance);
 

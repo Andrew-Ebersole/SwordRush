@@ -237,6 +237,7 @@ namespace SwordRush
                         player.RoomsCleared += 1;
                         StartGame();
                         player.NewRoom();
+
                     }
 
                     // Pause game on right click
@@ -456,7 +457,7 @@ namespace SwordRush
             sb.DrawString(BellMT24,
                 $"Rooms Cleared: {player.RoomsCleared}",
                 new Vector2(10, 10),
-                Color.Black);
+                Color.LightGray);
         }
 
         /// <summary>
@@ -490,7 +491,20 @@ namespace SwordRush
             }
 
             wallTiles.Clear();
-            int[,] tileGrid = fileManager_.LoadWallTiles($"Content/Level{player.RoomsCleared % 6}.txt");
+            int[,] tileGrid;
+
+            //if game just start generate the intro room, else randomly pick room
+            if (player.RoomsCleared == 0)
+            {
+                tileGrid = fileManager_.LoadWallTiles($"Content/Level{0}.txt");
+            }
+            else
+            {
+                //the second parameter is the number of total room
+                tileGrid = fileManager_.LoadWallTiles($"Content/Level{new Random().Next(1,6)}.txt");
+            }
+
+
             for (int i = 0; i < tileGrid.GetLength(1); i++)
             {
                 for (int j = 0; j < tileGrid.GetLength(0); j++)
@@ -819,15 +833,6 @@ namespace SwordRush
             enemies.Clear();
             //generates curent room based on grid
             GenerateRoom();
-            // TODO: Reset game code goes here
-            
-            if (player.RoomsCleared == 0)
-            {
-                // start with 90 xp so the player gets to level up
-                // on the tutorial level (level0)
-                player.GainExp(9);
-            }
-            
         }
 
         public void QuitGame()

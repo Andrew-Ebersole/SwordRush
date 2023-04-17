@@ -126,7 +126,7 @@ namespace SwordRush
 
         public Player(Texture2D texture, Rectangle rectangle, GraphicsDevice graphics) : base(texture, rectangle)
         {
-            exp = 0;
+            exp = 90;
             levelUpExp = 100;
             level = 1;
             atk = 1;
@@ -229,12 +229,17 @@ namespace SwordRush
             SoundManager.Get.PlayerLevelUpEffect.Play();
             exp -= levelUpExp;
             level += 1;
-            levelUpExp += level * 10;
+            levelUpExp += (level*level * 20);
 
             switch (ability)
             {
                 case LevelUpAbility.Heal:
-                    health = maxHealth; 
+                    health += maxHealth/2;
+                    if (health > maxHealth)
+                    {
+                        health = maxHealth;
+                    }
+
                     break;
 
                 case LevelUpAbility.MaxHealth:
@@ -244,22 +249,22 @@ namespace SwordRush
                     break;
 
                 case LevelUpAbility.AttackSpeed:
-                    atkSpd++;
+                    atkSpd+=2;
                     break;
 
                 case LevelUpAbility.AttackDamage:
-                    atk += 2f;
+                    atk += 1f;
                     break;
 
                 case LevelUpAbility.Range:
-                    range++;
+                    range+=1f;
                     break;
             }
         }
 
         public void GainExp(int enemyLevel)
         {
-            exp += enemyLevel * 10;
+            exp += enemyLevel * 10 * ((int)(enemyLevel / 2) + 1);
         }
 
         /// <summary>
@@ -340,15 +345,15 @@ namespace SwordRush
         public void NewRound()
         {
             roomsCleared = 0;
-            exp = 0;
+            exp = 90;
             levelUpExp = 100;
             level = 1;
             atk = 1;
             maxHealth = 10;
             health = maxHealth;
-            atkSpd = 1.75f;
+            atkSpd = 5f;
             distance = 10f;
-            range = 3.5f;
+            range = 3f;
             roomsCleared = 0;
         }
 
