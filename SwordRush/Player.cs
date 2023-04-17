@@ -229,7 +229,7 @@ namespace SwordRush
             SoundManager.Get.PlayerLevelUpEffect.Play();
             exp -= levelUpExp;
             level += 1;
-            levelUpExp += level * 10;
+            levelUpExp += (level*level * 20);
 
             switch (ability)
             {
