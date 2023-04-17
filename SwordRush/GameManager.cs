@@ -12,6 +12,7 @@ using Color = Microsoft.Xna.Framework.Color;
 using Point = Microsoft.Xna.Framework.Point;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
 using System.Linq;
+using System.Transactions;
 
 namespace SwordRush
 {
@@ -47,6 +48,7 @@ namespace SwordRush
         private Texture2D emptyBarTexture;
         private Texture2D whiteRectangle;
         private Texture2D abilityIcons;
+        private Texture2D singleColor;
 
         // fonts
         private SpriteFont BellMT24;
@@ -133,6 +135,10 @@ namespace SwordRush
             emptyBarTexture = content.Load<Texture2D>("empty_bar");
             healthBarTexture = content.Load<Texture2D>("health_bar");
             xpBarTexture = content.Load<Texture2D>("energy_bar");
+
+            // Single color texture
+            singleColor = new Texture2D(graphicsDevice, 1, 1);
+            singleColor.SetData(new Color[] { Color.White });
 
             // Font
             BellMT24 = content.Load<SpriteFont>("Bell_MT-24");
@@ -323,49 +329,23 @@ namespace SwordRush
             switch (gameFSM)
             {
                 case GameFSM.Playing:
-                    foreach (SceneObject tile in floorTiles)
-                    {
-                        tile.Draw(sb);
-                    }
 
-                    //draw walls
-                    foreach (SceneObject obj in walls)
-                    {
-                        obj.Draw(sb);
-                    }
-
-                    player.Draw(sb);
-                    foreach (Enemy enemy in enemies)
-                    {
-                        enemy.Draw(sb);
-                    }
-
-                    // Display health and xp bars
-                    drawBar(healthBarTexture,
-                        player.Health,
-                        player.MaxHealth,
-                        new Rectangle((int)(window.Width * 0.12f), (int)(window.Height * 0.92f),
-                        (int)(window.Width * 0.3f), (int)(window.Height * 0.079)),
-                        sb);
-
-                    drawBar(xpBarTexture,
-                        player.Exp,
-                        player.LevelUpExp,
-                        new Rectangle((int)(window.Width * 0.62f), (int)(window.Height * 0.92f),
-                        (int)(window.Width * 0.3f), (int)(window.Height * 0.079f)),
-                        sb);
-
-
-                    // Draw Room Number top right
-                    sb.DrawString(BellMT24,
-                        $"Rooms Cleared: {player.RoomsCleared}",
-                        new Vector2(10, 10),
-                        Color.Black);
+                    DrawGame(sb);
 
                     break;
 
                 case GameFSM.Paused: // --- Paused --------------------------------------------//
 
+                    // elements of the game a drawn but not updated
+                    DrawGame(sb);
+
+                    // Add a transparent black rectangle over the game
+                    // to darken screen and make text stand out
+                    sb.Draw(singleColor,
+                        window,
+                        Color.Black * 0.4f);
+
+                    // Text for the pause menu
                     sb.DrawString(BellMT72,
                         $"Paused",
                         new Vector2(window.Width *0.38f, window.Height * 0.36f),
@@ -379,21 +359,29 @@ namespace SwordRush
                     break;
 
                 case GameFSM.LevelUp:
+
+                    // elements of the game a drawn but not updated
+                    DrawGame(sb);
+
+                    // Add a transparent black rectangle over the game
+                    // to darken screen and make text stand out
+                    sb.Draw(singleColor,
+                        window,
+                        Color.Black * 0.4f);
+
+                    // Draw Text
                     sb.DrawString(BellMT72,
                         $"LEVEL UP",
                         new Vector2(window.Width * 0.3f, window.Height * 0.16f),
                         Color.LightGreen);
 
+                    // Draw all buttons
                     foreach (ImageButton i in levelUpButtons)
                     {
                         i.Draw(sb);
                     }
 
                     break;
-            }
-            if (gameFSM == GameFSM.Playing)
-            {
-                
             }
         }
 
@@ -414,6 +402,53 @@ namespace SwordRush
                 }
                 graph.Add(temp);
             }
+        }
+
+        /// <summary>
+        /// Draws all elements of the game
+        /// Player,Enemies,Tiles,Health and XP bar
+        /// </summary>
+        /// <param name="sb"></param>
+        private void DrawGame(SpriteBatch sb)
+        {
+            foreach (SceneObject tile in floorTiles)
+            {
+                tile.Draw(sb);
+            }
+
+            //draw walls
+            foreach (SceneObject obj in walls)
+            {
+                obj.Draw(sb);
+            }
+
+            player.Draw(sb);
+            foreach (Enemy enemy in enemies)
+            {
+                enemy.Draw(sb);
+            }
+
+            // Display health and xp bars
+            drawBar(healthBarTexture,
+                player.Health,
+                player.MaxHealth,
+                new Rectangle((int)(window.Width * 0.12f), (int)(window.Height * 0.92f),
+                (int)(window.Width * 0.3f), (int)(window.Height * 0.079)),
+                sb);
+
+            drawBar(xpBarTexture,
+                player.Exp,
+                player.LevelUpExp,
+                new Rectangle((int)(window.Width * 0.62f), (int)(window.Height * 0.92f),
+                (int)(window.Width * 0.3f), (int)(window.Height * 0.079f)),
+                sb);
+
+
+            // Draw Room Number top right
+            sb.DrawString(BellMT24,
+                $"Rooms Cleared: {player.RoomsCleared}",
+                new Vector2(10, 10),
+                Color.Black);
         }
 
         /// <summary>

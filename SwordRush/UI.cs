@@ -315,7 +315,7 @@ namespace SwordRush
                     sb.Draw(singleColor,                                                        // Texture
                         new Rectangle((int)(window.Width * 0.10f), (int)(window.Height*0.1f),   // X / Y
                         (int)(window.Width*0.5f),(int)(window.Height*0.13f)),                   // Width / Height
-                        new Color(32, 32, 32));                                                        // Color
+                        new Color(32, 32, 32) * 0.4f);                                                        // Color
 
                     // Draw Title
                     sb.DrawString(
@@ -329,27 +329,27 @@ namespace SwordRush
                     sb.Draw(singleColor,                                                        // Texture
                         new Rectangle((int)(window.Width * 0.10f), (int)(window.Height * 0.3f),   // X / Y
                         (int)(window.Width * 0.24f), (int)(window.Height * 0.08f)),                   // Width / Height
-                        new Color(32, 32, 32));
+                        new Color(32, 32, 32) * 0.4f);
 
                     sb.Draw(singleColor,                                                        // Texture
                         new Rectangle((int)(window.Width * 0.10f), (int)(window.Height * 0.42f),   // X / Y
                         (int)(window.Width * 0.25f), (int)(window.Height * 0.08f)),                   // Width / Height
-                        new Color(32, 32, 32));
+                        new Color(32, 32, 32) * 0.4f);
 
                     sb.Draw(singleColor,                                                        // Texture
                         new Rectangle((int)(window.Width * 0.10f), (int)(window.Height * 0.54f),   // X / Y
                         (int)(window.Width * 0.15f), (int)(window.Height * 0.08f)),                   // Width / Height
-                        new Color(32, 32, 32));
+                        new Color(32, 32, 32) * 0.4f);
 
                     sb.Draw(singleColor,                                                        // Texture
                         new Rectangle((int)(window.Width * 0.10f), (int)(window.Height * 0.66f),   // X / Y
                         (int)(window.Width * 0.25f), (int)(window.Height * 0.08f)),                   // Width / Height
-                        new Color(32, 32, 32));
+                        new Color(32, 32, 32) * 0.4f);
 
                     sb.Draw(singleColor,                                                        // Texture
                         new Rectangle((int)(window.Width * 0.10f), (int)(window.Height * 0.78f),   // X / Y
                         (int)(window.Width * 0.17f), (int)(window.Height * 0.08f)),                   // Width / Height
-                        new Color(32, 32, 32));
+                        new Color(32, 32, 32) * 0.4f);
 
                     // Draw all Buttons
                     foreach (TextButton b in menuButtons)
