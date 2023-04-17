@@ -94,7 +94,7 @@ namespace SwordRush
                 }
 
                 //move the enemy toward to player when they are in certain range
-                if (path != null && path.Count < 6+1 && playerDistance.Length() < 300)
+                if (path != null && path.Count < 7+1 && playerDistance.Length() < 350)
                 {
                     Vector2 direction = Vector2.Normalize(distance);
 
