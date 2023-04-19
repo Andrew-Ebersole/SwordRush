@@ -214,7 +214,7 @@ namespace SwordRush
             }
             
             if (playerState != PlayerStateMachine.Attack && currentKeyboardState.IsKeyDown(Keys.Space) &&
-                preKeyboardState.IsKeyUp(Keys.Space))
+                preKeyboardState.IsKeyUp(Keys.Space) && backUpFrame > 1000)
             {
                 backUpFrame = 0;
             }
@@ -270,7 +270,7 @@ namespace SwordRush
 
         public void BackUp(GameTime gameTime)
         {
-            Vector2 movement = GetDirection() * (5 + backUpLevel * 2);
+            Vector2 movement = GetDirection() * (10 + backUpLevel * 4);
             if (backUpFrame < 100)
             {
                 playerState = PlayerStateMachine.Attack;
