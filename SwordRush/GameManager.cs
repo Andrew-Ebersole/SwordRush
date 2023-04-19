@@ -120,7 +120,7 @@ namespace SwordRush
 
             //tiling
             mapNum = 0;
-            totalRoom = 6;
+            totalRoom = 7;
             grid = new int[20, 12];
             graph = new List<List<AStarNode>>();
             walls = new List<SceneObject>();
