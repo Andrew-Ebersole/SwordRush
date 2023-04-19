@@ -243,6 +243,9 @@
 #begin Level6.txt
 /copy:Level6.txt
 
+#begin Level7.txt
+/copy:Level7.txt
+
 #begin magic_bar.png
 /importer:TextureImporter
 /processor:TextureProcessor
