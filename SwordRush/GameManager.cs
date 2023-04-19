@@ -841,11 +841,10 @@ namespace SwordRush
                 }
             }
 
-            
             grid = fileManager_.LoadGrid($"Content/Level{mapNum}.txt");
             
             enemies.Clear();
-            //generates curent room based on grid
+            //generates current room based on grid
             GenerateRoom();
         }
 

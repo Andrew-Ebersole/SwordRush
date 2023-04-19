@@ -30,7 +30,8 @@ namespace SwordRush
         MaxHealth,
         AttackSpeed,
         AttackDamage,
-        Range
+        Range,
+        BackUp
     }
     internal class Player : GameObject
     {
@@ -53,6 +54,13 @@ namespace SwordRush
         private double attackFrame;
         private Vector2 direction;
         public Point graphPoint;
+
+        //player Power ups
+        private bool backUpPower;
+        private int backUpLevel;
+        private double backUpFrame;
+
+
         // Player weapon
         private GameObject sword;
 
@@ -60,6 +68,9 @@ namespace SwordRush
         private MouseState currentMouseState;
         private MouseState preMouseState;
 
+        //Keyboard Controls
+        private KeyboardState currentKeyboardState;
+        private KeyboardState preKeyboardState;
         //Texture
         private Texture2D dungeontilesTexture2D;
         private Texture2D singleColor;
@@ -137,6 +148,8 @@ namespace SwordRush
             range = 1;
             currentMouseState = Mouse.GetState();
             preMouseState = Mouse.GetState();
+            currentKeyboardState = Keyboard.GetState();
+            preKeyboardState = currentKeyboardState;
             direction = new Vector2();
 
             // Create a texture for blank rectangle
@@ -188,6 +201,7 @@ namespace SwordRush
             // Update mouse state and attack time
             attackFrame += gameTime.ElapsedGameTime.TotalMilliseconds;
             currentMouseState = Mouse.GetState();
+            currentKeyboardState = Keyboard.GetState();
 
             // If player clicks and attack
             if (currentMouseState.LeftButton == ButtonState.Pressed 
@@ -198,6 +212,12 @@ namespace SwordRush
                 direction = GetDirection();
                 attackFrame = 0;
             }
+            
+            if (playerState != PlayerStateMachine.Attack && currentKeyboardState.IsKeyDown(Keys.Space) &&
+                preKeyboardState.IsKeyUp(Keys.Space))
+            {
+                backUpFrame = 0;
+            }
 
             // Auto level up
             if (Keyboard.GetState().IsKeyDown(Keys.P))
@@ -205,9 +225,63 @@ namespace SwordRush
                 exp = LevelUpExp;
             }
 
-            // Previous mouse state
+            // Previous state
             preMouseState = currentMouseState;
+            preKeyboardState = currentKeyboardState;
         }
+
+        public void LevelUp(LevelUpAbility ability)
+        {
+            SoundManager.Get.PlayerLevelUpEffect.Play();
+            exp -= levelUpExp;
+            level += 1;
+            levelUpExp += (level * level * 20);
+
+            switch (ability)
+            {
+                case LevelUpAbility.Heal:
+                    health += maxHealth / 2;
+                    if (health > maxHealth)
+                    {
+                        health = maxHealth;
+                    }
+                    break;
+
+                case LevelUpAbility.MaxHealth:
+                    int healthDiff = maxHealth - health;
+                    maxHealth = (int)(maxHealth * 1.5f);
+                    health = maxHealth - healthDiff;
+                    break;
+
+                case LevelUpAbility.AttackSpeed:
+                    atkSpd += 2;
+                    break;
+
+                case LevelUpAbility.AttackDamage:
+                    atk += 1f;
+                    break;
+
+                case LevelUpAbility.Range:
+                    range += 1f;
+                    break;
+            }
+        }
+
+
+        public void BackUp(GameTime gameTime)
+        {
+            Vector2 movement = GetDirection() * (5 + backUpLevel * 2);
+            if (backUpFrame < 100)
+            {
+                playerState = PlayerStateMachine.Attack;
+
+                //move the player's location
+                Position += movement;
+            }
+            backUpFrame += gameTime.ElapsedGameTime.TotalMilliseconds;
+        }
+
+
 
         /// <summary>
         /// Calculate the direction vector between the player and the cursor
@@ -224,43 +298,9 @@ namespace SwordRush
             SoundManager.Get.PlayerDamagedEffect.Play();
         }
 
-        public void LevelUp(LevelUpAbility ability)
-        {
-            SoundManager.Get.PlayerLevelUpEffect.Play();
-            exp -= levelUpExp;
-            level += 1;
-            levelUpExp += (level*level * 20);
+        
 
-            switch (ability)
-            {
-                case LevelUpAbility.Heal:
-                    health += maxHealth/2;
-                    if (health > maxHealth)
-                    {
-                        health = maxHealth;
-                    }
 
-                    break;
-
-                case LevelUpAbility.MaxHealth:
-                    int healthDiff = maxHealth - health;
-                    maxHealth = (int)(maxHealth * 1.5f);
-                    health = maxHealth - healthDiff;
-                    break;
-
-                case LevelUpAbility.AttackSpeed:
-                    atkSpd+=2;
-                    break;
-
-                case LevelUpAbility.AttackDamage:
-                    atk += 1f;
-                    break;
-
-                case LevelUpAbility.Range:
-                    range+=1f;
-                    break;
-            }
-        }
 
         public void GainExp(int enemyLevel)
         {
@@ -330,6 +370,7 @@ namespace SwordRush
             SwordLocation();
             SwordRotateAngle();
             animation_.Update(gt);
+            BackUp(gt);
             if (UI.Get.TakeDamage == false)
             {
                 maxHealth = 9999;
