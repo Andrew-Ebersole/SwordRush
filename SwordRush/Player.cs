@@ -76,7 +76,6 @@ namespace SwordRush
         private Texture2D singleColor;
 
         private AnimationComposer animation_;
-
         // --- Properties --- //
         
         public PlayerStateMachine PlayerState => playerState;
@@ -264,9 +263,11 @@ namespace SwordRush
                 case LevelUpAbility.Range:
                     range += 1f;
                     break;
+                case LevelUpAbility.BackUp:
+                    backUpLevel += 1;
+                    break;
             }
         }
-
 
         public void BackUp(GameTime gameTime)
         {
@@ -280,8 +281,6 @@ namespace SwordRush
             }
             backUpFrame += gameTime.ElapsedGameTime.TotalMilliseconds;
         }
-
-
 
         /// <summary>
         /// Calculate the direction vector between the player and the cursor
