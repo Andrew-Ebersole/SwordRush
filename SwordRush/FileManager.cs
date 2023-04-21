@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace SwordRush
 {
@@ -16,6 +17,19 @@ namespace SwordRush
             StreamWriter writer = new StreamWriter(path);
             writer.WriteLine(path);
             writer.Close();
+        }
+
+        public static void SaveStats(string path, string[] info)
+        {
+
+        }
+
+        public string[] LoadStats(string path)
+        {
+            StreamReader reader = new StreamReader(path);
+            string[] info = reader.ReadLine().Split(',');
+
+            return info;
         }
 
         /// <summary>

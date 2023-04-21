@@ -14,6 +14,7 @@ using Rectangle = Microsoft.Xna.Framework.Rectangle;
 using System.Linq;
 using System.Transactions;
 using System.Drawing;
+using System.Reflection.Metadata;
 
 namespace SwordRush
 {
@@ -76,6 +77,10 @@ namespace SwordRush
         MouseState currentMS;
         MouseState previousMS;
 
+        //Economy system
+        private int totalCoin;
+
+
         // --- Properties --- //
 
         public static GameManager Get
@@ -120,7 +125,7 @@ namespace SwordRush
 
             //tiling
             mapNum = 0;
-            totalRoom = 6;
+            totalRoom = 10;
             grid = new int[20, 12];
             graph = new List<List<AStarNode>>();
             walls = new List<SceneObject>();
@@ -389,6 +394,20 @@ namespace SwordRush
 
                     break;
             }
+        }
+
+
+        public void InitPlayerStats()
+        {
+            string[] stats = fileManager_.LoadStats($"Content/PlayerProgress.txt");
+
+            totalCoin = int.Parse(stats[0]);
+            player.BackUpPower = (stats[1] == "true");
+        }
+
+        public void UpdateEcon()
+        {
+
         }
 
         public void UpdateGraph()
@@ -841,11 +860,10 @@ namespace SwordRush
                 }
             }
 
-            
             grid = fileManager_.LoadGrid($"Content/Level{mapNum}.txt");
             
             enemies.Clear();
-            //generates curent room based on grid
+            //generates current room based on grid
             GenerateRoom();
         }
 

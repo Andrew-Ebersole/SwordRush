@@ -240,6 +240,18 @@
 #begin Level5.txt
 /copy:Level5.txt
 
+#begin Level6.txt
+/copy:Level6.txt
+
+#begin Level7.txt
+/copy:Level7.txt
+
+#begin Level8.txt
+/copy:Level8.txt
+
+#begin Level9.txt
+/copy:Level9.txt
+
 #begin magic_bar.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -287,6 +299,9 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:MenuBackground3.jpg
+
+#begin PlayerProgress.txt
+/copy:PlayerProgress.txt
 
 #begin powerUp.wav
 /importer:WavImporter
