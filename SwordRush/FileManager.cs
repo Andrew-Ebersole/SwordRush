@@ -19,7 +19,12 @@ namespace SwordRush
             writer.Close();
         }
 
-        public string[] LoadStats(string path, int statsNum)
+        public static void SaveStats(string path, string[] info)
+        {
+
+        }
+
+        public string[] LoadStats(string path)
         {
             StreamReader reader = new StreamReader(path);
             string[] info = reader.ReadLine().Split(',');

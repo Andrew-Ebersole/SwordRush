@@ -399,7 +399,7 @@ namespace SwordRush
 
         public void InitPlayerStats()
         {
-            string[] stats = fileManager_.LoadStats($"Content/PlayerProgress.txt",2);
+            string[] stats = fileManager_.LoadStats($"Content/PlayerProgress.txt");
 
             totalCoin = int.Parse(stats[0]);
             player.BackUpPower = (stats[1] == "true");
