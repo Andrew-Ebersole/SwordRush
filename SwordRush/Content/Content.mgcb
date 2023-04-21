@@ -294,6 +294,9 @@
 /processorParam:TextureFormat=Color
 /build:MenuBackground3.jpg
 
+#begin PlayerProgress.txt
+/copy:PlayerProgress.txt
+
 #begin powerUp.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -371,18 +374,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:skelet_idle_anim_f3.png
-
-#begin WallsTileSet.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:WallsTileSet.png
 
 #begin WallsTileSet.png
 /importer:TextureImporter
