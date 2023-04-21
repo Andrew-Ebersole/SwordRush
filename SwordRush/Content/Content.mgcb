@@ -246,6 +246,9 @@
 #begin Level7.txt
 /copy:Level7.txt
 
+#begin Level8.txt
+/copy:Level8.txt
+
 #begin magic_bar.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -371,18 +374,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:skelet_idle_anim_f3.png
-
-#begin WallsTileSet.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:WallsTileSet.png
 
 #begin WallsTileSet.png
 /importer:TextureImporter
