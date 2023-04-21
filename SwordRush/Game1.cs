@@ -131,10 +131,10 @@ namespace SwordRush
 
                     if ((x+y)%2 == 0)
                     {
-                        gridColor = Color.White * 0.05f;
+                        gridColor = Color.Black * 0.1f;
                     } else
                     {
-                        gridColor = Color.Gray * 0.05f;
+                        gridColor = Color.Gray * 0.1f;
                     }
 
                     // Draw Tile size
@@ -148,7 +148,7 @@ namespace SwordRush
                         bellMT16,
                         $"{GameManager.Get.Grid[x,y]}",
                         new Vector2(x*windowSize.X/20+10,y*windowSize.Y/12+9),
-                        Color.Black);
+                        Color.White * 0.5f);
                     
                 }
             }
