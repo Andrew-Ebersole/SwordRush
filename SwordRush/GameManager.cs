@@ -76,6 +76,10 @@ namespace SwordRush
         MouseState currentMS;
         MouseState previousMS;
 
+        //Economy system
+        private int totalCoin;
+
+
         // --- Properties --- //
 
         public static GameManager Get
