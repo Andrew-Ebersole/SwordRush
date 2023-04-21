@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Input;
 using System.Threading;
 using System.Drawing;
+using System.Dynamic;
 using Microsoft.Xna.Framework.Audio;
 using Color = Microsoft.Xna.Framework.Color;
 using Point = Microsoft.Xna.Framework.Point;
@@ -77,7 +78,9 @@ namespace SwordRush
 
         private AnimationComposer animation_;
         // --- Properties --- //
-        
+
+        public bool BackUpPower { get; set; }
+
         public PlayerStateMachine PlayerState => playerState;
 
         public Point Size => size;

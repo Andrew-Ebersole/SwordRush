@@ -300,6 +300,9 @@
 /processorParam:TextureFormat=Color
 /build:MenuBackground3.jpg
 
+#begin PlayerProgress.txt
+/copy:PlayerProgress.txt
+
 #begin powerUp.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

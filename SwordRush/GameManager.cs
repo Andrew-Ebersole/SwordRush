@@ -14,6 +14,7 @@ using Rectangle = Microsoft.Xna.Framework.Rectangle;
 using System.Linq;
 using System.Transactions;
 using System.Drawing;
+using System.Reflection.Metadata;
 
 namespace SwordRush
 {
@@ -393,6 +394,20 @@ namespace SwordRush
 
                     break;
             }
+        }
+
+
+        public void InitPlayerStats()
+        {
+            string[] stats = fileManager_.LoadStats($"Content/PlayerProgress.txt",2);
+
+            totalCoin = int.Parse(stats[0]);
+            player.BackUpPower = (stats[1] == "true");
+        }
+
+        public void UpdateEcon()
+        {
+
         }
 
         public void UpdateGraph()
