@@ -45,6 +45,7 @@ namespace SwordRush
         // Buttons
         private List<TextButton> menuButtons;
         private List<TextButton> settingButtons;
+        private TextButton exitButton;
 
         // Window dimensions
         private Rectangle window;
@@ -551,6 +552,10 @@ namespace SwordRush
                     break;
 
             }
+            if (gameFSM != GameFSM.Menu && gameFSM != GameFSM.Game)
+            {
+                exitButton.Draw(sb);
+            }
             
 
         }
@@ -635,6 +640,14 @@ namespace SwordRush
                 (int)(window.Width * 0.10f), (int)(window.Height * 0.09f)), // Hitbox
                 "False",                                                     // Text
                 bellMT36));                                                 // Font
+
+            // --- Exit Button ------------------------------------------------------------------//
+
+            exitButton = new TextButton(new Rectangle(
+                (int)(window.Width * 0.10f), (int)(window.Height * 0.91f),  // Location
+                (int)(window.Width * 0.10f), (int)(window.Height * 0.09f)), // Hitbox
+                "Exit",                                                    // Text
+                bellMT36);                                                 // Font
         }
 
         public void EndGame(int roomsCleared)
