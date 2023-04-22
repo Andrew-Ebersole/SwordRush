@@ -58,7 +58,7 @@ namespace SwordRush
 
         //player Power ups
         private bool backUpPower;
-        private int backUpLevel;
+        private int backUpLevel; // max should be 3
         private double backUpFrame;
 
 
@@ -215,8 +215,8 @@ namespace SwordRush
                 attackFrame = 0;
             }
             
-            if (playerState != PlayerStateMachine.Attack && currentKeyboardState.IsKeyDown(Keys.Space) &&
-                preKeyboardState.IsKeyUp(Keys.Space) && backUpFrame > 1000)
+            if (playerState != PlayerStateMachine.Attack && currentMouseState.RightButton == ButtonState.Pressed &&
+                preMouseState.RightButton == ButtonState.Released && backUpFrame > 1000)
             {
                 backUpFrame = 0;
             }

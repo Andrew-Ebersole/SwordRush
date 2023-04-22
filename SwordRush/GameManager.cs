@@ -238,8 +238,6 @@ namespace SwordRush
                         enemies.Clear();
                     }
 
-                    previousKeyState = currentKeyState;
-
                     //check if enemies are all dead
                     if (enemies.Count == 0 && UI.Get.GameFSM == SwordRush.GameFSM.Game)
                     {
@@ -249,10 +247,10 @@ namespace SwordRush
                         player.NewRoom();
 
                     }
-
-                    // Pause game on right click
-                    if (currentMS.RightButton == ButtonState.Pressed
-                        && previousMS.RightButton == ButtonState.Released)
+                    
+                    // Pause game on esc click
+                    if (currentKeyState.IsKeyDown(Keys.Escape)
+                        && previousKeyState.IsKeyUp(Keys.Escape))
                     {
                         gameFSM = GameFSM.Paused;
                     }
@@ -329,7 +327,7 @@ namespace SwordRush
             
 
             previousMS = Mouse.GetState();
-
+            previousKeyState = currentKeyState;
             UpdateGrid();
             UpdateGraph();
         }
