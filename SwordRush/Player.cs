@@ -89,15 +89,15 @@ namespace SwordRush
 
         public PlayerStateMachine PlayerState => playerState;
 
-        public double AttackFrame
+        public Vector2 Direction
         {
             get
             {
-                return attackFrame;
+                return direction;
             }
             set
             {
-                attackFrame = value;
+                direction = value;
             }
         }
         public Point Size => size;
@@ -220,7 +220,7 @@ namespace SwordRush
             if (currentMouseState.RightButton == ButtonState.Pressed &&
                 preMouseState.RightButton == ButtonState.Released && backUpFrame > 1000)
             {
-                attackFrame = int.MaxValue/2;
+                direction = new Vector2(0, 0);
                 backUpFrame = 0;
             }
 

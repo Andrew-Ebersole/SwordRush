@@ -234,7 +234,7 @@ namespace SwordRush
                     //if player collide with wall stop it
                     if (WallCollision(player, walls))
                     {
-                        player.AttackFrame = int.MaxValue / 2;
+                        player.Direction = new Vector2(0, 0);
                     }
 
                     //get keyboard state
