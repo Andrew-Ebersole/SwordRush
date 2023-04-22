@@ -62,7 +62,6 @@ namespace SwordRush
                 AttackCooldown();
                 SoundManager.Get.EnemyDamagedEffect.Play();
             }
-
         }
 
         /// <summary>
@@ -86,7 +85,7 @@ namespace SwordRush
                 //make the enemy move toward the player when they are at the same grid
                 if (player.graphPoint == graphPoint)
                 {
-                    distance = position - playerDistance;
+                    distance = playerDistance;
                 }
                 else
                 {
@@ -97,7 +96,7 @@ namespace SwordRush
                 if (path != null && path.Count < 7+1 && playerDistance.Length() < 350)
                 {
                     Vector2 direction = Vector2.Normalize(distance);
-
+                    Debug.WriteLine(direction);
                     Position -= direction * 2.99f;//will cause error if increase speed, should be lower than 3
                     enemyState = EnemyStateMachine.Move;
                 }
