@@ -69,8 +69,7 @@ namespace SwordRush
             {
                 _currentShootCd -= gt.ElapsedGameTime.TotalSeconds;
             }
-
-            Debug.WriteLine(damageFrame);
+            
             if (damageFrame < 200)
             {
                 Position += direction * 20;
