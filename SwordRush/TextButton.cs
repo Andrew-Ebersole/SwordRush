@@ -65,8 +65,8 @@ namespace SwordRush
 
             // When the button is clicked sets leftClicked to true
             if (color == Color.DarkGoldenrod
-                && currentMState.LeftButton == ButtonState.Pressed
-                && previousMState.LeftButton == ButtonState.Released)
+                && currentMState.LeftButton == ButtonState.Released
+                && previousMState.LeftButton == ButtonState.Pressed)
             {
                 leftClicked = true;
                 SoundManager.Get.ClickEffect.Play();

@@ -271,16 +271,16 @@ namespace SwordRush
                 case GameFSM.Paused:
 
                     // End game on right click
-                    if (currentMS.RightButton == ButtonState.Pressed
-                        && previousMS.RightButton == ButtonState.Released)
+                    if (currentMS.RightButton == ButtonState.Released
+                        && previousMS.RightButton == ButtonState.Pressed)
                     {
                         player.Die();
                         gameOver(player.RoomsCleared);
                         gameFSM = GameFSM.Menu;
                     }
                     // Unpause when left click
-                    if (currentMS.LeftButton == ButtonState.Pressed
-                        && previousMS.LeftButton == ButtonState.Released)
+                    if (currentMS.LeftButton == ButtonState.Released
+                        && previousMS.LeftButton == ButtonState.Pressed)
                     {
                         gameFSM = GameFSM.Playing;
                     }
