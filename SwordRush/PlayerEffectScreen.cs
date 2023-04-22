@@ -11,10 +11,10 @@ public class PlayerEffectScreen
 
     public PlayerEffectScreen(Point windowSize)
     {
-        _animation.AddFrame(new Color(200, 0, 0, 50));
-        _animation.AddFrame(new Color(150, 0, 0, 50));
-        _animation.AddFrame(new Color(100, 0, 0, 25));
-        _animation.AddFrame(new Color(100, 0, 0, 25));
+        _animation.AddFrame(new Color(40, 0, 0, 20));
+        _animation.AddFrame(new Color(40, 0, 0, 20));
+        _animation.AddFrame(new Color(20, 0, 0, 10));
+        _animation.AddFrame(new Color(15, 0, 0, 5));
         _animation.AddFrame(new Color(0, 0, 0, 0));
 
         _windowSize = windowSize;
