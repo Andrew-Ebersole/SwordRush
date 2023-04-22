@@ -60,12 +60,28 @@ namespace SwordRush
                     GameManager.Get.LocalPlayer.Damaged(atk);
                     Projectiles.RemoveAt(i);
                     i--;
+                    SoundManager.Get.EnemyAttackEffect.Play();
+                }
+                else
+                {
+                    
+                    foreach (SceneObject wall in GameManager.Get.Walls)
+                    {
+                        if (Projectiles[i].Rectangle.Intersects(wall.Rectangle))
+                        {
+                            Projectiles.RemoveAt(i);
+                            i--;
+                            SoundManager.Get.EnemyAttackEffect.Play();
+                            break;
+                        }
+                    }
+                    
                 }
             }
 
             if (_currentShootCd <= 0)
             {
-                _currentShootCd = 0.4;
+                _currentShootCd = 1.5f;
 
                 Vector2 fireDirection = player.Position - Position;
                 fireDirection.Normalize();
@@ -76,8 +92,7 @@ namespace SwordRush
             {
                 _currentShootCd -= gt.ElapsedGameTime.TotalSeconds;
             }
-
-            Debug.WriteLine(damageFrame);
+            
             if (damageFrame < 200)
             {
                 Position += direction * 20;
@@ -103,7 +118,7 @@ namespace SwordRush
         {
             if (enemyState != EnemyStateMachine.Damaged)
             {
-                _currentShootCd = 3;
+                _currentShootCd = 1.5f;
                 health -= (int)player.Atk;
                 Vector2 distance = position - player.Position;
                 direction = Vector2.Normalize(distance);

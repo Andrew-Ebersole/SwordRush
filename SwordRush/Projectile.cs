@@ -13,7 +13,7 @@ namespace SwordRush
     internal class Projectile : GameObject
     {
         private readonly Vector2 _direction;
-        private const float Speed = 1000;
+        private const float Speed = 400;
         private readonly int _damage;
         private readonly LongRangeEnemy _owner;
 
