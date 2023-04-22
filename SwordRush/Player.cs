@@ -220,7 +220,7 @@ namespace SwordRush
             if (currentMouseState.RightButton == ButtonState.Pressed &&
                 preMouseState.RightButton == ButtonState.Released && backUpFrame > 1000)
             {
-                direction = new Vector2(0, 0);
+                attackFrame = int.MaxValue / 2;
                 backUpFrame = 0;
             }
 
