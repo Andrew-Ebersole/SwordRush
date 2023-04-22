@@ -429,22 +429,22 @@ namespace SwordRush
                     // to darken screen and make text stand out
                     sb.Draw(singleColor,
                         window,
-                        Color.Black * 0.4f);
+                        Color.Black * (float)(clickCooldown / 2000));
 
                     // Draw Game over
                     sb.DrawString(
                         BellMT72,
                         "GAME OVER",
-                        new Vector2((window.Width * 0.2f),
-                        (window.Height * 0.3f)),
-                        Color.DarkRed);
+                        new Vector2((window.Width * 0.26f),
+                        (window.Height * 0.38f)),
+                        Color.White);
 
                     // Draw Score
                     sb.DrawString(
                         BellMT48,                           // Font
                         $"YOU CLEARED {player.RoomsCleared} ROOMS",            // Text
                         new Vector2((window.Width * 0.2f),  // X Position
-                        (window.Height * 0.5f)),            // Y Position
+                        (window.Height * 0.52f)),            // Y Position
                         Color.White);                       // Color
 
                     break;
