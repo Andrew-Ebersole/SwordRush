@@ -178,7 +178,7 @@ namespace SwordRush
                 playerState = PlayerStateMachine.Attack;
 
                 //move the player's location
-                Position -= direction * distance;
+                Position -= direction * distance*(1+range/20);
             }
             // Cooldown after attack based off attack speed
             else if (attackFrame >= 100 * range && attackFrame <= 100 * range + 800 - 75 * atkSpd)
@@ -252,12 +252,13 @@ namespace SwordRush
                     break;
 
                 case LevelUpAbility.AttackDamage:
-                    atk += 1f;
+                    atk *= 1.5f;
                     break;
 
                 case LevelUpAbility.Range:
                     range += 1f;
                     break;
+
                 case LevelUpAbility.BackUp:
                     backUpLevel += 1;
                     break;
