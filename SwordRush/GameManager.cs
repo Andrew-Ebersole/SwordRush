@@ -231,7 +231,11 @@ namespace SwordRush
                     }
 
                     //update player collision
-                    WallCollision(player, walls);
+                    //if player collide with wall stop it
+                    if (WallCollision(player, walls))
+                    {
+                        player.AttackFrame = int.MaxValue / 2;
+                    }
 
                     //get keyboard state
                     currentKeyState = Keyboard.GetState();
@@ -711,8 +715,9 @@ namespace SwordRush
             }
         }
 
-        public void WallCollision(GameObject entity, List<SceneObject> walls)
+        public bool WallCollision(GameObject entity, List<SceneObject> walls)
         {
+            bool collide = false;
             //temporary variables for calculations
             Rectangle entityRect = entity.Rectangle;
 
@@ -737,6 +742,7 @@ namespace SwordRush
                 if (entityRect.Intersects(wallRects[i]))
                 {
                     intersectionsList.Add(wallRects[i]);
+                    collide = true;
                 }
             }
 
@@ -783,6 +789,8 @@ namespace SwordRush
             {
                 entity.Y = entityRect.Y;
             }
+
+            return collide;
 
         }
 
