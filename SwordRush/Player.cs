@@ -150,6 +150,7 @@ namespace SwordRush
             currentKeyboardState = Keyboard.GetState();
             preKeyboardState = currentKeyboardState;
             direction = new Vector2();
+            backUpFrame = 100;
 
             // Create a texture for blank rectangle
             singleColor = new Texture2D(graphics, 1, 1);
