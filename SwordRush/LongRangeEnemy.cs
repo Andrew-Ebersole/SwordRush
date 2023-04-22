@@ -51,16 +51,23 @@ namespace SwordRush
             damageFrame += gt.ElapsedGameTime.TotalMilliseconds;
             animationComposer_.Update(gt);
 
-            foreach (var projectile in Projectiles)
+            for(int i = 0; i < Projectiles.Count; i++)
             {
-                projectile.Update(gt);
+                Projectiles[i].Update(gt);
+
+                if (Projectiles[i].Rectangle.Intersects(player.Rectangle))
+                {
+                    GameManager.Get.LocalPlayer.Damaged(atk);
+                    Projectiles.RemoveAt(i);
+                    i--;
+                }
             }
 
             if (_currentShootCd <= 0)
             {
-                _currentShootCd = 3;
+                _currentShootCd = 0.4;
 
-                Vector2 fireDirection = Position - GameManager.Get.LocalPlayer.Position;
+                Vector2 fireDirection = player.Position - Position;
                 fireDirection.Normalize();
 
                 Projectiles.Add(new Projectile(rectangle.Center, fireDirection, this, atk));

@@ -13,12 +13,13 @@ namespace SwordRush
     internal class Projectile : GameObject
     {
         private readonly Vector2 _direction;
-        private const float Speed = 5;
+        private const float Speed = 1000;
         private readonly int _damage;
         private readonly LongRangeEnemy _owner;
 
         // --- Constructor --- //
-        public Projectile(Point position, Vector2 direction, LongRangeEnemy owner, int damage) : base(GameManager.Get.ContentManager.Load<Texture2D>("coin_anim_f0") ,new Rectangle(position, new Point(10, 10)))
+        public Projectile(Point position, Vector2 direction, LongRangeEnemy owner, int damage) : base(
+            GameManager.Get.ContentManager.Load<Texture2D>("coin_anim_f0"), new Rectangle(position, new Point(10, 10)))
         {
             _direction = direction;
             _damage = damage;
@@ -31,12 +32,6 @@ namespace SwordRush
             newRect.X = rectangle.X + (int)(_direction.X * Speed * gt.ElapsedGameTime.TotalSeconds);
             newRect.Y = rectangle.Y + (int)(_direction.Y * Speed * gt.ElapsedGameTime.TotalSeconds);
             rectangle = newRect;
-
-            if (Rectangle.Intersects(GameManager.Get.LocalPlayer.Rectangle))
-            {
-                GameManager.Get.LocalPlayer.Damaged(_damage);
-                _owner.Projectiles.Remove(this);
-            }
         }
     }
 }

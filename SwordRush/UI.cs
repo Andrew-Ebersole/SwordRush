@@ -174,6 +174,7 @@ namespace SwordRush
                     {
                         gameFSM = GameFSM.Settings;
                     }
+
                     break;
 
                 case GameFSM.Game: // --- Game --------------------------------------------------//
@@ -189,8 +190,8 @@ namespace SwordRush
                     }
 
                     // TODO: implement debug code here to adjust volumes and enable invincibility
-                    if (currentMState.LeftButton == ButtonState.Pressed 
-                        && previousMState.LeftButton == ButtonState.Released)
+                    if (currentMState.LeftButton == ButtonState.Released 
+                        && previousMState.LeftButton == ButtonState.Pressed)
                     {
                         // Lower SFX
                         if (settingButtons[0].LeftClicked)
@@ -272,27 +273,26 @@ namespace SwordRush
                                 showGrid = false;
                                 settingButtons[6].Text = "False";
                             }
-
-                        }
-                        else
-                        {
-                            gameFSM = GameFSM.Menu;
                         }
                     }
-                    
-                    
+
+                    if (exitButton.LeftClicked)
+                    {
+                        gameFSM = GameFSM.Menu;
+                    }
 
                     break;
 
                 default:  // --- Other ----------------------------------------------------------//
                     // In any state that is not game left click will bring you back to menu
-                    if (currentMState.LeftButton == ButtonState.Pressed
-                        && previousMState.LeftButton == ButtonState.Released)
+                    if (exitButton.LeftClicked)
                     {
                         gameFSM = GameFSM.Menu;
                     }
                     break;
             }
+
+            exitButton.Update(gt);
 
             previousMState = Mouse.GetState();
         }
@@ -374,12 +374,10 @@ namespace SwordRush
 
                     sb.DrawString(
                         bellMT36,                       // Font
-                        $"Attack to move, Kill as " +
-                        $"\nmany enemies as you can" +
-                        $"\nto unlock the next room." +
-                        $"\nSee how many rooms you " +
-                        $"\ncan clear before you die." +
-                        $"\nGain XP to upgrade stats.", // Text
+                        $"Kill enemies to gain XP" +
+                        $"\nSee how many rooms you" +
+                        $"\ncan clear." +
+                        $"\nUnlock upgrades with XP", // Text
                         new Vector2(window.Width * 0.1f,// X Position
                         window.Height * 0.3f),          // Y Position
                         Color.White);                   // Color
@@ -388,9 +386,9 @@ namespace SwordRush
                         bellMT36,                       // Font
                         $"Attack/Move" +
                         $"\n - Left Click" +
-                        $"\nPause" +
+                        $"\n\nDodge" +
                         $"\n - Right Click" +
-                        $"\nQuit" +
+                        $"\n\nPause/Quit" +
                         $"\n - Escape",                 // Text
                         new Vector2(window.Width * 0.6f,// X Position
                         window.Height * 0.3f),          // Y Position
@@ -580,25 +578,25 @@ namespace SwordRush
 
             settingButtons.Add(new TextButton(new Rectangle(
                 (int)(window.Width * 0.60f), (int)(window.Height * 0.30f),  // Location
-                (int)(window.Width * 0.02f), (int)(window.Height * 0.09f)), // Hitbox
+                (int)(window.Width * 0.04f), (int)(window.Height * 0.12f)), // Hitbox
                 "<",                                                        // Text
                 bellMT36));                                                 // Font
 
             settingButtons.Add(new TextButton(new Rectangle(
                 (int)(window.Width * 0.68f), (int)(window.Height * 0.30f),  // Location
-                (int)(window.Width * 0.02f), (int)(window.Height * 0.09f)), // Hitbox
+                (int)(window.Width * 0.04f), (int)(window.Height * 0.12f)), // Hitbox
                 ">",                                                        // Text
                 bellMT36));                                                 // Font
 
             settingButtons.Add(new TextButton(new Rectangle(
                 (int)(window.Width * 0.60f), (int)(window.Height * 0.40f),  // Location
-                (int)(window.Width * 0.02f), (int)(window.Height * 0.09f)), // Hitbox
+                (int)(window.Width * 0.04f), (int)(window.Height * 0.12f)), // Hitbox
                 "<",                                                        // Text
                 bellMT36));                                                 // Font
 
             settingButtons.Add(new TextButton(new Rectangle(
                 (int)(window.Width * 0.68f), (int)(window.Height * 0.40f),  // Location
-                (int)(window.Width * 0.02f), (int)(window.Height * 0.09f)), // Hitbox
+                (int)(window.Width * 0.04f), (int)(window.Height * 0.12f)), // Hitbox
                 ">",                                                        // Text
                 bellMT36));                                                 // Font
 
