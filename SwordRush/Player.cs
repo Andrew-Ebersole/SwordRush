@@ -388,7 +388,6 @@ namespace SwordRush
                 health = 9999;
                 atkSpd = 10;
             }
-
         }
 
         /// <summary>
@@ -400,7 +399,7 @@ namespace SwordRush
             exp = 90;
             levelUpExp = 100;
             level = 1;
-            atk = 0;
+            atk = 1;
             maxHealth = 10;
             health = maxHealth;
             atkSpd = 5f;

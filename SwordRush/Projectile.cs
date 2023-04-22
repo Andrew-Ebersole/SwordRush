@@ -18,10 +18,10 @@ namespace SwordRush
         private readonly LongRangeEnemy _owner;
 
         // --- Constructor --- //
-        public Projectile(Point position, Vector2 direction, LongRangeEnemy owner) : base(GameManager.Get.ContentManager.Load<Texture2D>("coin_anim_f0") ,new Rectangle(position, new Point(10, 10)))
+        public Projectile(Point position, Vector2 direction, LongRangeEnemy owner, int damage) : base(GameManager.Get.ContentManager.Load<Texture2D>("coin_anim_f0") ,new Rectangle(position, new Point(10, 10)))
         {
             _direction = direction;
-            _damage = 10;
+            _damage = damage;
             _owner = owner;
         }
 

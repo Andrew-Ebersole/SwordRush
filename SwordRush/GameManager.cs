@@ -232,7 +232,6 @@ namespace SwordRush
                     //update player collision
                     WallCollision(player, walls);
 
-
                     //get keyboard state
                     currentKeyState = Keyboard.GetState();
 
@@ -351,9 +350,6 @@ namespace SwordRush
                     }
                         break;
             }
-
-            
-
             previousMS = Mouse.GetState();
             previousKeyState = currentKeyState;
             UpdateGrid();
@@ -563,7 +559,7 @@ namespace SwordRush
                     }
                     else if (grid[j, i] == 5)
                     {
-                        enemies.Add(new LongRangeEnemy(dungeontilesTexture2D, new Rectangle(j * 64, i * 64, 32, 32), player, graphicsDevice));
+                        enemies.Add(new LongRangeEnemy(dungeontilesTexture2D, new Rectangle(j * 64, i * 64, 32, 32), player, (player.RoomsCleared / 2) + 1, graphicsDevice));
                     }
                 }
             }
