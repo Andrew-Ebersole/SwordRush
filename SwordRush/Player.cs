@@ -291,7 +291,16 @@ namespace SwordRush
         /// <returns>the direction vector</returns>
         public Vector2 GetDirection()
         {
-            return Vector2.Normalize(position - currentMouseState.Position.ToVector2()); ;
+            Vector2 returnVector = Vector2.Normalize(position - currentMouseState.Position.ToVector2());
+
+            // Check if the vector has real numbers in it
+            if (Math.Abs(returnVector.X) >= 0)
+            {
+                return returnVector;
+            }
+
+            // If not return defualt vector
+            return new Vector2(-1, 0);
         }
 
         public void Damaged(int dmg)
