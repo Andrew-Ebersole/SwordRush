@@ -11,19 +11,30 @@ namespace SwordRush
     internal class LongRangeEnemy : Enemy
     {
         private double _currentShootCd;
+        private AnimationComposer animationComposer_ = new AnimationComposer();
 
         public List<Projectile> Projectiles { get; }
 
         // --- Constructor --- //
-        public LongRangeEnemy(Texture2D texture, Rectangle rectangle, Player player, GraphicsDevice graphicsDevice) :
-            base(texture, rectangle, player, graphicsDevice)
+        public LongRangeEnemy(Texture2D texture, Rectangle rectangle1, Player player, GraphicsDevice graphicsDevice) :
+            base(texture, rectangle1, player, graphicsDevice)
         {
             Projectiles = new List<Projectile>();
+
+            List<Texture2D> frames = new List<Texture2D>();
+
+            frames.Add(GameManager.Get.ContentManager.Load<Texture2D>("necromancer_idle_anim_f0"));
+            frames.Add(GameManager.Get.ContentManager.Load<Texture2D>("necromancer_idle_anim_f1"));
+            frames.Add(GameManager.Get.ContentManager.Load<Texture2D>("necromancer_idle_anim_f2"));
+            frames.Add(GameManager.Get.ContentManager.Load<Texture2D>("necromancer_idle_anim_f3"));
+
+            animationComposer_.PlayMovementAnimation(new AnimationSequence(frames, 0.2, true));
         }
 
         public override void Draw(SpriteBatch sb)
         {
-            foreach (var projectile in Projectiles)
+            sb.Draw(animationComposer_.GetCurrentSequence().GetCurrentFrame(), rectangle, Color.White);
+            foreach (Projectile projectile in Projectiles)
             {
                 projectile.Draw(sb);
             }
@@ -31,6 +42,10 @@ namespace SwordRush
 
         public override void Update(GameTime gt)
         {
+            System.Diagnostics.Debug.WriteLine(rectangle.Location);
+
+            animationComposer_.Update(gt);
+
             foreach (var projectile in Projectiles)
             {
                 projectile.Update(gt);
