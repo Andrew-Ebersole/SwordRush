@@ -63,16 +63,17 @@ namespace SwordRush
                 }
                 else
                 {
-                    /*
+                    
                     foreach (SceneObject wall in GameManager.Get.Walls)
                     {
                         if (Projectiles[i].Rectangle.Intersects(wall.Rectangle))
                         {
                             Projectiles.RemoveAt(i);
                             i--;
+                            break;
                         }
                     }
-                    */
+                    
                 }
             }
 
