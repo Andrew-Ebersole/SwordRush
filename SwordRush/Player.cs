@@ -18,7 +18,8 @@ using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
 namespace SwordRush
 {
-    enum PlayerStateMachine{
+    enum PlayerStateMachine
+    {
         Idle,
         Attack,
         Damaged,
@@ -34,13 +35,14 @@ namespace SwordRush
         Range,
         BackUp
     }
+
     internal class Player : GameObject
     {
         // --- Fields --- //
 
         // Player State
         private PlayerStateMachine playerState;
-        
+
         // Plater stats
         private int exp;
         private int level;
@@ -71,12 +73,16 @@ namespace SwordRush
 
         //Keyboard Controls
         private KeyboardState currentKeyboardState;
+
         private KeyboardState preKeyboardState;
+
         //Texture
         private Texture2D dungeontilesTexture2D;
         private Texture2D singleColor;
 
-        private AnimationComposer animation_;
+        private PlayerEffectScreen _pes = new PlayerEffectScreen(new Point(1280, 764));
+
+        private Animation<Texture2D> animation_ = new(0.2f);
         // --- Properties --- //
 
         public bool BackUpPower { get; set; }
@@ -90,50 +96,41 @@ namespace SwordRush
 
         public int MaxHealth
         {
-            get
-            {
-                return maxHealth;
-            }
+            get { return maxHealth; }
         }
 
         public int Level => level;
+
         public int Exp
         {
-            get
-            {
-                return exp;
-            }
+            get { return exp; }
         }
 
         public int LevelUpExp
         {
-            get
-            {
-                return levelUpExp;
-            }
+            get { return levelUpExp; }
         }
+
         public int RoomsCleared
         {
-            get
-            {
-                return roomsCleared;
-            }
-            set
-            {
-                roomsCleared = value;
-            }
+            get { return roomsCleared; }
+            set { roomsCleared = value; }
         }
 
         public GameObject Sword
         {
-            get
-            {
-                return sword;
-            }
+            get { return sword; }
         }
 
-        public float AtkSpd { get { return atkSpd; } }
-        public float Range { get { return range; } }
+        public float AtkSpd
+        {
+            get { return atkSpd; }
+        }
+
+        public float Range
+        {
+            get { return range; }
+        }
 
         // --- Constructor --- //
 
@@ -161,17 +158,11 @@ namespace SwordRush
             sword = new GameObject(null, Rectangle);
             dungeontilesTexture2D = texture;
 
-            List<Texture2D> frames = new List<Texture2D>();
-
-            frames.Add(GameManager.Get.ContentManager.Load<Texture2D>("knight_f_idle_anim_f0"));
-            frames.Add(GameManager.Get.ContentManager.Load<Texture2D>("knight_f_idle_anim_f1"));
-            frames.Add(GameManager.Get.ContentManager.Load<Texture2D>("knight_f_idle_anim_f2"));
-            frames.Add(GameManager.Get.ContentManager.Load<Texture2D>("knight_f_idle_anim_f3"));
-
-            animation_ = new AnimationComposer();
-            animation_.PlayMovementAnimation(new AnimationSequence(frames, 0.25, true));
+            animation_.AddFrame(GameManager.Get.ContentManager.Load<Texture2D>("knight_f_idle_anim_f0"));
+            animation_.AddFrame(GameManager.Get.ContentManager.Load<Texture2D>("knight_f_idle_anim_f1"));
+            animation_.AddFrame(GameManager.Get.ContentManager.Load<Texture2D>("knight_f_idle_anim_f2"));
+            animation_.AddFrame(GameManager.Get.ContentManager.Load<Texture2D>("knight_f_idle_anim_f3"));
         }
-
 
 
         // --- Methods --- //
@@ -182,7 +173,7 @@ namespace SwordRush
         public void playerControl(GameTime gameTime)
         {
             // Move when attacking
-            if (attackFrame < 100*range)
+            if (attackFrame < 100 * range)
             {
                 playerState = PlayerStateMachine.Attack;
 
@@ -190,7 +181,7 @@ namespace SwordRush
                 Position -= direction * distance;
             }
             // Cooldown after attack based off attack speed
-            else if (attackFrame >= 100*range && attackFrame <= 100*range + 800 - 75 * atkSpd)
+            else if (attackFrame >= 100 * range && attackFrame <= 100 * range + 800 - 75 * atkSpd)
             {
                 playerState = PlayerStateMachine.AttackCoolDown;
             }
@@ -206,7 +197,7 @@ namespace SwordRush
             currentKeyboardState = Keyboard.GetState();
 
             // If player clicks and attack
-            if (currentMouseState.LeftButton == ButtonState.Pressed 
+            if (currentMouseState.LeftButton == ButtonState.Pressed
                 && preMouseState.LeftButton == ButtonState.Released
                 && playerState == PlayerStateMachine.Idle)
             {
@@ -214,7 +205,7 @@ namespace SwordRush
                 direction = GetDirection();
                 attackFrame = 0;
             }
-            
+
             if (playerState != PlayerStateMachine.Attack && currentMouseState.RightButton == ButtonState.Pressed &&
                 preMouseState.RightButton == ButtonState.Released && backUpFrame > 1000)
             {
@@ -247,6 +238,7 @@ namespace SwordRush
                     {
                         health = maxHealth;
                     }
+
                     break;
 
                 case LevelUpAbility.MaxHealth:
@@ -282,6 +274,7 @@ namespace SwordRush
                 //move the player's location
                 Position += movement;
             }
+
             backUpFrame += gameTime.ElapsedGameTime.TotalMilliseconds;
         }
 
@@ -305,12 +298,10 @@ namespace SwordRush
 
         public void Damaged(int dmg)
         {
+            _pes.Start();
             health -= dmg;
             SoundManager.Get.PlayerDamagedEffect.Play();
         }
-
-        
-
 
 
         public void GainExp(int enemyLevel)
@@ -336,7 +327,7 @@ namespace SwordRush
         {
             float angle = (float)Math.Atan2(currentMouseState.Y - Position.Y, currentMouseState.X - Position.X);
             float rotationAngle = angle - (float)(Math.PI / 2);
-            
+
             return rotationAngle;
         }
 
@@ -347,7 +338,7 @@ namespace SwordRush
         /// <param name="sb"></param>
         public void Draw(SpriteBatch sb)
         {
-            sb.Draw(animation_.GetCurrentSequence().GetCurrentFrame(), Rectangle, Color.White);
+            sb.Draw(animation_.Frame, Rectangle, Color.White);
             //sb.Draw(dungeontilesTexture2D, Rectangle, new Rectangle(128, 64, 16, 32), Color.White);
 
             Color swordTint;
@@ -355,20 +346,25 @@ namespace SwordRush
             if (playerState == PlayerStateMachine.AttackCoolDown)
             {
                 swordTint = Color.White * 0.2f;
-            } else
+            }
+            else
             {
                 swordTint = Color.White;
             }
-            sb.Draw(dungeontilesTexture2D, sword.Position, new Rectangle(320, 80, 16, 32), swordTint, SwordRotateAngle(), new Vector2(8, -8), 2.0f, SpriteEffects.FlipVertically, 0.0f);
+
+            sb.Draw(dungeontilesTexture2D, sword.Position, new Rectangle(320, 80, 16, 32), swordTint,
+                SwordRotateAngle(), new Vector2(8, -8), 2.0f, SpriteEffects.FlipVertically, 0.0f);
 
             // Draw Hitboxes
             if (UI.Get.ShowHitboxes == true)
             {
                 sb.Draw(singleColor,
-                    new Rectangle(rectangle.X,rectangle.Y+rectangle.Height/2,
-                    rectangle.Width,rectangle.Height/2),
+                    new Rectangle(rectangle.X, rectangle.Y + rectangle.Height / 2,
+                        rectangle.Width, rectangle.Height / 2),
                     Color.White * 0.2f);
             }
+
+            _pes.Draw(sb);
         }
 
         /// <summary>
@@ -381,6 +377,11 @@ namespace SwordRush
             SwordLocation();
             SwordRotateAngle();
             animation_.Update(gt);
+            if (animation_.Done)
+            {
+                animation_.Reset();
+            }
+
             BackUp(gt);
             if (UI.Get.TakeDamage == false)
             {
@@ -388,6 +389,8 @@ namespace SwordRush
                 health = 9999;
                 atkSpd = 10;
             }
+
+            _pes.Update(gt);
         }
 
         /// <summary>

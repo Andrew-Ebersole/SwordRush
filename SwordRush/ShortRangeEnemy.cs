@@ -15,37 +15,38 @@ namespace SwordRush
     {
         Player player;
         private double damageFrame;
-        private AnimationComposer animationComposer_ = new AnimationComposer();
+        private Animation<Texture2D> _animation = new(0.2f);
         private int maxHP;
         private Vector2 direction;
         private Astar astar;
         private Stack<AStarNode> path;
         public Point graphPoint;
         private Vector2 distance;
+
         private AStarNode pos;
+
         // --- Constructor --- //
-        public ShortRangeEnemy(Texture2D texture, Rectangle rectangle, Player player,int level, GraphicsDevice graphicsDevice) : base(texture, rectangle, player, graphicsDevice)
+        public ShortRangeEnemy(Texture2D texture, Rectangle rectangle, Player player, int level,
+            GraphicsDevice graphicsDevice) : base(texture, rectangle, player, graphicsDevice)
         {
             this.player = player;
             astar = new Astar(null);
-            pos = new AStarNode(position,true,1);
-            List<Texture2D> frames = new List<Texture2D>();
+            pos = new AStarNode(position, true, 1);
 
-            frames.Add(GameManager.Get.ContentManager.Load<Texture2D>("skelet_idle_anim_f0"));
-            frames.Add(GameManager.Get.ContentManager.Load<Texture2D>("skelet_idle_anim_f1"));
-            frames.Add(GameManager.Get.ContentManager.Load<Texture2D>("skelet_idle_anim_f2"));
-            frames.Add(GameManager.Get.ContentManager.Load<Texture2D>("skelet_idle_anim_f3"));
+            _animation.AddFrame(GameManager.Get.ContentManager.Load<Texture2D>("skelet_idle_anim_f0"));
+            _animation.AddFrame(GameManager.Get.ContentManager.Load<Texture2D>("skelet_idle_anim_f1"));
+            _animation.AddFrame(GameManager.Get.ContentManager.Load<Texture2D>("skelet_idle_anim_f2"));
+            _animation.AddFrame(GameManager.Get.ContentManager.Load<Texture2D>("skelet_idle_anim_f3"));
 
-            animationComposer_.PlayMovementAnimation(new AnimationSequence(frames, 0.2, true));
             this.level = level;
             initStat(level);
             direction = new Vector2(0, 0);
         }
-        
+
         public void initStat(int level)
         {
-            health = (int)(2f*level);
-            atk = (level/2)+1;
+            health = (int)(2f * level);
+            atk = (level / 2) + 1;
             maxHP = health;
         }
 
@@ -71,8 +72,8 @@ namespace SwordRush
         {
             //update the graph, and get the path
             astar.UpdateGraph(GameManager.Get.Graph);
-            path = astar.FindPath(graphPoint.ToVector2() * 64, player.graphPoint.ToVector2()*64);
-            
+            path = astar.FindPath(graphPoint.ToVector2() * 64, player.graphPoint.ToVector2() * 64);
+
             damageFrame += gameTime.ElapsedGameTime.TotalMilliseconds;
             if (damageFrame >= 1000)
             {
@@ -93,20 +94,22 @@ namespace SwordRush
                 }
 
                 //move the enemy toward to player when they are in certain range
-                if (path != null && path.Count < 7+1 && playerDistance.Length() < 350)
+                if (path != null && path.Count < 7 + 1 && playerDistance.Length() < 350)
                 {
                     Vector2 direction = Vector2.Normalize(distance);
-                    Position -= direction * 2.99f;//will cause error if increase speed, should be lower than 3
+                    Position -= direction * 2.99f; //will cause error if increase speed, should be lower than 3
                     enemyState = EnemyStateMachine.Move;
                 }
                 else
                 {
                     enemyState = EnemyStateMachine.Idle;
                 }
-            } else if (damageFrame < 200)
+            }
+            else if (damageFrame < 200)
             {
                 Position += direction * 20;
-            } else
+            }
+            else
             {
                 enemyState = EnemyStateMachine.Idle;
             }
@@ -114,23 +117,23 @@ namespace SwordRush
 
         public override void Draw(SpriteBatch sb)
         {
-            sb.Draw(animationComposer_.GetCurrentSequence().GetCurrentFrame(), Rectangle, Color.White);
+            sb.Draw(_animation.Frame, Rectangle, Color.White);
             //sb.Draw(dungeontilesTexture2D, Rectangle, new Rectangle(368, 80, 16, 16), Color.White);
 
             // Draw Healthbar
             if (enemyState != EnemyStateMachine.Idle)
             {
-                sb.Draw(singleColor,                                                    // Texture
-                new Rectangle((int)this.Position.X - 16, (int)this.Position.Y - 10, // X-Y position
-                (int)((this.Rectangle.Width * health / maxHP)), 3),                 // Width-Height
-                Color.DarkRed);                                                     // Color
+                sb.Draw(singleColor, // Texture
+                    new Rectangle((int)this.Position.X - 16, (int)this.Position.Y - 10, // X-Y position
+                        (int)((this.Rectangle.Width * health / maxHP)), 3), // Width-Height
+                    Color.DarkRed); // Color
             }
 
             if (UI.Get.ShowHitboxes == true)
             {
                 sb.Draw(singleColor,
                     new Rectangle(rectangle.X, rectangle.Y,
-                    rectangle.Width, rectangle.Height),
+                        rectangle.Width, rectangle.Height),
                     Color.Red * 0.3f);
             }
         }
@@ -138,7 +141,11 @@ namespace SwordRush
         public override void Update(GameTime gt)
         {
             AI(gt);
-            animationComposer_.Update(gt);
+            _animation.Update(gt);
+            if (_animation.Done)
+            {
+                _animation.Reset();
+            }
         }
 
         /// <summary>

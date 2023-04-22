@@ -12,9 +12,9 @@ namespace SwordRush
     internal class LongRangeEnemy : Enemy
     {
         private double _currentShootCd;
-        private AnimationComposer animationComposer_ = new AnimationComposer();
         private int maxHP;
         private Vector2 direction;
+        private readonly Animation<Texture2D> _animation = new(0.2f);
         public List<Projectile> Projectiles { get; }
 
         public double damageFrame;
@@ -27,19 +27,15 @@ namespace SwordRush
             initStat(level);
             Projectiles = new List<Projectile>();
 
-            List<Texture2D> frames = new List<Texture2D>();
-
-            frames.Add(GameManager.Get.ContentManager.Load<Texture2D>("necromancer_idle_anim_f0"));
-            frames.Add(GameManager.Get.ContentManager.Load<Texture2D>("necromancer_idle_anim_f1"));
-            frames.Add(GameManager.Get.ContentManager.Load<Texture2D>("necromancer_idle_anim_f2"));
-            frames.Add(GameManager.Get.ContentManager.Load<Texture2D>("necromancer_idle_anim_f3"));
-
-            animationComposer_.PlayMovementAnimation(new AnimationSequence(frames, 0.2, true));
+            _animation.AddFrame(GameManager.Get.ContentManager.Load<Texture2D>("necromancer_idle_anim_f0"));
+            _animation.AddFrame(GameManager.Get.ContentManager.Load<Texture2D>("necromancer_idle_anim_f1"));
+            _animation.AddFrame(GameManager.Get.ContentManager.Load<Texture2D>("necromancer_idle_anim_f2"));
+            _animation.AddFrame(GameManager.Get.ContentManager.Load<Texture2D>("necromancer_idle_anim_f3"));
         }
 
         public override void Draw(SpriteBatch sb)
         {
-            sb.Draw(animationComposer_.GetCurrentSequence().GetCurrentFrame(), rectangle, Color.White);
+            sb.Draw(_animation.Frame, rectangle, Color.White);
             foreach (Projectile projectile in Projectiles)
             {
                 projectile.Draw(sb);
@@ -49,9 +45,13 @@ namespace SwordRush
         public override void Update(GameTime gt)
         {
             damageFrame += gt.ElapsedGameTime.TotalMilliseconds;
-            animationComposer_.Update(gt);
+            _animation.Update(gt);
+            if (_animation.Done)
+            {
+                _animation.Reset();
+            }
 
-            for(int i = 0; i < Projectiles.Count; i++)
+            for (int i = 0; i < Projectiles.Count; i++)
             {
                 Projectiles[i].Update(gt);
 
