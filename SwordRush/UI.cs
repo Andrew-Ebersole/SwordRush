@@ -14,7 +14,6 @@ namespace SwordRush
     {
         Menu,
         Game,
-        GameOver,
         Settings,
         Credits,
         Instructions,
@@ -28,7 +27,6 @@ namespace SwordRush
         private int level;
         private int playerLevel;
         private int health;
-        private int roomsCleared;
 
         // Finite State Machine
         private GameFSM gameFSM;
@@ -357,25 +355,6 @@ namespace SwordRush
                     {
                         b.Draw(sb);
                     }
-                    
-                    break;
-
-                case GameFSM.GameOver:  // --- Game Over -----------------------------------------------//
-                    // Draw Game over
-                    sb.DrawString(
-                        bellMT72,
-                        "GAME OVER",
-                        new Vector2((window.Width * 0.2f),
-                        (window.Height * 0.3f)),
-                        Color.DarkRed);
-
-                    // Draw Score
-                    sb.DrawString(
-                        bellMT48,                           // Font
-                        $"YOU CLEARED {roomsCleared} ROOMS",            // Text
-                        new Vector2((window.Width * 0.2f),  // X Position
-                        (window.Height * 0.5f)),            // Y Position
-                        Color.White);                       // Color
                     break;
 
                 case GameFSM.Instructions: // --- Instructions ----------------------------------//
@@ -652,8 +631,7 @@ namespace SwordRush
 
         public void EndGame(int roomsCleared)
         {
-            gameFSM = GameFSM.GameOver;
-            this.roomsCleared = roomsCleared;
+            gameFSM = GameFSM.Menu;
         }
     }
 }
