@@ -61,6 +61,19 @@ namespace SwordRush
                     Projectiles.RemoveAt(i);
                     i--;
                 }
+                else
+                {
+                    /*
+                    foreach (SceneObject wall in GameManager.Get.Walls)
+                    {
+                        if (Projectiles[i].Rectangle.Intersects(wall.Rectangle))
+                        {
+                            Projectiles.RemoveAt(i);
+                            i--;
+                        }
+                    }
+                    */
+                }
             }
 
             if (_currentShootCd <= 0)

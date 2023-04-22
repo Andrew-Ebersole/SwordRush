@@ -104,6 +104,7 @@ namespace SwordRush
             // NEVER a set for the instance
         }
 
+        public List<SceneObject> Walls => walls;
         public ContentManager ContentManager { get { return contentManager_; } }
 
         public int[,] Grid { get { return grid; } }
