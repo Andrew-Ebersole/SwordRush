@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -47,7 +48,6 @@ namespace SwordRush
 
         public override void Update(GameTime gt)
         {
-            System.Diagnostics.Debug.WriteLine(rectangle.Location);
             damageFrame += gt.ElapsedGameTime.TotalMilliseconds;
             animationComposer_.Update(gt);
 
@@ -70,6 +70,7 @@ namespace SwordRush
                 _currentShootCd -= gt.ElapsedGameTime.TotalSeconds;
             }
 
+            Debug.WriteLine(damageFrame);
             if (damageFrame < 200)
             {
                 Position += direction * 20;
@@ -77,6 +78,7 @@ namespace SwordRush
             else
             {
                 direction = new Vector2(0, 0);
+                enemyState = EnemyStateMachine.Idle;
             }
         }
 
@@ -94,11 +96,13 @@ namespace SwordRush
         {
             if (enemyState != EnemyStateMachine.Damaged)
             {
+                _currentShootCd = 3;
                 health -= (int)player.Atk;
                 Vector2 distance = position - player.Position;
                 direction = Vector2.Normalize(distance);
-                AttackCooldown();
                 SoundManager.Get.EnemyDamagedEffect.Play();
+                enemyState = EnemyStateMachine.Damaged;
+                damageFrame = 0;
             }
         }
     }
