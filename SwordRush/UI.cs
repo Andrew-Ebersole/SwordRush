@@ -14,7 +14,6 @@ namespace SwordRush
     {
         Menu,
         Game,
-        GameOver,
         Settings,
         Credits,
         Instructions,
@@ -28,7 +27,6 @@ namespace SwordRush
         private int level;
         private int playerLevel;
         private int health;
-        private int roomsCleared;
 
         // Finite State Machine
         private GameFSM gameFSM;
@@ -45,6 +43,7 @@ namespace SwordRush
         // Buttons
         private List<TextButton> menuButtons;
         private List<TextButton> settingButtons;
+        private TextButton exitButton;
 
         // Window dimensions
         private Rectangle window;
@@ -356,25 +355,6 @@ namespace SwordRush
                     {
                         b.Draw(sb);
                     }
-                    
-                    break;
-
-                case GameFSM.GameOver:  // --- Game Over -----------------------------------------------//
-                    // Draw Game over
-                    sb.DrawString(
-                        bellMT72,
-                        "GAME OVER",
-                        new Vector2((window.Width * 0.2f),
-                        (window.Height * 0.3f)),
-                        Color.DarkRed);
-
-                    // Draw Score
-                    sb.DrawString(
-                        bellMT48,                           // Font
-                        $"YOU CLEARED {roomsCleared} ROOMS",            // Text
-                        new Vector2((window.Width * 0.2f),  // X Position
-                        (window.Height * 0.5f)),            // Y Position
-                        Color.White);                       // Color
                     break;
 
                 case GameFSM.Instructions: // --- Instructions ----------------------------------//
@@ -551,6 +531,10 @@ namespace SwordRush
                     break;
 
             }
+            if (gameFSM != GameFSM.Menu && gameFSM != GameFSM.Game)
+            {
+                exitButton.Draw(sb);
+            }
             
 
         }
@@ -635,12 +619,19 @@ namespace SwordRush
                 (int)(window.Width * 0.10f), (int)(window.Height * 0.09f)), // Hitbox
                 "False",                                                     // Text
                 bellMT36));                                                 // Font
+
+            // --- Exit Button ------------------------------------------------------------------//
+
+            exitButton = new TextButton(new Rectangle(
+                (int)(window.Width * 0.10f), (int)(window.Height * 0.91f),  // Location
+                (int)(window.Width * 0.10f), (int)(window.Height * 0.09f)), // Hitbox
+                "Exit",                                                    // Text
+                bellMT36);                                                 // Font
         }
 
         public void EndGame(int roomsCleared)
         {
-            gameFSM = GameFSM.GameOver;
-            this.roomsCleared = roomsCleared;
+            gameFSM = GameFSM.Menu;
         }
     }
 }

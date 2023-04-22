@@ -27,6 +27,7 @@ namespace SwordRush
             Playing,
             Paused,
             LevelUp,
+            GameOver,
             Menu
         }
         private GameFSM gameFSM;
@@ -80,6 +81,8 @@ namespace SwordRush
         //Economy system
         private int totalCoin;
 
+        // Timer
+        private double clickCooldown;
 
         // --- Properties --- //
 
@@ -221,8 +224,9 @@ namespace SwordRush
                     // End game if player health runs out
                     if (player.Health <= 0)
                     {
-                        gameFSM = GameFSM.Menu;
+                        gameFSM = GameFSM.GameOver;
                         gameOver(player.RoomsCleared);
+                        clickCooldown = 0;
                     }
 
                     //update player collision
@@ -260,6 +264,7 @@ namespace SwordRush
                     {
                         gameFSM |= GameFSM.LevelUp;
                         RandomizeLevelUpAbilities();
+                        clickCooldown = 0;
                     }
                     break;
 
@@ -290,38 +295,61 @@ namespace SwordRush
                         b.Update(gt);
                     }
 
-                    // Increase Stat when pressed
-                    if (levelUpButtons[0].LeftClicked)
+                    // Only allow click after one second has passed to give player
+                    // time to read menu and not accidentally click
+                    clickCooldown += gt.ElapsedGameTime.TotalMilliseconds;
+                    if (clickCooldown >= 1000)
                     {
-                        // Heal to max health
-                        player.LevelUp(LevelUpAbility.Heal);
-                        gameFSM = GameFSM.Playing;
+                        // Increase Stat when pressed
+                        if (levelUpButtons[0].LeftClicked)
+                        {
+                            // Heal to max health
+                            player.LevelUp(LevelUpAbility.Heal);
+                            gameFSM = GameFSM.Playing;
+                        }
+                        else if (levelUpButtons[1].LeftClicked)
+                        {
+                            // Increase max health
+                            player.LevelUp(LevelUpAbility.MaxHealth);
+                            gameFSM = GameFSM.Playing;
+                        }
+                        else if (levelUpButtons[2].LeftClicked)
+                        {
+                            // Increase attack speed
+                            player.LevelUp(LevelUpAbility.AttackSpeed);
+                            gameFSM = GameFSM.Playing;
+                        }
+                        else if (levelUpButtons[3].LeftClicked)
+                        {
+                            // Increase attack damage
+                            player.LevelUp(LevelUpAbility.AttackDamage);
+                            gameFSM = GameFSM.Playing;
+                        }
+                        else if (levelUpButtons[4].LeftClicked)
+                        {
+                            // Increase movement range
+                            player.LevelUp(LevelUpAbility.Range);
+                            gameFSM = GameFSM.Playing;
+                        }
                     }
-                    else if (levelUpButtons[1].LeftClicked)
-                    {
-                        // Increase max health
-                        player.LevelUp(LevelUpAbility.MaxHealth);
-                        gameFSM = GameFSM.Playing;
-                    }
-                    else if (levelUpButtons[2].LeftClicked)
-                    {
-                        // Increase attack speed
-                        player.LevelUp(LevelUpAbility.AttackSpeed);
-                        gameFSM = GameFSM.Playing;
-                    }
-                    else if (levelUpButtons[3].LeftClicked)
-                    {
-                        // Increase attack damage
-                        player.LevelUp(LevelUpAbility.AttackDamage);
-                        gameFSM = GameFSM.Playing;
-                    }
-                    else if (levelUpButtons[4].LeftClicked)
-                    {
-                        // Increase movement range
-                        player.LevelUp(LevelUpAbility.Range);
-                        gameFSM = GameFSM.Playing;
-                    }
+                    
                     break;
+
+                case GameFSM.GameOver:
+
+                    // Only allow click after one second has passed to give player
+                    // time to read menu and not accidentally click
+                    clickCooldown += gt.ElapsedGameTime.TotalMilliseconds;
+                    if (clickCooldown >= 1000)
+                    { 
+                        // Return to menu when mouse down
+                        if (Mouse.GetState().LeftButton == ButtonState.Pressed)
+                        {
+                            gameFSM = GameFSM.Menu;
+                            gameOver(player.RoomsCleared);
+                        }
+                    }
+                        break;
             }
 
             
@@ -391,6 +419,36 @@ namespace SwordRush
                     }
 
                     break;
+
+                case GameFSM.GameOver:  // --- Game Over -----------------------------------------------//
+
+                    // elements of the game a drawn but not updated
+                    DrawGame(sb);
+
+                    // Add a transparent black rectangle over the game
+                    // to darken screen and make text stand out
+                    sb.Draw(singleColor,
+                        window,
+                        Color.Black * (float)(clickCooldown / 2000));
+
+                    // Draw Game over
+                    sb.DrawString(
+                        BellMT72,
+                        "GAME OVER",
+                        new Vector2((window.Width * 0.26f),
+                        (window.Height * 0.38f)),
+                        Color.White);
+
+                    // Draw Score
+                    sb.DrawString(
+                        BellMT48,                           // Font
+                        $"YOU CLEARED {player.RoomsCleared} ROOMS",            // Text
+                        new Vector2((window.Width * 0.2f),  // X Position
+                        (window.Height * 0.52f)),            // Y Position
+                        Color.White);                       // Color
+
+                    break;
+
             }
         }
 
