@@ -60,6 +60,7 @@ namespace SwordRush
                     GameManager.Get.LocalPlayer.Damaged(atk);
                     Projectiles.RemoveAt(i);
                     i--;
+                    SoundManager.Get.EnemyAttackEffect.Play();
                 }
                 else
                 {
@@ -70,6 +71,7 @@ namespace SwordRush
                         {
                             Projectiles.RemoveAt(i);
                             i--;
+                            SoundManager.Get.EnemyAttackEffect.Play();
                             break;
                         }
                     }
