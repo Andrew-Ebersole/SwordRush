@@ -232,7 +232,6 @@ namespace SwordRush
                     //update player collision
                     WallCollision(player, walls);
 
-
                     //get keyboard state
                     currentKeyState = Keyboard.GetState();
 
@@ -351,9 +350,6 @@ namespace SwordRush
                     }
                         break;
             }
-
-            
-
             previousMS = Mouse.GetState();
             previousKeyState = currentKeyState;
             UpdateGrid();

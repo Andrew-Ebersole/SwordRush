@@ -388,7 +388,6 @@ namespace SwordRush
                 health = 9999;
                 atkSpd = 10;
             }
-
         }
 
         /// <summary>
