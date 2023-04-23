@@ -89,6 +89,17 @@ namespace SwordRush
 
         public PlayerStateMachine PlayerState => playerState;
 
+        public Vector2 Direction
+        {
+            get
+            {
+                return direction;
+            }
+            set
+            {
+                direction = value;
+            }
+        }
         public Point Size => size;
 
         public float Atk => atk;
@@ -177,9 +188,8 @@ namespace SwordRush
             if (attackFrame < 100 * range)
             {
                 playerState = PlayerStateMachine.Attack;
-
                 //move the player's location
-                Position -= direction * distance;
+                Position -= direction * distance*(1+range/20);
             }
             // Cooldown after attack based off attack speed
             else if (attackFrame >= 100 * range && attackFrame <= 100 * range + 800 - 75 * atkSpd)
@@ -207,9 +217,10 @@ namespace SwordRush
                 attackFrame = 0;
             }
 
-            if (playerState != PlayerStateMachine.Attack && currentMouseState.RightButton == ButtonState.Pressed &&
+            if (currentMouseState.RightButton == ButtonState.Pressed &&
                 preMouseState.RightButton == ButtonState.Released && backUpFrame > 1000)
             {
+                attackFrame = int.MaxValue / 2;
                 backUpFrame = 0;
             }
 
@@ -253,12 +264,13 @@ namespace SwordRush
                     break;
 
                 case LevelUpAbility.AttackDamage:
-                    atk += 1f;
+                    atk *= 1.5f;
                     break;
 
                 case LevelUpAbility.Range:
                     range += 1f;
                     break;
+
                 case LevelUpAbility.BackUp:
                     backUpLevel += 1;
                     break;
