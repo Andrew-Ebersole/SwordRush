@@ -57,6 +57,7 @@ namespace SwordRush
         private SpriteFont BellMT24;
         private SpriteFont BellMT48;
         private SpriteFont BellMT72;
+
         //tiling
         private int mapNum;
         private int totalRoom;
@@ -70,6 +71,7 @@ namespace SwordRush
 
         // Level up buttons
         private List<ImageButton> levelUpButtons;
+        private List<int> maxedPowers;
 
         // Graphics Device
         private GraphicsDevice graphicsDevice;
@@ -116,6 +118,7 @@ namespace SwordRush
         {
             contentManager_ = content;
             fileManager_ = new FileManager();
+
             //sprites & game states
             this.spriteSheet = spriteSheet;
             gameFSM = GameFSM.Menu;
@@ -172,6 +175,7 @@ namespace SwordRush
             levelUpButtons = new List<ImageButton>();
             abilityIcons = content.Load<Texture2D>("AbilityIcons");
             InitializeLevelUpButtons();
+            maxedPowers = new List<int>();
 
         }
 
@@ -322,6 +326,12 @@ namespace SwordRush
                             // Increase attack speed
                             player.LevelUp(LevelUpAbility.AttackSpeed);
                             gameFSM = GameFSM.Playing;
+
+                            // Max attack speed
+                            if (player.AtkSpd >= 8)
+                            {
+                                maxedPowers.Add(2);
+                            }
                         }
                         else if (levelUpButtons[3].LeftClicked)
                         {
@@ -333,6 +343,18 @@ namespace SwordRush
                         {
                             // Increase movement range
                             player.LevelUp(LevelUpAbility.Range);
+                            gameFSM = GameFSM.Playing;
+
+                            // Max movement range
+                            if (player.AtkSpd >= 3)
+                            {
+                                maxedPowers.Add(4);
+                            }
+                        }
+                        else if (levelUpButtons[5].LeftClicked)
+                        {
+                            // Increase backup range
+                            player.LevelUp(LevelUpAbility.BackUp);
                             gameFSM = GameFSM.Playing;
                         }
                     }
@@ -1005,6 +1027,14 @@ namespace SwordRush
                 BellMT24,
                 abilityIcons,
                 new Vector2(10, 3)));
+
+            levelUpButtons.Add(new ImageButton(
+                new Rectangle(window.Height * 2, 0,
+                (int)(window.Height * 0.2f), (int)(window.Height * 0.2f)),
+                "Dodge Distance",
+                BellMT24,
+                abilityIcons,
+                new Vector2(13, 2)));
         }
 
         /// <summary>
@@ -1028,8 +1058,12 @@ namespace SwordRush
 
             for (int i = 0; i < 3; i+= 0)
             {
-                int next = rng.Next(0, 5);
-                if (!randomAbilities.Contains(next))
+                int next = rng.Next(0, 6);
+
+                // Make sure the ability is not already picked
+                // or it hasn't been maxed out
+                if (!randomAbilities.Contains(next)
+                    && !maxedPowers.Contains(next))
                 {
                     randomAbilities[i] = next;
                     i++;
