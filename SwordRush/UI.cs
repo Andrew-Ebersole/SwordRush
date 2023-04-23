@@ -51,6 +51,8 @@ namespace SwordRush
         // Textures
         private Texture2D menuImageTexture;
         private Texture2D singleColor;
+        private Texture2D mouseLeft;
+        private Texture2D mouseRight;
 
         // Event to communicate with GameManager
         public event ToggleGameState startGame;
@@ -110,6 +112,8 @@ namespace SwordRush
             menuImageTexture = content.Load<Texture2D>("MenuBackground3");
             singleColor = new Texture2D(gd, 1, 1);
             singleColor.SetData(new Color[] { Color.White });
+            mouseLeft = content.Load<Texture2D>("mouse-left-click");
+            mouseRight = content.Load<Texture2D>("mouse-right-click");
 
 
             // Controls Mouse
@@ -393,6 +397,10 @@ namespace SwordRush
                         new Vector2(window.Width * 0.6f,// X Position
                         window.Height * 0.3f),          // Y Position
                         Color.White);                   // Color
+
+                    sb.Draw(mouseLeft, new Rectangle((int)(window.Width * 0.85), (int)(window.Height * 0.3), 100, 100), Color.White); //draw left click icon
+
+                    sb.Draw(mouseRight, new Rectangle((int)(window.Width * 0.85), (int)(window.Height * 0.5), 100, 100), Color.White); //draw right click icon
 
 
                     break;
