@@ -45,7 +45,7 @@ namespace SwordRush
 
         public void initStat(int level)
         {
-            health = (int)(2f * level);
+            health = (int)(1f * level);
             atk = (level / 2) + 1;
             maxHP = health;
         }

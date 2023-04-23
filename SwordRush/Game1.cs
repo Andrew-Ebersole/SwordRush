@@ -102,7 +102,7 @@ namespace SwordRush
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(new Color(32,32,32));
+            GraphicsDevice.Clear(new Color(12,12,12));
             _spriteBatch.Begin();
 
             // Draw UI elements (Text, Menus, Icons)
