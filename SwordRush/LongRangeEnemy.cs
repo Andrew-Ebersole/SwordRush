@@ -81,7 +81,7 @@ namespace SwordRush
 
             if (_currentShootCd <= 0)
             {
-                _currentShootCd = 1.5f;
+                _currentShootCd = 2.0f;
 
                 Vector2 fireDirection = player.Position - Position;
                 fireDirection.Normalize();
