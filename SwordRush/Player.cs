@@ -377,7 +377,8 @@ namespace SwordRush
                     Color.White * 0.2f);
             }
 
-            _pes.Draw(sb);
+            if(!_pes.firstTime)
+                _pes.Draw(sb);
         }
 
         /// <summary>

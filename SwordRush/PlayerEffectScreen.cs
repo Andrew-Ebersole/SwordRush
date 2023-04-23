@@ -5,12 +5,13 @@ namespace SwordRush;
 
 public class PlayerEffectScreen
 {
-    private readonly Animation<Color> _animation = new(0.05f);
+    public readonly Animation<Color> _animation = new(0.05f);
     private Point _windowSize;
     private Texture2D border;
-
+    public bool firstTime;
     public PlayerEffectScreen(Point windowSize)
     {
+        firstTime = true;
         _animation.AddFrame(new Color(40, 0, 0, 100));
         _animation.AddFrame(new Color(40, 0, 0, 100));
         _animation.AddFrame(new Color(20, 0, 0, 100));
@@ -24,6 +25,11 @@ public class PlayerEffectScreen
 
     public void Start()
     {
+        if (firstTime)
+        {
+            firstTime = false;
+        }
+
         _animation.Reset();
     }
 

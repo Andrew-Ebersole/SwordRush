@@ -10,7 +10,7 @@ public class Animation<T>
     private double _frameTime;
     private int _frameCurIndex;
     public bool Done { get; set; }
-
+    
     public T Frame => _frames[_frameCurIndex];
 
     public Animation(double frameDuration)
