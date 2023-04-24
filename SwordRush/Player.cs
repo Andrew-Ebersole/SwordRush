@@ -161,7 +161,7 @@ namespace SwordRush
             currentKeyboardState = Keyboard.GetState();
             preKeyboardState = currentKeyboardState;
             direction = new Vector2();
-            backUpFrame = 100;
+            backUpFrame = 1000;
 
             // Create a texture for blank rectangle
             singleColor = new Texture2D(graphics, 1, 1);
@@ -368,6 +368,7 @@ namespace SwordRush
             sb.Draw(dungeontilesTexture2D, sword.Position, new Rectangle(320, 80, 16, 32), swordTint,
                 SwordRotateAngle(), new Vector2(8, -8), 2.0f, SpriteEffects.FlipVertically, 0.0f);
 
+            
             // Draw Hitboxes
             if (UI.Get.ShowHitboxes == true)
             {
@@ -376,8 +377,27 @@ namespace SwordRush
                         rectangle.Width, rectangle.Height / 2),
                     Color.White * 0.2f);
             }
+            
+            if (backUpFrame > 1000)
+            {
+                //draw cd bar
+                sb.Draw(singleColor, // Texture
+                    new Rectangle((int)this.Position.X - 16, (int)this.Position.Y + 36, // X-Y position
+                        (int)((this.Rectangle.Width)), 3), // Width-Height
+                    Color.DarkGreen); // Color
+            }
+            else
+            {
+                //draw cd bar
+                sb.Draw(singleColor, // Texture
+                    new Rectangle((int)this.Position.X - 16, (int)this.Position.Y + 36, // X-Y position
+                        (int)((this.Rectangle.Width * backUpFrame / 1000)), 3), // Width-Height
+                    Color.Gray); // Color
+            }
 
-            if(!_pes.firstTime)
+
+
+            if (!_pes.firstTime)
                 _pes.Draw(sb);
         }
 
