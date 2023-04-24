@@ -40,6 +40,19 @@ namespace SwordRush
             {
                 projectile.Draw(sb);
             }
+
+            Vector2 playerDistance = position - player.Position;
+            if (playerDistance.Length() < 300)
+            {
+                // Draw Healthbar
+                sb.Draw(singleColor, // Texture
+                    new Rectangle((int)this.Position.X - 16, (int)this.Position.Y - 10, // X-Y position
+                        (int)((this.Rectangle.Width * health / maxHP)), 3), // Width-Height
+                    Color.DarkRed); // Color
+            }
+
+            
+            
         }
 
         public override void Update(GameTime gt)
