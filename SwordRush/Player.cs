@@ -443,6 +443,7 @@ namespace SwordRush
             distance = 10f;
             range = 3f;
             roomsCleared = 0;
+            _pes.firstTime = true;
         }
 
         public void NewRoom()
