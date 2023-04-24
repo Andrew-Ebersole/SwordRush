@@ -574,7 +574,7 @@ namespace SwordRush
                     }
                     else if (grid[j,i] == 2)
                     {
-                        enemies.Add(new ShortRangeEnemy(dungeontilesTexture2D, new Rectangle(j*64, i*64, 32, 32), player, (player.RoomsCleared / 2) + 1, graphicsDevice));
+                        enemies.Add(new ShortRangeEnemy(dungeontilesTexture2D, new Rectangle(j*64, i*64, 32, 32), player, (player.RoomsCleared / 3) + 1, graphicsDevice));
                     }
                     else if (grid[j,i] == 3)
                     {
@@ -583,7 +583,7 @@ namespace SwordRush
                     }
                     else if (grid[j, i] == 5)
                     {
-                        enemies.Add(new LongRangeEnemy(dungeontilesTexture2D, new Rectangle(j * 64, i * 64, 32, 32), player, (player.RoomsCleared / 2) + 1, graphicsDevice));
+                        enemies.Add(new LongRangeEnemy(dungeontilesTexture2D, new Rectangle(j * 64, i * 64, 32, 32), player, (player.RoomsCleared / 3) + 1, graphicsDevice));
                     }
                 }
             }
