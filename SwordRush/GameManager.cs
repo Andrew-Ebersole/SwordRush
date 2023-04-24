@@ -235,11 +235,8 @@ namespace SwordRush
                     }
 
                     //update player collision
-                    //if player collide with wall stop it
-                    if (WallCollision(player, walls))
-                    {
-                        player.Direction = new Vector2(0, 0);
-                    }
+                    WallCollision(player, walls);
+                    
 
                     //get keyboard state
                     currentKeyState = Keyboard.GetState();
