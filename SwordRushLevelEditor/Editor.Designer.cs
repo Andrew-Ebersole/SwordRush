@@ -28,377 +28,360 @@
         /// </summary>
         private void InitializeComponent()
         {
-            groupBoxMap = new GroupBox();
-            groupBoxCurrent = new GroupBox();
-            pictureBoxSelected = new PictureBox();
-            buttonSave = new Button();
-            buttonLoad = new Button();
-            buttonLayerChange = new Button();
-            buttonGreen = new Button();
-            buttonGray = new Button();
-            buttonBrown = new Button();
-            buttonBlue = new Button();
-            buttonRed = new Button();
-            buttonBlack = new Button();
-            label2 = new Label();
-            label6 = new Label();
-            buttonPurple = new Button();
-            groupBoxTiles = new GroupBox();
-            buttonAqua = new Button();
-            buttonPink = new Button();
-            buttonOlive = new Button();
-            buttonIndigo = new Button();
-            buttonTan = new Button();
-            buttonGold = new Button();
-            buttonTeal = new Button();
-            buttonOrange = new Button();
-            groupBoxLayer = new GroupBox();
-            labelLayer = new Label();
-            groupBoxCurrent.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBoxSelected).BeginInit();
-            groupBoxTiles.SuspendLayout();
-            groupBoxLayer.SuspendLayout();
-            SuspendLayout();
+            this.groupBoxMap = new System.Windows.Forms.GroupBox();
+            this.groupBoxCurrent = new System.Windows.Forms.GroupBox();
+            this.pictureBoxSelected = new System.Windows.Forms.PictureBox();
+            this.buttonSave = new System.Windows.Forms.Button();
+            this.buttonLoad = new System.Windows.Forms.Button();
+            this.buttonLayerChange = new System.Windows.Forms.Button();
+            this.buttonGreen = new System.Windows.Forms.Button();
+            this.buttonGray = new System.Windows.Forms.Button();
+            this.buttonBrown = new System.Windows.Forms.Button();
+            this.buttonBlue = new System.Windows.Forms.Button();
+            this.buttonRed = new System.Windows.Forms.Button();
+            this.buttonBlack = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.buttonPurple = new System.Windows.Forms.Button();
+            this.groupBoxTiles = new System.Windows.Forms.GroupBox();
+            this.buttonAqua = new System.Windows.Forms.Button();
+            this.buttonPink = new System.Windows.Forms.Button();
+            this.buttonOlive = new System.Windows.Forms.Button();
+            this.buttonIndigo = new System.Windows.Forms.Button();
+            this.buttonTan = new System.Windows.Forms.Button();
+            this.buttonGold = new System.Windows.Forms.Button();
+            this.buttonTeal = new System.Windows.Forms.Button();
+            this.buttonOrange = new System.Windows.Forms.Button();
+            this.groupBoxLayer = new System.Windows.Forms.GroupBox();
+            this.labelLayer = new System.Windows.Forms.Label();
+            this.groupBoxCurrent.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxSelected)).BeginInit();
+            this.groupBoxTiles.SuspendLayout();
+            this.groupBoxLayer.SuspendLayout();
+            this.SuspendLayout();
             // 
             // groupBoxMap
             // 
-            groupBoxMap.AutoSize = true;
-            groupBoxMap.Location = new Point(213, 8);
-            groupBoxMap.Margin = new Padding(1, 2, 1, 2);
-            groupBoxMap.Name = "groupBoxMap";
-            groupBoxMap.Padding = new Padding(1, 2, 1, 2);
-            groupBoxMap.Size = new Size(700, 600);
-            groupBoxMap.TabIndex = 0;
-            groupBoxMap.TabStop = false;
-            groupBoxMap.Text = "Map";
+            this.groupBoxMap.AutoSize = true;
+            this.groupBoxMap.Location = new System.Drawing.Point(213, 8);
+            this.groupBoxMap.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
+            this.groupBoxMap.Name = "groupBoxMap";
+            this.groupBoxMap.Padding = new System.Windows.Forms.Padding(1, 2, 1, 2);
+            this.groupBoxMap.Size = new System.Drawing.Size(700, 600);
+            this.groupBoxMap.TabIndex = 0;
+            this.groupBoxMap.TabStop = false;
+            this.groupBoxMap.Text = "Map";
             // 
             // groupBoxCurrent
             // 
-            groupBoxCurrent.Controls.Add(pictureBoxSelected);
-            groupBoxCurrent.Location = new Point(9, 322);
-            groupBoxCurrent.Margin = new Padding(1, 2, 1, 2);
-            groupBoxCurrent.Name = "groupBoxCurrent";
-            groupBoxCurrent.Padding = new Padding(1, 2, 1, 2);
-            groupBoxCurrent.Size = new Size(192, 96);
-            groupBoxCurrent.TabIndex = 2;
-            groupBoxCurrent.TabStop = false;
-            groupBoxCurrent.Text = "Current Tile";
+            this.groupBoxCurrent.Controls.Add(this.pictureBoxSelected);
+            this.groupBoxCurrent.Location = new System.Drawing.Point(9, 322);
+            this.groupBoxCurrent.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
+            this.groupBoxCurrent.Name = "groupBoxCurrent";
+            this.groupBoxCurrent.Padding = new System.Windows.Forms.Padding(1, 2, 1, 2);
+            this.groupBoxCurrent.Size = new System.Drawing.Size(192, 96);
+            this.groupBoxCurrent.TabIndex = 2;
+            this.groupBoxCurrent.TabStop = false;
+            this.groupBoxCurrent.Text = "Current Tile";
             // 
             // pictureBoxSelected
             // 
-            pictureBoxSelected.BackColor = SystemColors.ActiveCaptionText;
-            pictureBoxSelected.Location = new Point(51, 17);
-            pictureBoxSelected.Margin = new Padding(1, 2, 1, 2);
-            pictureBoxSelected.Name = "pictureBoxSelected";
-            pictureBoxSelected.Size = new Size(88, 76);
-            pictureBoxSelected.TabIndex = 0;
-            pictureBoxSelected.TabStop = false;
+            this.pictureBoxSelected.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.pictureBoxSelected.Location = new System.Drawing.Point(51, 17);
+            this.pictureBoxSelected.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
+            this.pictureBoxSelected.Name = "pictureBoxSelected";
+            this.pictureBoxSelected.Size = new System.Drawing.Size(88, 76);
+            this.pictureBoxSelected.TabIndex = 0;
+            this.pictureBoxSelected.TabStop = false;
             // 
             // buttonSave
             // 
-            buttonSave.Location = new Point(112, 538);
-            buttonSave.Margin = new Padding(1, 2, 1, 2);
-            buttonSave.Name = "buttonSave";
-            buttonSave.Size = new Size(73, 57);
-            buttonSave.TabIndex = 3;
-            buttonSave.Text = "Save File";
-            buttonSave.UseVisualStyleBackColor = true;
-            buttonSave.Click += buttonSave_Click;
+            this.buttonSave.Location = new System.Drawing.Point(112, 538);
+            this.buttonSave.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
+            this.buttonSave.Name = "buttonSave";
+            this.buttonSave.Size = new System.Drawing.Size(73, 57);
+            this.buttonSave.TabIndex = 3;
+            this.buttonSave.Text = "Save File";
+            this.buttonSave.UseVisualStyleBackColor = true;
             // 
             // buttonLoad
             // 
-            buttonLoad.Location = new Point(26, 538);
-            buttonLoad.Margin = new Padding(1, 2, 1, 2);
-            buttonLoad.Name = "buttonLoad";
-            buttonLoad.Size = new Size(70, 57);
-            buttonLoad.TabIndex = 4;
-            buttonLoad.Text = "Load File";
-            buttonLoad.UseVisualStyleBackColor = true;
-            buttonLoad.Click += buttonLoad_Click;
+            this.buttonLoad.Location = new System.Drawing.Point(26, 538);
+            this.buttonLoad.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
+            this.buttonLoad.Name = "buttonLoad";
+            this.buttonLoad.Size = new System.Drawing.Size(70, 57);
+            this.buttonLoad.TabIndex = 4;
+            this.buttonLoad.Text = "Load File";
+            this.buttonLoad.UseVisualStyleBackColor = true;
             // 
             // buttonLayerChange
             // 
-            buttonLayerChange.Location = new Point(26, 477);
-            buttonLayerChange.Name = "buttonLayerChange";
-            buttonLayerChange.Size = new Size(159, 57);
-            buttonLayerChange.TabIndex = 5;
-            buttonLayerChange.Text = "Change Layer";
-            buttonLayerChange.UseVisualStyleBackColor = true;
-            buttonLayerChange.Click += buttonLayerChange_Click;
+            this.buttonLayerChange.Location = new System.Drawing.Point(26, 477);
+            this.buttonLayerChange.Name = "buttonLayerChange";
+            this.buttonLayerChange.Size = new System.Drawing.Size(159, 57);
+            this.buttonLayerChange.TabIndex = 5;
+            this.buttonLayerChange.Text = "Change Layer";
+            this.buttonLayerChange.UseVisualStyleBackColor = true;
             // 
             // buttonGreen
             // 
-            buttonGreen.BackColor = Color.Green;
-            buttonGreen.Location = new Point(4, 129);
-            buttonGreen.Margin = new Padding(1, 2, 1, 2);
-            buttonGreen.Name = "buttonGreen";
-            buttonGreen.Size = new Size(84, 34);
-            buttonGreen.TabIndex = 0;
-            buttonGreen.Text = "N/A";
-            buttonGreen.UseVisualStyleBackColor = false;
-            buttonGreen.Click += buttonGreen_Click;
+            this.buttonGreen.BackColor = System.Drawing.Color.Green;
+            this.buttonGreen.Location = new System.Drawing.Point(4, 129);
+            this.buttonGreen.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
+            this.buttonGreen.Name = "buttonGreen";
+            this.buttonGreen.Size = new System.Drawing.Size(84, 34);
+            this.buttonGreen.TabIndex = 0;
+            this.buttonGreen.Text = "Chest";
+            this.buttonGreen.UseVisualStyleBackColor = false;
             // 
             // buttonGray
             // 
-            buttonGray.BackColor = Color.LightGray;
-            buttonGray.Location = new Point(104, 129);
-            buttonGray.Margin = new Padding(1, 2, 1, 2);
-            buttonGray.Name = "buttonGray";
-            buttonGray.Size = new Size(84, 34);
-            buttonGray.TabIndex = 1;
-            buttonGray.Text = "Wall";
-            buttonGray.UseVisualStyleBackColor = false;
-            buttonGray.Click += buttonGray_Click;
+            this.buttonGray.BackColor = System.Drawing.Color.LightGray;
+            this.buttonGray.Location = new System.Drawing.Point(104, 129);
+            this.buttonGray.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
+            this.buttonGray.Name = "buttonGray";
+            this.buttonGray.Size = new System.Drawing.Size(84, 34);
+            this.buttonGray.TabIndex = 1;
+            this.buttonGray.Text = "Wall";
+            this.buttonGray.UseVisualStyleBackColor = false;
             // 
             // buttonBrown
             // 
-            buttonBrown.BackColor = Color.DarkGoldenrod;
-            buttonBrown.Cursor = Cursors.No;
-            buttonBrown.Location = new Point(4, 166);
-            buttonBrown.Margin = new Padding(1, 2, 1, 2);
-            buttonBrown.Name = "buttonBrown";
-            buttonBrown.Size = new Size(84, 34);
-            buttonBrown.TabIndex = 2;
-            buttonBrown.Text = "LR Enemy";
-            buttonBrown.UseVisualStyleBackColor = false;
-            buttonBrown.Click += buttonBrown_Click;
+            this.buttonBrown.BackColor = System.Drawing.Color.DarkGoldenrod;
+            this.buttonBrown.Cursor = System.Windows.Forms.Cursors.No;
+            this.buttonBrown.Location = new System.Drawing.Point(4, 166);
+            this.buttonBrown.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
+            this.buttonBrown.Name = "buttonBrown";
+            this.buttonBrown.Size = new System.Drawing.Size(84, 34);
+            this.buttonBrown.TabIndex = 2;
+            this.buttonBrown.Text = "LR Enemy";
+            this.buttonBrown.UseVisualStyleBackColor = false;
             // 
             // buttonBlue
             // 
-            buttonBlue.BackColor = Color.LightSkyBlue;
-            buttonBlue.Location = new Point(104, 204);
-            buttonBlue.Margin = new Padding(1, 2, 1, 2);
-            buttonBlue.Name = "buttonBlue";
-            buttonBlue.Size = new Size(84, 32);
-            buttonBlue.TabIndex = 3;
-            buttonBlue.Text = "Player";
-            buttonBlue.UseVisualStyleBackColor = false;
-            buttonBlue.Click += buttonBlue_Click;
+            this.buttonBlue.BackColor = System.Drawing.Color.LightSkyBlue;
+            this.buttonBlue.Location = new System.Drawing.Point(104, 204);
+            this.buttonBlue.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
+            this.buttonBlue.Name = "buttonBlue";
+            this.buttonBlue.Size = new System.Drawing.Size(84, 32);
+            this.buttonBlue.TabIndex = 3;
+            this.buttonBlue.Text = "Player";
+            this.buttonBlue.UseVisualStyleBackColor = false;
             // 
             // buttonRed
             // 
-            buttonRed.BackColor = Color.Firebrick;
-            buttonRed.Location = new Point(104, 167);
-            buttonRed.Margin = new Padding(1, 2, 1, 2);
-            buttonRed.Name = "buttonRed";
-            buttonRed.Size = new Size(84, 34);
-            buttonRed.TabIndex = 4;
-            buttonRed.Text = "SR Enemy";
-            buttonRed.UseVisualStyleBackColor = false;
-            buttonRed.Click += buttonRed_Click;
+            this.buttonRed.BackColor = System.Drawing.Color.Firebrick;
+            this.buttonRed.Location = new System.Drawing.Point(104, 167);
+            this.buttonRed.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
+            this.buttonRed.Name = "buttonRed";
+            this.buttonRed.Size = new System.Drawing.Size(84, 34);
+            this.buttonRed.TabIndex = 4;
+            this.buttonRed.Text = "SR Enemy";
+            this.buttonRed.UseVisualStyleBackColor = false;
             // 
             // buttonBlack
             // 
-            buttonBlack.BackColor = Color.Black;
-            buttonBlack.Location = new Point(4, 262);
-            buttonBlack.Margin = new Padding(1, 2, 1, 2);
-            buttonBlack.Name = "buttonBlack";
-            buttonBlack.Size = new Size(84, 32);
-            buttonBlack.TabIndex = 5;
-            buttonBlack.UseVisualStyleBackColor = false;
-            buttonBlack.Click += buttonBlack_Click;
+            this.buttonBlack.BackColor = System.Drawing.Color.Black;
+            this.buttonBlack.Location = new System.Drawing.Point(4, 262);
+            this.buttonBlack.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
+            this.buttonBlack.Name = "buttonBlack";
+            this.buttonBlack.Size = new System.Drawing.Size(84, 32);
+            this.buttonBlack.TabIndex = 5;
+            this.buttonBlack.UseVisualStyleBackColor = false;
             // 
             // label2
             // 
-            label2.AutoSize = true;
-            label2.Location = new Point(4, 246);
-            label2.Name = "label2";
-            label2.Size = new Size(71, 15);
-            label2.TabIndex = 7;
-            label2.Text = "Empty Floor";
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(4, 246);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(71, 15);
+            this.label2.TabIndex = 7;
+            this.label2.Text = "Empty Floor";
             // 
             // label6
             // 
-            label6.AutoSize = true;
-            label6.Location = new Point(4, 64);
-            label6.Name = "label6";
-            label6.Size = new Size(0, 15);
-            label6.TabIndex = 11;
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(4, 64);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(0, 15);
+            this.label6.TabIndex = 11;
             // 
             // buttonPurple
             // 
-            buttonPurple.BackColor = Color.Purple;
-            buttonPurple.ForeColor = Color.Black;
-            buttonPurple.Location = new Point(4, 203);
-            buttonPurple.Margin = new Padding(2);
-            buttonPurple.Name = "buttonPurple";
-            buttonPurple.Size = new Size(84, 32);
-            buttonPurple.TabIndex = 12;
-            buttonPurple.Text = "N/A";
-            buttonPurple.UseVisualStyleBackColor = false;
-            buttonPurple.Click += buttonPurple_Click;
+            this.buttonPurple.BackColor = System.Drawing.Color.Purple;
+            this.buttonPurple.ForeColor = System.Drawing.Color.Black;
+            this.buttonPurple.Location = new System.Drawing.Point(4, 203);
+            this.buttonPurple.Margin = new System.Windows.Forms.Padding(2);
+            this.buttonPurple.Name = "buttonPurple";
+            this.buttonPurple.Size = new System.Drawing.Size(84, 32);
+            this.buttonPurple.TabIndex = 12;
+            this.buttonPurple.Text = "N/A";
+            this.buttonPurple.UseVisualStyleBackColor = false;
             // 
             // groupBoxTiles
             // 
-            groupBoxTiles.Controls.Add(buttonAqua);
-            groupBoxTiles.Controls.Add(buttonPink);
-            groupBoxTiles.Controls.Add(buttonOlive);
-            groupBoxTiles.Controls.Add(buttonIndigo);
-            groupBoxTiles.Controls.Add(buttonTan);
-            groupBoxTiles.Controls.Add(buttonGold);
-            groupBoxTiles.Controls.Add(buttonTeal);
-            groupBoxTiles.Controls.Add(buttonOrange);
-            groupBoxTiles.Controls.Add(buttonPurple);
-            groupBoxTiles.Controls.Add(label6);
-            groupBoxTiles.Controls.Add(label2);
-            groupBoxTiles.Controls.Add(buttonBlack);
-            groupBoxTiles.Controls.Add(buttonRed);
-            groupBoxTiles.Controls.Add(buttonBlue);
-            groupBoxTiles.Controls.Add(buttonBrown);
-            groupBoxTiles.Controls.Add(buttonGray);
-            groupBoxTiles.Controls.Add(buttonGreen);
-            groupBoxTiles.Location = new Point(8, 8);
-            groupBoxTiles.Margin = new Padding(1, 2, 1, 2);
-            groupBoxTiles.Name = "groupBoxTiles";
-            groupBoxTiles.Padding = new Padding(1, 2, 1, 2);
-            groupBoxTiles.Size = new Size(192, 311);
-            groupBoxTiles.TabIndex = 1;
-            groupBoxTiles.TabStop = false;
-            groupBoxTiles.Text = "TileSelector";
+            this.groupBoxTiles.Controls.Add(this.buttonAqua);
+            this.groupBoxTiles.Controls.Add(this.buttonPink);
+            this.groupBoxTiles.Controls.Add(this.buttonOlive);
+            this.groupBoxTiles.Controls.Add(this.buttonIndigo);
+            this.groupBoxTiles.Controls.Add(this.buttonTan);
+            this.groupBoxTiles.Controls.Add(this.buttonGold);
+            this.groupBoxTiles.Controls.Add(this.buttonTeal);
+            this.groupBoxTiles.Controls.Add(this.buttonOrange);
+            this.groupBoxTiles.Controls.Add(this.buttonPurple);
+            this.groupBoxTiles.Controls.Add(this.label6);
+            this.groupBoxTiles.Controls.Add(this.label2);
+            this.groupBoxTiles.Controls.Add(this.buttonBlack);
+            this.groupBoxTiles.Controls.Add(this.buttonRed);
+            this.groupBoxTiles.Controls.Add(this.buttonBlue);
+            this.groupBoxTiles.Controls.Add(this.buttonBrown);
+            this.groupBoxTiles.Controls.Add(this.buttonGray);
+            this.groupBoxTiles.Controls.Add(this.buttonGreen);
+            this.groupBoxTiles.Location = new System.Drawing.Point(8, 8);
+            this.groupBoxTiles.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
+            this.groupBoxTiles.Name = "groupBoxTiles";
+            this.groupBoxTiles.Padding = new System.Windows.Forms.Padding(1, 2, 1, 2);
+            this.groupBoxTiles.Size = new System.Drawing.Size(192, 311);
+            this.groupBoxTiles.TabIndex = 1;
+            this.groupBoxTiles.TabStop = false;
+            this.groupBoxTiles.Text = "TileSelector";
             // 
             // buttonAqua
             // 
-            buttonAqua.BackColor = Color.Aquamarine;
-            buttonAqua.Location = new Point(104, 275);
-            buttonAqua.Margin = new Padding(3, 2, 3, 2);
-            buttonAqua.Name = "buttonAqua";
-            buttonAqua.Size = new Size(82, 32);
-            buttonAqua.TabIndex = 18;
-            buttonAqua.Text = "N/A";
-            buttonAqua.UseVisualStyleBackColor = false;
-            buttonAqua.Click += buttonAqua_Click;
+            this.buttonAqua.BackColor = System.Drawing.Color.Aquamarine;
+            this.buttonAqua.Location = new System.Drawing.Point(104, 275);
+            this.buttonAqua.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.buttonAqua.Name = "buttonAqua";
+            this.buttonAqua.Size = new System.Drawing.Size(82, 32);
+            this.buttonAqua.TabIndex = 18;
+            this.buttonAqua.Text = "N/A";
+            this.buttonAqua.UseVisualStyleBackColor = false;
             // 
             // buttonPink
             // 
-            buttonPink.BackColor = Color.Pink;
-            buttonPink.Location = new Point(104, 239);
-            buttonPink.Margin = new Padding(3, 2, 3, 2);
-            buttonPink.Name = "buttonPink";
-            buttonPink.Size = new Size(82, 32);
-            buttonPink.TabIndex = 17;
-            buttonPink.Text = "N/A";
-            buttonPink.UseVisualStyleBackColor = false;
-            buttonPink.Click += buttonPink_Click;
+            this.buttonPink.BackColor = System.Drawing.Color.Pink;
+            this.buttonPink.Location = new System.Drawing.Point(104, 239);
+            this.buttonPink.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.buttonPink.Name = "buttonPink";
+            this.buttonPink.Size = new System.Drawing.Size(82, 32);
+            this.buttonPink.TabIndex = 17;
+            this.buttonPink.Text = "N/A";
+            this.buttonPink.UseVisualStyleBackColor = false;
             // 
             // buttonOlive
             // 
-            buttonOlive.BackColor = Color.Olive;
-            buttonOlive.Location = new Point(104, 16);
-            buttonOlive.Margin = new Padding(3, 2, 3, 2);
-            buttonOlive.Name = "buttonOlive";
-            buttonOlive.Size = new Size(82, 34);
-            buttonOlive.TabIndex = 16;
-            buttonOlive.Text = "N/A";
-            buttonOlive.UseVisualStyleBackColor = false;
-            buttonOlive.Click += buttonOlive_Click;
+            this.buttonOlive.BackColor = System.Drawing.Color.Olive;
+            this.buttonOlive.Location = new System.Drawing.Point(104, 16);
+            this.buttonOlive.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.buttonOlive.Name = "buttonOlive";
+            this.buttonOlive.Size = new System.Drawing.Size(82, 34);
+            this.buttonOlive.TabIndex = 16;
+            this.buttonOlive.Text = "N/A";
+            this.buttonOlive.UseVisualStyleBackColor = false;
             // 
             // buttonIndigo
             // 
-            buttonIndigo.BackColor = Color.Indigo;
-            buttonIndigo.Location = new Point(6, 16);
-            buttonIndigo.Margin = new Padding(3, 2, 3, 2);
-            buttonIndigo.Name = "buttonIndigo";
-            buttonIndigo.Size = new Size(82, 34);
-            buttonIndigo.TabIndex = 15;
-            buttonIndigo.Text = "N/A";
-            buttonIndigo.UseVisualStyleBackColor = false;
-            buttonIndigo.Click += buttonIndigo_Click;
+            this.buttonIndigo.BackColor = System.Drawing.Color.Indigo;
+            this.buttonIndigo.Location = new System.Drawing.Point(6, 16);
+            this.buttonIndigo.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.buttonIndigo.Name = "buttonIndigo";
+            this.buttonIndigo.Size = new System.Drawing.Size(82, 34);
+            this.buttonIndigo.TabIndex = 15;
+            this.buttonIndigo.Text = "N/A";
+            this.buttonIndigo.UseVisualStyleBackColor = false;
             // 
             // buttonTan
             // 
-            buttonTan.BackColor = Color.Tan;
-            buttonTan.Location = new Point(106, 56);
-            buttonTan.Margin = new Padding(3, 2, 3, 2);
-            buttonTan.Name = "buttonTan";
-            buttonTan.Size = new Size(82, 34);
-            buttonTan.TabIndex = 14;
-            buttonTan.Text = "N/A";
-            buttonTan.UseVisualStyleBackColor = false;
-            buttonTan.Click += buttonTan_Click;
+            this.buttonTan.BackColor = System.Drawing.Color.Tan;
+            this.buttonTan.Location = new System.Drawing.Point(106, 56);
+            this.buttonTan.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.buttonTan.Name = "buttonTan";
+            this.buttonTan.Size = new System.Drawing.Size(82, 34);
+            this.buttonTan.TabIndex = 14;
+            this.buttonTan.Text = "N/A";
+            this.buttonTan.UseVisualStyleBackColor = false;
             // 
             // buttonGold
             // 
-            buttonGold.BackColor = Color.Gold;
-            buttonGold.Location = new Point(6, 56);
-            buttonGold.Margin = new Padding(3, 2, 3, 2);
-            buttonGold.Name = "buttonGold";
-            buttonGold.Size = new Size(82, 34);
-            buttonGold.TabIndex = 13;
-            buttonGold.Text = "N/A";
-            buttonGold.TextImageRelation = TextImageRelation.TextBeforeImage;
-            buttonGold.UseVisualStyleBackColor = false;
-            buttonGold.Click += buttonGold_Click;
+            this.buttonGold.BackColor = System.Drawing.Color.Gold;
+            this.buttonGold.Location = new System.Drawing.Point(6, 56);
+            this.buttonGold.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.buttonGold.Name = "buttonGold";
+            this.buttonGold.Size = new System.Drawing.Size(82, 34);
+            this.buttonGold.TabIndex = 13;
+            this.buttonGold.Text = "N/A";
+            this.buttonGold.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.buttonGold.UseVisualStyleBackColor = false;
             // 
             // buttonTeal
             // 
-            buttonTeal.BackColor = Color.Teal;
-            buttonTeal.Location = new Point(106, 91);
-            buttonTeal.Margin = new Padding(3, 2, 3, 2);
-            buttonTeal.Name = "buttonTeal";
-            buttonTeal.Size = new Size(82, 34);
-            buttonTeal.TabIndex = 0;
-            buttonTeal.Text = "N/A";
-            buttonTeal.UseVisualStyleBackColor = false;
-            buttonTeal.Click += buttonTeal_Click;
+            this.buttonTeal.BackColor = System.Drawing.Color.Teal;
+            this.buttonTeal.Location = new System.Drawing.Point(106, 91);
+            this.buttonTeal.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.buttonTeal.Name = "buttonTeal";
+            this.buttonTeal.Size = new System.Drawing.Size(82, 34);
+            this.buttonTeal.TabIndex = 0;
+            this.buttonTeal.Text = "N/A";
+            this.buttonTeal.UseVisualStyleBackColor = false;
             // 
             // buttonOrange
             // 
-            buttonOrange.BackColor = Color.Orange;
-            buttonOrange.Location = new Point(6, 91);
-            buttonOrange.Margin = new Padding(3, 2, 3, 2);
-            buttonOrange.Name = "buttonOrange";
-            buttonOrange.Size = new Size(82, 34);
-            buttonOrange.TabIndex = 0;
-            buttonOrange.Text = "N/A";
-            buttonOrange.UseVisualStyleBackColor = false;
-            buttonOrange.Click += buttonOrange_Click;
+            this.buttonOrange.BackColor = System.Drawing.Color.Orange;
+            this.buttonOrange.Location = new System.Drawing.Point(6, 91);
+            this.buttonOrange.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.buttonOrange.Name = "buttonOrange";
+            this.buttonOrange.Size = new System.Drawing.Size(82, 34);
+            this.buttonOrange.TabIndex = 0;
+            this.buttonOrange.Text = "N/A";
+            this.buttonOrange.UseVisualStyleBackColor = false;
             // 
             // groupBoxLayer
             // 
-            groupBoxLayer.Controls.Add(labelLayer);
-            groupBoxLayer.Location = new Point(8, 421);
-            groupBoxLayer.Margin = new Padding(2);
-            groupBoxLayer.Name = "groupBoxLayer";
-            groupBoxLayer.Padding = new Padding(2);
-            groupBoxLayer.Size = new Size(192, 52);
-            groupBoxLayer.TabIndex = 6;
-            groupBoxLayer.TabStop = false;
-            groupBoxLayer.Text = "Current Layer:";
+            this.groupBoxLayer.Controls.Add(this.labelLayer);
+            this.groupBoxLayer.Location = new System.Drawing.Point(8, 421);
+            this.groupBoxLayer.Margin = new System.Windows.Forms.Padding(2);
+            this.groupBoxLayer.Name = "groupBoxLayer";
+            this.groupBoxLayer.Padding = new System.Windows.Forms.Padding(2);
+            this.groupBoxLayer.Size = new System.Drawing.Size(192, 52);
+            this.groupBoxLayer.TabIndex = 6;
+            this.groupBoxLayer.TabStop = false;
+            this.groupBoxLayer.Text = "Current Layer:";
             // 
             // labelLayer
             // 
-            labelLayer.AutoSize = true;
-            labelLayer.Font = new Font("Segoe UI", 20F, FontStyle.Regular, GraphicsUnit.Point);
-            labelLayer.Location = new Point(28, 16);
-            labelLayer.Margin = new Padding(2, 0, 2, 0);
-            labelLayer.Name = "labelLayer";
-            labelLayer.Size = new Size(131, 37);
-            labelLayer.TabIndex = 0;
-            labelLayer.Text = "Collisions";
+            this.labelLayer.AutoSize = true;
+            this.labelLayer.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.labelLayer.Location = new System.Drawing.Point(28, 16);
+            this.labelLayer.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.labelLayer.Name = "labelLayer";
+            this.labelLayer.Size = new System.Drawing.Size(131, 37);
+            this.labelLayer.TabIndex = 0;
+            this.labelLayer.Text = "Collisions";
             // 
             // Editor
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(921, 610);
-            Controls.Add(groupBoxLayer);
-            Controls.Add(buttonLayerChange);
-            Controls.Add(buttonLoad);
-            Controls.Add(buttonSave);
-            Controls.Add(groupBoxCurrent);
-            Controls.Add(groupBoxTiles);
-            Controls.Add(groupBoxMap);
-            Margin = new Padding(1, 2, 1, 2);
-            Name = "Editor";
-            Text = "Editor";
-            groupBoxCurrent.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)pictureBoxSelected).EndInit();
-            groupBoxTiles.ResumeLayout(false);
-            groupBoxTiles.PerformLayout();
-            groupBoxLayer.ResumeLayout(false);
-            groupBoxLayer.PerformLayout();
-            ResumeLayout(false);
-            PerformLayout();
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(921, 610);
+            this.Controls.Add(this.groupBoxLayer);
+            this.Controls.Add(this.buttonLayerChange);
+            this.Controls.Add(this.buttonLoad);
+            this.Controls.Add(this.buttonSave);
+            this.Controls.Add(this.groupBoxCurrent);
+            this.Controls.Add(this.groupBoxTiles);
+            this.Controls.Add(this.groupBoxMap);
+            this.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
+            this.Name = "Editor";
+            this.Text = "Editor";
+            this.groupBoxCurrent.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxSelected)).EndInit();
+            this.groupBoxTiles.ResumeLayout(false);
+            this.groupBoxTiles.PerformLayout();
+            this.groupBoxLayer.ResumeLayout(false);
+            this.groupBoxLayer.PerformLayout();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
         }
 
         #endregion

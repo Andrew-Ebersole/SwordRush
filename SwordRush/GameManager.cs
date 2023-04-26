@@ -42,6 +42,7 @@ namespace SwordRush
         //objects
         private Player player;
         private List<Enemy> enemies;
+        private Chest chest;
 
         //textures
         private Texture2D spriteSheet;
@@ -130,6 +131,7 @@ namespace SwordRush
             //objects
             enemies = new List<Enemy>();
             player = new Player(dungeontilesTexture2D, new Rectangle(0,0, 32, 64), graphicsDevice);
+            chest = new Chest(dungeontilesTexture2D, new Rectangle(32, 32, 32, 32));
 
 
             //tiling
@@ -198,6 +200,14 @@ namespace SwordRush
             {
                 case GameFSM.Playing: // Playing Game
                     player.Update(gt);
+
+
+                    //update chests
+                    if (player.Rectangle.Intersects(chest.Rectangle))
+                    {
+                        chest.Open = true;
+                    }
+
 
                     //update all the enemies
                     for (int i = 0; i < enemies.Count; i++)
@@ -529,6 +539,8 @@ namespace SwordRush
         /// <param name="sb"></param>
         private void DrawGame(SpriteBatch sb)
         {
+            
+
             foreach (SceneObject tile in floorTiles)
             {
                 tile.Draw(sb);
@@ -546,6 +558,8 @@ namespace SwordRush
                 tile.Draw(sb);
             }
 
+            //draw objects
+            chest.Draw(sb);
             player.Draw(sb);
             foreach (Enemy enemy in enemies)
             {
@@ -568,11 +582,44 @@ namespace SwordRush
                 sb);
 
 
-            // Draw Room Number top right
+            // Draw Box around Room Number top right
+            sb.Draw(singleColor,
+                new Rectangle(0, 0,
+                (int)(window.Width * 0.2f), (int)(window.Height * 0.07f)),
+                Color.White);
+            sb.Draw(singleColor,
+                new Rectangle(1, 1,
+                (int)(window.Width * 0.2f - 2), (int)(window.Height * 0.07f - 2)),
+                Color.Black);
+
+            // Draw Room Number
             sb.DrawString(BellMT24,
                 $"Rooms Cleared: {player.RoomsCleared}",
                 new Vector2(10, 10),
                 Color.LightGray);
+
+
+            // Tutorial text on first room
+            if (player.RoomsCleared == 0)
+            {
+                // Draw Box around Room Number top right
+                sb.Draw(singleColor,
+                    new Rectangle(0, (int)(window.Height*0.07f),
+                    (int)(window.Width * 0.25f), (int)(window.Height * 0.24f)),
+                    Color.White);
+                sb.Draw(singleColor,
+                    new Rectangle(1, (int)(window.Height * 0.07f + 1),
+                    (int)(window.Width * 0.25f - 2), (int)(window.Height * 0.24f - 2)),
+                    Color.Black);
+
+                sb.DrawString(BellMT24,                           // Font
+                        $"Left Click To Dash" +
+                        $"\nRight Click to Dodge" +
+                        $"\nDefeat the enemies to\n clear the room",            // Text
+                        new Vector2(10,  // X Position
+                        (window.Height * 0.08f)),            // Y Position
+                        Color.White);                       // Color
+            }
         }
 
         /// <summary>
@@ -597,6 +644,10 @@ namespace SwordRush
                     {
                         player.X = (j * 64 + 32);
                         player.Y = (i * 64 + 32);
+                    }
+                    else if (grid[j,i] == 4)
+                    {
+                        chest = new Chest(dungeontilesTexture2D, new Rectangle(j*64+16, i*64+16, 32, 32));
                     }
                     else if (grid[j, i] == 5)
                     {
