@@ -129,7 +129,7 @@ namespace SwordRush
             //objects
             enemies = new List<Enemy>();
             player = new Player(dungeontilesTexture2D, new Rectangle(0,0, 32, 64), graphicsDevice);
-            chest = new Chest(dungeontilesTexture2D, new Rectangle(32, 32, 32, 32));
+            chest = null;
 
 
             //tiling
@@ -199,7 +199,7 @@ namespace SwordRush
 
 
                     //update chests
-                    if (player.Rectangle.Intersects(chest.Rectangle))
+                    if (chest != null && player.Rectangle.Intersects(chest.Rectangle))
                     {
                         chest.Open = true;
                     }
@@ -542,7 +542,10 @@ namespace SwordRush
             }
 
             //draw objects
-            chest.Draw(sb);
+            if (chest != null)
+            {
+                chest.Draw(sb);
+            }
             player.Draw(sb);
             foreach (Enemy enemy in enemies)
             {
@@ -611,6 +614,7 @@ namespace SwordRush
         public void GenerateRoom()
         {
             walls.Clear();
+            chest = null;
             for (int i = 0; i < grid.GetLength(1); i++)
             {
                 for (int j = 0; j < grid.GetLength(0); j++)
@@ -628,7 +632,7 @@ namespace SwordRush
                         player.X = (j * 64 + 32);
                         player.Y = (i * 64 + 32);
                     }
-                    else if (grid[j,i] == 4)
+                    else if (grid[j,i] == 4 && player.RoomsCleared%5 == 0)
                     {
                         chest = new Chest(dungeontilesTexture2D, new Rectangle(j*64+16, i*64+16, 32, 32));
                     }
