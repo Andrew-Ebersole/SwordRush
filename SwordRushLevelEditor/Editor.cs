@@ -459,7 +459,7 @@ namespace SwordRushLevelEditor
             else
             {
                 buttonGray.Text = "Wall";
-                buttonGreen.Text = "N/A";
+                buttonGreen.Text = "Chest";
                 buttonBrown.Text = "LR Enemy";
                 buttonRed.Text = "SR Enemy";
                 buttonPurple.Text = "N/A";
@@ -492,7 +492,7 @@ namespace SwordRushLevelEditor
                         //save collision layer
                         if (map[j, i].BackColor == Color.Green)
                         {
-                            collisionGrid[j, i] = 0;
+                            collisionGrid[j, i] = 4;
                         }
                         else if (map[j, i].BackColor == Color.LightGray)
                         {

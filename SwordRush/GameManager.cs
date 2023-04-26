@@ -42,6 +42,7 @@ namespace SwordRush
         //objects
         private Player player;
         private List<Enemy> enemies;
+        private Chest chest;
 
         //textures
         private Texture2D spriteSheet;
@@ -128,6 +129,7 @@ namespace SwordRush
             //objects
             enemies = new List<Enemy>();
             player = new Player(dungeontilesTexture2D, new Rectangle(0,0, 32, 64), graphicsDevice);
+            chest = new Chest(dungeontilesTexture2D, new Rectangle(32, 32, 32, 32));
 
 
             //tiling
@@ -194,6 +196,14 @@ namespace SwordRush
             {
                 case GameFSM.Playing: // Playing Game
                     player.Update(gt);
+
+
+                    //update chests
+                    if (player.Rectangle.Intersects(chest.Rectangle))
+                    {
+                        chest.Open = true;
+                    }
+
 
                     //update all the enemies
                     for (int i = 0; i < enemies.Count; i++)
@@ -531,6 +541,8 @@ namespace SwordRush
                 tile.Draw(sb);
             }
 
+            //draw objects
+            chest.Draw(sb);
             player.Draw(sb);
             foreach (Enemy enemy in enemies)
             {
@@ -615,6 +627,10 @@ namespace SwordRush
                     {
                         player.X = (j * 64 + 32);
                         player.Y = (i * 64 + 32);
+                    }
+                    else if (grid[j,i] == 4)
+                    {
+                        chest = new Chest(dungeontilesTexture2D, new Rectangle(j*64+16, i*64+16, 32, 32));
                     }
                     else if (grid[j, i] == 5)
                     {
