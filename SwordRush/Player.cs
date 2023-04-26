@@ -204,7 +204,7 @@ namespace SwordRush
         /// </summary>
         public void playerControl(GameTime gameTime)
         {
-            Debug.WriteLine(shiledOn);
+            //Debug.WriteLine(shiledOn);
             // Move when attacking
             if (attackFrame < 100 * range)
             {

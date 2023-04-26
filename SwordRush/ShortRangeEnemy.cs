@@ -97,6 +97,16 @@ namespace SwordRush
                 if (path != null && path.Count < 7 + 1 && playerDistance.Length() < 350)
                 {
                     Vector2 direction = Vector2.Normalize(distance);
+
+
+                    // Make sure that the direction is a real number
+                    // so the enemy doesn't disappear
+                    if (!(Math.Abs(direction.X) >= 0))
+                    {
+                        //direction = new Vector2(0, 1);
+                    }
+                    Debug.WriteLine($"{direction}");
+
                     Position -= direction * 2.99f; //will cause error if increase speed, should be lower than 3
                     enemyState = EnemyStateMachine.Move;
                 }
