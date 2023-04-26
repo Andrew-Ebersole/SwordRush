@@ -82,6 +82,8 @@ namespace SwordRush
 
         //Economy system
         private int totalCoin;
+        private int startAttack;
+        private int startHealth;
 
         // Timer
         private double clickCooldown;
@@ -177,6 +179,8 @@ namespace SwordRush
             InitializeLevelUpButtons();
             maxedPowers = new List<int>();
 
+            //init player econ
+            InitPlayerStats();
         }
 
         public Player LocalPlayer
@@ -216,6 +220,8 @@ namespace SwordRush
                             SoundManager.Get.EnemyAttackEffect.Play();
                             enemies[i].AttackCooldown();
                             player.Damaged(enemies[i].Atk);
+                            
+
                         }
 
                         if (enemies[i].Health <= 0)
@@ -472,18 +478,29 @@ namespace SwordRush
             }
         }
 
-
         public void InitPlayerStats()
         {
             string[] stats = fileManager_.LoadStats($"Content/PlayerProgress.txt");
 
             totalCoin = int.Parse(stats[0]);
-            player.BackUpPower = (stats[1] == "true");
+            startAttack = int.Parse(stats[1]);
+            startHealth = int.Parse(stats[2]);
+            player.BackUpPower = (stats[3] == "true");
+            player.vampirePower = (stats[4] == "true");
+            player.shieldPower = (stats[5] == "true");
         }
 
         public void UpdateEcon()
         {
-
+            string stats = "";
+            stats += totalCoin+",";
+            stats += startAttack + ",";
+            stats += startHealth + ",";
+            stats += player.BackUpPower + ",";
+            stats += player.vampirePower + ",";
+            stats += player.shieldPower;
+            
+            FileManager.SaveStats($"Content/PlayerProgress.txt",stats);
         }
 
         public void UpdateGraph()
