@@ -143,6 +143,11 @@ namespace SwordRush
             get { return range; }
         }
 
+        public float BackUpLevel
+        {
+            get { return backUpLevel; }
+        }
+
         // --- Constructor --- //
 
         public Player(Texture2D texture, Rectangle rectangle, GraphicsDevice graphics) : base(texture, rectangle)
@@ -443,7 +448,7 @@ namespace SwordRush
 
         public void NewRoom()
         {
-            attackFrame = 100 * range + 800 - 50 * atkSpd;
+            attackFrame = 100 * range + 800 - 75 * atkSpd;
         }
 
         /// <summary>
