@@ -103,9 +103,9 @@ namespace SwordRush
                     // so the enemy doesn't disappear
                     if (!(Math.Abs(direction.X) >= 0))
                     {
-                        //direction = new Vector2(0, 1);
+                        direction = new Vector2(0, 1);
                     }
-                    Debug.WriteLine($"{direction}");
+                    //Debug.WriteLine($"{direction}");
 
                     Position -= direction * 2.99f; //will cause error if increase speed, should be lower than 3
                     enemyState = EnemyStateMachine.Move;
