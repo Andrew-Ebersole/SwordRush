@@ -19,16 +19,18 @@ namespace SwordRush
             writer.Close();
         }
 
-        public static void SaveStats(string path, string[] info)
+        public static void SaveStats(string path, string info)
         {
-
+            StreamWriter writer = new StreamWriter(path);
+            writer.WriteLine(info);
+            writer.Close();
         }
 
         public string[] LoadStats(string path)
         {
             StreamReader reader = new StreamReader(path);
             string[] info = reader.ReadLine().Split(',');
-
+            reader.Close();
             return info;
         }
 

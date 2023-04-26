@@ -15,6 +15,8 @@ using Microsoft.Xna.Framework.Audio;
 using Color = Microsoft.Xna.Framework.Color;
 using Point = Microsoft.Xna.Framework.Point;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
+using System.Numerics;
+using Vector2 = Microsoft.Xna.Framework.Vector2;
 
 namespace SwordRush
 {
@@ -33,7 +35,10 @@ namespace SwordRush
         AttackSpeed,
         AttackDamage,
         Range,
-        BackUp
+        BackUp,
+        Shield,
+        Vampire
+
     }
 
     internal class Player : GameObject
@@ -62,6 +67,14 @@ namespace SwordRush
         private bool backUpPower;
         private int backUpLevel; // max should be 3
         private double backUpFrame;
+
+        public bool shieldPower;
+        private int shiledLevel; // max should be 3
+        public double shiledFrame;
+        public bool shiledOn;
+
+        public bool vampirePower;
+        private int vampireLevel; // max should be 3
 
 
         // Player weapon
@@ -167,6 +180,8 @@ namespace SwordRush
             preKeyboardState = currentKeyboardState;
             direction = new Vector2();
             backUpFrame = 1000;
+            shiledFrame = 20000;
+            shiledOn = true;
 
             // Create a texture for blank rectangle
             singleColor = new Texture2D(graphics, 1, 1);
@@ -189,6 +204,7 @@ namespace SwordRush
         /// </summary>
         public void playerControl(GameTime gameTime)
         {
+            Debug.WriteLine(shiledOn);
             // Move when attacking
             if (attackFrame < 100 * range)
             {
@@ -222,12 +238,25 @@ namespace SwordRush
                 attackFrame = 0;
             }
 
+            //back up
             if (currentMouseState.RightButton == ButtonState.Pressed &&
                 preMouseState.RightButton == ButtonState.Released && backUpFrame > 1000)
             {
                 attackFrame = int.MaxValue / 2;
                 backUpFrame = 0;
             }
+
+            //shield
+            if (!shiledOn)
+            {
+                shiledFrame += gameTime.TotalGameTime.TotalMilliseconds;
+
+                if (shiledFrame > 1000000)
+                {
+                    shiledOn = true;
+                }
+            }
+
 
             // Auto level up
             if (Keyboard.GetState().IsKeyDown(Keys.P))
@@ -274,6 +303,12 @@ namespace SwordRush
                 case LevelUpAbility.BackUp:
                     backUpLevel += 1;
                     break;
+                case LevelUpAbility.Shield:
+                    shiledLevel += 1;
+                    break;
+                case LevelUpAbility.Vampire:
+                    shiledLevel += 1;
+                    break;
             }
         }
 
@@ -311,9 +346,17 @@ namespace SwordRush
 
         public void Damaged(int dmg)
         {
-            _pes.Start();
-            health -= dmg;
-            SoundManager.Get.PlayerDamagedEffect.Play();
+            if (shiledOn)
+            {
+                shiledOn = false;
+                shiledFrame = 0;
+            }
+            else
+            {
+                _pes.Start();
+                health -= dmg;
+                SoundManager.Get.PlayerDamagedEffect.Play();
+            }
         }
 
 
@@ -378,6 +421,7 @@ namespace SwordRush
                     Color.White * 0.2f);
             }
             
+            //back up
             if (backUpFrame > 1000)
             {
                 //draw cd bar
@@ -394,9 +438,8 @@ namespace SwordRush
                         (int)((this.Rectangle.Width * backUpFrame / 1000)), 3), // Width-Height
                     Color.Gray); // Color
             }
-
-
-
+            
+            
             if (!_pes.firstTime)
                 _pes.Draw(sb);
         }

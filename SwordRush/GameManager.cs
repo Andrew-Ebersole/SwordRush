@@ -43,6 +43,7 @@ namespace SwordRush
         //objects
         private Player player;
         private List<Enemy> enemies;
+        private Chest chest;
 
         //textures
         private Texture2D spriteSheet;  
@@ -84,6 +85,8 @@ namespace SwordRush
 
         //Economy system
         private int totalCoin;
+        private int startAttack;
+        private int startHealth;
 
         // Timer
         private double clickCooldown;
@@ -130,6 +133,7 @@ namespace SwordRush
             //objects
             enemies = new List<Enemy>();
             player = new Player(dungeontilesTexture2D, new Rectangle(0,0, 32, 64), graphicsDevice);
+            chest = null;
 
 
             //tiling
@@ -180,6 +184,8 @@ namespace SwordRush
             InitializeLevelUpButtons();
             maxedPowers = new List<int>();
 
+            //init player econ
+            InitPlayerStats();
         }
 
         public Player LocalPlayer
@@ -197,6 +203,14 @@ namespace SwordRush
             {
                 case GameFSM.Playing: // Playing Game
                     player.Update(gt);
+
+
+                    //update chests
+                    if (chest != null && player.Rectangle.Intersects(chest.Rectangle))
+                    {
+                        chest.Open = true;
+                    }
+
 
                     //update all the enemies
                     for (int i = 0; i < enemies.Count; i++)
@@ -219,6 +233,8 @@ namespace SwordRush
                             SoundManager.Get.EnemyAttackEffect.Play();
                             enemies[i].AttackCooldown();
                             player.Damaged(enemies[i].Atk);
+                            
+
                         }
 
                         if (enemies[i].Health <= 0)
@@ -472,18 +488,29 @@ namespace SwordRush
             }
         }
 
-
         public void InitPlayerStats()
         {
             string[] stats = fileManager_.LoadStats($"Content/PlayerProgress.txt");
 
             totalCoin = int.Parse(stats[0]);
-            player.BackUpPower = (stats[1] == "true");
+            startAttack = int.Parse(stats[1]);
+            startHealth = int.Parse(stats[2]);
+            player.BackUpPower = (stats[3] == "true");
+            player.vampirePower = (stats[4] == "true");
+            player.shieldPower = (stats[5] == "true");
         }
 
         public void UpdateEcon()
         {
-
+            string stats = "";
+            stats += totalCoin+",";
+            stats += startAttack + ",";
+            stats += startHealth + ",";
+            stats += player.BackUpPower + ",";
+            stats += player.vampirePower + ",";
+            stats += player.shieldPower;
+            
+            FileManager.SaveStats($"Content/PlayerProgress.txt",stats);
         }
 
         public void UpdateGraph()
@@ -531,6 +558,11 @@ namespace SwordRush
                 tile.Draw(sb);
             }
 
+            //draw objects
+            if (chest != null)
+            {
+                chest.Draw(sb);
+            }
             player.Draw(sb);
             foreach (Enemy enemy in enemies)
             {
@@ -601,6 +633,7 @@ namespace SwordRush
         public void GenerateRoom()
         {
             walls.Clear();
+            chest = null;
             for (int i = 0; i < grid.GetLength(1); i++)
             {
                 for (int j = 0; j < grid.GetLength(0); j++)
@@ -617,6 +650,10 @@ namespace SwordRush
                     {
                         player.X = (j * 64 + 32);
                         player.Y = (i * 64 + 32);
+                    }
+                    else if (grid[j,i] == 4 && player.RoomsCleared%5 == 0)
+                    {
+                        chest = new Chest(dungeontilesTexture2D, new Rectangle(j*64+16, i*64+16, 32, 32));
                     }
                     else if (grid[j, i] == 5)
                     {
