@@ -28,6 +28,14 @@ namespace SwordRush
         AttackCoolDown
     }
 
+    enum PlayerPerk
+    {
+        Dodge,
+        Sheild,
+        Vampire,
+        None
+    }
+
     enum LevelUpAbility
     {
         Heal,
@@ -38,7 +46,6 @@ namespace SwordRush
         BackUp,
         Shield,
         Vampire
-
     }
 
     internal class Player : GameObject
@@ -49,10 +56,10 @@ namespace SwordRush
         private PlayerStateMachine playerState;
 
         // Plater stats
-        private int exp;
+        public int exp;
         private int level;
-        private int health;
-        private int maxHealth;
+        public int health;
+        public int maxHealth;
         private float atk;
         private float atkSpd;
         private float range;
@@ -76,6 +83,8 @@ namespace SwordRush
         public bool vampirePower;
         public int vampireLevel; // max should be 5
 
+        // Player Perk
+        private PlayerPerk playerPerk;
 
         // Player weapon
         private GameObject sword;
@@ -161,6 +170,10 @@ namespace SwordRush
             get { return backUpLevel; }
         }
 
+        public PlayerPerk Perk { get { return playerPerk; } set { playerPerk = value; } }
+
+        public int VampirePower { get { return vampireLevel; } }
+
         // --- Constructor --- //
 
         public Player(Texture2D texture, Rectangle rectangle, GraphicsDevice graphics) : base(texture, rectangle)
@@ -174,6 +187,7 @@ namespace SwordRush
             atkSpd = 1;
             distance = 1;
             range = 1;
+            vampireLevel = 0;
             currentMouseState = Mouse.GetState();
             preMouseState = Mouse.GetState();
             currentKeyboardState = Keyboard.GetState();
@@ -181,7 +195,7 @@ namespace SwordRush
             direction = new Vector2();
             backUpFrame = 1000;
             shiledFrame = 20000;
-            shiledOn = true;
+            shiledOn = false;
 
             // Create a texture for blank rectangle
             singleColor = new Texture2D(graphics, 1, 1);
@@ -238,7 +252,7 @@ namespace SwordRush
             }
 
             //back up
-            if (currentMouseState.RightButton == ButtonState.Pressed &&
+            if (backUpPower&&currentMouseState.RightButton == ButtonState.Pressed &&
                 preMouseState.RightButton == ButtonState.Released && backUpFrame > 2000)
             {
                 attackFrame = int.MaxValue / 2;
@@ -246,7 +260,7 @@ namespace SwordRush
             }
 
             //shield
-            if (!shiledOn)
+            if (!shiledOn&&shieldPower)
             {
                 shiledFrame += gameTime.TotalGameTime.TotalMilliseconds;
 
@@ -305,7 +319,7 @@ namespace SwordRush
                     shiledLevel += 1;
                     break;
                 case LevelUpAbility.Vampire:
-                    shiledLevel += 1;
+                    vampireLevel += 1;
                     break;
             }
         }
@@ -440,22 +454,28 @@ namespace SwordRush
             }
             
             //back up
-            if (backUpFrame > 2000)
+            if (backUpPower)
             {
-                //draw cd bar
-                sb.Draw(singleColor, // Texture
-                    new Rectangle((int)this.Position.X - 16, (int)this.Position.Y + 36, // X-Y position
-                        (int)((this.Rectangle.Width)), 3), // Width-Height
-                    Color.DarkGreen); // Color
+                if (backUpFrame > 2000)
+                {
+                    //draw cd bar
+                    sb.Draw(singleColor, // Texture
+                        new Rectangle((int)this.Position.X - 16, (int)this.Position.Y + 36, // X-Y position
+                            (int)((this.Rectangle.Width)), 3), // Width-Height
+                        Color.DarkGreen); // Color
+                }
+                else
+                {
+                    //draw cd bar
+                    sb.Draw(singleColor, // Texture
+                        new Rectangle((int)this.Position.X - 16, (int)this.Position.Y + 36, // X-Y position
+                            (int)((this.Rectangle.Width * backUpFrame / 2000)), 3), // Width-Height
+                        Color.Gray); // Color
+                }
+
             }
-            else
-            {
-                //draw cd bar
-                sb.Draw(singleColor, // Texture
-                    new Rectangle((int)this.Position.X - 16, (int)this.Position.Y + 36, // X-Y position
-                        (int)((this.Rectangle.Width * backUpFrame / 2000)), 3), // Width-Height
-                    Color.Gray); // Color
-            }
+
+            
             
             
             if (!_pes.firstTime)
@@ -505,6 +525,20 @@ namespace SwordRush
             range = 3f;
             roomsCleared = 0;
             _pes.firstTime = true;
+            vampireLevel = 0;
+        }
+
+        /// <summary>
+        /// Heal the player
+        /// </summary>
+        /// <param name="amount"></param>
+        public void Heal(int amount)
+        {
+            health += amount;
+            if (health >= MaxHealth)
+            {
+                health = MaxHealth;
+            }
         }
 
         public void NewRoom()
