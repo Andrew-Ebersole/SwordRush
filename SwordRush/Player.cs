@@ -315,8 +315,7 @@ namespace SwordRush
             Vector2 movement = GetDirection() * (10 + backUpLevel * 4);
             if (backUpFrame < 100)
             {
-                playerState = PlayerStateMachine.Attack;
-                shiledOn = true;
+                //playerState = PlayerStateMachine.Attack;
                 //move the player's location
                 Position += movement;
             }
@@ -344,7 +343,11 @@ namespace SwordRush
 
         public void Damaged(int dmg)
         {
-            if (shiledOn)
+            if (backUpFrame < 100)
+            {
+
+            }
+            else if (shiledOn)
             {
                 shiledOn = false;
                 shiledFrame = 0;
@@ -402,7 +405,14 @@ namespace SwordRush
         /// <param name="sb"></param>
         public void Draw(SpriteBatch sb)
         {
-            sb.Draw(animation_.Frame, Rectangle, Color.White);
+            if (shiledOn)
+            {
+                sb.Draw(animation_.Frame, Rectangle, Color.White*0.2f);
+            }
+            else
+            {
+                sb.Draw(animation_.Frame, Rectangle, Color.White);
+            }
             //sb.Draw(dungeontilesTexture2D, Rectangle, new Rectangle(128, 64, 16, 32), Color.White);
 
             Color swordTint;

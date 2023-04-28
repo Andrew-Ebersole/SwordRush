@@ -559,8 +559,6 @@ namespace SwordRush
         /// <param name="sb"></param>
         private void DrawGame(SpriteBatch sb)
         {
-            
-
             foreach (SceneObject tile in floorTiles)
             {
                 tile.Draw(sb);
