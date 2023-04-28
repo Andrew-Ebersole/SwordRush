@@ -555,7 +555,7 @@ namespace SwordRush
 
                     // Vampire Power
                     // Check if perk is equipted
-                    if (player.Perk == PlayerPerk.Dodge)
+                    if (player.Perk == PlayerPerk.Vampire)
                     {
                         if (maxedPowers.Contains(6))
                         {
