@@ -228,8 +228,28 @@ namespace SwordRush
                     if (chest != null && player.Rectangle.Intersects(chest.Rectangle))
                     {
                         chest.Open = true;
-                    }
 
+                        Random rand = new Random();
+                        int num = rand.Next(100);
+
+                        //heal
+                        if (num < 20)
+                        {
+                            player.health += (int)(player.maxHealth / 4);
+                            if (player.health > player.maxHealth)
+                            {
+                                player.health = player.maxHealth;
+                            }
+                            // gain exp
+                        }else if (num < 60)
+                        {
+                            player.exp += (int)(player.LevelUpExp * 0.25);
+                            //gain coin
+                        }else
+                        {
+                            totalCoin += (player.RoomsCleared*10)*100/ (num - 50);
+                        }
+                    }
 
                     //update all the enemies
                     for (int i = 0; i < enemies.Count; i++)
