@@ -65,16 +65,16 @@ namespace SwordRush
 
         //player Power ups
         private bool backUpPower;
-        private int backUpLevel; // max should be 3
+        public int backUpLevel; // max should be 3
         private double backUpFrame;
 
         public bool shieldPower;
-        private int shiledLevel; // max should be 3
+        public int shiledLevel; // max should be 5
         public double shiledFrame;
         public bool shiledOn;
 
         public bool vampirePower;
-        private int vampireLevel; // max should be 3
+        public int vampireLevel; // max should be 5
 
 
         // Player weapon
@@ -184,7 +184,7 @@ namespace SwordRush
             direction = new Vector2();
             backUpFrame = 1000;
             shiledFrame = 20000;
-            shiledOn = true;
+            shiledOn = false;
 
             // Create a texture for blank rectangle
             singleColor = new Texture2D(graphics, 1, 1);
@@ -207,7 +207,6 @@ namespace SwordRush
         /// </summary>
         public void playerControl(GameTime gameTime)
         {
-            //Debug.WriteLine(shiledOn);
             // Move when attacking
             if (attackFrame < 100 * range)
             {
@@ -242,24 +241,23 @@ namespace SwordRush
             }
 
             //back up
-            if (currentMouseState.RightButton == ButtonState.Pressed &&
-                preMouseState.RightButton == ButtonState.Released && backUpFrame > 1000)
+            if (backUpPower&&currentMouseState.RightButton == ButtonState.Pressed &&
+                preMouseState.RightButton == ButtonState.Released && backUpFrame > 2000)
             {
                 attackFrame = int.MaxValue / 2;
                 backUpFrame = 0;
             }
 
             //shield
-            if (!shiledOn)
+            if (!shiledOn&&shieldPower)
             {
                 shiledFrame += gameTime.TotalGameTime.TotalMilliseconds;
 
-                if (shiledFrame > 1000000)
+                if (shiledFrame > 10000000 - shiledLevel* 1000000)//default 10second
                 {
                     shiledOn = true;
                 }
             }
-
 
             // Auto level up
             if (Keyboard.GetState().IsKeyDown(Keys.P))
@@ -320,8 +318,7 @@ namespace SwordRush
             Vector2 movement = GetDirection() * (10 + backUpLevel * 4);
             if (backUpFrame < 100)
             {
-                playerState = PlayerStateMachine.Attack;
-
+                //playerState = PlayerStateMachine.Attack;
                 //move the player's location
                 Position += movement;
             }
@@ -349,7 +346,11 @@ namespace SwordRush
 
         public void Damaged(int dmg)
         {
-            if (shiledOn)
+            if (backUpFrame < 100)
+            {
+
+            }
+            else if (shiledOn)
             {
                 shiledOn = false;
                 shiledFrame = 0;
@@ -366,6 +367,16 @@ namespace SwordRush
         public void GainExp(int enemyLevel)
         {
             exp += enemyLevel * 10 * ((int)(enemyLevel / 2) + 1);
+
+            //if the player has vampire and kills an enemy gain hp
+            if (vampirePower)
+            {
+                health += vampireLevel;
+                if (health > maxHealth)
+                {
+                    health = maxHealth;
+                }
+            }
         }
 
         /// <summary>
@@ -397,7 +408,14 @@ namespace SwordRush
         /// <param name="sb"></param>
         public void Draw(SpriteBatch sb)
         {
-            sb.Draw(animation_.Frame, Rectangle, Color.White);
+            if (shiledOn)
+            {
+                sb.Draw(animation_.Frame, Rectangle, Color.White*0.2f);
+            }
+            else
+            {
+                sb.Draw(animation_.Frame, Rectangle, Color.White);
+            }
             //sb.Draw(dungeontilesTexture2D, Rectangle, new Rectangle(128, 64, 16, 32), Color.White);
 
             Color swordTint;
@@ -425,22 +443,28 @@ namespace SwordRush
             }
             
             //back up
-            if (backUpFrame > 1000)
+            if (backUpPower)
             {
-                //draw cd bar
-                sb.Draw(singleColor, // Texture
-                    new Rectangle((int)this.Position.X - 16, (int)this.Position.Y + 36, // X-Y position
-                        (int)((this.Rectangle.Width)), 3), // Width-Height
-                    Color.DarkGreen); // Color
+                if (backUpFrame > 2000)
+                {
+                    //draw cd bar
+                    sb.Draw(singleColor, // Texture
+                        new Rectangle((int)this.Position.X - 16, (int)this.Position.Y + 36, // X-Y position
+                            (int)((this.Rectangle.Width)), 3), // Width-Height
+                        Color.DarkGreen); // Color
+                }
+                else
+                {
+                    //draw cd bar
+                    sb.Draw(singleColor, // Texture
+                        new Rectangle((int)this.Position.X - 16, (int)this.Position.Y + 36, // X-Y position
+                            (int)((this.Rectangle.Width * backUpFrame / 2000)), 3), // Width-Height
+                        Color.Gray); // Color
+                }
+
             }
-            else
-            {
-                //draw cd bar
-                sb.Draw(singleColor, // Texture
-                    new Rectangle((int)this.Position.X - 16, (int)this.Position.Y + 36, // X-Y position
-                        (int)((this.Rectangle.Width * backUpFrame / 1000)), 3), // Width-Height
-                    Color.Gray); // Color
-            }
+
+            
             
             
             if (!_pes.firstTime)

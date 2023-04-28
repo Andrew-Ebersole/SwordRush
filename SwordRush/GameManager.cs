@@ -58,6 +58,7 @@ namespace SwordRush
 
         // fonts
         private SpriteFont BellMT16;
+        private SpriteFont BellMT18;
         private SpriteFont BellMT24;
         private SpriteFont BellMT48;
         private SpriteFont BellMT72;
@@ -70,7 +71,7 @@ namespace SwordRush
         private SceneObject[,] floorTiles;
         private List<SceneObject> wallTiles;
         private List<List<AStarNode>> graph;
-
+        
         private static GameManager instance = null;
 
         // Level up buttons
@@ -88,7 +89,7 @@ namespace SwordRush
         private int totalCoin;
         private int startAttack;
         private int startHealth;
-
+        private int difficulty; 
         // Timer
         private double clickCooldown;
 
@@ -117,6 +118,7 @@ namespace SwordRush
 
         public int[,] Grid { get { return grid; } }
         public List<List<AStarNode>> Graph { get { return graph; } }
+        public int TotalCoin { get { return totalCoin; } set { totalCoin = value; } }
 
         // --- Constructor --- //
 
@@ -168,6 +170,7 @@ namespace SwordRush
 
             // Font
             BellMT16 = content.Load<SpriteFont>("Bell_MT-16");
+            BellMT18 = content.Load<SpriteFont>("Bell_MT-18");
             BellMT24 = content.Load<SpriteFont>("Bell_MT-24");
             BellMT48 = content.Load<SpriteFont>("Bell_MT-48");
             BellMT72 = content.Load<SpriteFont>("Bell_MT-72");
@@ -187,6 +190,7 @@ namespace SwordRush
 
             //init player econ
             InitPlayerStats();
+            difficulty = 1;
         }
 
         public Player LocalPlayer
@@ -199,12 +203,26 @@ namespace SwordRush
         public void Update(GameTime gt)
         {
             currentMS = Mouse.GetState();
+            currentKeyState = Keyboard.GetState();
+            //special action to reset the stats
+            if (currentKeyState.IsKeyDown(Keys.A)&& currentKeyState.IsKeyDown(Keys.B) && currentKeyState.IsKeyDown(Keys.C) &&
+                currentKeyState.IsKeyDown(Keys.D) && currentKeyState.IsKeyDown(Keys.E) && currentKeyState.IsKeyDown(Keys.F) )
+            {
+                string stats = "";
+                stats += 0 + ",";
+                stats += 1 + ",";
+                stats += 10 + ",";
+                stats += false + ",";
+                stats += false + ",";
+                stats += false;
+
+                FileManager.SaveStats($"Content/PlayerProgress.txt", stats);
+            }
 
             switch (gameFSM)
             {
                 case GameFSM.Playing: // Playing Game
                     player.Update(gt);
-
 
                     //update chests
                     if (chest != null && player.Rectangle.Intersects(chest.Rectangle))
@@ -259,12 +277,13 @@ namespace SwordRush
                         gameFSM = GameFSM.GameOver;
                         gameOver(player.RoomsCleared);
                         clickCooldown = 0;
-                    }
 
+                        totalCoin += player.RoomsCleared*difficulty + player.Level;
+                        UpdateEcon();
+                    }
                     //update player collision
                     WallCollision(player, walls);
                     
-
                     //get keyboard state
                     currentKeyState = Keyboard.GetState();
 
@@ -412,7 +431,7 @@ namespace SwordRush
                             gameOver(player.RoomsCleared);
                         }
                     }
-                        break;
+                    break;
             }
             previousMS = Mouse.GetState();
             previousKeyState = currentKeyState;
@@ -422,6 +441,11 @@ namespace SwordRush
 
         public void Draw(SpriteBatch sb)
         {
+            //draw the total coin
+            sb.DrawString(BellMT24,
+                $"Total Coins: {totalCoin}",
+                new Vector2(1000, 10),
+                Color.LightGray);
             // Testing image buttons
             switch (gameFSM)
             {
@@ -557,7 +581,8 @@ namespace SwordRush
                     // Draw Score
                     sb.DrawString(
                         BellMT48,                           // Font
-                        $"YOU CLEARED {player.RoomsCleared} ROOMS",            // Text
+                        $"YOU CLEARED {player.RoomsCleared} ROOMS\n" +
+                        $"YOU GOT {player.RoomsCleared*difficulty+player.Level} COINS",            // Text
                         new Vector2((window.Width * 0.2f),  // X Position
                         (window.Height * 0.52f)),            // Y Position
                         Color.White);                       // Color
@@ -577,6 +602,35 @@ namespace SwordRush
             player.BackUpPower = (stats[3] == "true");
             player.vampirePower = (stats[4] == "true");
             player.shieldPower = (stats[5] == "true");
+
+            //init the level
+            if (player.BackUpPower)
+            {
+                player.backUpLevel = 1;
+            }
+            else
+            {
+                player.backUpLevel = 0;
+            }
+
+            if (player.shieldPower)
+            {
+                player.shiledLevel = 1;
+            }
+            else
+            {
+                player.shiledLevel = 0;
+            }
+
+            if (player.vampirePower)
+            {
+                player.vampireLevel = 1;
+            }
+            else
+            {
+                player.vampireLevel = 0;
+            }
+
         }
 
         public void UpdateEcon()
@@ -618,8 +672,6 @@ namespace SwordRush
         /// <param name="sb"></param>
         private void DrawGame(SpriteBatch sb)
         {
-            
-
             foreach (SceneObject tile in floorTiles)
             {
                 tile.Draw(sb);
@@ -717,13 +769,13 @@ namespace SwordRush
                     Color.White);
                 sb.Draw(singleColor,
                     new Rectangle(1, (int)(window.Height * 0.07f + 1),
-                    (int)(window.Width * 0.25f - 2), (int)(window.Height * 0.24f - 2)),
+                    (int)(window.Width * 0.25f - 2), (int)(window.Height * 0.24f-2)),
                     Color.Black);
 
                 sb.DrawString(BellMT24,                           // Font
-                        $"Left Click To Dash" +
-                        $"\nRight Click to Dodge" +
-                        $"\nDefeat the enemies to\n clear the room",            // Text
+                        $"Left Click To Dash\n(When sword is solid)" +
+                        $"\nPress space level up" +
+                        $"\nDefeat the enemies to\nclear the room",            // Text
                         new Vector2(10,  // X Position
                         (window.Height * 0.08f)),            // Y Position
                         Color.White);                       // Color
@@ -737,6 +789,21 @@ namespace SwordRush
         {
             walls.Clear();
             chest = null;
+            int enemyLevelGrow = 3;
+
+            switch (difficulty)
+            {
+                case 1:
+                    enemyLevelGrow = 3;
+                    break;
+                case 2:
+                    enemyLevelGrow = 2;
+                    break;
+                case 3:
+                    enemyLevelGrow = 1;
+                    break;
+            }
+
             for (int i = 0; i < grid.GetLength(1); i++)
             {
                 for (int j = 0; j < grid.GetLength(0); j++)
@@ -747,7 +814,7 @@ namespace SwordRush
                     }
                     else if (grid[j,i] == 2)
                     {
-                        enemies.Add(new ShortRangeEnemy(dungeontilesTexture2D, new Rectangle(j*64, i*64, 32, 32), player, (player.RoomsCleared / 3) + 1, graphicsDevice));
+                        enemies.Add(new ShortRangeEnemy(dungeontilesTexture2D, new Rectangle(j*64, i*64, 32, 32), player, (player.RoomsCleared / enemyLevelGrow) + 1, graphicsDevice));
                     }
                     else if (grid[j,i] == 3)
                     {
@@ -760,7 +827,7 @@ namespace SwordRush
                     }
                     else if (grid[j, i] == 5)
                     {
-                        enemies.Add(new LongRangeEnemy(dungeontilesTexture2D, new Rectangle(j * 64, i * 64, 32, 32), player, (player.RoomsCleared / 3) + 1, graphicsDevice));
+                        enemies.Add(new LongRangeEnemy(dungeontilesTexture2D, new Rectangle(j * 64, i * 64, 32, 32), player, (player.RoomsCleared / enemyLevelGrow) + 1, graphicsDevice));
                     }
                 }
             }
