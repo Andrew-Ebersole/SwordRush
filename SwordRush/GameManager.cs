@@ -254,12 +254,13 @@ namespace SwordRush
                         gameFSM = GameFSM.GameOver;
                         gameOver(player.RoomsCleared);
                         clickCooldown = 0;
-                    }
 
+                        totalCoin += player.RoomsCleared + player.Level;
+                        UpdateEcon();
+                    }
                     //update player collision
                     WallCollision(player, walls);
                     
-
                     //get keyboard state
                     currentKeyState = Keyboard.GetState();
 
@@ -405,6 +406,11 @@ namespace SwordRush
 
         public void Draw(SpriteBatch sb)
         {
+            //draw the total coin
+            sb.DrawString(BellMT24,
+                $"Total Coins: {totalCoin}",
+                new Vector2(1000, 10),
+                Color.LightGray);
             // Testing image buttons
             switch (gameFSM)
             {
@@ -485,7 +491,8 @@ namespace SwordRush
                     // Draw Score
                     sb.DrawString(
                         BellMT48,                           // Font
-                        $"YOU CLEARED {player.RoomsCleared} ROOMS",            // Text
+                        $"YOU CLEARED {player.RoomsCleared} ROOMS\n" +
+                        $"YOU GOT {player.RoomsCleared+player.Level} COINS",            // Text
                         new Vector2((window.Width * 0.2f),  // X Position
                         (window.Height * 0.52f)),            // Y Position
                         Color.White);                       // Color
