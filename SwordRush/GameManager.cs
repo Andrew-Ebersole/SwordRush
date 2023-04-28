@@ -658,14 +658,14 @@ namespace SwordRush
                     Color.White);
                 sb.Draw(singleColor,
                     new Rectangle(1, (int)(window.Height * 0.07f + 1),
-                    (int)(window.Width * 0.25f - 2), (int)(window.Height * 0.24f - 2)),
+                    (int)(window.Width * 0.25f - 2), (int)(window.Height * 0.25f)),
                     Color.Black);
 
                 sb.DrawString(BellMT18,                           // Font
                         $"Left Click To Dash\n(When sword is solid)" +
                         $"\nRight Click to Dodge\n(When bar is filled)" +
                         $"\nPress space level up" +
-                        $"\nDefeat the enemies to\n clear the room",            // Text
+                        $"\nDefeat the enemies to\nclear the room",            // Text
                         new Vector2(10,  // X Position
                         (window.Height * 0.08f)),            // Y Position
                         Color.White);                       // Color
