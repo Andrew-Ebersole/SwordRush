@@ -161,6 +161,8 @@ namespace SwordRush
             get { return backUpLevel; }
         }
 
+        public int VampirePower { get { return vampireLevel; } }
+
         // --- Constructor --- //
 
         public Player(Texture2D texture, Rectangle rectangle, GraphicsDevice graphics) : base(texture, rectangle)
@@ -174,6 +176,7 @@ namespace SwordRush
             atkSpd = 1;
             distance = 1;
             range = 1;
+            vampireLevel = 0;
             currentMouseState = Mouse.GetState();
             preMouseState = Mouse.GetState();
             currentKeyboardState = Keyboard.GetState();
@@ -307,7 +310,7 @@ namespace SwordRush
                     shiledLevel += 1;
                     break;
                 case LevelUpAbility.Vampire:
-                    shiledLevel += 1;
+                    vampireLevel += 1;
                     break;
             }
         }
@@ -487,6 +490,20 @@ namespace SwordRush
             range = 3f;
             roomsCleared = 0;
             _pes.firstTime = true;
+            vampireLevel = 0;
+        }
+
+        /// <summary>
+        /// Heal the player
+        /// </summary>
+        /// <param name="amount"></param>
+        public void Heal(int amount)
+        {
+            health += amount;
+            if (health >= MaxHealth)
+            {
+                health = MaxHealth;
+            }
         }
 
         public void NewRoom()

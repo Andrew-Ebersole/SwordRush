@@ -243,6 +243,13 @@ namespace SwordRush
                             player.GainExp(enemies[i].Level);
                             SoundManager.Get.EnemyDeathEffect.Play();
                             enemies.RemoveAt(i);
+
+                            // Vampire Heal
+                            Random rng = new Random();
+                            if (player.VampirePower >= rng.Next(1, 4))
+                            {
+                                player.Heal(1);
+                            }
                         }
                     }
 
@@ -375,8 +382,20 @@ namespace SwordRush
                             player.LevelUp(LevelUpAbility.BackUp);
                             gameFSM = GameFSM.Playing;
                         }
+                        else if (levelUpButtons[6].LeftClicked)
+                        {
+                            // Increase Vampire Power
+                            player.LevelUp(LevelUpAbility.Vampire);
+                            gameFSM = GameFSM.Playing;
+
+                            // Max movement range
+                            if (player.VampirePower >= 3)
+                            {
+                                maxedPowers.Add(6);
+                            }
+                        }
                     }
-                    
+
                     break;
 
                 case GameFSM.GameOver:
@@ -434,6 +453,61 @@ namespace SwordRush
                         $"Left Click to Resume",
                         new Vector2(window.Width * 0.38f, window.Height * 0.56f),
                         Color.White);
+
+                    // Draw all the power ups & levels
+                    
+                    // Attack Speed
+                    if (maxedPowers.Contains(2))
+                    {
+                        DrawPowerUpLevel(sb, new Point(11, 3),
+                            $"Attack Cooldown: {800 - 75 * player.AtkSpd}ms: Maxed", 0.3f);
+                    }
+                    else
+                    {
+                        DrawPowerUpLevel(sb, new Point(11, 3), 
+                            $"Attack Cooldown: {800 - 75 * player.AtkSpd}ms", 0.3f);
+                    }
+
+                    // Damage
+                    DrawPowerUpLevel(sb, new Point(0, 3),
+                            $"Damage: {Math.Round(player.Atk,2)}", 0.4f);
+
+                    // Range
+                    if (maxedPowers.Contains(4))
+                    {
+                        DrawPowerUpLevel(sb, new Point(10, 3),
+                            $"Range: {player.Range}: Maxed", 0.5f);
+                    }
+                    else
+                    {
+                        DrawPowerUpLevel(sb, new Point(10, 3),
+                            $"Range: {player.Range}", 0.5f);
+                    }
+
+                    // Dodge Distance
+                    if (maxedPowers.Contains(5))
+                    {
+                        DrawPowerUpLevel(sb, new Point(13, 2),
+                            $"Dodge Distance: {player.BackUpLevel}: Maxed", 0.6f);
+                    }
+                    else
+                    {
+                        DrawPowerUpLevel(sb, new Point(13, 2),
+                            $"Dodge Distance: {player.BackUpLevel}", 0.6f);
+                    }
+
+                    // Vampire Power
+                    if (maxedPowers.Contains(6))
+                    {
+                        DrawPowerUpLevel(sb, new Point(2, 3),
+                            $"Life Steal: 100%: Maxed", 0.7f);
+                    }
+                    else
+                    {
+                        DrawPowerUpLevel(sb, new Point(2, 3),
+                            $"Life Steal: {player.VampirePower*33}%", 0.7f);
+                    }
+
                     break;
 
                 case GameFSM.LevelUp:
@@ -1084,6 +1158,30 @@ namespace SwordRush
         }
 
         /// <summary>
+        /// Show power up levels during pause menu
+        /// </summary>
+        /// <param name="sb">spritebatch</param>
+        /// <param name="source"> source rectangle in ability tile sheet</param>
+        /// <param name="text"> Power up and level </param>
+        /// <param name="height"> what height to display on screen</param>
+        public void DrawPowerUpLevel(SpriteBatch sb, Point source, string text, float height)
+        {
+            int tileSize = abilityIcons.Width / 16;
+            // Draw Icon
+            sb.Draw(abilityIcons,
+                new Rectangle((int)(window.Width*0.01f),(int)(window.Height*height),
+                (int)(window.Width * 0.05f), (int)(window.Width * 0.05f)),
+                new Rectangle(source.X * tileSize, source.Y * tileSize, tileSize, tileSize),
+                Color.White);
+
+            // Draw Text
+            sb.DrawString(BellMT24,
+                text,
+                new Vector2((int)(window.Width*0.07f), (int)(window.Height*(height+0.015f))),
+                Color.White);
+        }
+
+        /// <summary>
         /// Set the defualt values of all the upgrade buttons
         /// </summary>
         public void InitializeLevelUpButtons()
@@ -1151,6 +1249,18 @@ namespace SwordRush
                 BellMT24,
                 abilityIcons,
                 new Vector2(13, 2)));
+
+            levelUpButtons.Add(new ImageButton(
+                new Rectangle(window.Height * 2, 0,
+                (int)(window.Height * 0.2f), (int)(window.Height * 0.2f)),
+                "Life Steal",
+                "Chance to gain Health" +
+                "\nAfter Killing Enemy" +
+                $"\n{100*Math.Round(player.VampirePower*0.33f,2)}% " +
+                $"=> {100*Math.Round((1+player.VampirePower) * 0.3333f, 2)}%",
+                BellMT24,
+                abilityIcons,
+                new Vector2(2, 3)));
         }
 
         /// <summary>
@@ -1174,7 +1284,7 @@ namespace SwordRush
 
             for (int i = 0; i < 3; i+= 0)
             {
-                int next = rng.Next(0, 6);
+                int next = rng.Next(0, 7);
 
                 // Make sure the ability is not already picked
                 // or it hasn't been maxed out
@@ -1238,6 +1348,13 @@ namespace SwordRush
                 "Increase backwards" +
                 "\ndistance during dodge" +
                 $"\n{player.BackUpLevel} => {player.BackUpLevel + 1}");
+
+            levelUpButtons[6].Update(
+                gt,
+                "Chance to gain Health" +
+                "\nAfter Killing Enemy" +
+                $"\n{100 * Math.Round(player.VampirePower * 0.3333f, 2)}% " +
+                $"=> {100 * Math.Round((1 + player.VampirePower) * 0.3333f, 2)}%");
         }
     }
 }
