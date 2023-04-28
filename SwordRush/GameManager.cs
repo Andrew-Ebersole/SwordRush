@@ -225,7 +225,7 @@ namespace SwordRush
                     player.Update(gt);
 
                     //update chests
-                    if (chest != null && player.Rectangle.Intersects(chest.Rectangle))
+                    if (chest != null && player.Rectangle.Intersects(chest.Rectangle)&& chest.Open == false)
                     {
                         chest.Open = true;
 
