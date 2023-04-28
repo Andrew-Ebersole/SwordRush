@@ -393,7 +393,7 @@ namespace SwordRush
                             gameOver(player.RoomsCleared);
                         }
                     }
-                        break;
+                    break;
             }
             previousMS = Mouse.GetState();
             previousKeyState = currentKeyState;
@@ -503,6 +503,21 @@ namespace SwordRush
             player.BackUpPower = (stats[3] == "true");
             player.vampirePower = (stats[4] == "true");
             player.shieldPower = (stats[5] == "true");
+
+            //init the level
+            if (player.BackUpPower)
+            {
+                player.backUpLevel = 1;
+            }
+            if (player.shieldPower)
+            {
+                player.shiledLevel = 1;
+            }
+            if (player.vampirePower)
+            {
+                player.vampireLevel = 1;
+            }
+
         }
 
         public void UpdateEcon()

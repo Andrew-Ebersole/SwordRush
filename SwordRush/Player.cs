@@ -65,16 +65,16 @@ namespace SwordRush
 
         //player Power ups
         private bool backUpPower;
-        private int backUpLevel; // max should be 3
+        public int backUpLevel; // max should be 3
         private double backUpFrame;
 
         public bool shieldPower;
-        private int shiledLevel; // max should be 5
+        public int shiledLevel; // max should be 5
         public double shiledFrame;
         public bool shiledOn;
 
         public bool vampirePower;
-        private int vampireLevel; // max should be 5
+        public int vampireLevel; // max should be 5
 
 
         // Player weapon
