@@ -191,6 +191,9 @@ namespace SwordRush
             //init player econ
             InitPlayerStats();
             difficulty = 1;
+
+            // Player perk
+            player.Perk = PlayerPerk.None;
         }
 
         public Player LocalPlayer
@@ -508,30 +511,49 @@ namespace SwordRush
                             $"Range: {player.Range}", 0.5f);
                     }
 
+                    // --- Perks ---------------------------------------------------//
                     // Dodge Distance
-                    if (maxedPowers.Contains(5))
+                    // Check if perk is equipted
+                    if (player.Perk == PlayerPerk.Dodge)
+                    {
+                        if (maxedPowers.Contains(5))
+                        {
+                            DrawPowerUpLevel(sb, new Point(13, 2),
+                                $"Dodge Distance: {player.BackUpLevel}: Maxed", 0.6f);
+                        }
+                        else
+                        {
+                            DrawPowerUpLevel(sb, new Point(13, 2),
+                                $"Dodge Distance: {player.BackUpLevel}", 0.6f);
+                        }
+                    } else
                     {
                         DrawPowerUpLevel(sb, new Point(13, 2),
-                            $"Dodge Distance: {player.BackUpLevel}: Maxed", 0.6f);
-                    }
-                    else
-                    {
-                        DrawPowerUpLevel(sb, new Point(13, 2),
-                            $"Dodge Distance: {player.BackUpLevel}", 0.6f);
+                                $"NOT EQUIPTED", 0.6f);
                     }
 
                     // Vampire Power
-                    if (maxedPowers.Contains(6))
+                    // Check if perk is equipted
+                    if (player.Perk == PlayerPerk.Dodge)
                     {
-                        DrawPowerUpLevel(sb, new Point(2, 3),
-                            $"Life Steal: 100%: Maxed", 0.7f);
+                        if (maxedPowers.Contains(6))
+                        {
+                            DrawPowerUpLevel(sb, new Point(2, 3),
+                                $"Life Steal: 100%: Maxed", 0.7f);
+                        }
+                        else
+                        {
+                            DrawPowerUpLevel(sb, new Point(2, 3),
+                                $"Life Steal: {player.VampirePower * 33}%", 0.7f);
+                        }
                     }
                     else
                     {
                         DrawPowerUpLevel(sb, new Point(2, 3),
-                            $"Life Steal: {player.VampirePower*33}%", 0.7f);
+                                $"NOT EQUIPTED", 0.7f);
                     }
 
+                    // Sheild
                     break;
 
                 case GameFSM.LevelUp:

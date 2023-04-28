@@ -28,6 +28,14 @@ namespace SwordRush
         AttackCoolDown
     }
 
+    enum PlayerPerk
+    {
+        Dodge,
+        Sheild,
+        Vampire,
+        None
+    }
+
     enum LevelUpAbility
     {
         Heal,
@@ -38,7 +46,6 @@ namespace SwordRush
         BackUp,
         Shield,
         Vampire
-
     }
 
     internal class Player : GameObject
@@ -76,6 +83,8 @@ namespace SwordRush
         public bool vampirePower;
         public int vampireLevel; // max should be 5
 
+        // Player Perk
+        private PlayerPerk playerPerk;
 
         // Player weapon
         private GameObject sword;
@@ -160,6 +169,8 @@ namespace SwordRush
         {
             get { return backUpLevel; }
         }
+
+        public PlayerPerk Perk { get { return playerPerk; } set { playerPerk = value; } }
 
         public int VampirePower { get { return vampireLevel; } }
 
