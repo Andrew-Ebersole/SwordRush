@@ -58,6 +58,7 @@ namespace SwordRush
 
         // fonts
         private SpriteFont BellMT16;
+        private SpriteFont BellMT18;
         private SpriteFont BellMT24;
         private SpriteFont BellMT48;
         private SpriteFont BellMT72;
@@ -169,6 +170,7 @@ namespace SwordRush
 
             // Font
             BellMT16 = content.Load<SpriteFont>("Bell_MT-16");
+            BellMT18 = content.Load<SpriteFont>("Bell_MT-18");
             BellMT24 = content.Load<SpriteFont>("Bell_MT-24");
             BellMT48 = content.Load<SpriteFont>("Bell_MT-48");
             BellMT72 = content.Load<SpriteFont>("Bell_MT-72");
@@ -253,12 +255,13 @@ namespace SwordRush
                         gameFSM = GameFSM.GameOver;
                         gameOver(player.RoomsCleared);
                         clickCooldown = 0;
-                    }
 
+                        totalCoin += player.RoomsCleared + player.Level;
+                        UpdateEcon();
+                    }
                     //update player collision
                     WallCollision(player, walls);
                     
-
                     //get keyboard state
                     currentKeyState = Keyboard.GetState();
 
@@ -404,6 +407,11 @@ namespace SwordRush
 
         public void Draw(SpriteBatch sb)
         {
+            //draw the total coin
+            sb.DrawString(BellMT24,
+                $"Total Coins: {totalCoin}",
+                new Vector2(1000, 10),
+                Color.LightGray);
             // Testing image buttons
             switch (gameFSM)
             {
@@ -484,7 +492,8 @@ namespace SwordRush
                     // Draw Score
                     sb.DrawString(
                         BellMT48,                           // Font
-                        $"YOU CLEARED {player.RoomsCleared} ROOMS",            // Text
+                        $"YOU CLEARED {player.RoomsCleared} ROOMS\n" +
+                        $"YOU GOT {player.RoomsCleared+player.Level} COINS",            // Text
                         new Vector2((window.Width * 0.2f),  // X Position
                         (window.Height * 0.52f)),            // Y Position
                         Color.White);                       // Color
@@ -657,13 +666,14 @@ namespace SwordRush
                     Color.White);
                 sb.Draw(singleColor,
                     new Rectangle(1, (int)(window.Height * 0.07f + 1),
-                    (int)(window.Width * 0.25f - 2), (int)(window.Height * 0.24f - 2)),
+                    (int)(window.Width * 0.25f - 2), (int)(window.Height * 0.25f)),
                     Color.Black);
 
-                sb.DrawString(BellMT24,                           // Font
-                        $"Left Click To Dash" +
-                        $"\nRight Click to Dodge" +
-                        $"\nDefeat the enemies to\n clear the room",            // Text
+                sb.DrawString(BellMT18,                           // Font
+                        $"Left Click To Dash\n(When sword is solid)" +
+                        $"\nRight Click to Dodge\n(When bar is filled)" +
+                        $"\nPress space level up" +
+                        $"\nDefeat the enemies to\nclear the room",            // Text
                         new Vector2(10,  // X Position
                         (window.Height * 0.08f)),            // Y Position
                         Color.White);                       // Color
