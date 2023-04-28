@@ -43,7 +43,13 @@ namespace SwordRush
         // Buttons
         private List<TextButton> menuButtons;
         private List<TextButton> settingButtons;
+        private List<TextButton> shopButtons;
         private TextButton exitButton;
+
+        //shop states
+        private bool shieldPurchased;
+        private bool dodgePurchased;
+        private bool vampirePurchased;
 
         // Window dimensions
         private Rectangle window;
@@ -115,6 +121,11 @@ namespace SwordRush
             mouseLeft = content.Load<Texture2D>("mouse-left-click");
             mouseRight = content.Load<Texture2D>("mouse-right-click");
 
+            //shop bools
+            dodgePurchased = false;
+            shieldPurchased = false;
+            vampirePurchased = false;
+
 
             // Controls Mouse
             currentMState = new MouseState();
@@ -185,6 +196,46 @@ namespace SwordRush
                     // Right click to quit the game
                     // Code for quitting game in GameManager
                     break;
+
+                case GameFSM.Shop: // ----- Shop ------------------------------------------------//
+
+                    foreach(TextButton b in shopButtons)
+                    {
+                        b.Update(gt);
+                    }
+
+                    if (exitButton.LeftClicked)
+                    {
+                        gameFSM = GameFSM.Menu;
+                    }
+
+                    //TODO: Update shop buttons
+                    if (currentMState.LeftButton == ButtonState.Released
+                        && previousMState.LeftButton == ButtonState.Pressed)
+                    {
+                        //buy powers
+                        if (!dodgePurchased && shopButtons[0].LeftClicked && GameManager.Get.TotalCoin >= 50)
+                        {
+                            dodgePurchased = true;
+                            GameManager.Get.TotalCoin -= 50;
+                        }
+                        if (!shieldPurchased && shopButtons[1].LeftClicked && GameManager.Get.TotalCoin >= 50)
+                        {
+                            shieldPurchased = true;
+                            GameManager.Get.TotalCoin -= 50;
+                        }
+                        if (!vampirePurchased && shopButtons[2].LeftClicked && GameManager.Get.TotalCoin >= 50)
+                        {
+                            vampirePurchased = true;
+                            GameManager.Get.TotalCoin -= 50;
+                        }
+
+
+
+
+                    }
+
+                        break;
 
                 case GameFSM.Settings:
 
@@ -459,17 +510,52 @@ namespace SwordRush
                         window.Height * 0.1f),          // Y Position
                         Color.White);                   // Color
 
+                    sb.DrawString(
+                        bellMT36,                       // Font
+                        $"50 Coins Each",                 // Text
+                        new Vector2(window.Width * 0.3f,// X Position
+                        window.Height * 0.15f),          // Y Position
+                        Color.Yellow);                   // Color
+
 
                     sb.DrawString(
                         bellMT48,                       // Font
                         $"Dodge: " +
                         $"\n\nShield:" +
-                        $"\n\nVampirism:",                        // Text
+                        $"\n\nVampire:",                        // Text
                         new Vector2(window.Width * 0.1f,// X Position
                         window.Height * 0.3f),          // Y Position
                         Color.White);                   // Color
 
+                    if (dodgePurchased)
+                    {
+                        shopButtons[0].Text = "Equip";
+                        if (GameManager.Get.LocalPlayer.BackUpPower)
+                        {
+                            shopButtons[0].Text = "Equipped";
+                        }
+                    }
+                    if (shieldPurchased)
+                    {
+                        shopButtons[1].Text = "Equip";
+                        if (GameManager.Get.LocalPlayer.shieldPower)
+                        {
+                            shopButtons[1].Text = "Equipped";
+                        }
+                    }
+                    if (vampirePurchased)
+                    {
+                        shopButtons[2].Text = "Equip";
+                        if (GameManager.Get.LocalPlayer.vampirePower)
+                        {
+                            shopButtons[2].Text = "Equipped";
+                        }
+                    }
 
+                    foreach (TextButton b in shopButtons)
+                    {
+                        b.Draw(sb);
+                    }
 
                     break;
 
@@ -581,6 +667,28 @@ namespace SwordRush
                 (int)(window.Width * 0.17f), (int)(window.Height * 0.09f)), // Hitbox
                 "Settings",                                                 // Text
                 bellMT48));                                                 // Font
+
+            // --- Shop Buttons -----------------------------------------------------------------//
+            shopButtons = new List<TextButton>();
+
+            shopButtons.Add(new TextButton(new Rectangle(
+                (int)(window.Width * 0.40f), (int)(window.Height * 0.30f),  // Location
+                (int)(window.Width * 0.20f), (int)(window.Height * 0.09f)), // Hitbox
+                "Purchase",                                               // Text
+                bellMT48));
+
+            shopButtons.Add(new TextButton(new Rectangle(
+                (int)(window.Width * 0.40f), (int)(window.Height * 0.485f),  // Location
+                (int)(window.Width * 0.20f), (int)(window.Height * 0.09f)), // Hitbox
+                "Purchase",                                               // Text
+                bellMT48));
+
+            shopButtons.Add(new TextButton(new Rectangle(
+                (int)(window.Width * 0.40f), (int)(window.Height * 0.67f),  // Location
+                (int)(window.Width * 0.20f), (int)(window.Height * 0.09f)), // Hitbox
+                "Purchase",                                               // Text
+                bellMT48));
+
 
             // --- Settings Buttons -------------------------------------------------------------//
             settingButtons = new List<TextButton>();
