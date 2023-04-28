@@ -228,11 +228,31 @@ namespace SwordRush
                     player.Update(gt);
 
                     //update chests
-                    if (chest != null && player.Rectangle.Intersects(chest.Rectangle))
+                    if (chest != null && player.Rectangle.Intersects(chest.Rectangle)&& chest.Open == false)
                     {
                         chest.Open = true;
-                    }
 
+                        Random rand = new Random();
+                        int num = rand.Next(100);
+
+                        //heal
+                        if (num < 20)
+                        {
+                            player.health += (int)(player.maxHealth / 4);
+                            if (player.health > player.maxHealth)
+                            {
+                                player.health = player.maxHealth;
+                            }
+                            // gain exp
+                        }else if (num < 60)
+                        {
+                            player.exp += (int)(player.LevelUpExp * 0.25);
+                            //gain coin
+                        }else
+                        {
+                            totalCoin += (int)((player.RoomsCleared*100)/ (num - 30));
+                        }
+                    }
 
                     //update all the enemies
                     for (int i = 0; i < enemies.Count; i++)
@@ -280,9 +300,6 @@ namespace SwordRush
                         gameFSM = GameFSM.GameOver;
                         gameOver(player.RoomsCleared);
                         clickCooldown = 0;
-
-                        totalCoin += player.RoomsCleared*difficulty + player.Level;
-                        UpdateEcon();
                     }
                     //update player collision
                     WallCollision(player, walls);
@@ -425,6 +442,9 @@ namespace SwordRush
                     // Only allow click after one second has passed to give player
                     // time to read menu and not accidentally click
                     clickCooldown += gt.ElapsedGameTime.TotalMilliseconds;
+                    //gain coin
+                    totalCoin += player.RoomsCleared * difficulty + player.Level;
+                    UpdateEcon();
                     if (clickCooldown >= 1000)
                     { 
                         // Return to menu when mouse down

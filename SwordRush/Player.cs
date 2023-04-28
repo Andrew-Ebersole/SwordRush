@@ -56,10 +56,10 @@ namespace SwordRush
         private PlayerStateMachine playerState;
 
         // Plater stats
-        private int exp;
+        public int exp;
         private int level;
-        private int health;
-        private int maxHealth;
+        public int health;
+        public int maxHealth;
         private float atk;
         private float atkSpd;
         private float range;
