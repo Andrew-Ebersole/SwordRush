@@ -436,6 +436,12 @@ namespace SwordRush
                                 maxedPowers.Add(6);
                             }
                         }
+                        else if (levelUpButtons[7].LeftClicked)
+                        {
+                            // Increase Sheild Power
+                            player.LevelUp(LevelUpAbility.Shield);
+                            gameFSM = GameFSM.Playing;
+                        }
                     }
 
                     break;
@@ -531,6 +537,7 @@ namespace SwordRush
                             $"Range: {player.Range}", 0.5f);
                     }
 
+
                     // --- Perks ---------------------------------------------------//
                     // Dodge Distance
                     // Check if perk is equipted
@@ -574,6 +581,16 @@ namespace SwordRush
                     }
 
                     // Sheild
+                    if (player.Perk == PlayerPerk.Sheild)
+                    {
+                        DrawPowerUpLevel(sb, new Point(7, 0),
+                            $"Sheild: {player.shiledLevel}", 0.8f);
+                    }
+                    else
+                    {
+                        DrawPowerUpLevel(sb, new Point(7, 0),
+                            $"NOT EQUIPTED", 0.8f);
+                    }
                     break;
 
                 case GameFSM.LevelUp:
@@ -1341,6 +1358,18 @@ namespace SwordRush
                 BellMT24,
                 abilityIcons,
                 new Vector2(2, 3)));
+
+            levelUpButtons.Add(new ImageButton(
+                new Rectangle(window.Height * 2, 0,
+                (int)(window.Height * 0.2f), (int)(window.Height * 0.2f)),
+                "Sheild",
+                "Grant Immunity" +
+                "\nAfter Taking Damage" +
+                $"\n{player.shiledLevel}" +
+                $"=> {player.shiledLevel+1}",
+                BellMT24,
+                abilityIcons,
+                new Vector2(7, 0)));
         }
 
         /// <summary>
@@ -1364,7 +1393,7 @@ namespace SwordRush
 
             for (int i = 0; i < 3; i+= 0)
             {
-                int next = rng.Next(0, 7);
+                int next = rng.Next(0, 8);
 
                 // Check if the perk is equipted
                 // if not return to beginning of loop
@@ -1457,6 +1486,13 @@ namespace SwordRush
                 "\nAfter Killing Enemy" +
                 $"\n{100 * Math.Round(player.VampirePower * 0.3333f, 2)}% " +
                 $"=> {100 * Math.Round((1 + player.VampirePower) * 0.3333f, 2)}%");
+
+            levelUpButtons[7].Update(
+                gt,
+                "Decrease Sheild" +
+                "\nRecharge Cooldown" +
+                $"\n{player.shiledLevel}" +
+                $"=> {player.shiledLevel + 1}");
         }
     }
 }
