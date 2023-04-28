@@ -1395,6 +1395,28 @@ namespace SwordRush
             {
                 int next = rng.Next(0, 7);
 
+                // Check if the perk is equipted
+                // if not return to beginning of loop
+                // And choose new power up
+                if (next > 4)
+                {
+                    if (next != 5 && player.Perk == PlayerPerk.Dodge)
+                    {
+                        continue;
+                    }
+                    if (next != 6 && player.Perk == PlayerPerk.Vampire)
+                    {
+                        continue;
+                    }
+                    if (next != 7 && player.Perk == PlayerPerk.Sheild)
+                    {
+                        continue;
+                    }
+                    if (player.Perk == PlayerPerk.None)
+                    {
+                        continue;
+                    }
+                }
                 // Make sure the ability is not already picked
                 // or it hasn't been maxed out
                 if (!randomAbilities.Contains(next)
