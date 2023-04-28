@@ -213,7 +213,7 @@ namespace SwordRush
                 currentKeyState.IsKeyDown(Keys.D) && currentKeyState.IsKeyDown(Keys.E) && currentKeyState.IsKeyDown(Keys.F) )
             {
                 string stats = "";
-                stats += 100 + ",";//coin
+                stats += 0 + ",";//coin
                 stats += 1 + ",";
                 stats += 10 + ",";
                 stats += false + ",";
