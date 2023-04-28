@@ -16,7 +16,7 @@ namespace SwordRush
 
         private Texture2D image;
         private Vector2 tile;
-
+        private string description;
 
         // --- Properties --- //
 
@@ -37,20 +37,25 @@ namespace SwordRush
 
         // --- Constructor --- //
 
-        public ImageButton(Rectangle rectangle, string text, SpriteFont font, Texture2D image, Vector2 tile) 
+        public ImageButton(Rectangle rectangle, string text, string description, 
+            SpriteFont font, Texture2D image, Vector2 tile) 
             : base(rectangle,text,font)
         {
             this.image = image;
             this.tile = tile;
+            this.description = description;
         }
 
 
         // --- Methods --- //
 
-        public override void Update(GameTime gt)
+        public void Update(GameTime gt, string description)
         {
             currentMState = Mouse.GetState();
 
+            // Update Description
+
+            this.description = description;
             // Highlight text when mouse hovers
             if (new Rectangle(currentMState.Position, new Point(0, 0)).Intersects(rectangle))
             {
@@ -78,6 +83,7 @@ namespace SwordRush
 
         public override void Draw(SpriteBatch sb)
         {
+            // Draw Ability Icon
             sb.Draw(image,
                 rectangle,
                 new Rectangle((int)(tile.X*(image.Width/16)),(int)(tile.Y*(image.Height/16)),
@@ -88,10 +94,26 @@ namespace SwordRush
                 SpriteEffects.None,
                 0);
 
+            // Draw Ability Name
             sb.DrawString(
                 font,
                 text,
                 new Vector2(rectangle.X+rectangle.Width*(0.5f-(text.Count()*0.03f)), rectangle.Y+rectangle.Height),
+                color);
+
+            // Draw Ability Description
+            sb.DrawString(
+                font,
+                description,
+                new Vector2(rectangle.X + rectangle.Width * 0.1f + 2,
+                rectangle.Y + rectangle.Height + 0.15f * rectangle.Height + 2),
+                Color.Black);
+
+            sb.DrawString(
+                font,
+                description,
+                new Vector2(rectangle.X + rectangle.Width * 0.1f,
+                rectangle.Y + rectangle.Height + 0.15f * rectangle.Height),
                 color);
         }
     }

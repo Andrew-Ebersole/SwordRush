@@ -15,6 +15,7 @@ using System.Linq;
 using System.Transactions;
 using System.Drawing;
 using System.Reflection.Metadata;
+using System.Security.Cryptography;
 
 namespace SwordRush
 {
@@ -30,6 +31,7 @@ namespace SwordRush
             GameOver,
             Menu
         }
+
         private GameFSM gameFSM;
         private ContentManager contentManager_;
         private FileManager fileManager_;
@@ -45,7 +47,7 @@ namespace SwordRush
         private Chest chest;
 
         //textures
-        private Texture2D spriteSheet;
+        private Texture2D spriteSheet;  
         private Texture2D dungeontilesTexture2D;
         private Texture2D healthBarTexture;
         private Texture2D xpBarTexture;
@@ -55,6 +57,7 @@ namespace SwordRush
         private Texture2D singleColor;
 
         // fonts
+        private SpriteFont BellMT16;
         private SpriteFont BellMT24;
         private SpriteFont BellMT48;
         private SpriteFont BellMT72;
@@ -131,7 +134,7 @@ namespace SwordRush
             //objects
             enemies = new List<Enemy>();
             player = new Player(dungeontilesTexture2D, new Rectangle(0,0, 32, 64), graphicsDevice);
-            chest = new Chest(dungeontilesTexture2D, new Rectangle(32, 32, 32, 32));
+            chest = null;
 
 
             //tiling
@@ -164,6 +167,7 @@ namespace SwordRush
             singleColor.SetData(new Color[] { Color.White });
 
             // Font
+            BellMT16 = content.Load<SpriteFont>("Bell_MT-16");
             BellMT24 = content.Load<SpriteFont>("Bell_MT-24");
             BellMT48 = content.Load<SpriteFont>("Bell_MT-48");
             BellMT72 = content.Load<SpriteFont>("Bell_MT-72");
@@ -203,7 +207,7 @@ namespace SwordRush
 
 
                     //update chests
-                    if (player.Rectangle.Intersects(chest.Rectangle))
+                    if (chest != null && player.Rectangle.Intersects(chest.Rectangle))
                     {
                         chest.Open = true;
                     }
@@ -283,9 +287,13 @@ namespace SwordRush
                     // Go To Level Up Screen
                     if (player.Exp >= player.LevelUpExp)
                     {
-                        gameFSM |= GameFSM.LevelUp;
-                        RandomizeLevelUpAbilities();
-                        clickCooldown = 0;
+                        if (currentKeyState.IsKeyDown(Keys.Space)
+                            && previousKeyState.IsKeyUp(Keys.Space))
+                        {
+                            gameFSM |= GameFSM.LevelUp;
+                            RandomizeLevelUpAbilities();
+                            clickCooldown = 0;
+                        }
                     }
                     break;
 
@@ -311,10 +319,7 @@ namespace SwordRush
                 case GameFSM.LevelUp:
 
                     // Update buttons to check if clicked
-                    foreach (ImageButton b in levelUpButtons)
-                    {
-                        b.Update(gt);
-                    }
+                    UpdateLevelButtons(gt);
 
                     // Only allow click after one second has passed to give player
                     // time to read menu and not accidentally click
@@ -559,7 +564,10 @@ namespace SwordRush
             }
 
             //draw objects
-            chest.Draw(sb);
+            if (chest != null)
+            {
+                chest.Draw(sb);
+            }
             player.Draw(sb);
             foreach (Enemy enemy in enemies)
             {
@@ -581,15 +589,41 @@ namespace SwordRush
                 (int)(window.Width * 0.3f), (int)(window.Height * 0.079f)),
                 sb);
 
+            // If level up availabe say so
+            if (player.Exp >= player.LevelUpExp
+                && gameFSM != GameFSM.LevelUp)
+            {
+                // Change the color randomly
+                Random rng = new Random();
+                Color color = Color.Green;
+                if (rng.Next(0,2) == 1)
+                {
+                    color = Color.LightGreen;
+                }
+                // Draw Background
+                sb.Draw(singleColor,
+                    new Rectangle((int)(window.Width * 0.615f), (int)(window.Height * 0.865f),
+                (int)(window.Width * 0.27f), (int)(window.Height * 0.05f)),
+                    Color.Black * 0.5f);
 
-            // Draw Box around Room Number top right
-            sb.Draw(singleColor,
+                // Draw Text
+                sb.DrawString(
+                    BellMT24,
+                    "Press Space To Level Up",
+                    new Vector2((int)(window.Width * 0.62f), (int)(window.Height * 0.87f)),
+                    color);
+            }
+
+                // Draw Box around Room Number top right
+                sb.Draw(singleColor,
                 new Rectangle(0, 0,
-                (int)(window.Width * 0.2f), (int)(window.Height * 0.07f)),
+                (int)(window.Width * (0.19f + 0.011f*(player.RoomsCleared.ToString().Count()))),
+                (int)(window.Height * 0.07f)),
                 Color.White);
             sb.Draw(singleColor,
                 new Rectangle(1, 1,
-                (int)(window.Width * 0.2f - 2), (int)(window.Height * 0.07f - 2)),
+                (int)(window.Width * (0.19f + 0.011f * (player.RoomsCleared.ToString().Count())) - 2),
+                (int)(window.Height * 0.07f - 2)),
                 Color.Black);
 
             // Draw Room Number
@@ -628,6 +662,7 @@ namespace SwordRush
         public void GenerateRoom()
         {
             walls.Clear();
+            chest = null;
             for (int i = 0; i < grid.GetLength(1); i++)
             {
                 for (int j = 0; j < grid.GetLength(0); j++)
@@ -645,7 +680,7 @@ namespace SwordRush
                         player.X = (j * 64 + 32);
                         player.Y = (i * 64 + 32);
                     }
-                    else if (grid[j,i] == 4)
+                    else if (grid[j,i] == 4 && player.RoomsCleared%5 == 0)
                     {
                         chest = new Chest(dungeontilesTexture2D, new Rectangle(j*64+16, i*64+16, 32, 32));
                     }
@@ -1057,6 +1092,8 @@ namespace SwordRush
                 new Rectangle(window.Height * 2,0,
                 (int)(window.Height * 0.2f), (int)(window.Height * 0.2f)),
                 "Heal",
+                "Fully Heal Player" +
+                $"\n{player.Health} => {player.MaxHealth}",
                 BellMT24,
                 abilityIcons,
                 new Vector2(6,2)));
@@ -1065,6 +1102,9 @@ namespace SwordRush
                 new Rectangle(window.Height * 2, 0,
                 (int)(window.Height * 0.2f), (int)(window.Height * 0.2f)),
                 "Max Health",
+                "Increase Maximum" +
+                "\nHealth of Player" +
+                $"\n{player.MaxHealth} => {player.MaxHealth * 1.5}",
                 BellMT24,
                 abilityIcons,
                 new Vector2(12, 5)));
@@ -1073,6 +1113,9 @@ namespace SwordRush
                 new Rectangle(window.Height*2, 0,
                 (int)(window.Height * 0.2f), (int)(window.Height * 0.2f)),
                 "Attack Speed",
+                "Decrease cooldown" +
+                "\nbetween attacks" +
+                $"\n{800 - 75 * player.AtkSpd}ms => {800 - 75 * (player.AtkSpd + 2)}ms",
                 BellMT24,
                 abilityIcons,
                 new Vector2(11, 3)));
@@ -1081,6 +1124,8 @@ namespace SwordRush
                 new Rectangle(window.Height*2, 0,
                 (int)(window.Height * 0.2f), (int)(window.Height * 0.2f)),
                 "Damage",
+                "Increase Attack Damage" +
+                $"\n{player.Atk} => {player.Atk * 1.5}",
                 BellMT24,
                 abilityIcons,
                 new Vector2(0, 3)));
@@ -1089,6 +1134,9 @@ namespace SwordRush
                 new Rectangle(window.Height*2, 0,
                 (int)(window.Height * 0.2f), (int)(window.Height * 0.2f)),
                 "Range",
+                "Increase distance moved" +
+                "\nforward during attack" +
+                $"\n{player.Range} => {player.Range + 1}",
                 BellMT24,
                 abilityIcons,
                 new Vector2(10, 3)));
@@ -1097,6 +1145,9 @@ namespace SwordRush
                 new Rectangle(window.Height * 2, 0,
                 (int)(window.Height * 0.2f), (int)(window.Height * 0.2f)),
                 "Dodge Distance",
+                "Increase backwards" +
+                "\ndistance during dodge" +
+                $"\n{player.BackUpLevel} => {player.BackUpLevel + 1}",
                 BellMT24,
                 abilityIcons,
                 new Vector2(13, 2)));
@@ -1150,6 +1201,43 @@ namespace SwordRush
                 new Rectangle((int)(window.Width * 0.7f), (int)(window.Height * 0.4f),
                 (int)(window.Width * 0.2f), (int)(window.Width * 0.2f));
 
+        }
+
+        public void UpdateLevelButtons(GameTime gt)
+        {
+            levelUpButtons[0].Update(
+                gt,
+                "Fully Heal Player" +
+                $"\n{player.Health} => {player.MaxHealth}");
+
+            levelUpButtons[1].Update(
+                gt,
+                "Increase Maximum" +
+                "\nHealth of Player" +
+                $"\n{player.MaxHealth} => {(int)(player.MaxHealth * 1.5)}");
+
+            levelUpButtons[2].Update(
+                gt,
+                "Decrease cooldown" +
+                "\nbetween attacks" +
+                $"\n{800 - 75 * player.AtkSpd}ms => {800 - 75 * (player.AtkSpd + 2)}ms");
+
+            levelUpButtons[3].Update(
+                gt,
+                "Increase Attack Damage" +
+                $"\n{Math.Round(player.Atk,1)} => {Math.Round(player.Atk * 1.5,1)}");
+
+            levelUpButtons[4].Update(
+                gt,
+                "Increase distance moved" +
+                "\nforward during attack" +
+                $"\n{player.Range} => {player.Range + 1}");
+
+            levelUpButtons[5].Update(
+                gt,
+                "Increase backwards" +
+                "\ndistance during dodge" +
+                $"\n{player.BackUpLevel} => {player.BackUpLevel + 1}");
         }
     }
 }
