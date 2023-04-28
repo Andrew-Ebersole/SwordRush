@@ -89,7 +89,7 @@ namespace SwordRush
         private int totalCoin;
         private int startAttack;
         private int startHealth;
-        private int difficulty;
+        private int difficulty; 
         // Timer
         private double clickCooldown;
 
@@ -190,7 +190,7 @@ namespace SwordRush
 
             //init player econ
             InitPlayerStats();
-            difficulty = 3;
+            difficulty = 1;
         }
 
         public Player LocalPlayer
@@ -715,6 +715,21 @@ namespace SwordRush
         {
             walls.Clear();
             chest = null;
+            int enemyLevelGrow = 3;
+
+            switch (difficulty)
+            {
+                case 1:
+                    enemyLevelGrow = 3;
+                    break;
+                case 2:
+                    enemyLevelGrow = 2;
+                    break;
+                case 3:
+                    enemyLevelGrow = 1;
+                    break;
+            }
+
             for (int i = 0; i < grid.GetLength(1); i++)
             {
                 for (int j = 0; j < grid.GetLength(0); j++)
@@ -725,7 +740,7 @@ namespace SwordRush
                     }
                     else if (grid[j,i] == 2)
                     {
-                        enemies.Add(new ShortRangeEnemy(dungeontilesTexture2D, new Rectangle(j*64, i*64, 32, 32), player, (player.RoomsCleared / difficulty) + 1, graphicsDevice));
+                        enemies.Add(new ShortRangeEnemy(dungeontilesTexture2D, new Rectangle(j*64, i*64, 32, 32), player, (player.RoomsCleared / enemyLevelGrow) + 1, graphicsDevice));
                     }
                     else if (grid[j,i] == 3)
                     {
@@ -738,7 +753,7 @@ namespace SwordRush
                     }
                     else if (grid[j, i] == 5)
                     {
-                        enemies.Add(new LongRangeEnemy(dungeontilesTexture2D, new Rectangle(j * 64, i * 64, 32, 32), player, (player.RoomsCleared / 3) + 1, graphicsDevice));
+                        enemies.Add(new LongRangeEnemy(dungeontilesTexture2D, new Rectangle(j * 64, i * 64, 32, 32), player, (player.RoomsCleared / enemyLevelGrow) + 1, graphicsDevice));
                     }
                 }
             }
