@@ -637,7 +637,6 @@ namespace SwordRush
         public void InitPlayerStats()
         {
             string[] stats = fileManager_.LoadStats($"Content/PlayerProgress.txt");
-
             totalCoin = int.Parse(stats[0]);
             startAttack = int.Parse(stats[1]);
             startHealth = int.Parse(stats[2]);
