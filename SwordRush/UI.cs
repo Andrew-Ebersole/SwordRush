@@ -459,12 +459,6 @@ namespace SwordRush
                         window.Height * 0.1f),          // Y Position
                         Color.White);                   // Color
 
-                    sb.DrawString(
-                        bellMT48,                       // Font
-                        $"Coins: {GameManager.Get.TotalCoin}",                 // Text
-                        new Vector2(window.Width * 0.75f,// X Position
-                        window.Height * 0.1f),          // Y Position
-                        Color.Yellow);                   // Color
 
                     sb.DrawString(
                         bellMT48,                       // Font
