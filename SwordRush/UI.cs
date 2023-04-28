@@ -229,8 +229,28 @@ namespace SwordRush
                             vampirePurchased = true;
                             GameManager.Get.TotalCoin -= 50;
                         }
-
-
+                        //equip powers
+                        if (dodgePurchased && shopButtons[0].LeftClicked)
+                        {
+                            GameManager.Get.LocalPlayer.BackUpPower = true;
+                            GameManager.Get.LocalPlayer.shieldPower = false;
+                            GameManager.Get.LocalPlayer.vampirePower = false;
+                            GameManager.Get.LocalPlayer.Perk = PlayerPerk.Dodge;
+                        }
+                        if (shieldPurchased && shopButtons[1].LeftClicked)
+                        {
+                            GameManager.Get.LocalPlayer.BackUpPower = false;
+                            GameManager.Get.LocalPlayer.shieldPower = true;
+                            GameManager.Get.LocalPlayer.vampirePower = false;
+                            GameManager.Get.LocalPlayer.Perk = PlayerPerk.Sheild;
+                        }
+                        if (vampirePurchased && shopButtons[2].LeftClicked)
+                        {
+                            GameManager.Get.LocalPlayer.BackUpPower = false;
+                            GameManager.Get.LocalPlayer.shieldPower = false;
+                            GameManager.Get.LocalPlayer.vampirePower = true;
+                            GameManager.Get.LocalPlayer.Perk = PlayerPerk.Vampire;
+                        }
 
 
                     }
