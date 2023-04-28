@@ -17,7 +17,7 @@ namespace SwordRush
         Settings,
         Credits,
         Instructions,
-        HighScores
+        Shop
     }
 
     internal class UI
@@ -172,7 +172,7 @@ namespace SwordRush
                     }
                     if (menuButtons[3].LeftClicked)
                     {
-                        gameFSM = GameFSM.HighScores;
+                        gameFSM = GameFSM.Shop;
                     }
                     if (menuButtons[4].LeftClicked)
                     {
@@ -346,7 +346,7 @@ namespace SwordRush
 
                     sb.Draw(singleColor,                                                        // Texture
                         new Rectangle((int)(window.Width * 0.10f), (int)(window.Height * 0.66f),   // X / Y
-                        (int)(window.Width * 0.25f), (int)(window.Height * 0.08f)),                   // Width / Height
+                        (int)(window.Width * 0.11f), (int)(window.Height * 0.08f)),                   // Width / Height
                         new Color(32, 32, 32) * 0.4f);
 
                     sb.Draw(singleColor,                                                        // Texture
@@ -450,25 +450,26 @@ namespace SwordRush
                         Color.White);                   // Color
                     break;
 
-                case GameFSM.HighScores: // --- HighScores --------------------------------------//
+                case GameFSM.Shop: // --- Shop --------------------------------------//
 
                     sb.DrawString(
                         bellMT72,                       // Font
-                        $"High Scores",                 // Text
+                        $"Shop",                 // Text
                         new Vector2(window.Width * 0.1f,// X Position
                         window.Height * 0.1f),          // Y Position
                         Color.White);                   // Color
 
+
                     sb.DrawString(
                         bellMT48,                       // Font
-                        $"1: Not implemented yet" +
-                        $"\n2:" +
-                        $"\n3:" +
-                        $"\n4:" +
-                        $"\n5:",                        // Text
+                        $"Dodge: " +
+                        $"\n\nShield:" +
+                        $"\n\nVampirism:",                        // Text
                         new Vector2(window.Width * 0.1f,// X Position
                         window.Height * 0.3f),          // Y Position
                         Color.White);                   // Color
+
+
 
                     break;
 
@@ -572,7 +573,7 @@ namespace SwordRush
             menuButtons.Add(new TextButton(new Rectangle(
                 (int)(window.Width * 0.10f), (int)(window.Height * 0.66f),  // Location
                 (int)(window.Width * 0.25f), (int)(window.Height * 0.09f)), // Hitbox
-                "High Scores",                                              // Text
+                "Shop",                                              // Text
                 bellMT48));                                                 // Font
 
             menuButtons.Add(new TextButton(new Rectangle(
