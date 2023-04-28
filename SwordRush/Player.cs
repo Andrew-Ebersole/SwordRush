@@ -252,6 +252,7 @@ namespace SwordRush
             }
 
             //back up
+            Debug.WriteLine("123"+GameManager.Get.LocalPlayer.BackUpPower);
             if (GameManager.Get.LocalPlayer.BackUpPower&&
                 currentMouseState.RightButton == ButtonState.Pressed &&
                 preMouseState.RightButton == ButtonState.Released && backUpFrame > 2000)
@@ -453,9 +454,9 @@ namespace SwordRush
                         rectangle.Width, rectangle.Height / 2),
                     Color.White * 0.2f);
             }
-            
+
             //back up
-            if (GameManager.Get.LocalPlayer.backUpPower)
+            if (GameManager.Get.LocalPlayer.BackUpPower)
             {
                 if (backUpFrame > 2000)
                 {
