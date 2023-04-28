@@ -213,7 +213,7 @@ namespace SwordRush
                 currentKeyState.IsKeyDown(Keys.D) && currentKeyState.IsKeyDown(Keys.E) && currentKeyState.IsKeyDown(Keys.F) )
             {
                 string stats = "";
-                stats += 0 + ",";
+                stats += 100 + ",";//coin
                 stats += 1 + ",";
                 stats += 10 + ",";
                 stats += false + ",";
@@ -641,11 +641,9 @@ namespace SwordRush
             totalCoin = int.Parse(stats[0]);
             startAttack = int.Parse(stats[1]);
             startHealth = int.Parse(stats[2]);
-            UI.Get.dodgePurchased = (stats[3] == "true");
-            UI.Get.shieldPurchased = (stats[4] == "true");
-            UI.Get.vampirePurchased = (stats[5] == "true");
-
-
+            UI.Get.dodgePurchased = (stats[3] == "True");
+            UI.Get.shieldPurchased = (stats[4] == "True");
+            UI.Get.vampirePurchased = (stats[5] == "True");
         }
 
         public void UpdateEcon()
@@ -657,6 +655,7 @@ namespace SwordRush
             stats += UI.Get.dodgePurchased  + ",";
             stats += UI.Get.shieldPurchased + ",";
             stats += UI.Get.vampirePurchased;
+            Debug.WriteLine(UI.Get.dodgePurchased);
             
             FileManager.SaveStats($"Content/PlayerProgress.txt",stats);
         }
