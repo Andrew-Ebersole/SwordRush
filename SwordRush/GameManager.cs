@@ -247,7 +247,7 @@ namespace SwordRush
                             //gain coin
                         }else
                         {
-                            totalCoin += (player.RoomsCleared*10)*100/ (num - 50);
+                            totalCoin += (int)((player.RoomsCleared*100)/ (num - 30));
                         }
                     }
 
@@ -290,9 +290,6 @@ namespace SwordRush
                         gameFSM = GameFSM.GameOver;
                         gameOver(player.RoomsCleared);
                         clickCooldown = 0;
-
-                        totalCoin += player.RoomsCleared*difficulty + player.Level;
-                        UpdateEcon();
                     }
                     //update player collision
                     WallCollision(player, walls);
@@ -423,6 +420,9 @@ namespace SwordRush
                     // Only allow click after one second has passed to give player
                     // time to read menu and not accidentally click
                     clickCooldown += gt.ElapsedGameTime.TotalMilliseconds;
+                    //gain coin
+                    totalCoin += player.RoomsCleared * difficulty + player.Level;
+                    UpdateEcon();
                     if (clickCooldown >= 1000)
                     { 
                         // Return to menu when mouse down
