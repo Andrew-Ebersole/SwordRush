@@ -119,6 +119,7 @@ namespace SwordRush
         public int[,] Grid { get { return grid; } }
         public List<List<AStarNode>> Graph { get { return graph; } }
         public int TotalCoin { get { return totalCoin; } set { totalCoin = value; } }
+        
 
         // --- Constructor --- //
 
@@ -228,7 +229,7 @@ namespace SwordRush
                     player.Update(gt);
 
                     //update chests
-                    if (chest != null && player.Rectangle.Intersects(chest.Rectangle)&& chest.Open == false)
+                    if (chest != null && player.Rectangle.Intersects(chest.Rectangle) && chest.Open == false)
                     {
                         chest.Open = true;
 
