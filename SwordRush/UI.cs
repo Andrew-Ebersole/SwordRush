@@ -236,6 +236,7 @@ namespace SwordRush
                         if (dodgePurchased && shopButtons[0].LeftClicked)
                         {
                             GameManager.Get.LocalPlayer.BackUpPower = true;
+                            GameManager.Get.LocalPlayer.backUpLevel = 1;
                             GameManager.Get.LocalPlayer.shieldPower = false;
                             GameManager.Get.LocalPlayer.vampirePower = false;
                             GameManager.Get.LocalPlayer.Perk = PlayerPerk.Dodge;
@@ -244,6 +245,7 @@ namespace SwordRush
                         {
                             GameManager.Get.LocalPlayer.BackUpPower = false;
                             GameManager.Get.LocalPlayer.shieldPower = true;
+                            GameManager.Get.LocalPlayer.shiledLevel = 1;
                             GameManager.Get.LocalPlayer.vampirePower = false;
                             GameManager.Get.LocalPlayer.Perk = PlayerPerk.Sheild;
                         }
@@ -252,6 +254,7 @@ namespace SwordRush
                             GameManager.Get.LocalPlayer.BackUpPower = false;
                             GameManager.Get.LocalPlayer.shieldPower = false;
                             GameManager.Get.LocalPlayer.vampirePower = true;
+                            GameManager.Get.LocalPlayer.vampireLevel = 1;
                             GameManager.Get.LocalPlayer.Perk = PlayerPerk.Vampire;
                         }
 
