@@ -15,6 +15,7 @@ using System.Linq;
 using System.Transactions;
 using System.Drawing;
 using System.Reflection.Metadata;
+using System.Security.Cryptography;
 
 namespace SwordRush
 {
@@ -286,9 +287,13 @@ namespace SwordRush
                     // Go To Level Up Screen
                     if (player.Exp >= player.LevelUpExp)
                     {
-                        gameFSM |= GameFSM.LevelUp;
-                        RandomizeLevelUpAbilities();
-                        clickCooldown = 0;
+                        if (currentKeyState.IsKeyDown(Keys.Space)
+                            && previousKeyState.IsKeyUp(Keys.Space))
+                        {
+                            gameFSM |= GameFSM.LevelUp;
+                            RandomizeLevelUpAbilities();
+                            clickCooldown = 0;
+                        }
                     }
                     break;
 
@@ -584,9 +589,33 @@ namespace SwordRush
                 (int)(window.Width * 0.3f), (int)(window.Height * 0.079f)),
                 sb);
 
+            // If level up availabe say so
+            if (player.Exp >= player.LevelUpExp
+                && gameFSM != GameFSM.LevelUp)
+            {
+                // Change the color randomly
+                Random rng = new Random();
+                Color color = Color.Green;
+                if (rng.Next(0,2) == 1)
+                {
+                    color = Color.LightGreen;
+                }
+                // Draw Background
+                sb.Draw(singleColor,
+                    new Rectangle((int)(window.Width * 0.615f), (int)(window.Height * 0.865f),
+                (int)(window.Width * 0.27f), (int)(window.Height * 0.05f)),
+                    Color.Black * 0.5f);
 
-            // Draw Box around Room Number top right
-            sb.Draw(singleColor,
+                // Draw Text
+                sb.DrawString(
+                    BellMT24,
+                    "Press Space To Level Up",
+                    new Vector2((int)(window.Width * 0.62f), (int)(window.Height * 0.87f)),
+                    color);
+            }
+
+                // Draw Box around Room Number top right
+                sb.Draw(singleColor,
                 new Rectangle(0, 0,
                 (int)(window.Width * (0.19f + 0.011f*(player.RoomsCleared.ToString().Count()))),
                 (int)(window.Height * 0.07f)),
