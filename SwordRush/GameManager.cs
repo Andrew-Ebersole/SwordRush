@@ -227,7 +227,6 @@ namespace SwordRush
             {
                 case GameFSM.Playing: // Playing Game
                     player.Update(gt);
-
                     //update chests
                     if (chest != null && player.Rectangle.Intersects(chest.Rectangle) && chest.Open == false)
                     {
