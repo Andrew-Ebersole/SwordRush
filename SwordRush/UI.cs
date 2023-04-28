@@ -1,6 +1,7 @@
  using System;
 using System.Collections.Generic;
-using System.Linq;
+ using System.Diagnostics;
+ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
@@ -47,9 +48,9 @@ namespace SwordRush
         private TextButton exitButton;
 
         //shop states
-        private bool shieldPurchased;
-        private bool dodgePurchased;
-        private bool vampirePurchased;
+        public bool shieldPurchased;
+        public bool dodgePurchased;
+        public bool vampirePurchased;
 
         // Window dimensions
         private Rectangle window;
@@ -218,38 +219,44 @@ namespace SwordRush
                         {
                             dodgePurchased = true;
                             GameManager.Get.TotalCoin -= 50;
+                            GameManager.Get.UpdateEcon();
                         }
                         if (!shieldPurchased && shopButtons[1].LeftClicked && GameManager.Get.TotalCoin >= 50)
                         {
                             shieldPurchased = true;
                             GameManager.Get.TotalCoin -= 50;
+                            GameManager.Get.UpdateEcon();
                         }
                         if (!vampirePurchased && shopButtons[2].LeftClicked && GameManager.Get.TotalCoin >= 50)
                         {
                             vampirePurchased = true;
                             GameManager.Get.TotalCoin -= 50;
+                            GameManager.Get.UpdateEcon();
                         }
                         //equip powers
                         if (dodgePurchased && shopButtons[0].LeftClicked)
                         {
-                            GameManager.Get.LocalPlayer.BackUpPower = true;
-                            GameManager.Get.LocalPlayer.shieldPower = false;
-                            GameManager.Get.LocalPlayer.vampirePower = false;
-                            GameManager.Get.LocalPlayer.Perk = PlayerPerk.Dodge;
+                            GameManager.Get.player.BackUpPower = true;
+                            GameManager.Get.player.backUpLevel = 1;
+                            GameManager.Get.player.shieldPower = false;
+                            GameManager.Get.player.vampirePower = false;
+                            GameManager.Get.player.Perk = PlayerPerk.Dodge;
                         }
                         if (shieldPurchased && shopButtons[1].LeftClicked)
                         {
-                            GameManager.Get.LocalPlayer.BackUpPower = false;
-                            GameManager.Get.LocalPlayer.shieldPower = true;
-                            GameManager.Get.LocalPlayer.vampirePower = false;
-                            GameManager.Get.LocalPlayer.Perk = PlayerPerk.Sheild;
+                            GameManager.Get.player.BackUpPower = false;
+                            GameManager.Get.player.shieldPower = true;
+                            GameManager.Get.player.shiledLevel = 1;
+                            GameManager.Get.player.vampirePower = false;
+                            GameManager.Get.player.Perk = PlayerPerk.Sheild;
                         }
                         if (vampirePurchased && shopButtons[2].LeftClicked)
                         {
-                            GameManager.Get.LocalPlayer.BackUpPower = false;
-                            GameManager.Get.LocalPlayer.shieldPower = false;
-                            GameManager.Get.LocalPlayer.vampirePower = true;
-                            GameManager.Get.LocalPlayer.Perk = PlayerPerk.Vampire;
+                            GameManager.Get.player.BackUpPower = false;
+                            GameManager.Get.player.shieldPower = false;
+                            GameManager.Get.player.vampirePower = true;
+                            GameManager.Get.player.vampireLevel = 1;
+                            GameManager.Get.player.Perk = PlayerPerk.Vampire;
                         }
 
 

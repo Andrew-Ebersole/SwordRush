@@ -42,7 +42,7 @@ namespace SwordRush
         private KeyboardState previousKeyState;
 
         //objects
-        private Player player;
+        public Player player;
         private List<Enemy> enemies;
         private Chest chest;
 
@@ -213,7 +213,7 @@ namespace SwordRush
                 currentKeyState.IsKeyDown(Keys.D) && currentKeyState.IsKeyDown(Keys.E) && currentKeyState.IsKeyDown(Keys.F) )
             {
                 string stats = "";
-                stats += 0 + ",";
+                stats += 0 + ",";//coin
                 stats += 1 + ",";
                 stats += 10 + ",";
                 stats += false + ",";
@@ -227,7 +227,6 @@ namespace SwordRush
             {
                 case GameFSM.Playing: // Playing Game
                     player.Update(gt);
-
                     //update chests
                     if (chest != null && player.Rectangle.Intersects(chest.Rectangle) && chest.Open == false)
                     {
@@ -655,42 +654,12 @@ namespace SwordRush
         public void InitPlayerStats()
         {
             string[] stats = fileManager_.LoadStats($"Content/PlayerProgress.txt");
-
             totalCoin = int.Parse(stats[0]);
             startAttack = int.Parse(stats[1]);
             startHealth = int.Parse(stats[2]);
-            player.BackUpPower = (stats[3] == "true");
-            player.vampirePower = (stats[4] == "true");
-            player.shieldPower = (stats[5] == "true");
-
-            //init the level
-            if (player.BackUpPower)
-            {
-                player.backUpLevel = 1;
-            }
-            else
-            {
-                player.backUpLevel = 0;
-            }
-
-            if (player.shieldPower)
-            {
-                player.shiledLevel = 1;
-            }
-            else
-            {
-                player.shiledLevel = 0;
-            }
-
-            if (player.vampirePower)
-            {
-                player.vampireLevel = 1;
-            }
-            else
-            {
-                player.vampireLevel = 0;
-            }
-
+            UI.Get.dodgePurchased = (stats[3] == "True");
+            UI.Get.shieldPurchased = (stats[4] == "True");
+            UI.Get.vampirePurchased = (stats[5] == "True");
         }
 
         public void UpdateEcon()
@@ -699,9 +668,10 @@ namespace SwordRush
             stats += totalCoin+",";
             stats += startAttack + ",";
             stats += startHealth + ",";
-            stats += player.BackUpPower + ",";
-            stats += player.vampirePower + ",";
-            stats += player.shieldPower;
+            stats += UI.Get.dodgePurchased  + ",";
+            stats += UI.Get.shieldPurchased + ",";
+            stats += UI.Get.vampirePurchased;
+            Debug.WriteLine(UI.Get.dodgePurchased);
             
             FileManager.SaveStats($"Content/PlayerProgress.txt",stats);
         }
