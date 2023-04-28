@@ -69,12 +69,12 @@ namespace SwordRush
         private double backUpFrame;
 
         public bool shieldPower;
-        private int shiledLevel; // max should be 3
+        private int shiledLevel; // max should be 5
         public double shiledFrame;
         public bool shiledOn;
 
         public bool vampirePower;
-        private int vampireLevel; // max should be 3
+        private int vampireLevel; // max should be 5
 
 
         // Player weapon
@@ -199,7 +199,6 @@ namespace SwordRush
         /// </summary>
         public void playerControl(GameTime gameTime)
         {
-            Debug.WriteLine(shiledOn);
             // Move when attacking
             if (attackFrame < 100 * range)
             {
@@ -246,12 +245,11 @@ namespace SwordRush
             {
                 shiledFrame += gameTime.TotalGameTime.TotalMilliseconds;
 
-                if (shiledFrame > 1000000)
+                if (shiledFrame > 10000000 - shiledLevel* 1000000)//default 10second
                 {
                     shiledOn = true;
                 }
             }
-
 
             // Auto level up
             if (Keyboard.GetState().IsKeyDown(Keys.P))
@@ -313,7 +311,7 @@ namespace SwordRush
             if (backUpFrame < 100)
             {
                 playerState = PlayerStateMachine.Attack;
-
+                shiledOn = true;
                 //move the player's location
                 Position += movement;
             }
@@ -358,6 +356,16 @@ namespace SwordRush
         public void GainExp(int enemyLevel)
         {
             exp += enemyLevel * 10 * ((int)(enemyLevel / 2) + 1);
+
+            //if the player has vampire and kills an enemy gain hp
+            if (vampirePower)
+            {
+                health += vampireLevel;
+                if (health > maxHealth)
+                {
+                    health = maxHealth;
+                }
+            }
         }
 
         /// <summary>
