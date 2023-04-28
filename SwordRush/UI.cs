@@ -47,9 +47,9 @@ namespace SwordRush
         private TextButton exitButton;
 
         //shop states
-        private bool shieldPurchased;
-        private bool dodgePurchased;
-        private bool vampirePurchased;
+        public bool shieldPurchased;
+        public bool dodgePurchased;
+        public bool vampirePurchased;
 
         // Window dimensions
         private Rectangle window;

@@ -642,37 +642,10 @@ namespace SwordRush
             totalCoin = int.Parse(stats[0]);
             startAttack = int.Parse(stats[1]);
             startHealth = int.Parse(stats[2]);
-            player.BackUpPower = (stats[3] == "true");
-            player.vampirePower = (stats[4] == "true");
-            player.shieldPower = (stats[5] == "true");
+            UI.Get.dodgePurchased = (stats[3] == "true");
+            UI.Get.shieldPurchased = (stats[4] == "true");
+            UI.Get.vampirePurchased = (stats[5] == "true");
 
-            //init the level
-            if (player.BackUpPower)
-            {
-                player.backUpLevel = 1;
-            }
-            else
-            {
-                player.backUpLevel = 0;
-            }
-
-            if (player.shieldPower)
-            {
-                player.shiledLevel = 1;
-            }
-            else
-            {
-                player.shiledLevel = 0;
-            }
-
-            if (player.vampirePower)
-            {
-                player.vampireLevel = 1;
-            }
-            else
-            {
-                player.vampireLevel = 0;
-            }
 
         }
 
@@ -682,9 +655,9 @@ namespace SwordRush
             stats += totalCoin+",";
             stats += startAttack + ",";
             stats += startHealth + ",";
-            stats += player.BackUpPower + ",";
-            stats += player.vampirePower + ",";
-            stats += player.shieldPower;
+            stats += UI.Get.dodgePurchased  + ",";
+            stats += UI.Get.shieldPurchased + ",";
+            stats += UI.Get.vampirePurchased;
             
             FileManager.SaveStats($"Content/PlayerProgress.txt",stats);
         }
