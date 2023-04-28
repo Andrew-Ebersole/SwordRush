@@ -235,7 +235,6 @@ namespace SwordRush
 
                         Random rand = new Random();
                         int num = rand.Next(100);
-
                         //heal
                         if (num < 20)
                         {
@@ -251,7 +250,7 @@ namespace SwordRush
                             //gain coin
                         }else
                         {
-                            totalCoin += (int)((player.RoomsCleared*100)/ (num - 30));
+                            totalCoin += (int)(((player.RoomsCleared+1)*100)/ (num - 30));
                         }
                     }
 
@@ -301,6 +300,10 @@ namespace SwordRush
                         gameFSM = GameFSM.GameOver;
                         gameOver(player.RoomsCleared);
                         clickCooldown = 0;
+
+                        //add coin when game over
+                        totalCoin += player.RoomsCleared * difficulty + player.Level;
+                        UpdateEcon();
                     }
                     //update player collision
                     WallCollision(player, walls);
@@ -443,9 +446,6 @@ namespace SwordRush
                     // Only allow click after one second has passed to give player
                     // time to read menu and not accidentally click
                     clickCooldown += gt.ElapsedGameTime.TotalMilliseconds;
-                    //gain coin
-                    totalCoin += player.RoomsCleared * difficulty + player.Level;
-                    UpdateEcon();
                     if (clickCooldown >= 1000)
                     { 
                         // Return to menu when mouse down
@@ -1396,6 +1396,28 @@ namespace SwordRush
             {
                 int next = rng.Next(0, 7);
 
+                // Check if the perk is equipted
+                // if not return to beginning of loop
+                // And choose new power up
+                if (next > 4)
+                {
+                    if (next != 5 && player.Perk == PlayerPerk.Dodge)
+                    {
+                        continue;
+                    }
+                    if (next != 6 && player.Perk == PlayerPerk.Vampire)
+                    {
+                        continue;
+                    }
+                    if (next != 7 && player.Perk == PlayerPerk.Sheild)
+                    {
+                        continue;
+                    }
+                    if (player.Perk == PlayerPerk.None)
+                    {
+                        continue;
+                    }
+                }
                 // Make sure the ability is not already picked
                 // or it hasn't been maxed out
                 if (!randomAbilities.Contains(next)
