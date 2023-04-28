@@ -71,7 +71,7 @@ namespace SwordRush
         private SceneObject[,] floorTiles;
         private List<SceneObject> wallTiles;
         private List<List<AStarNode>> graph;
-
+        
         private static GameManager instance = null;
 
         // Level up buttons
@@ -89,7 +89,7 @@ namespace SwordRush
         private int totalCoin;
         private int startAttack;
         private int startHealth;
-
+        private int difficulty;
         // Timer
         private double clickCooldown;
 
@@ -189,6 +189,7 @@ namespace SwordRush
 
             //init player econ
             InitPlayerStats();
+            difficulty = 3;
         }
 
         public Player LocalPlayer
@@ -201,12 +202,26 @@ namespace SwordRush
         public void Update(GameTime gt)
         {
             currentMS = Mouse.GetState();
+            currentKeyState = Keyboard.GetState();
+            //special action to reset the stats
+            if (currentKeyState.IsKeyDown(Keys.A)&& currentKeyState.IsKeyDown(Keys.B) && currentKeyState.IsKeyDown(Keys.C) &&
+                currentKeyState.IsKeyDown(Keys.D) && currentKeyState.IsKeyDown(Keys.E) && currentKeyState.IsKeyDown(Keys.F) )
+            {
+                string stats = "";
+                stats += 0 + ",";
+                stats += 1 + ",";
+                stats += 10 + ",";
+                stats += false + ",";
+                stats += false + ",";
+                stats += false;
+
+                FileManager.SaveStats($"Content/PlayerProgress.txt", stats);
+            }
 
             switch (gameFSM)
             {
                 case GameFSM.Playing: // Playing Game
                     player.Update(gt);
-
 
                     //update chests
                     if (chest != null && player.Rectangle.Intersects(chest.Rectangle))
@@ -255,7 +270,7 @@ namespace SwordRush
                         gameOver(player.RoomsCleared);
                         clickCooldown = 0;
 
-                        totalCoin += player.RoomsCleared + player.Level;
+                        totalCoin += player.RoomsCleared*difficulty + player.Level;
                         UpdateEcon();
                     }
                     //update player collision
@@ -492,7 +507,7 @@ namespace SwordRush
                     sb.DrawString(
                         BellMT48,                           // Font
                         $"YOU CLEARED {player.RoomsCleared} ROOMS\n" +
-                        $"YOU GOT {player.RoomsCleared+player.Level} COINS",            // Text
+                        $"YOU GOT {player.RoomsCleared*difficulty+player.Level} COINS",            // Text
                         new Vector2((window.Width * 0.2f),  // X Position
                         (window.Height * 0.52f)),            // Y Position
                         Color.White);                       // Color
@@ -518,13 +533,27 @@ namespace SwordRush
             {
                 player.backUpLevel = 1;
             }
+            else
+            {
+                player.backUpLevel = 0;
+            }
+
             if (player.shieldPower)
             {
                 player.shiledLevel = 1;
             }
+            else
+            {
+                player.shiledLevel = 0;
+            }
+
             if (player.vampirePower)
             {
                 player.vampireLevel = 1;
+            }
+            else
+            {
+                player.vampireLevel = 0;
             }
 
         }
@@ -665,12 +694,11 @@ namespace SwordRush
                     Color.White);
                 sb.Draw(singleColor,
                     new Rectangle(1, (int)(window.Height * 0.07f + 1),
-                    (int)(window.Width * 0.25f - 2), (int)(window.Height * 0.25f)),
+                    (int)(window.Width * 0.25f - 2), (int)(window.Height * 0.24f-2)),
                     Color.Black);
 
-                sb.DrawString(BellMT18,                           // Font
+                sb.DrawString(BellMT24,                           // Font
                         $"Left Click To Dash\n(When sword is solid)" +
-                        $"\nRight Click to Dodge\n(When bar is filled)" +
                         $"\nPress space level up" +
                         $"\nDefeat the enemies to\nclear the room",            // Text
                         new Vector2(10,  // X Position
@@ -696,7 +724,7 @@ namespace SwordRush
                     }
                     else if (grid[j,i] == 2)
                     {
-                        enemies.Add(new ShortRangeEnemy(dungeontilesTexture2D, new Rectangle(j*64, i*64, 32, 32), player, (player.RoomsCleared / 3) + 1, graphicsDevice));
+                        enemies.Add(new ShortRangeEnemy(dungeontilesTexture2D, new Rectangle(j*64, i*64, 32, 32), player, (player.RoomsCleared / difficulty) + 1, graphicsDevice));
                     }
                     else if (grid[j,i] == 3)
                     {

@@ -181,7 +181,7 @@ namespace SwordRush
             direction = new Vector2();
             backUpFrame = 1000;
             shiledFrame = 20000;
-            shiledOn = true;
+            shiledOn = false;
 
             // Create a texture for blank rectangle
             singleColor = new Texture2D(graphics, 1, 1);
@@ -238,7 +238,7 @@ namespace SwordRush
             }
 
             //back up
-            if (currentMouseState.RightButton == ButtonState.Pressed &&
+            if (backUpPower&&currentMouseState.RightButton == ButtonState.Pressed &&
                 preMouseState.RightButton == ButtonState.Released && backUpFrame > 2000)
             {
                 attackFrame = int.MaxValue / 2;
@@ -246,7 +246,7 @@ namespace SwordRush
             }
 
             //shield
-            if (!shiledOn)
+            if (!shiledOn&&shieldPower)
             {
                 shiledFrame += gameTime.TotalGameTime.TotalMilliseconds;
 
@@ -440,22 +440,28 @@ namespace SwordRush
             }
             
             //back up
-            if (backUpFrame > 2000)
+            if (backUpPower)
             {
-                //draw cd bar
-                sb.Draw(singleColor, // Texture
-                    new Rectangle((int)this.Position.X - 16, (int)this.Position.Y + 36, // X-Y position
-                        (int)((this.Rectangle.Width)), 3), // Width-Height
-                    Color.DarkGreen); // Color
+                if (backUpFrame > 2000)
+                {
+                    //draw cd bar
+                    sb.Draw(singleColor, // Texture
+                        new Rectangle((int)this.Position.X - 16, (int)this.Position.Y + 36, // X-Y position
+                            (int)((this.Rectangle.Width)), 3), // Width-Height
+                        Color.DarkGreen); // Color
+                }
+                else
+                {
+                    //draw cd bar
+                    sb.Draw(singleColor, // Texture
+                        new Rectangle((int)this.Position.X - 16, (int)this.Position.Y + 36, // X-Y position
+                            (int)((this.Rectangle.Width * backUpFrame / 2000)), 3), // Width-Height
+                        Color.Gray); // Color
+                }
+
             }
-            else
-            {
-                //draw cd bar
-                sb.Draw(singleColor, // Texture
-                    new Rectangle((int)this.Position.X - 16, (int)this.Position.Y + 36, // X-Y position
-                        (int)((this.Rectangle.Width * backUpFrame / 2000)), 3), // Width-Height
-                    Color.Gray); // Color
-            }
+
+            
             
             
             if (!_pes.firstTime)
