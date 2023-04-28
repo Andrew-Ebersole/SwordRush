@@ -218,16 +218,19 @@ namespace SwordRush
                         {
                             dodgePurchased = true;
                             GameManager.Get.TotalCoin -= 50;
+                            GameManager.Get.UpdateEcon();
                         }
                         if (!shieldPurchased && shopButtons[1].LeftClicked && GameManager.Get.TotalCoin >= 50)
                         {
                             shieldPurchased = true;
                             GameManager.Get.TotalCoin -= 50;
+                            GameManager.Get.UpdateEcon();
                         }
                         if (!vampirePurchased && shopButtons[2].LeftClicked && GameManager.Get.TotalCoin >= 50)
                         {
                             vampirePurchased = true;
                             GameManager.Get.TotalCoin -= 50;
+                            GameManager.Get.UpdateEcon();
                         }
                         //equip powers
                         if (dodgePurchased && shopButtons[0].LeftClicked)
