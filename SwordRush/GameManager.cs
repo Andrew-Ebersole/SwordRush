@@ -42,7 +42,7 @@ namespace SwordRush
         private KeyboardState previousKeyState;
 
         //objects
-        private Player player;
+        public Player player;
         private List<Enemy> enemies;
         private Chest chest;
 
