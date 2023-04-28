@@ -58,6 +58,7 @@ namespace SwordRush
 
         // fonts
         private SpriteFont BellMT16;
+        private SpriteFont BellMT18;
         private SpriteFont BellMT24;
         private SpriteFont BellMT48;
         private SpriteFont BellMT72;
@@ -168,6 +169,7 @@ namespace SwordRush
 
             // Font
             BellMT16 = content.Load<SpriteFont>("Bell_MT-16");
+            BellMT18 = content.Load<SpriteFont>("Bell_MT-18");
             BellMT24 = content.Load<SpriteFont>("Bell_MT-24");
             BellMT48 = content.Load<SpriteFont>("Bell_MT-48");
             BellMT72 = content.Load<SpriteFont>("Bell_MT-72");
@@ -659,9 +661,10 @@ namespace SwordRush
                     (int)(window.Width * 0.25f - 2), (int)(window.Height * 0.24f - 2)),
                     Color.Black);
 
-                sb.DrawString(BellMT24,                           // Font
-                        $"Left Click To Dash" +
-                        $"\nRight Click to Dodge" +
+                sb.DrawString(BellMT18,                           // Font
+                        $"Left Click To Dash\n(When sword is solid)" +
+                        $"\nRight Click to Dodge\n(When bar is filled)" +
+                        $"\nPress space level up" +
                         $"\nDefeat the enemies to\n clear the room",            // Text
                         new Vector2(10,  // X Position
                         (window.Height * 0.08f)),            // Y Position

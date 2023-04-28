@@ -239,7 +239,7 @@ namespace SwordRush
 
             //back up
             if (currentMouseState.RightButton == ButtonState.Pressed &&
-                preMouseState.RightButton == ButtonState.Released && backUpFrame > 1000)
+                preMouseState.RightButton == ButtonState.Released && backUpFrame > 2000)
             {
                 attackFrame = int.MaxValue / 2;
                 backUpFrame = 0;
@@ -440,7 +440,7 @@ namespace SwordRush
             }
             
             //back up
-            if (backUpFrame > 1000)
+            if (backUpFrame > 2000)
             {
                 //draw cd bar
                 sb.Draw(singleColor, // Texture
@@ -453,7 +453,7 @@ namespace SwordRush
                 //draw cd bar
                 sb.Draw(singleColor, // Texture
                     new Rectangle((int)this.Position.X - 16, (int)this.Position.Y + 36, // X-Y position
-                        (int)((this.Rectangle.Width * backUpFrame / 1000)), 3), // Width-Height
+                        (int)((this.Rectangle.Width * backUpFrame / 2000)), 3), // Width-Height
                     Color.Gray); // Color
             }
             
