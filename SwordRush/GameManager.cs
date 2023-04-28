@@ -119,6 +119,7 @@ namespace SwordRush
         public int[,] Grid { get { return grid; } }
         public List<List<AStarNode>> Graph { get { return graph; } }
         public int TotalCoin { get { return totalCoin; } set { totalCoin = value; } }
+        
 
         // --- Constructor --- //
 
@@ -228,7 +229,7 @@ namespace SwordRush
                     player.Update(gt);
 
                     //update chests
-                    if (chest != null && player.Rectangle.Intersects(chest.Rectangle)&& chest.Open == false)
+                    if (chest != null && player.Rectangle.Intersects(chest.Rectangle) && chest.Open == false)
                     {
                         chest.Open = true;
 
@@ -1395,6 +1396,28 @@ namespace SwordRush
             {
                 int next = rng.Next(0, 7);
 
+                // Check if the perk is equipted
+                // if not return to beginning of loop
+                // And choose new power up
+                if (next > 4)
+                {
+                    if (next != 5 && player.Perk == PlayerPerk.Dodge)
+                    {
+                        continue;
+                    }
+                    if (next != 6 && player.Perk == PlayerPerk.Vampire)
+                    {
+                        continue;
+                    }
+                    if (next != 7 && player.Perk == PlayerPerk.Sheild)
+                    {
+                        continue;
+                    }
+                    if (player.Perk == PlayerPerk.None)
+                    {
+                        continue;
+                    }
+                }
                 // Make sure the ability is not already picked
                 // or it hasn't been maxed out
                 if (!randomAbilities.Contains(next)
