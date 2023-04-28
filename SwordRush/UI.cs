@@ -235,27 +235,27 @@ namespace SwordRush
                         //equip powers
                         if (dodgePurchased && shopButtons[0].LeftClicked)
                         {
-                            GameManager.Get.LocalPlayer.BackUpPower = true;
-                            GameManager.Get.LocalPlayer.backUpLevel = 1;
-                            GameManager.Get.LocalPlayer.shieldPower = false;
-                            GameManager.Get.LocalPlayer.vampirePower = false;
-                            GameManager.Get.LocalPlayer.Perk = PlayerPerk.Dodge;
+                            GameManager.Get.player.BackUpPower = true;
+                            GameManager.Get.player.backUpLevel = 1;
+                            GameManager.Get.player.shieldPower = false;
+                            GameManager.Get.player.vampirePower = false;
+                            GameManager.Get.player.Perk = PlayerPerk.Dodge;
                         }
                         if (shieldPurchased && shopButtons[1].LeftClicked)
                         {
-                            GameManager.Get.LocalPlayer.BackUpPower = false;
-                            GameManager.Get.LocalPlayer.shieldPower = true;
-                            GameManager.Get.LocalPlayer.shiledLevel = 1;
-                            GameManager.Get.LocalPlayer.vampirePower = false;
-                            GameManager.Get.LocalPlayer.Perk = PlayerPerk.Sheild;
+                            GameManager.Get.player.BackUpPower = false;
+                            GameManager.Get.player.shieldPower = true;
+                            GameManager.Get.player.shiledLevel = 1;
+                            GameManager.Get.player.vampirePower = false;
+                            GameManager.Get.player.Perk = PlayerPerk.Sheild;
                         }
                         if (vampirePurchased && shopButtons[2].LeftClicked)
                         {
-                            GameManager.Get.LocalPlayer.BackUpPower = false;
-                            GameManager.Get.LocalPlayer.shieldPower = false;
-                            GameManager.Get.LocalPlayer.vampirePower = true;
-                            GameManager.Get.LocalPlayer.vampireLevel = 1;
-                            GameManager.Get.LocalPlayer.Perk = PlayerPerk.Vampire;
+                            GameManager.Get.player.BackUpPower = false;
+                            GameManager.Get.player.shieldPower = false;
+                            GameManager.Get.player.vampirePower = true;
+                            GameManager.Get.player.vampireLevel = 1;
+                            GameManager.Get.player.Perk = PlayerPerk.Vampire;
                         }
 
 
