@@ -1,6 +1,7 @@
  using System;
 using System.Collections.Generic;
-using System.Linq;
+ using System.Diagnostics;
+ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
@@ -235,6 +236,7 @@ namespace SwordRush
                         //equip powers
                         if (dodgePurchased && shopButtons[0].LeftClicked)
                         {
+                            Debug.WriteLine(10086);
                             GameManager.Get.LocalPlayer.BackUpPower = true;
                             GameManager.Get.LocalPlayer.backUpLevel = 1;
                             GameManager.Get.LocalPlayer.shieldPower = false;

@@ -252,7 +252,8 @@ namespace SwordRush
             }
 
             //back up
-            if (backUpPower&&currentMouseState.RightButton == ButtonState.Pressed &&
+            if (GameManager.Get.LocalPlayer.BackUpPower&&
+                currentMouseState.RightButton == ButtonState.Pressed &&
                 preMouseState.RightButton == ButtonState.Released && backUpFrame > 2000)
             {
                 attackFrame = int.MaxValue / 2;
@@ -260,7 +261,7 @@ namespace SwordRush
             }
 
             //shield
-            if (!shiledOn&&shieldPower)
+            if (!shiledOn&& GameManager.Get.LocalPlayer.shieldPower)
             {
                 shiledFrame += gameTime.TotalGameTime.TotalMilliseconds;
 
@@ -380,7 +381,7 @@ namespace SwordRush
             exp += enemyLevel * 10 * ((int)(enemyLevel / 2) + 1);
 
             //if the player has vampire and kills an enemy gain hp
-            if (vampirePower)
+            if (GameManager.Get.LocalPlayer.vampirePower)
             {
                 health += vampireLevel;
                 if (health > maxHealth)
