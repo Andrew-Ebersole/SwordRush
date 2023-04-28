@@ -117,6 +117,7 @@ namespace SwordRush
 
         public int[,] Grid { get { return grid; } }
         public List<List<AStarNode>> Graph { get { return graph; } }
+        public int TotalCoin { get { return totalCoin; } set { totalCoin = value; } }
 
         // --- Constructor --- //
 
