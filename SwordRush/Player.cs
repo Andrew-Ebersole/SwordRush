@@ -455,7 +455,7 @@ namespace SwordRush
             }
             
             //back up
-            if (backUpPower)
+            if (GameManager.Get.LocalPlayer.backUpPower)
             {
                 if (backUpFrame > 2000)
                 {
