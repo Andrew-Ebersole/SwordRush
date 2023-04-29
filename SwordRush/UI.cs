@@ -526,6 +526,14 @@ namespace SwordRush
                         new Vector2(window.Width * 0.7f,// X Position
                         window.Height * 0.1f),          // Y Position
                         Color.White);                   // Color
+
+                    sb.DrawString(
+                        bellMT36,                       // Font
+                        $"Music: Leohpaz" +
+                        $"\nSFX: jsfxr",                       // Text
+                        new Vector2(window.Width * 0.7f,// X Position
+                        window.Height * 0.3f),          // Y Position
+                        Color.White);                   // Color
                     break;
 
                 case GameFSM.Shop: // --- Shop --------------------------------------//
