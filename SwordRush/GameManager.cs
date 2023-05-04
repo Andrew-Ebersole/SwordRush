@@ -357,8 +357,7 @@ namespace SwordRush
                         gameFSM = GameFSM.Menu;
                     }
                     // Unpause when left click
-                    if (currentMS.LeftButton == ButtonState.Released
-                        && previousMS.LeftButton == ButtonState.Pressed)
+                    if (currentMS.LeftButton == ButtonState.Released)
                     {
                         gameFSM = GameFSM.Playing;
                     }

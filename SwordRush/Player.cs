@@ -380,16 +380,6 @@ namespace SwordRush
         public void GainExp(int enemyLevel)
         {
             exp += enemyLevel * 10 * ((int)(enemyLevel / 2) + 1);
-
-            //if the player has vampire and kills an enemy gain hp
-            if (GameManager.Get.LocalPlayer.vampirePower)
-            {
-                health += vampireLevel;
-                if (health > maxHealth)
-                {
-                    health = maxHealth;
-                }
-            }
         }
 
         /// <summary>
