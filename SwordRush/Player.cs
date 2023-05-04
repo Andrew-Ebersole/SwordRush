@@ -243,7 +243,6 @@ namespace SwordRush
 
             // If player clicks and attack
             if (currentMouseState.LeftButton == ButtonState.Pressed
-                && preMouseState.LeftButton == ButtonState.Released
                 && playerState == PlayerStateMachine.Idle)
             {
                 SoundManager.Get.PlayerAttackEffect.Play();
@@ -252,7 +251,7 @@ namespace SwordRush
             }
 
             //back up
-            Debug.WriteLine("123"+GameManager.Get.LocalPlayer.BackUpPower);
+            //Debug.WriteLine("123"+GameManager.Get.LocalPlayer.BackUpPower);
             if (GameManager.Get.LocalPlayer.BackUpPower&&
                 currentMouseState.RightButton == ButtonState.Pressed &&
                 preMouseState.RightButton == ButtonState.Released && backUpFrame > 2000)
